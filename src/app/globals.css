@@ -1,0 +1,269 @@
+@import "tailwindcss";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #fff;
+    color: #000;
+}
+
+/* Header */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+    border-bottom: 2px solid #000;
+    background-color: #fff;
+    padding: 0;
+    position: relative;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 1.4rem;
+    font-weight: 800;
+    padding-left: 2.5rem;
+    flex: 1;
+}
+
+.nav {
+    display: flex;
+    gap: 3rem;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #000;
+    flex: 2;
+    justify-content: center;
+}
+
+.nav a {
+    text-decoration: none;
+    color: #111;
+}
+
+.auth-buttons {
+    display: flex;
+    height: 100%;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 2.5rem;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 1.05rem;
+}
+
+.btn-login {
+    color: #000;
+    background-color: #fff;
+    border-left: 2px solid #000;
+}
+
+.btn-signup {
+    color: #fff;
+    background-color: #000;
+}
+
+/* Main Content */
+.main-content {
+    display: flex;
+    flex: 1;
+    height: calc(100vh - 80px);
+}
+
+/* Left Section */
+.left-section {
+    width: 50%;
+    background-color: #82fed6;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 2px solid #000;
+    position: relative;
+}
+
+.hero-content {
+    padding: 15% 10%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hero-content h1 {
+    font-size: 3.5vw;
+    font-weight: 800;
+    line-height: 1.15;
+    color: #000;
+    margin-bottom: 1.5rem;
+    letter-spacing: -1px;
+}
+
+.hero-content p {
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: #222;
+    line-height: 1.5;
+    margin-bottom: 2.5rem;
+    max-width: 90%;
+}
+
+.btn-subscribe {
+    align-self: flex-start;
+    background-color: #fff;
+    color: #000;
+    font-size: 1.25rem;
+    font-weight: 700;
+    padding: 1.1rem 2.8rem;
+    border: 3px solid #000;
+    border-radius: 50px;
+    box-shadow: 6px 6px 0px 0px #000;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.btn-subscribe:active {
+    transform: translate(3px, 3px);
+    box-shadow: 3px 3px 0px 0px #000;
+}
+
+.bottom-bar {
+    background-color: #000;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    padding: 0 10%;
+    width: 100%;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.15rem;
+    gap: 0.7rem;
+}
+
+.star-icon {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Right Section */
+.right-section {
+    width: 50%;
+    background-color: #ffb17a;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Image wrappers */
+.image-wrapper {
+    position: absolute;
+    border: 3px solid #000;
+    box-shadow: 10px 10px 0px 0px #000;
+    background-color: #fff;
+    overflow: hidden;
+    z-index: 2;
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Pill 1: Woman laptop */
+.img-1 {
+    width: 32%;
+    height: 45%;
+    border-radius: 200px;
+    top: 8%;
+    left: 12%;
+}
+
+/* Circle 2: Man headphones */
+.img-2 {
+    width: 28%;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    top: 15%;
+    right: 8%;
+}
+
+/* Circle 3: Woman pencil */
+.img-3 {
+    width: 25%;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    bottom: 8%;
+    left: 10%;
+}
+
+/* Pill 4: Men chalkboard */
+.img-4 {
+    width: 30%;
+    height: 48%;
+    border-radius: 200px;
+    bottom: -6%;
+    right: 8%;
+}
+
+/* Decorations */
+.decoration {
+    position: absolute;
+    z-index: 1;
+}
+
+.squiggly-arrow {
+    top: 5%;
+    right: 18%;
+}
+
+.green-triangle {
+    top: 50%;
+    left: 45%;
+    transform: translateY(-50%);
+}
+
+.wavy-lines {
+    top: 60%;
+    left: 8%;
+}
+
+.pink-semi-circle {
+    bottom: 6%;
+    left: 30%;
+}
+
+.blue-quarter-circle {
+    bottom: -2px;
+    right: -2px;
+}
+
+@media (max-width: 1200px) {
+    .hero-content h1 {
+        font-size: 3rem;
+    }
+    .bottom-bar {
+        padding: 0 2rem;
+        gap: 1.5rem;
+    }
+}
