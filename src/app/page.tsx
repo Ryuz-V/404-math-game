@@ -15,9 +15,7 @@ export default function Home() {
   const container = useRef(null);
   
   useGSAP(() => {
-    // Left side animations
     const tl = gsap.timeline();
-    
     tl.from('.hero-content h1', {
       y: 50,
       opacity: 0,
@@ -47,7 +45,6 @@ export default function Home() {
       delay: 0.5
     });
 
-    // Right side animations - Images pop in
     gsap.from('.image-wrapper', {
       scale: 0,
       rotation: (i) => (i % 2 === 0 ? -10 : 10),
@@ -58,7 +55,6 @@ export default function Home() {
       delay: 0.2
     });
 
-    // Decorations float/rotate
     gsap.from('.decoration', {
       scale: 0,
       opacity: 0,
