@@ -3,12 +3,12 @@
 import { useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 import Image from 'next/image';
 import Link from 'next/link';
 
-// Register useGSAP
 if (typeof window !== 'undefined') {
-  gsap.registerPlugin(useGSAP);
+  gsap.registerPlugin(useGSAP, ScrollTrigger);
 }
 
 export default function Home() {
@@ -35,7 +35,6 @@ export default function Home() {
       ease: 'back.out(1.7)'
     }, '-=0.5');
 
-    // Bottom bar stagger
     gsap.from('.feature', {
       y: 40,
       opacity: 0,
@@ -83,6 +82,54 @@ export default function Home() {
       ease: 'sine.inOut'
     });
 
+    // Scroll Animations
+    gsap.from('.topics-section .section-header', {
+      scrollTrigger: {
+        trigger: '.topics-section',
+        start: 'top 80%',
+      },
+      y: 50,
+      opacity: 0,
+      duration: 0.8,
+      ease: 'power3.out'
+    });
+
+    gsap.from('.topic-card', {
+      scrollTrigger: {
+        trigger: '.topics-grid',
+        start: 'top 85%',
+      },
+      y: 50,
+      opacity: 0,
+      duration: 0.6,
+      stagger: 0.15,
+      ease: 'back.out(1.2)'
+    });
+
+    gsap.from('.stat-item', {
+      scrollTrigger: {
+        trigger: '.stats-section',
+        start: 'top 80%',
+      },
+      scale: 0.5,
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.2,
+      ease: 'elastic.out(1, 0.5)'
+    });
+
+    gsap.from('.cta-section h2, .cta-section p, .cta-section .btn-subscribe', {
+      scrollTrigger: {
+        trigger: '.cta-section',
+        start: 'top 75%',
+      },
+      y: 30,
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.2,
+      ease: 'power3.out'
+    });
+
   }, { scope: container });
 
   const StarIcon = () => (
@@ -109,7 +156,8 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="main-content">
+      <main>
+        <section className="hero-section">
         <section className="left-section">
           <div className="hero-content">
             <h1>Daily Mathematics<br/>Exercises and Solutions<br/>for Versity Students</h1>
@@ -170,7 +218,120 @@ export default function Home() {
             <img src="/assets/men_chalkboard.png" alt="Men at chalkboard" />
           </div>
         </section>
+        </section>
+
+        <section className="topics-section">
+          <div className="section-header">
+            <div>
+              <h2 className="section-title">Explore Topics</h2>
+              <p className="section-subtitle">Master mathematics step-by-step with our comprehensive, curriculum-aligned topic breakdowns.</p>
+            </div>
+            <Link href="#" className="btn-view-all">View All Topics</Link>
+          </div>
+          
+          <div className="topics-grid">
+            <div className="topic-card card-bg-yellow">
+              <div className="topic-icon">🔢</div>
+              <h3>Algebra</h3>
+              <p>Master equations, inequalities, and functions to build a strong mathematical foundation.</p>
+            </div>
+            <div className="topic-card card-bg-pink">
+              <div className="topic-icon">📐</div>
+              <h3>Geometry</h3>
+              <p>Explore shapes, sizes, properties of space, and visual reasoning.</p>
+            </div>
+            <div className="topic-card card-bg-blue">
+              <div className="topic-icon">📈</div>
+              <h3>Calculus</h3>
+              <p>Understand limits, derivatives, integrals, and the mathematics of continuous change.</p>
+            </div>
+            <div className="topic-card card-bg-green">
+              <div className="topic-icon">📊</div>
+              <h3>Statistics</h3>
+              <p>Learn to collect, analyze, interpret, and present data effectively.</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="stats-section">
+          <div className="stat-item">
+            <div className="stat-number">50K+</div>
+            <div className="stat-label">Active Students</div>
+          </div>
+          <div className="stat-item">
+            <div className="stat-number">1,200+</div>
+            <div className="stat-label">Exercises</div>
+          </div>
+          <div className="stat-item">
+            <div className="stat-number">98%</div>
+            <div className="stat-label">Success Rate</div>
+          </div>
+        </section>
+
+        <section className="cta-section">
+          <h2>Ready to master math?</h2>
+          <p>Join thousands of students who are already improving their grades and understanding of complex mathematical concepts.</p>
+          <button className="btn-subscribe">Get Started Now</button>
+          
+          <div className="decoration pink-semi-circle" style={{ top: '10%', right: '15%', left: 'auto', bottom: 'auto', transform: 'rotate(45deg)' }}>
+            <svg width="60" height="60" viewBox="0 0 40 40">
+              <path d="M 10 10 A 15 15 0 1 0 30 30" fill="none" stroke="#ff6b6b" strokeWidth="7" strokeLinecap="round"/>
+            </svg>
+          </div>
+          <div className="decoration blue-quarter-circle" style={{ bottom: '10%', left: '10%', right: 'auto', top: 'auto', transform: 'rotate(-45deg)' }}>
+            <svg width="60" height="60" viewBox="0 0 60 60">
+              <path d="M 0 60 A 60 60 0 0 1 60 0 L 60 60 Z" fill="#00d0ff" stroke="#000" strokeWidth="4" strokeLinejoin="round"/>
+            </svg>
+          </div>
+        </section>
       </main>
+
+      <footer className="footer">
+        <div className="footer-top">
+          <div className="footer-brand">
+            <Link href="#" className="logo">Math101</Link>
+            <p>Empowering students to conquer mathematics through interactive exercises, peer collaboration, and expert solutions.</p>
+          </div>
+          
+          <div className="footer-links-group">
+            <h4>Learn</h4>
+            <ul>
+              <li><Link href="#">Algebra</Link></li>
+              <li><Link href="#">Geometry</Link></li>
+              <li><Link href="#">Calculus</Link></li>
+              <li><Link href="#">Statistics</Link></li>
+            </ul>
+          </div>
+          
+          <div className="footer-links-group">
+            <h4>Company</h4>
+            <ul>
+              <li><Link href="#">About Us</Link></li>
+              <li><Link href="#">Careers</Link></li>
+              <li><Link href="#">Blog</Link></li>
+              <li><Link href="#">Contact</Link></li>
+            </ul>
+          </div>
+          
+          <div className="footer-links-group">
+            <h4>Legal</h4>
+            <ul>
+              <li><Link href="#">Terms of Service</Link></li>
+              <li><Link href="#">Privacy Policy</Link></li>
+              <li><Link href="#">Cookie Policy</Link></li>
+            </ul>
+          </div>
+        </div>
+        
+        <div className="footer-bottom">
+          <p>&copy; {new Date().getFullYear()} Math101. All rights reserved.</p>
+          <div className="social-links">
+            <Link href="#">Twitter</Link>
+            <Link href="#">LinkedIn</Link>
+            <Link href="#">Instagram</Link>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

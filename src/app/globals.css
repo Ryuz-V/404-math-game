@@ -9,10 +9,9 @@
 body {
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    overflow: hidden;
     background-color: #fff;
     color: #000;
+    font-family: var(--font-geist-sans), sans-serif;
 }
 
 /* Header */
@@ -76,11 +75,11 @@ body {
     background-color: #000;
 }
 
-/* Main Content */
-.main-content {
+/* Hero Section */
+.hero-section {
     display: flex;
-    flex: 1;
-    height: calc(100vh - 80px);
+    width: 100%;
+    min-height: calc(100vh - 80px);
 }
 
 /* Left Section */
@@ -266,4 +265,243 @@ body {
         padding: 0 2rem;
         gap: 1.5rem;
     }
+}
+
+/* Topics Section */
+.topics-section {
+    padding: 6rem 10%;
+    background-color: #fff;
+    border-bottom: 2px solid #000;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4rem;
+}
+
+.section-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #000;
+    letter-spacing: -1px;
+}
+
+.section-subtitle {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #444;
+    max-width: 500px;
+    margin-top: 1rem;
+}
+
+.btn-view-all {
+    padding: 0.8rem 2rem;
+    border: 2px solid #000;
+    background-color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 50px;
+    box-shadow: 4px 4px 0px 0px #000;
+    cursor: pointer;
+    transition: all 0.1s;
+    color: #000;
+    text-decoration: none;
+}
+
+.btn-view-all:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px 0px #000;
+}
+
+.topics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+}
+
+.topic-card {
+    border: 3px solid #000;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 8px 8px 0px 0px #000;
+    background-color: #fff;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+
+.topic-card:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 12px 12px 0px 0px #000;
+}
+
+.topic-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #000;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.topic-card h3 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.topic-card p {
+    font-size: 1.05rem;
+    color: #444;
+    font-weight: 500;
+}
+
+.card-bg-yellow { background-color: #ffdc00; }
+.card-bg-pink { background-color: #ffb17a; }
+.card-bg-blue { background-color: #00d0ff; }
+.card-bg-green { background-color: #82fed6; }
+
+/* Stats Section */
+.stats-section {
+    padding: 6rem 10%;
+    background-color: #ffb17a;
+    border-bottom: 2px solid #000;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 3rem;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 4rem;
+    font-weight: 900;
+    color: #000;
+    letter-spacing: -2px;
+    text-shadow: 3px 3px 0px #fff;
+}
+
+.stat-label {
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 0.5rem;
+}
+
+/* CTA Section */
+.cta-section {
+    padding: 8rem 10%;
+    background-color: #82fed6;
+    text-align: center;
+    border-bottom: 2px solid #000;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-section h2 {
+    font-size: 4rem;
+    font-weight: 900;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.cta-section p {
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin-bottom: 3rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    z-index: 2;
+}
+
+/* Footer */
+.footer {
+    background-color: #111;
+    color: #fff;
+    padding: 5rem 10% 2rem;
+}
+
+.footer-top {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 3rem;
+    margin-bottom: 4rem;
+    border-bottom: 1px solid #333;
+    padding-bottom: 4rem;
+}
+
+.footer-brand .logo {
+    color: #fff;
+    padding-left: 0;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.footer-brand p {
+    color: #aaa;
+    max-width: 300px;
+    line-height: 1.6;
+}
+
+.footer-links-group h4 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #fff;
+}
+
+.footer-links-group ul {
+    list-style: none;
+}
+
+.footer-links-group li {
+    margin-bottom: 0.8rem;
+}
+
+.footer-links-group a {
+    color: #aaa;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.footer-links-group a:hover {
+    color: #fff;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #777;
+    font-size: 0.9rem;
+}
+
+.social-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.social-links a {
+    color: #777;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.2s;
+}
+
+.social-links a:hover {
+    color: #fff;
 }
