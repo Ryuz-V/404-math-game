@@ -44,14 +44,25 @@ export default function Home() {
       delay: 0.5
     });
 
-    gsap.from('.image-wrapper', {
+    gsap.from('.floating-asset', {
       scale: 0,
-      rotation: (i) => (i % 2 === 0 ? -10 : 10),
+      rotation: (i) => (i % 2 === 0 ? -15 : 15),
       opacity: 0,
       duration: 0.8,
-      stagger: 0.2,
+      stagger: 0.1,
       ease: 'back.out(1.5)',
       delay: 0.2
+    });
+
+    gsap.to('.floating-asset', {
+      y: 'random(-20, 20)',
+      x: 'random(-10, 10)',
+      rotation: 'random(-10, 10)',
+      yoyo: true,
+      repeat: -1,
+      duration: 'random(2, 4)',
+      ease: 'sine.inOut',
+      stagger: 0.1
     });
 
     gsap.from('.decoration', {
@@ -81,6 +92,16 @@ export default function Home() {
       duration: 2,
       ease: 'sine.inOut'
     });
+    
+    gsap.fromTo('.marquee-content', 
+      { x: '0%' },
+      {
+        x: '-50%',
+        ease: 'none',
+        duration: 25,
+        repeat: -1
+      }
+    );
 
     // Scroll Animations
     gsap.from('.topics-section .section-header', {
@@ -145,30 +166,54 @@ export default function Home() {
       <header className="header">
         <div className="logo">Math101</div>
         <nav className="nav">
-          <Link href="#">Topics</Link>
-          <Link href="#">Pricing</Link>
-          <Link href="#">Lecturers</Link>
-          <Link href="#">Lecturers</Link>
+          <Link href="#">Games</Link>
+          <Link href="#">Resources</Link>
+          <Link href="#">Leaderboard</Link>
+          <Link href="#">Quizz</Link>
+          <Link href="#">About</Link>
         </nav>
+        <div className="header-search">
+          <input type="text" placeholder="Search..." className="search-input" />
+          <svg className="search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </div>
         <div className="auth-buttons">
           <Link href="#" className="btn btn-login">Log in</Link>
           <Link href="#" className="btn btn-signup">Sign up</Link>
         </div>
       </header>
-
       <main>
         <section className="hero-section">
         <section className="left-section">
           <div className="hero-content">
-            <h1>Daily Mathematics<br/>Exercises and Solutions<br/>for Versity Students</h1>
-            <p>Mathematics exercises for all levels with solutions, curated to help you understand various disciplines in Mathematics</p>
-            <button className="btn-subscribe">Subscribe</button>
-          </div>
-          
+            <h1>Master Mathematics<br/>Through Games and Challenges</h1>
+            <p>
+              Explore mathematics through interactive games, exercises, and challenges
+              that help you improve your skills while having fun.
+            </p>
+            <button className="btn-subscribe">Get Started Now</button>
+          </div>    
           <div className="bottom-bar">
-            <div className="feature"><StarIcon /> Peers</div>
-            <div className="feature"><StarIcon /> Leaderboards</div>
-            <div className="feature"><StarIcon /> Schools</div>
+            <div className="marquee-content">
+              {[...Array(2)].map((_, i) => (
+                <div key={i} className="marquee-items">
+                  <div className="feature"><StarIcon /> Math Exercises</div>
+                  <span className="gap-text">//</span>
+                  <div className="feature"><StarIcon /> Leaderboards</div>
+                  <span className="gap-text">//</span>
+                  <div className="feature"><StarIcon /> Learning Resources</div>
+                  <span className="gap-text">//</span>
+                  <div className="feature"><StarIcon /> Challenges</div>
+                  <span className="gap-text">//</span>
+                  <div className="feature"><StarIcon /> Quizzes</div>
+                  <span className="gap-text">//</span>
+                  <div className="feature"><StarIcon /> Games</div>
+                  <span className="gap-text">//</span>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
         
@@ -205,18 +250,15 @@ export default function Home() {
           </div>
 
           {/* Images */}
-          <div className="image-wrapper img-1">
-            <img src="/assets/woman_laptop.png" alt="Woman on laptop" />
-          </div>
-          <div className="image-wrapper img-2">
-            <img src="/assets/man_headphones.png" alt="Man with headphones" />
-          </div>
-          <div className="image-wrapper img-3">
-            <img src="/assets/woman_pencil.png" alt="Woman with pencil" />
-          </div>
-          <div className="image-wrapper img-4">
-            <img src="/assets/men_chalkboard.png" alt="Men at chalkboard" />
-          </div>
+          <img src="/assets/fireball.png" alt="asset" className="floating-asset" style={{ position: 'absolute', zIndex: 2, width: '120px', top: '10%', left: '15%' }} />
+          <img src="/assets/xray.png" alt="asset" className="floating-asset" style={{ position: 'absolute', zIndex: 2, width: '110px', top: '15%', right: '10%' }} />
+          <img src="/assets/random.png" alt="asset" className="floating-asset" style={{ position: 'absolute', zIndex: 2, width: '130px', top: '35%', left: '10%' }} />
+          <img src="/assets/yey.png" alt="asset" className="floating-asset" style={{ position: 'absolute', zIndex: 2, width: '120px', top: '45%', right: '15%' }} />
+          <img src="/assets/si_paling_mtk.png" alt="asset" className="floating-asset" style={{ position: 'absolute', zIndex: 2, width: '140px', bottom: '15%', left: '15%' }} />
+          <img src="/assets/kue_pun_dihitung.png" alt="asset" className="floating-asset" style={{ position: 'absolute', zIndex: 2, width: '120px', bottom: '25%', right: '35%' }} />
+          <img src="/assets/anjay.png" alt="asset" className="floating-asset" style={{ position: 'absolute', zIndex: 2, width: '110px', top: '70%', left: '45%' }} />
+          <img src="/assets/fih.png" alt="asset" className="floating-asset" style={{ position: 'absolute', zIndex: 2, width: '130px', top: '80%', right: '10%' }} />
+          <img src="/assets/gokil.png" alt="asset" className="floating-asset" style={{ position: 'absolute', zIndex: 2, width: '140px', top: '5%', left: '50%' }} />
         </section>
         </section>
 

@@ -23,25 +23,59 @@ body {
     border-bottom: 2px solid #000;
     background-color: #fff;
     padding: 0;
-    position: relative;
-    z-index: 10;
+    position: sticky;
+    top: 0;
+    z-index: 50;
 }
 
 .logo {
     font-size: 1.4rem;
     font-weight: 800;
     padding-left: 2.5rem;
-    flex: 1;
+    flex: none;
+    margin-right: 5.5rem;
 }
 
 .nav {
     display: flex;
-    gap: 3rem;
+    gap: 2.5rem;
     font-weight: 600;
     font-size: 1.05rem;
     color: #000;
-    flex: 2;
-    justify-content: center;
+    flex: 1;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.header-search {
+    display: flex;
+    align-items: center;
+    margin-right: 2rem;
+    position: relative;
+}
+
+.search-input {
+    padding: 0.5rem 2.5rem 0.5rem 1rem;
+    border: 2px solid #000;
+    border-radius: 4px;
+    font-size: 1rem;
+    outline: none;
+    width: 380px;
+    font-family: inherit;
+    transition: box-shadow 0.2s;
+}
+
+.search-input:focus {
+    box-shadow: 4px 4px 0px 0px #000;
+}
+
+.search-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #555;
+    pointer-events: none;
 }
 
 .nav a {
@@ -127,7 +161,7 @@ body {
     font-weight: 700;
     padding: 1.1rem 2.8rem;
     border: 3px solid #000;
-    border-radius: 50px;
+    border-radius: 6px;
     box-shadow: 6px 6px 0px 0px #000;
     cursor: pointer;
     transition: transform 0.1s, box-shadow 0.1s;
@@ -143,9 +177,27 @@ body {
     height: 70px;
     display: flex;
     align-items: center;
-    gap: 3rem;
-    padding: 0 10%;
     width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.marquee-content {
+    display: flex;
+    white-space: nowrap;
+    width: max-content;
+}
+
+.marquee-items {
+    display: flex;
+    align-items: center;
+}
+
+.gap-text {
+    color: #fff;
+    margin: 0 2.5rem;
+    font-weight: 800;
+    font-size: 1.25rem;
 }
 
 .feature {
