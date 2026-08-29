@@ -6,7 +6,6 @@ import { useGSAP } from '@gsap/react';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import Image from 'next/image';
 import Link from 'next/link';
-
 import MateriSection from '../components/MateriSection';
 import SoloGame from '../components/SoloGame';
 import VersusGame from '../components/VersusGame';
@@ -97,26 +96,7 @@ export default function Home() {
       delay: 0.5
     });
 
-    gsap.from('.floating-asset', {
-      scale: 0,
-      rotation: (i) => (i % 2 === 0 ? -15 : 15),
-      opacity: 0,
-      duration: 0.8,
-      stagger: 0.1,
-      ease: 'back.out(1.5)',
-      delay: 0.2
-    });
 
-    gsap.to('.floating-asset', {
-      y: 'random(-20, 20)',
-      x: 'random(-10, 10)',
-      rotation: 'random(-10, 10)',
-      yoyo: true,
-      repeat: -1,
-      duration: 'random(2, 4)',
-      ease: 'sine.inOut',
-      stagger: 0.1
-    });
 
     gsap.from('.decoration', {
       scale: 0,
@@ -412,16 +392,47 @@ export default function Home() {
                 </div>
 
                 {/* Floating Assets */}
-                <Image src="/assets/fireball.png" alt="fireball asset" width={120} height={120} className="floating-asset" style={{ position: 'absolute', zIndex: 2, width: '120px', height: 'auto', top: '10%', left: '15%' }} priority />
-                <Image src="/assets/xray.png" alt="xray asset" width={110} height={110} className="floating-asset" style={{ position: 'absolute', zIndex: 2, width: '110px', height: 'auto', top: '15%', right: '10%' }} priority />
-                <Image src="/assets/random.png" alt="random asset" width={130} height={130} className="floating-asset" style={{ position: 'absolute', zIndex: 2, width: '130px', height: 'auto', top: '35%', left: '10%' }} priority />
-                <Image src="/assets/yey.png" alt="yey asset" width={120} height={120} className="floating-asset" style={{ position: 'absolute', zIndex: 2, width: '120px', height: 'auto', top: '45%', right: '15%' }} priority />
-                <Image src="/assets/si_paling_mtk.png" alt="si paling mtk asset" width={140} height={140} className="floating-asset" style={{ position: 'absolute', zIndex: 2, width: '140px', height: 'auto', bottom: '15%', left: '15%' }} priority />
-                <Image src="/assets/kue_pun_dihitung.png" alt="kue pun dihitung asset" width={120} height={120} className="floating-asset" style={{ position: 'absolute', zIndex: 2, width: '120px', height: 'auto', bottom: '25%', right: '35%' }} priority />
-                <Image src="/assets/anjay.png" alt="anjay asset" width={110} height={110} className="floating-asset" style={{ position: 'absolute', zIndex: 2, width: '110px', height: 'auto', top: '70%', left: '45%' }} priority />
-                <Image src="/assets/fih.png" alt="fih asset" width={130} height={130} className="floating-asset" style={{ position: 'absolute', zIndex: 2, width: '130px', height: 'auto', top: '80%', right: '10%' }} priority />
-                <Image src="/assets/gokil.png" alt="gokil asset" width={140} height={140} className="floating-asset" style={{ position: 'absolute', zIndex: 2, width: '140px', height: 'auto', top: '5%', left: '50%' }} priority />
+                <Image src="/assets/fireball.png" alt="fireball asset" width={170} height={170} style={{ position: 'absolute', zIndex: 2, width: '170px', height: 'auto', top: '3%', right: '15%' }} priority />
+                <Image src="/assets/xray.png" alt="xray asset" width={130} height={130} style={{ position: 'absolute', zIndex: 2, width: '130px', height: 'auto', top: '27.8%', right: '18.4%' }} priority />
+                <Image src="/assets/random.png" alt="random asset" width={150} height={150} style={{ position: 'absolute', zIndex: 2, width: '150px', height: 'auto', top: '3%', left: '2%' }} priority />
+                <Image src="/assets/yey.png" alt="yey asset" width={250} height={250} style={{ position: 'absolute', zIndex: 2, width: '250px', height: 'auto', top: '30%', right: '15%' }} priority />
+                <Image src="/assets/si_paling_mtk.png" alt="si paling mtk asset" width={200} height={200} style={{ position: 'absolute', zIndex: 2, width: '200px', height: 'auto', bottom: '39%', left: '10%' }} priority />
+                <Image src="/assets/kue_pun_dihitung.png" alt="kue pun dihitung asset" width={250} height={250} style={{ position: 'absolute', zIndex: 2, width: '250px', height: 'auto', bottom: '-5.8%', right: '1%' }} priority />
+                <Image src="/assets/anjay.png" alt="anjay asset" width={180} height={180} style={{ position: 'absolute', zIndex: 2, width: '180px', height: 'auto', bottom: '-0.1%', right: '45%' }} priority />
+                <Image src="/assets/gokil.png" alt="gokil asset" width={200} height={200} style={{ position: 'absolute', zIndex: 2, width: '200px', height: 'auto', bottom: '-0.8%', right: '70%' }} priority />
               </section>
+            </section>
+            {/* FEATURES SECTION (Duolingo Style) */}
+            <section className="features-section">
+              <div className="feature-row">
+                <div className="feature-text">
+                  <h2>Gratis. Seru. Efektif.</h2>
+                  <p>Belajar matematika di 404_math itu seru dan terbukti efektif! Dengan materi yang interaktif, kamu akan memahami konsep dari dasar hingga mahir dengan mudah.</p>
+                </div>
+                <div className="feature-image">
+                  <Image src="/assets/si_paling_mtk.png" alt="Gratis seru efektif" width={300} height={300} />
+                </div>
+              </div>
+
+              <div className="feature-row reverse">
+                <div className="feature-text">
+                  <h2>Didukung Ilmu Pengetahuan</h2>
+                  <p>Kami memadukan metode pengajaran berbasis riset dengan konten yang interaktif untuk membantumu memecahkan masalah matematika dengan logika yang tepat.</p>
+                </div>
+                <div className="feature-image">
+                  <Image src="/assets/xray.png" alt="Ilmu pengetahuan" width={300} height={300} />
+                </div>
+              </div>
+
+              <div className="feature-row">
+                <div className="feature-text">
+                  <h2>Tetap Termotivasi</h2>
+                  <p>Kami membuat belajar matematika menjadi kebiasaan yang menyenangkan dengan tantangan seru, pencapaian, dan sistem belajar yang mirip seperti bermain game.</p>
+                </div>
+                <div className="feature-image">
+                  <Image src="/assets/gokil.png" alt="Termotivasi" width={300} height={300} />
+                </div>
+              </div>
             </section>
 
             {/* TOPICS SECTION (Matching Screenshot 2 & 3) */}
@@ -431,9 +442,7 @@ export default function Home() {
                   <h2 className="section-title">Explore Topics</h2>
                   <p className="section-subtitle">Master mathematics step-by-step with our comprehensive, curriculum-aligned topic breakdowns.</p>
                 </div>
-                <button className="btn-view-all" onClick={() => setCurrentView('materi')}>View All Topics</button>
               </div>
-              
               <div className="topics-grid">
                 <div className="topic-card card-bg-yellow" onClick={() => handleStartSoloWithTopic('kaidah-pencacahan')}>
                   <div className="topic-icon">🔢</div>
@@ -455,22 +464,6 @@ export default function Home() {
                   <h3>Statistics</h3>
                   <p>Learn to collect, analyze, interpret, and present data effectively.</p>
                 </div>
-              </div>
-            </section>
-
-            {/* STATS SECTION (Matching Screenshot 4) */}
-            <section className="stats-section">
-              <div className="stat-item">
-                <div className="stat-number">50K+</div>
-                <div className="stat-label">Active Students</div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-number">1,200+</div>
-                <div className="stat-label">Exercises</div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-number">98%</div>
-                <div className="stat-label">Success Rate</div>
               </div>
             </section>
 

@@ -33,7 +33,9 @@ body {
     letter-spacing: -1px;
     padding-left: 2.5rem;
     cursor: pointer;
-    margin-right: 2.5rem;
+    margin-right: 2.4rem;
+    margin-left: 2.3rem;
+
 }
 
 .nav {
@@ -42,6 +44,7 @@ body {
     font-weight: 600;
     font-size: 1rem;
     align-items: center;
+    margin-left: 50px;
 }
 
 .nav a {
@@ -69,7 +72,7 @@ body {
     border-radius: 4px;
     font-size: 0.95rem;
     outline: none;
-    width: 280px;
+    width: 380px;
     font-family: inherit;
     transition: box-shadow 0.2s;
 }
@@ -164,9 +167,10 @@ body {
     align-self: flex-start;
     background-color: #fff;
     color: #000;
-    font-size: 1.25rem;
+    font-size: 1.35rem;
     font-weight: 700;
-    padding: 1.1rem 2.8rem;
+    padding: 1.2rem 3.2rem;
+    margin-left: -27px;
     border: 3px solid #000;
     border-radius: 6px;
     box-shadow: 6px 6px 0px 0px #000;
@@ -326,6 +330,167 @@ body {
     }
 }
 
+/* Testimonial Section */
+.testimonial-section {
+    padding: 6rem 10%;
+    background-color: #f7f7f8;
+    border-bottom: 2px solid #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.testimonial-container {
+    max-width: 900px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.testimonial-quote {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #111;
+    line-height: 1.5;
+    font-style: italic;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.author-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #000;
+    object-fit: cover;
+}
+
+.author-info {
+    font-size: 1.05rem;
+    color: #444;
+    font-weight: 500;
+}
+
+.author-info strong {
+    color: #000;
+    font-weight: 700;
+}
+
+.testimonial-pagination {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.pagination-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.pagination-btn:hover {
+    color: #111;
+}
+
+.pagination-dots {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #ddd;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.dot.active {
+    background-color: #82fed6;
+    border: 2px solid #000;
+    transform: scale(1.2);
+}
+
+.dot:hover:not(.active) {
+    background-color: #bbb;
+}
+
+/* Features Section (Duolingo Style) */
+.features-section {
+    padding: 6rem 10%;
+    background-color: #fff;
+    border-bottom: 2px solid #000;
+}
+
+.feature-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4rem;
+    margin-bottom: 8rem;
+}
+
+.feature-row:last-child {
+    margin-bottom: 0;
+}
+
+.feature-row.reverse {
+    flex-direction: row-reverse;
+}
+
+.feature-text {
+    flex: 1;
+}
+
+.feature-text h2 {
+    font-size: 3.5rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+    color: #58cc02; /* Duolingo green adjusted for this project */
+    text-shadow: 2px 2px 0px #000; /* Neobrutalism shadow */
+}
+
+.feature-text p {
+    font-size: 1.25rem;
+    color: #444;
+    font-weight: 500;
+    line-height: 1.6;
+    max-width: 500px;
+}
+
+.feature-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.feature-image img {
+    max-width: 100%;
+    height: auto;
+    filter: drop-shadow(8px 8px 0px #000);
+    transition: transform 0.2s;
+}
+
+.feature-image img:hover {
+    transform: translate(-4px, -4px);
+    filter: drop-shadow(12px 12px 0px #000);
+}
+
 /* Topics Section */
 .topics-section {
     padding: 6rem 10%;
@@ -335,8 +500,10 @@ body {
 
 .section-header {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     margin-bottom: 4rem;
 }
 
@@ -352,7 +519,7 @@ body {
     font-weight: 600;
     color: #444;
     max-width: 500px;
-    margin-top: 1rem;
+    margin: 1rem auto 0;
 }
 
 .btn-view-all {
@@ -382,7 +549,7 @@ body {
 
 .topic-card {
     border: 3px solid #000;
-    border-radius: 20px;
+    border-radius: 8px;
     padding: 2rem;
     box-shadow: 8px 8px 0px 0px #000;
     background-color: #fff;
