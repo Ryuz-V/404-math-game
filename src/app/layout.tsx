@@ -13,6 +13,8 @@ export const metadata: Metadata = {
   description: 'Mathematics exercises for all levels with solutions',
 };
 
+import SmoothScroll from '@/components/SmoothScroll';
+
 export default function RootLayout({
   children,
 }: {
@@ -20,7 +22,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.variable} suppressHydrationWarning>
-      <body className={inter.className} suppressHydrationWarning>{children}</body>
+      <body className={inter.className} suppressHydrationWarning>
+        <SmoothScroll>{children}</SmoothScroll>
+      </body>
     </html>
   );
 }

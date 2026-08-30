@@ -390,47 +390,39 @@ export default function Home() {
                     <path d="M 0 60 A 60 60 0 0 1 60 0 L 60 60 Z" fill="#00d0ff" stroke="#000" strokeWidth="4" strokeLinejoin="round"/>
                   </svg>
                 </div>
-
-                {/* Floating Assets */}
-                <Image src="/assets/fireball.png" alt="fireball asset" width={170} height={170} style={{ position: 'absolute', zIndex: 2, width: '170px', height: 'auto', top: '3%', right: '15%' }} priority />
-                <Image src="/assets/xray.png" alt="xray asset" width={130} height={130} style={{ position: 'absolute', zIndex: 2, width: '130px', height: 'auto', top: '27.8%', right: '18.4%' }} priority />
-                <Image src="/assets/random.png" alt="random asset" width={150} height={150} style={{ position: 'absolute', zIndex: 2, width: '150px', height: 'auto', top: '3%', left: '2%' }} priority />
-                <Image src="/assets/yey.png" alt="yey asset" width={250} height={250} style={{ position: 'absolute', zIndex: 2, width: '250px', height: 'auto', top: '30%', right: '15%' }} priority />
-                <Image src="/assets/si_paling_mtk.png" alt="si paling mtk asset" width={200} height={200} style={{ position: 'absolute', zIndex: 2, width: '200px', height: 'auto', bottom: '39%', left: '10%' }} priority />
-                <Image src="/assets/kue_pun_dihitung.png" alt="kue pun dihitung asset" width={250} height={250} style={{ position: 'absolute', zIndex: 2, width: '250px', height: 'auto', bottom: '-5.8%', right: '1%' }} priority />
-                <Image src="/assets/anjay.png" alt="anjay asset" width={180} height={180} style={{ position: 'absolute', zIndex: 2, width: '180px', height: 'auto', bottom: '-0.1%', right: '45%' }} priority />
-                <Image src="/assets/gokil.png" alt="gokil asset" width={200} height={200} style={{ position: 'absolute', zIndex: 2, width: '200px', height: 'auto', bottom: '-0.8%', right: '70%' }} priority />
+                <img src="done.png" alt="done" style={{ position: 'absolute', zIndex: 2, width: '170px', top: '3%', right: '15%' }} />
               </section>
             </section>
-            {/* FEATURES SECTION (Duolingo Style) */}
-            <section className="features-section">
+
+            {/* FEATURES SHOWCASE SECTION */}
+            <section className="features-showcase">
               <div className="feature-row">
                 <div className="feature-text">
-                  <h2>Gratis. Seru. Efektif.</h2>
-                  <p>Belajar matematika di 404_math itu seru dan terbukti efektif! Dengan materi yang interaktif, kamu akan memahami konsep dari dasar hingga mahir dengan mudah.</p>
+                  <h2 style={{ color: '#000000', fontSize: '48px' }}>Belajar Jadi Seru Dengan Teman</h2>
+                  <p>Belajar Math404 bersama teman jadi lebih seru dan menyenangkan! Jelajahi berbagai materi matematika, uji kemampuan lewat kuis, dan hadapi tantangan sehari-hari.</p>
                 </div>
                 <div className="feature-image">
-                  <Image src="/assets/si_paling_mtk.png" alt="Gratis seru efektif" width={300} height={300} />
+                  <img src="/assets/3.png" alt="Feature 1" style={{ width: '100%', height: 'auto', objectFit: 'contain' }} />
                 </div>
               </div>
 
               <div className="feature-row reverse">
                 <div className="feature-text">
-                  <h2>Didukung Ilmu Pengetahuan</h2>
-                  <p>Kami memadukan metode pengajaran berbasis riset dengan konten yang interaktif untuk membantumu memecahkan masalah matematika dengan logika yang tepat.</p>
+                  <h2 style={{ color: '#000000', fontSize: '48px' }}>Materi Lengkap</h2>
+                  <p>Pelajari matematika secara lengkap dan terstruktur, mulai dari konsep dasar hingga materi yang lebih menantang. Temukan penjelasan yang mudah dipahami, contoh soal, serta latihan untuk membantu meningkatkan kemampuanmu.</p>
                 </div>
                 <div className="feature-image">
-                  <Image src="/assets/xray.png" alt="Ilmu pengetahuan" width={300} height={300} />
+                  <img src="/assets/gokil.png" alt="Feature 2" style={{ width: '85%', height: 'auto', objectFit: 'contain' }} />
                 </div>
               </div>
 
               <div className="feature-row">
                 <div className="feature-text">
-                  <h2>Tetap Termotivasi</h2>
-                  <p>Kami membuat belajar matematika menjadi kebiasaan yang menyenangkan dengan tantangan seru, pencapaian, dan sistem belajar yang mirip seperti bermain game.</p>
+                  <h2 style={{ color: '#000000' }}>Tantangan Seru Dan Menyenangkan</h2>
+                  <p>Siap menguji kemampuanmu? Hadapi berbagai tantangan matematika, pecahkan soal, raih skor, dan buktikan seberapa jauh kemampuanmu!</p>
                 </div>
                 <div className="feature-image">
-                  <Image src="/assets/gokil.png" alt="Termotivasi" width={300} height={300} />
+                  <img src="/assets/together.png" alt="Feature 3" style={{ width: '100%', height: 'auto', objectFit: 'contain' }} />
                 </div>
               </div>
             </section>
