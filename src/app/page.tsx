@@ -107,25 +107,21 @@ export default function Home() {
       delay: 0.6
     });
 
-    // Continuous floating animation for shapes
-    gsap.to('.green-triangle', {
-      y: '-=15',
-      rotation: 15,
-      yoyo: true,
-      repeat: -1,
-      duration: 2.5,
-      ease: 'sine.inOut'
+    // Stacking features showcase
+    const featureRows = gsap.utils.toArray('.feature-row');
+    featureRows.forEach((row: any, i) => {
+      if (i < featureRows.length - 1) {
+        ScrollTrigger.create({
+          trigger: row,
+          start: "top 15%",
+          endTrigger: featureRows[featureRows.length - 1] as Element,
+          end: "top 15%",
+          pin: true,
+          pinSpacing: false,
+        });
+      }
     });
-    
-    gsap.to('.squiggly-arrow', {
-      y: '+=10',
-      rotation: -5,
-      yoyo: true,
-      repeat: -1,
-      duration: 2,
-      ease: 'sine.inOut'
-    });
-    
+
     gsap.fromTo('.marquee-content', 
       { x: '0%' },
       {
@@ -360,43 +356,14 @@ export default function Home() {
               </section>
               
               <section className="right-section">
-                {/* SVG Decorations */}
-                <div className="decoration squiggly-arrow">
-                  <svg width="80" height="90" viewBox="0 0 80 90" fill="none" stroke="#111" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M50 10 C 20 -10, -10 30, 30 40 C 70 50, 70 80, 40 80 C 30 80, 20 70, 20 70" />
-                    <path d="M10 60 L 20 70 L 35 60" />
-                  </svg>
-                </div>
-                <div className="decoration green-triangle">
-                  <svg width="40" height="50" viewBox="0 0 40 50">
-                    <polygon points="0,0 40,25 0,50" fill="#7bf358" stroke="#000" strokeWidth="2" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-                <div className="decoration wavy-lines">
-                  <svg width="70" height="40" viewBox="0 0 70 40" fill="none" stroke="#111" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M 5 5 Q 12.5 0, 20 5 T 35 5 T 50 5 T 65 5" />
-                    <path d="M 5 15 Q 12.5 10, 20 15 T 35 15 T 50 15 T 65 15" />
-                    <path d="M 5 25 Q 12.5 20, 20 25 T 35 25 T 50 25 T 65 25" />
-                    <path d="M 5 35 Q 12.5 30, 20 35 T 35 35 T 50 35 T 65 35" />
-                  </svg>
-                </div>
-                <div className="decoration pink-semi-circle">
-                  <svg width="40" height="40" viewBox="0 0 40 40">
-                    <path d="M 10 10 A 15 15 0 1 0 30 30" fill="none" stroke="#ff6b6b" strokeWidth="7" strokeLinecap="round"/>
-                  </svg>
-                </div>
-                <div className="decoration blue-quarter-circle">
-                  <svg width="60" height="60" viewBox="0 0 60 60">
-                    <path d="M 0 60 A 60 60 0 0 1 60 0 L 60 60 Z" fill="#00d0ff" stroke="#000" strokeWidth="4" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-                <img src="done.png" alt="done" style={{ position: 'absolute', zIndex: 2, width: '170px', top: '3%', right: '15%' }} />
+                <img src="/assets/done.png" alt="done" style={{ position: 'absolute', zIndex: 2, width: '1000px', top: '3%', right: '-3%' }} />
+
               </section>
             </section>
 
             {/* FEATURES SHOWCASE SECTION */}
             <section className="features-showcase">
-              <div className="feature-row">
+              <div className="feature-row" style={{ backgroundColor: '#fff', position: 'relative', zIndex: 1, padding: '2rem 0' }}>
                 <div className="feature-text">
                   <h2 style={{ color: '#000000', fontSize: '48px' }}>Belajar Jadi Seru Dengan Teman</h2>
                   <p>Belajar Math404 bersama teman jadi lebih seru dan menyenangkan! Jelajahi berbagai materi matematika, uji kemampuan lewat kuis, dan hadapi tantangan sehari-hari.</p>
@@ -406,7 +373,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="feature-row reverse">
+              <div className="feature-row reverse" style={{ backgroundColor: '#fff', position: 'relative', zIndex: 2, padding: '2rem 0' }}>
                 <div className="feature-text">
                   <h2 style={{ color: '#000000', fontSize: '48px' }}>Materi Lengkap</h2>
                   <p>Pelajari matematika secara lengkap dan terstruktur, mulai dari konsep dasar hingga materi yang lebih menantang. Temukan penjelasan yang mudah dipahami, contoh soal, serta latihan untuk membantu meningkatkan kemampuanmu.</p>
@@ -416,7 +383,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="feature-row">
+              <div className="feature-row" style={{ backgroundColor: '#fff', position: 'relative', zIndex: 3, padding: '2rem 0' }}>
                 <div className="feature-text">
                   <h2 style={{ color: '#000000' }}>Tantangan Seru Dan Menyenangkan</h2>
                   <p>Siap menguji kemampuanmu? Hadapi berbagai tantangan matematika, pecahkan soal, raih skor, dan buktikan seberapa jauh kemampuanmu!</p>
@@ -432,30 +399,75 @@ export default function Home() {
               <div className="section-header">
                 <div>
                   <h2 className="section-title">Explore Topics</h2>
-                  <p className="section-subtitle">Master mathematics step-by-step with our comprehensive, curriculum-aligned topic breakdowns.</p>
+                  <p className="section-subtitle">No need to create projects or setups from scratch when we have<br/>50+ templates made for you.</p>
                 </div>
               </div>
+
+              <div className="topics-filter">
+                <button className="filter-btn active">Work</button>
+                <button className="filter-btn">Personal</button>
+                <button className="filter-btn">Education</button>
+                <button className="filter-btn">Management</button>
+                <button className="filter-btn">Marketing &amp; Sales</button>
+                <button className="filter-btn">Customer Support</button>
+              </div>
+
               <div className="topics-grid">
-                <div className="topic-card card-bg-yellow" onClick={() => handleStartSoloWithTopic('kaidah-pencacahan')}>
-                  <div className="topic-icon">🔢</div>
-                  <h3>Algebra</h3>
-                  <p>Master equations, inequalities, and functions to build a strong mathematical foundation.</p>
+                <div className="topic-card" onClick={() => handleStartSoloWithTopic('kaidah-pencacahan')}>
+                  <div className="topic-card-top card-bg-yellow">
+                    <div className="topic-icon">🔢</div>
+                  </div>
+                  <div className="topic-card-bottom">
+                    <h3>Algebra</h3>
+                    <p>Master equations, inequalities, and functions to build a strong mathematical foundation.</p>
+                    <div className="topic-card-footer">
+                      <span>📄 List</span>
+                    </div>
+                  </div>
                 </div>
-                <div className="topic-card card-bg-pink" onClick={() => handleStartSoloWithTopic('dimensi-tiga')}>
-                  <div className="topic-icon">📐</div>
-                  <h3>Geometry</h3>
-                  <p>Explore shapes, sizes, properties of space, and visual reasoning.</p>
+
+                <div className="topic-card" onClick={() => handleStartSoloWithTopic('dimensi-tiga')}>
+                  <div className="topic-card-top card-bg-pink">
+                    <div className="topic-icon">📐</div>
+                  </div>
+                  <div className="topic-card-bottom">
+                    <h3>Geometry</h3>
+                    <p>Explore shapes, sizes, properties of space, and visual reasoning.</p>
+                    <div className="topic-card-footer">
+                      <span>📄 List</span>
+                    </div>
+                  </div>
                 </div>
-                <div className="topic-card card-bg-blue" onClick={() => handleStartSoloWithTopic('kalkulus-lanjut')}>
-                  <div className="topic-icon">📈</div>
-                  <h3>Calculus</h3>
-                  <p>Understand limits, derivatives, integrals, and the mathematics of continuous change.</p>
+
+                <div className="topic-card" onClick={() => handleStartSoloWithTopic('kalkulus-lanjut')}>
+                  <div className="topic-card-top card-bg-blue">
+                    <div className="topic-icon">📈</div>
+                  </div>
+                  <div className="topic-card-bottom">
+                    <h3>Calculus</h3>
+                    <p>Understand limits, derivatives, integrals, and the mathematics of continuous change.</p>
+                    <div className="topic-card-footer">
+                      <span>📄 List</span>
+                    </div>
+                  </div>
                 </div>
-                <div className="topic-card card-bg-green" onClick={() => handleStartSoloWithTopic('statistika')}>
-                  <div className="topic-icon">📊</div>
-                  <h3>Statistics</h3>
-                  <p>Learn to collect, analyze, interpret, and present data effectively.</p>
+
+                <div className="topic-card" onClick={() => handleStartSoloWithTopic('statistika')}>
+                  <div className="topic-card-top card-bg-green">
+                    <div className="topic-icon">📊</div>
+                  </div>
+                  <div className="topic-card-bottom">
+                    <h3>Statistics</h3>
+                    <p>Learn to collect, analyze, interpret, and present data effectively.</p>
+                    <div className="topic-card-footer">
+                      <span>📄 List</span>
+                    </div>
+                  </div>
                 </div>
+              </div>
+
+              <div className="see-more-container">
+                <a href="#" className="see-more-link">See more topics &gt;</a>
               </div>
             </section>
 
