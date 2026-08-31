@@ -494,8 +494,6 @@ body {
     height: auto;
 }
 
-/* Topics Section */
-/* Topics Section */
 .topics-section {
     padding: 6rem 10%;
     background-color: #fff;
@@ -540,7 +538,7 @@ body {
 .filter-btn {
     padding: 0.8rem 1.8rem;
     border: 2px solid #000;
-    border-radius: 50px;
+    border-radius: 8px;
     background-color: #fff;
     font-weight: 700;
     font-size: 1rem;
@@ -562,12 +560,15 @@ body {
 }
 
 .btn-view-all {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding: 0.8rem 2rem;
     border: 2px solid #000;
     background-color: #fff;
     font-weight: 700;
     font-size: 1rem;
-    border-radius: 50px;
+    border-radius: 10px;
     box-shadow: 4px 4px 0px 0px #000;
     cursor: pointer;
     transition: all 0.1s;
@@ -588,7 +589,7 @@ body {
 
 .topic-card {
     border: 3px solid #000;
-    border-radius: 12px;
+    border-radius: 10px;
     padding: 0;
     box-shadow: 8px 8px 0px 0px #000;
     background-color: #fff;

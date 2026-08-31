@@ -399,17 +399,14 @@ export default function Home() {
               <div className="section-header">
                 <div>
                   <h2 className="section-title">Explore Topics</h2>
-                  <p className="section-subtitle">No need to create projects or setups from scratch when we have<br/>50+ templates made for you.</p>
+                  <p className="section-subtitle">Explore exciting math topics, master new concepts, and challenge yourself with problems designed to make learning more fun and interactive.</p>
                 </div>
               </div>
 
               <div className="topics-filter">
-                <button className="filter-btn active">Work</button>
-                <button className="filter-btn">Personal</button>
-                <button className="filter-btn">Education</button>
-                <button className="filter-btn">Management</button>
-                <button className="filter-btn">Marketing &amp; Sales</button>
-                <button className="filter-btn">Customer Support</button>
+                <button className="filter-btn active">Learning</button>
+                <button className="filter-btn">Quiz</button>
+                <button className="filter-btn">Games</button>
               </div>
 
               <div className="topics-grid">
@@ -467,7 +464,13 @@ export default function Home() {
               </div>
 
               <div className="see-more-container">
-                <a href="#" className="see-more-link">See more topics &gt;</a>
+                <a href="#" className="btn-view-all">
+                  See more topics
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: '8px' }}>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </a>
               </div>
             </section>
 
