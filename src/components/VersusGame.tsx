@@ -17,13 +17,13 @@ export default function VersusGame({ onBackToMenu, onSwitchToSolo }: VersusGameP
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // Player 1 state
-  const [p1Name, setP1Name] = useState('Player 1 (Kiri)');
+  const [p1Name, setP1Name] = useState('Player 1 (Left)');
   const [p1Score, setP1Score] = useState(0);
   const [p1Selected, setP1Selected] = useState<number | null>(null);
   const [p1Locked, setP1Locked] = useState(false);
 
   // Player 2 state
-  const [p2Name, setP2Name] = useState('Player 2 (Kanan)');
+  const [p2Name, setP2Name] = useState('Player 2 (Right)');
   const [p2Score, setP2Score] = useState(0);
   const [p2Selected, setP2Selected] = useState<number | null>(null);
   const [p2Locked, setP2Locked] = useState(false);
@@ -77,7 +77,7 @@ export default function VersusGame({ onBackToMenu, onSwitchToSolo }: VersusGameP
       // P1 Got it right!
       const newScore = p1Score + 100;
       setP1Score(newScore);
-      setRoundWinner(`${p1Name} Benar! (+100)`);
+      setRoundWinner(`${p1Name} Correct! (+100)`);
       setP1Locked(true);
       setP2Locked(true);
 
@@ -93,7 +93,7 @@ export default function VersusGame({ onBackToMenu, onSwitchToSolo }: VersusGameP
       setP1Locked(true); // Locked out for this round
       if (p2Locked) {
         // Both locked out
-        setRoundWinner('Keduanya Salah! Tidak ada poin.');
+        setRoundWinner('Both Wrong! No points.');
         setGameState('round_result');
       }
     }
@@ -109,7 +109,7 @@ export default function VersusGame({ onBackToMenu, onSwitchToSolo }: VersusGameP
       // P2 Got it right!
       const newScore = p2Score + 100;
       setP2Score(newScore);
-      setRoundWinner(`${p2Name} Benar! (+100)`);
+      setRoundWinner(`${p2Name} Correct! (+100)`);
       setP1Locked(true);
       setP2Locked(true);
 
@@ -125,7 +125,7 @@ export default function VersusGame({ onBackToMenu, onSwitchToSolo }: VersusGameP
       setP2Locked(true); // Locked out for this round
       if (p1Locked) {
         // Both locked out
-        setRoundWinner('Keduanya Salah! Tidak ada poin.');
+        setRoundWinner('Both Wrong! No points.');
         setGameState('round_result');
       }
     }
@@ -194,65 +194,65 @@ export default function VersusGame({ onBackToMenu, onSwitchToSolo }: VersusGameP
       {gameState === 'lobby' && (
         <div className="versus-card versus-lobby">
           <div className="game-badge">⚔️ 1 vs 1 Split Screen Battle</div>
-          <h2 className="game-title">Tanding Matematika Kelas 12</h2>
+          <h2 className="game-title">Grade 12 Math Battle</h2>
           <p className="game-desc">
-            Adu cepat dan tepat menjawab soal bersama teman dalam 1 layar! Pemain pertama yang mencapai <strong>{TARGET_SCORE} Poin</strong> menjadi pemenang.
+            Compete for speed and accuracy in answering questions with a friend on 1 screen! The first player to reach <strong>{TARGET_SCORE} Points</strong> wins.
           </p>
 
           <div className="versus-player-setup">
             <div className="player-setup-box p1-box">
-              <div className="p-header">🎮 Player 1 (Sisi Kiri)</div>
+              <div className="p-header">🎮 Player 1 (Left Side)</div>
               <input
                 type="text"
                 value={p1Name}
                 onChange={e => setP1Name(e.target.value)}
                 className="p-name-input"
-                placeholder="Nama P1"
+                placeholder="P1 Name"
               />
               <div className="key-guide">
-                <span>Tombol Keyboard:</span>
+                <span>Keyboard Keys:</span>
                 <div className="keys-row">
                   <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd>
                 </div>
-                <small>(W=Opsi 1, A=Opsi 2, S=Opsi 3, D=Opsi 4)</small>
+                <small>(W=Option 1, A=Option 2, S=Option 3, D=Option 4)</small>
               </div>
             </div>
 
             <div className="versus-vs-badge">VS</div>
 
             <div className="player-setup-box p2-box">
-              <div className="p-header">🕹️ Player 2 (Sisi Kanan)</div>
+              <div className="p-header">🕹️ Player 2 (Right Side)</div>
               <input
                 type="text"
                 value={p2Name}
                 onChange={e => setP2Name(e.target.value)}
                 className="p-name-input"
-                placeholder="Nama P2"
+                placeholder="P2 Name"
               />
               <div className="key-guide">
-                <span>Tombol Keyboard:</span>
+                <span>Keyboard Keys:</span>
                 <div className="keys-row">
                   <kbd>↑</kbd> <kbd>←</kbd> <kbd>↓</kbd> <kbd>→</kbd>
                 </div>
-                <small>(↑=Opsi 1, ←=Opsi 2, ↓=Opsi 3, →=Opsi 4)</small>
+                <small>(↑=Option 1, ←=Option 2, ↓=Option 3, →=Option 4)</small>
               </div>
             </div>
           </div>
 
           <div className="rules-ribbon">
-            💡 <strong>Aturan Battle:</strong> Benar = <strong>+100 Poin</strong> | Salah = <strong>-50 Poin & Terkunci di Ronde Ini</strong>.
+            💡 <strong>Battle Rules:</strong> Correct = <strong>+100 Points</strong> | Wrong = <strong>-50 Points & Locked This Round</strong>.
           </div>
 
           <div className="lobby-actions">
             <button className="btn-main-action btn-versus-play" onClick={startVersusGame}>
-              🔥 Mulai Pertandingan 1 vs 1!
+              🔥 Start 1 vs 1 Battle!
             </button>
             <div className="lobby-sub-actions">
               <button className="btn-sub-action" onClick={onSwitchToSolo}>
-                🎯 Mode Solo (1 Player)
+                🎯 Solo Mode (1 Player)
               </button>
               <button className="btn-sub-action" onClick={onBackToMenu}>
-                🏠 Kembali ke Menu
+                🏠 Back to Menu
               </button>
             </div>
           </div>
@@ -261,7 +261,7 @@ export default function VersusGame({ onBackToMenu, onSwitchToSolo }: VersusGameP
 
       {gameState === 'countdown' && (
         <div className="versus-countdown-box">
-          <div className="countdown-text">Pertandingan Dimulai Dalam:</div>
+          <div className="countdown-text">Battle Starts In:</div>
           <div className="countdown-number">{countdown}</div>
         </div>
       )}
@@ -272,11 +272,11 @@ export default function VersusGame({ onBackToMenu, onSwitchToSolo }: VersusGameP
           <div className="versus-top-bar">
             <div className="p1-score-tag">
               <span className="p-tag-name">{p1Name}</span>
-              <span className="p-tag-score">{p1Score} Poin</span>
+              <span className="p-tag-score">{p1Score} Points</span>
             </div>
 
             <div className="battle-target-info">
-              <span>Target: {TARGET_SCORE} Poin</span>
+              <span>Target: {TARGET_SCORE} Points</span>
               <div className="score-progress-bar">
                 <div className="bar-p1" style={{ width: `${Math.min(50, (p1Score / TARGET_SCORE) * 50)}%` }}></div>
                 <div className="bar-p2" style={{ width: `${Math.min(50, (p2Score / TARGET_SCORE) * 50)}%` }}></div>
@@ -284,7 +284,7 @@ export default function VersusGame({ onBackToMenu, onSwitchToSolo }: VersusGameP
             </div>
 
             <div className="p2-score-tag">
-              <span className="p-tag-score">{p2Score} Poin</span>
+              <span className="p-tag-score">{p2Score} Points</span>
               <span className="p-tag-name">{p2Name}</span>
             </div>
           </div>
@@ -306,7 +306,7 @@ export default function VersusGame({ onBackToMenu, onSwitchToSolo }: VersusGameP
             <div className={`p-arena-panel p1-panel ${p1Locked ? 'locked' : ''}`}>
               <div className="panel-header">
                 <h4>{p1Name}</h4>
-                <span className="key-hint">Tombol [W, A, S, D]</span>
+                <span className="key-hint">Keys [W, A, S, D]</span>
               </div>
 
               <div className="panel-options">
@@ -336,7 +336,7 @@ export default function VersusGame({ onBackToMenu, onSwitchToSolo }: VersusGameP
             <div className={`p-arena-panel p2-panel ${p2Locked ? 'locked' : ''}`}>
               <div className="panel-header">
                 <h4>{p2Name}</h4>
-                <span className="key-hint">Tombol [↑, ←, ↓, →]</span>
+                <span className="key-hint">Keys [↑, ←, ↓, →]</span>
               </div>
 
               <div className="panel-options">
@@ -368,33 +368,33 @@ export default function VersusGame({ onBackToMenu, onSwitchToSolo }: VersusGameP
       {gameState === 'gameover' && (
         <div className="versus-card versus-winner-card">
           <div className="winner-crown">👑</div>
-          <h2 className="winner-title">{winner} MENANG!</h2>
-          <p className="winner-desc">Berhasil mencapai {TARGET_SCORE} poin lebih cepat dalam duel matematika!</p>
+          <h2 className="winner-title">{winner} WINS!</h2>
+          <p className="winner-desc">Successfully reached {TARGET_SCORE} points faster in the math duel!</p>
 
           <div className="final-battle-score">
             <div className={`final-box ${winner === p1Name ? 'champion' : ''}`}>
               <div className="final-name">{p1Name}</div>
-              <div className="final-score">{p1Score} Poin</div>
+              <div className="final-score">{p1Score} Points</div>
             </div>
             <div className="final-vs">VS</div>
             <div className={`final-box ${winner === p2Name ? 'champion' : ''}`}>
               <div className="final-name">{p2Name}</div>
-              <div className="final-score">{p2Score} Poin</div>
+              <div className="final-score">{p2Score} Points</div>
             </div>
           </div>
 
           <div className="gameover-actions">
             <button className="btn-main-action btn-versus-play" onClick={startVersusGame}>
-              🔥 Rematch (Tanding Ulang)
+              🔥 Rematch
             </button>
             <button className="btn-sub-action" onClick={() => setGameState('lobby')}>
-              ⚙️ Pengaturan Pemain
+              ⚙️ Player Settings
             </button>
             <button className="btn-sub-action" onClick={onSwitchToSolo}>
-              🎯 Mode Solo
+              🎯 Solo Mode
             </button>
             <button className="btn-sub-action" onClick={onBackToMenu}>
-              🏠 Menu Utama
+              🏠 Main Menu
             </button>
           </div>
         </div>

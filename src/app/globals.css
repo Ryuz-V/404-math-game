@@ -3572,3 +3572,506 @@ kbd {
         gap: 2rem;
     }
 }
+/* Games Hero Section (Playground) */
+.games-hero-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #00d0ff; /* Project blue color instead of orange */
+    padding: 5rem 10%;
+    border-bottom: 3px solid #000;
+}
+
+.games-hero-content {
+    flex: 1;
+    max-width: 600px;
+    z-index: 2;
+}
+
+.games-hero-title {
+    font-size: 5rem;
+    font-weight: 900;
+    color: #ffdc00; /* Yellow */
+    text-shadow: 4px 4px 0px #000;
+    margin-bottom: 1rem;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+}
+
+.games-hero-subtitle {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 2.5rem;
+    text-shadow: 2px 2px 0px #000;
+}
+
+.games-hero-buttons {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.games-btn-primary {
+    background-color: #ff6b6b; /* Pink */
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+    border: 3px solid #000;
+    border-radius: 12px;
+    box-shadow: 5px 5px 0px 0px #000;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.games-btn-primary:active {
+    transform: translate(3px, 3px);
+    box-shadow: 2px 2px 0px 0px #000;
+}
+
+.games-btn-secondary {
+    background-color: transparent;
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+    border: 3px solid #fff;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+    text-shadow: 1px 1px 0px #000;
+    box-shadow: inset 0 0 0 0 transparent;
+}
+
+.games-btn-secondary:hover {
+    background-color: rgba(255,255,255,0.2);
+}
+
+.games-hero-tags {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.games-tag {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    text-shadow: 1px 1px 0px rgba(0,0,0,0.5);
+}
+
+.games-hero-image {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    position: relative;
+}
+
+.games-hero-image img {
+    max-width: 100%;
+    height: auto;
+    max-height: 450px;
+    filter: drop-shadow(8px 8px 0px #000);
+    transform: rotate(5deg);
+    animation: floatArcade 3s ease-in-out infinite;
+}
+
+@keyframes floatArcade {
+    0% { transform: translateY(0px) rotate(5deg); }
+    50% { transform: translateY(-15px) rotate(3deg); }
+    100% { transform: translateY(0px) rotate(5deg); }
+}
+
+@media (max-width: 900px) {
+    .games-hero-section {
+        flex-direction: column;
+        text-align: center;
+        padding: 4rem 5%;
+    }
+    
+    .games-hero-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .games-hero-title {
+        font-size: 3.5rem;
+    }
+    
+    .games-hero-subtitle {
+        font-size: 2rem;
+    }
+    
+    .games-hero-tags {
+        justify-content: center;
+    }
+    
+    .games-hero-image {
+        margin-top: 3rem;
+        justify-content: center;
+    }
+    
+    .games-hero-image img {
+        transform: rotate(0deg);
+        animation: none;
+    }
+}
+
+/* ==========================================================================
+   QUIZ LIBRARY COMPONENT (QUIZIZZ EXACT STYLE)
+   ========================================================================== */
+
+.ql-page-wrapper {
+    background-color: #fafafa;
+    min-height: 100vh;
+}
+
+.ql-top-gradient {
+    background: radial-gradient(circle at top center, #fce4ec 0%, #fafafa 70%);
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+}
+
+.ql-container {
+    padding: 0 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: inherit;
+}
+
+/* Greeting */
+.ql-greeting {
+    text-align: center;
+    margin-bottom: 3.5rem;
+}
+
+.ql-greeting h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #222;
+}
+
+/* Tabs */
+.ql-tabs-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.ql-tabs {
+    display: flex;
+    gap: 1.5rem;
+    background: transparent;
+}
+
+.ql-tab-btn {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 160px;
+    padding: 1.5rem 1rem 1rem 1rem;
+    background: #fff;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 25px; /* space for floating icon */
+}
+
+.ql-tab-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.ql-tab-icon-wrapper {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    transition: all 0.2s ease;
+}
+
+.ql-tab-btn.active .ql-tab-icon-wrapper {
+    box-shadow: 0 0 0 2px #f48fb1, 0 4px 10px rgba(244,143,177,0.3);
+}
+
+.ql-tab-icon {
+    font-size: 1.25rem;
+}
+
+.ql-tab-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.ql-tab-text strong {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #444;
+}
+
+.ql-tab-text span {
+    font-size: 0.8rem;
+    color: #999;
+    font-weight: 500;
+    margin-top: 2px;
+}
+
+/* Active State */
+.ql-tab-btn.active {
+    box-shadow: 0 4px 20px rgba(244,143,177,0.2);
+}
+
+.ql-tab-btn.active .ql-tab-text strong {
+    color: #e91e63;
+}
+
+.ql-tab-arrow {
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0; 
+    height: 0; 
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #fff;
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.05));
+}
+
+/* Search Bar */
+.ql-search-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+
+.ql-search-bar {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 30px;
+    padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.ql-search-icon {
+    font-size: 1.25rem;
+    margin-right: 0.75rem;
+    color: #666;
+}
+
+.ql-search-bar input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 1.1rem;
+    font-family: inherit;
+    font-weight: 500;
+    background: transparent;
+    color: #333;
+}
+
+.ql-search-bar input::placeholder {
+    color: #aaa;
+}
+
+.ql-search-submit {
+    background: #e91e63;
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(233,30,99,0.3);
+    transition: all 0.2s ease;
+    color: #fff;
+    font-size: 1.2rem;
+}
+
+.ql-search-submit:hover {
+    transform: scale(1.05);
+    background: #d81b60;
+}
+
+/* Filters */
+.ql-filters {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    font-weight: 600;
+    flex-wrap: wrap;
+    color: #555;
+}
+
+.ql-filter-label {
+    font-size: 1.1rem;
+}
+
+.ql-filter-dropdown {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-bottom: 2px solid #e91e63;
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: #222;
+    font-weight: 700;
+}
+
+.ql-filter-dropdown .caret {
+    font-size: 0.7rem;
+    color: #888;
+}
+
+/* Resources */
+.ql-category {
+    margin-bottom: 4rem;
+}
+
+.ql-category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.ql-category-header h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0;
+    color: #333;
+}
+
+.ql-cat-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.ql-see-all {
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: #222;
+}
+
+.ql-see-all:hover {
+    text-decoration: underline;
+}
+
+.ql-badge-early {
+    background: #fff3e0;
+    color: #f57c00;
+    border: none;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border-radius: 12px;
+}
+
+.ql-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.ql-resource-card {
+    display: flex;
+    background: #fff;
+    border: 1px solid #eaeaea;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    min-height: 100px;
+}
+
+.ql-resource-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.ql-card-content {
+    flex: 1;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.ql-card-content h4 {
+    margin: 0 0 0.4rem 0;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: #222;
+}
+
+.ql-card-subtitle {
+    font-size: 0.8rem;
+    color: #888;
+    font-weight: 500;
+}
+
+.ql-card-image {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .ql-tabs {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .ql-tab-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .ql-category-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

@@ -12,6 +12,7 @@ import VersusGame from '../components/VersusGame';
 import LeaderboardSection from '../components/LeaderboardSection';
 import AboutSection from '../components/AboutSection';
 import AuthModal from '../components/AuthModal';
+import QuizLibrary from '../components/QuizLibrary';
 import { MATERI_KELAS_12, MATH_QUESTIONS } from '../data/mathData';
 
 if (typeof window !== 'undefined') {
@@ -20,7 +21,7 @@ if (typeof window !== 'undefined') {
 
 export default function Home() {
   const container = useRef<HTMLDivElement>(null);
-  const [currentView, setCurrentView] = useState<'home' | 'menu' | 'materi' | 'solo' | 'versus' | 'leaderboard' | 'about'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'menu' | 'materi' | 'solo' | 'versus' | 'leaderboard' | 'about' | 'quiz-library'>('home');
   const [selectedTopicId, setSelectedTopicId] = useState<string | undefined>(undefined);
 
   // Auth & Profile State
@@ -209,11 +210,10 @@ export default function Home() {
           </a>
           <a
             href="#"
-            style={{ fontWeight: currentView === 'solo' ? 800 : 600 }}
+            style={{ fontWeight: currentView === 'quiz-library' || currentView === 'solo' ? 800 : 600 }}
             onClick={(e) => {
               e.preventDefault();
-              setSelectedTopicId(undefined);
-              setCurrentView('solo');
+              setCurrentView('quiz-library');
             }}
           >
             Quizz
@@ -258,13 +258,13 @@ export default function Home() {
                     <span className="search-item-icon">{item.icon}</span>
                     <div>
                       <div className="search-item-title">{item.title}</div>
-                      <div className="search-item-cat">{item.category} • {item.type === 'materi' ? 'Modul Teori' : 'Latihan Soal'}</div>
+                      <div className="search-item-cat">{item.category} • {item.type === 'materi' ? 'Theory Module' : 'Practice'}</div>
                     </div>
                   </div>
                 ))
               ) : (
                 <div className="search-no-result">
-                  Tidak ditemukan hasil untuk &quot;{searchQuery}&quot;
+                  No results found for &quot;{searchQuery}&quot;
                 </div>
               )}
             </div>
@@ -277,7 +277,7 @@ export default function Home() {
             <>
               <button
                 className="btn btn-login"
-                title="Klik untuk ubah profil"
+                title="Click to edit profile"
                 onClick={handleOpenProfileOrLogin}
               >
                 {userProfile.avatar} {userProfile.name}
@@ -365,8 +365,8 @@ export default function Home() {
             <section className="features-showcase">
               <div className="feature-row" style={{ backgroundColor: '#fff', position: 'relative', zIndex: 1, padding: '2rem 0' }}>
                 <div className="feature-text">
-                  <h2 style={{ color: '#000000', fontSize: '48px' }}>Belajar Jadi Seru Dengan Teman</h2>
-                  <p>Belajar Math404 bersama teman jadi lebih seru dan menyenangkan! Jelajahi berbagai materi matematika, uji kemampuan lewat kuis, dan hadapi tantangan sehari-hari.</p>
+                  <h2 style={{ color: '#000000', fontSize: '48px' }}>Learning is Fun with Friends</h2>
+                  <p>Learning Math404 with friends is more fun and exciting! Explore various math materials, test your skills through quizzes, and face daily challenges.</p>
                 </div>
                 <div className="feature-image">
                   <img src="/assets/3.png" alt="Feature 1" style={{ width: '100%', height: 'auto', objectFit: 'contain' }} />
@@ -375,8 +375,8 @@ export default function Home() {
 
               <div className="feature-row reverse" style={{ backgroundColor: '#fff', position: 'relative', zIndex: 2, padding: '2rem 0' }}>
                 <div className="feature-text">
-                  <h2 style={{ color: '#000000', fontSize: '48px' }}>Materi Lengkap</h2>
-                  <p>Pelajari matematika secara lengkap dan terstruktur, mulai dari konsep dasar hingga materi yang lebih menantang. Temukan penjelasan yang mudah dipahami, contoh soal, serta latihan untuk membantu meningkatkan kemampuanmu.</p>
+                  <h2 style={{ color: '#000000', fontSize: '48px' }}>Comprehensive Materials</h2>
+                  <p>Learn mathematics completely and structurally, from basic concepts to more challenging materials. Find easy-to-understand explanations, examples, and practice questions to improve your skills.</p>
                 </div>
                 <div className="feature-image">
                   <img src="/assets/gokil.png" alt="Feature 2" style={{ width: '85%', height: 'auto', objectFit: 'contain' }} />
@@ -385,8 +385,8 @@ export default function Home() {
 
               <div className="feature-row" style={{ backgroundColor: '#fff', position: 'relative', zIndex: 3, padding: '2rem 0' }}>
                 <div className="feature-text">
-                  <h2 style={{ color: '#000000' }}>Tantangan Seru Dan Menyenangkan</h2>
-                  <p>Siap menguji kemampuanmu? Hadapi berbagai tantangan matematika, pecahkan soal, raih skor, dan buktikan seberapa jauh kemampuanmu!</p>
+                  <h2 style={{ color: '#000000' }}>Exciting and Fun Challenges</h2>
+                  <p>Ready to test your skills? Face various math challenges, solve problems, earn scores, and prove how far you can go!</p>
                 </div>
                 <div className="feature-image">
                   <img src="/assets/together.png" alt="Feature 3" style={{ width: '100%', height: 'auto', objectFit: 'contain' }} />
@@ -398,8 +398,11 @@ export default function Home() {
             <section className="topics-section">
               <div className="section-header">
                 <div>
-                  <h2 className="section-title">Explore Topics</h2>
-                  <p className="section-subtitle">Explore exciting math topics, master new concepts, and challenge yourself with problems designed to make learning more fun and interactive.</p>
+                  <h2 className="section-title">Explore All Topics</h2>
+                  <p className="section-subtitle">
+                    Explore exciting math topics, master new concepts, <br />
+                    and challenge yourself with problems designed to make learning more fun and interactive.
+                  </p>
                 </div>
               </div>
 
@@ -496,31 +499,43 @@ export default function Home() {
 
         {/* VIEW 2: GAME & MATERI MENU SELECTION HUB */}
         {currentView === 'menu' && (
-          <div className="menu-hub-container">
-            <div className="menu-hub-header">
-              <div className="menu-hub-badge">🎮 Game & Learning Hub</div>
-              <h1 className="menu-hub-title">Pilih Menu Pembelajaran & Permainan</h1>
-              <p className="menu-hub-subtitle">
-                Pilih salah satu menu di bawah untuk mempelajari materi Matematika Kelas 12 atau bermain game kuis!
-              </p>
+          <>
+            <div className="games-hero-section">
+              <div className="games-hero-content">
+                <h1 className="games-hero-title">PLAYGROUND</h1>
+                <p className="games-hero-subtitle">Play that gets every student learning</p>
+                
+                <div className="games-hero-buttons">
+                  <button className="games-btn-primary">
+                    Try Playground &rarr;
+                  </button>
+                  <button className="games-btn-secondary">
+                    See the game modes
+                  </button>
+                </div>
+              </div>
+              <div className="games-hero-image">
+                <img src="/assets/arcade_machine.png" alt="Arcade Game Machine" />
+              </div>
             </div>
 
-            <div className="menu-cards-grid">
-              {/* Menu Card 1: Materi Kelas 12 */}
+            <div className="menu-hub-container" style={{ minHeight: 'auto', paddingTop: '4rem' }}>
+              <div className="menu-cards-grid">
+                {/* Menu Card 1: Materi Kelas 12 */}
               <div
                 className="menu-card-item menu-card-materi"
                 onClick={() => setCurrentView('materi')}
               >
                 <div className="card-item-top">
                   <div className="card-item-icon-box">📚</div>
-                  <span className="card-item-tag">Kurikulum SMA</span>
-                  <h3 className="card-item-title">Materi Matematika Kelas 12</h3>
+                  <span className="card-item-tag">High School Curriculum</span>
+                  <h3 className="card-item-title">Grade 12 Math Materials</h3>
                   <p className="card-item-desc">
-                    Pelajari rangkuman rumus, konsep kunci Dimensi Tiga, Statistika Kelompok, Kaidah Pencacahan, dan Kalkulus beserta contoh soal.
+                    Learn formula summaries, key concepts of 3D Geometry, Grouped Statistics, Counting Principles, and Calculus along with practice problems.
                   </p>
                 </div>
                 <div className="card-item-action">
-                  <strong>Buka Modul Materi</strong>
+                  <strong>Open Materials Module</strong>
                   <span>➡️</span>
                 </div>
               </div>
@@ -535,14 +550,14 @@ export default function Home() {
               >
                 <div className="card-item-top">
                   <div className="card-item-icon-box">🎯</div>
-                  <span className="card-item-tag">Mode Latihan 1P</span>
-                  <h3 className="card-item-title">Quiz Solo & Latihan Soal</h3>
+                  <span className="card-item-tag">1P Practice Mode</span>
+                  <h3 className="card-item-title">Solo Quiz & Practice</h3>
                   <p className="card-item-desc">
-                    Uji pemahaman matematikamu dengan kuis bertempo waktu, streak skor, kalkulator bantuan, dan pembahasan langkah demi langkah.
+                    Test your math understanding with timed quizzes, score streaks, helper calculators, and step-by-step explanations.
                   </p>
                 </div>
                 <div className="card-item-action">
-                  <strong>Mulai Quiz Solo</strong>
+                  <strong>Start Solo Quiz</strong>
                   <span>➡️</span>
                 </div>
               </div>
@@ -554,14 +569,14 @@ export default function Home() {
               >
                 <div className="card-item-top">
                   <div className="card-item-icon-box">⚔️</div>
-                  <span className="card-item-tag">Mode Duel 2P (1 Keyboard)</span>
-                  <h3 className="card-item-title">Duel 1 vs 1 (Lawan Teman)</h3>
+                  <span className="card-item-tag">2P Duel Mode (1 Keyboard)</span>
+                  <h3 className="card-item-title">1 vs 1 Duel (Against Friends)</h3>
                   <p className="card-item-desc">
-                    Tantang teman sebangkumu dalam duel split-screen! Player 1 (A/S/D/F) vs Player 2 (H/J/K/L) beradu cepat & tepat.
+                    Challenge your friend in a split-screen duel! Player 1 (A/S/D/F) vs Player 2 (H/J/K/L) compete for speed & accuracy.
                   </p>
                 </div>
                 <div className="card-item-action">
-                  <strong>Mulai Duel 1 vs 1</strong>
+                  <strong>Start 1 vs 1 Duel</strong>
                   <span>➡️</span>
                 </div>
               </div>
@@ -573,28 +588,20 @@ export default function Home() {
               >
                 <div className="card-item-top">
                   <div className="card-item-icon-box">🏆</div>
-                  <span className="card-item-tag">Peringkat & Skor</span>
-                  <h3 className="card-item-title">Papan Skor Leaderboard</h3>
+                  <span className="card-item-tag">Rankings & Scores</span>
+                  <h3 className="card-item-title">Leaderboard</h3>
                   <p className="card-item-desc">
-                    Lihat peringkat teratas pemain dengan skor tertinggi dan pertahankan posisi juaramu di podium kehormatan!
+                    See top-ranked players with the highest scores and defend your championship position on the podium of honor!
                   </p>
                 </div>
                 <div className="card-item-action">
-                  <strong>Lihat Leaderboard</strong>
+                  <strong>View Leaderboard</strong>
                   <span>➡️</span>
                 </div>
               </div>
             </div>
-
-            <div style={{ textAlign: 'center', marginTop: '2.5rem' }}>
-              <button
-                className="btn-back-main"
-                onClick={() => setCurrentView('home')}
-              >
-                ⬅️ Kembali ke Halaman Utama
-              </button>
-            </div>
           </div>
+          </>
         )}
 
         {/* VIEW 3: MATERI KELAS 12 (Resources) */}
@@ -602,10 +609,10 @@ export default function Home() {
           <div>
             <div style={{ padding: '1rem 5%', background: '#fff', borderBottom: '2px solid #000', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <button className="btn-back-main" onClick={() => setCurrentView('home')}>
-                ⬅️ Kembali ke Beranda (Home)
+                ⬅️ Back to Home
               </button>
               <button className="btn-back-main" style={{ background: '#ffdc00' }} onClick={() => setCurrentView('menu')}>
-                🎮 Buka Menu Game
+                🎮 Open Game Menu
               </button>
             </div>
             <MateriSection
@@ -615,12 +622,22 @@ export default function Home() {
           </div>
         )}
 
+        {/* VIEW: QUIZ LIBRARY */}
+        {currentView === 'quiz-library' && (
+          <QuizLibrary 
+            onSelectQuiz={(topicId) => {
+              setSelectedTopicId(topicId === 'all' ? undefined : topicId);
+              setCurrentView('solo');
+            }} 
+          />
+        )}
+
         {/* VIEW 4: GAME SOLO (1P / Quiz) */}
         {currentView === 'solo' && (
           <div>
             <div style={{ padding: '1rem 5%', background: '#fff', borderBottom: '2px solid #000', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <button className="btn-back-main" onClick={() => setCurrentView('home')}>
-                ⬅️ Kembali ke Beranda (Home)
+                ⬅️ Back to Home
               </button>
               <button className="btn-back-main" style={{ background: '#ffdc00' }} onClick={() => setCurrentView('menu')}>
                 🎮 Hub Menu
@@ -640,7 +657,7 @@ export default function Home() {
           <div>
             <div style={{ padding: '1rem 5%', background: '#fff', borderBottom: '2px solid #000', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <button className="btn-back-main" onClick={() => setCurrentView('home')}>
-                ⬅️ Kembali ke Beranda (Home)
+                ⬅️ Back to Home
               </button>
               <button className="btn-back-main" style={{ background: '#ffdc00' }} onClick={() => setCurrentView('menu')}>
                 🎮 Hub Menu
@@ -658,7 +675,7 @@ export default function Home() {
           <div>
             <div style={{ padding: '1rem 5%', background: '#fff', borderBottom: '2px solid #000', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <button className="btn-back-main" onClick={() => setCurrentView('home')}>
-                ⬅️ Kembali ke Beranda (Home)
+                ⬅️ Back to Home
               </button>
               <button className="btn-back-main" style={{ background: '#ffdc00' }} onClick={() => setCurrentView('menu')}>
                 🎮 Hub Menu
@@ -689,7 +706,7 @@ export default function Home() {
           <div>
             <div style={{ padding: '1rem 5%', background: '#fff', borderBottom: '2px solid #000', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <button className="btn-back-main" onClick={() => setCurrentView('home')}>
-                ⬅️ Kembali ke Beranda (Home)
+                ⬅️ Back to Home
               </button>
               <button className="btn-back-main" style={{ background: '#ffdc00' }} onClick={() => setCurrentView('menu')}>
                 🎮 Hub Menu

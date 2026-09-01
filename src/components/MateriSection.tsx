@@ -15,17 +15,17 @@ export default function MateriSection({ onStartSoloWithTopic, onStartVersus }: M
   return (
     <div className="materi-container">
       <div className="materi-header-box">
-        <div className="materi-badge">📚 Kurikulum Matematika SMA</div>
-        <h1 className="materi-title">Materi Matematika Kelas 12</h1>
+        <div className="materi-badge">📚 High School Math Curriculum</div>
+        <h1 className="materi-title">Grade 12 Math Materials</h1>
         <p className="materi-subtitle">
-          Rangkuman materi penting, konsep kunci, formula praktis, dan contoh soal persiapan UTBK / Ujian Sekolah.
+          Summary of important materials, key concepts, practical formulas, and practice questions for university entrance / school exams.
         </p>
       </div>
 
       <div className="materi-layout">
         {/* Sidebar Topics */}
         <div className="materi-sidebar">
-          <h3>Pilih Topik Materi:</h3>
+          <h3>Select Material Topic:</h3>
           <div className="topic-list">
             {MATERI_KELAS_12.map((topic) => (
               <button
@@ -50,21 +50,21 @@ export default function MateriSection({ onStartSoloWithTopic, onStartVersus }: M
           </div>
 
           <div className="materi-cta-box">
-            <h4>Siap menguji pemahaman?</h4>
-            <p>Tantang dirimu dalam Solo Mode atau tanding 1 vs 1 bersama teman!</p>
+            <h4>Ready to test your understanding?</h4>
+            <p>Challenge yourself in Solo Mode or compete 1 vs 1 with a friend!</p>
             <div className="materi-cta-actions">
               <button
                 className="btn-game-play solo"
                 onClick={() => onStartSoloWithTopic && onStartSoloWithTopic(selectedTopic.id)}
               >
-                🎯 Kuis Topik Ini (Solo)
+                🎯 Quiz This Topic (Solo)
               </button>
               {onStartVersus && (
                 <button
                   className="btn-game-play versus"
                   onClick={onStartVersus}
                 >
-                  ⚔️ Main 1 vs 1 (Duo)
+                  ⚔️ Play 1 vs 1 (Duo)
                 </button>
               )}
             </div>
@@ -77,7 +77,7 @@ export default function MateriSection({ onStartSoloWithTopic, onStartVersus }: M
             <div className="top-title-row">
               <span className="content-icon">{selectedTopic.icon}</span>
               <div>
-                <span className="content-badge">{selectedTopic.category} - Kelas 12</span>
+                <span className="content-badge">{selectedTopic.category} - Grade 12</span>
                 <h2>{selectedTopic.title}</h2>
               </div>
             </div>
@@ -89,13 +89,13 @@ export default function MateriSection({ onStartSoloWithTopic, onStartVersus }: M
               className={`content-tab-btn ${activeTab === 'rumus' ? 'active' : ''}`}
               onClick={() => setActiveTab('rumus')}
             >
-              📐 Rumus & Konsep Kunci
+              📐 Formulas & Key Concepts
             </button>
             <button
               className={`content-tab-btn ${activeTab === 'contoh' ? 'active' : ''}`}
               onClick={() => setActiveTab('contoh')}
             >
-              📝 Contoh Soal & Pembahasan
+              📝 Practice Questions & Discussion
             </button>
           </div>
 
@@ -112,10 +112,10 @@ export default function MateriSection({ onStartSoloWithTopic, onStartVersus }: M
               </div>
             ) : (
               <div className="example-box">
-                <div className="example-badge">Contoh Soal Penerapan</div>
+                <div className="example-badge">Application Practice Question</div>
                 <h4 className="example-question">{selectedTopic.example.question}</h4>
                 <div className="example-steps">
-                  <div className="steps-title">Langkah Penyelesaian:</div>
+                  <div className="steps-title">Solution Steps:</div>
                   <ol>
                     {selectedTopic.example.steps.map((step, sIdx) => (
                       <li key={sIdx}>{step}</li>
@@ -123,7 +123,7 @@ export default function MateriSection({ onStartSoloWithTopic, onStartVersus }: M
                   </ol>
                 </div>
                 <div className="example-answer">
-                  Jawaban Akhir: <span>{selectedTopic.example.answer}</span>
+                  Final Answer: <span>{selectedTopic.example.answer}</span>
                 </div>
               </div>
             )}

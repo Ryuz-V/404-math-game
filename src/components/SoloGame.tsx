@@ -156,10 +156,10 @@ export default function SoloGame({ initialTopicId, onBackToMenu, onSwitchToVersu
   const currentQ = filteredQuestions[currentIndex];
 
   const getRank = () => {
-    if (score >= 800) return { rank: 'S', title: 'Grandmaster Matematika', color: '#ffdc00' };
-    if (score >= 500) return { rank: 'A', title: 'Master Kalkulasi', color: '#82fed6' };
-    if (score >= 300) return { rank: 'B', title: 'Pejuang Rumus', color: '#00d0ff' };
-    return { rank: 'C', title: 'Terus Berlatih!', color: '#ffb17a' };
+    if (score >= 800) return { rank: 'S', title: 'Math Grandmaster', color: '#ffdc00' };
+    if (score >= 500) return { rank: 'A', title: 'Calculation Master', color: '#82fed6' };
+    if (score >= 300) return { rank: 'B', title: 'Formula Fighter', color: '#00d0ff' };
+    return { rank: 'C', title: 'Keep Practicing!', color: '#ffb17a' };
   };
 
   return (
@@ -167,19 +167,19 @@ export default function SoloGame({ initialTopicId, onBackToMenu, onSwitchToVersu
       {gameState === 'lobby' && (
         <div className="game-card game-lobby">
           <div className="game-badge">🕹️ 1 Player Solo Challenge</div>
-          <h2 className="game-title">Time Attack: Kuis Matematika Kelas 12</h2>
+          <h2 className="game-title">Time Attack: Grade 12 Math Quiz</h2>
           <p className="game-desc">
-            Jawab soal sebanyak-banyaknya dalam 60 detik! Dapatkan bonus combo streak untuk melipatgandakan poinmu.
+            Answer as many questions as you can in 60 seconds! Get bonus combo streaks to multiply your points.
           </p>
 
           <div className="topic-picker">
-            <label className="picker-label">Pilih Kategori Materi:</label>
+            <label className="picker-label">Select Material Category:</label>
             <div className="picker-grid">
               <button
                 className={`picker-btn ${selectedTopic === 'all' ? 'active' : ''}`}
                 onClick={() => setSelectedTopic('all')}
               >
-                🎯 Semua Topik Campuran
+                🎯 All Mixed Topics
               </button>
               {MATERI_KELAS_12.map(m => (
                 <button
@@ -195,14 +195,14 @@ export default function SoloGame({ initialTopicId, onBackToMenu, onSwitchToVersu
 
           <div className="lobby-actions">
             <button className="btn-main-action btn-play" onClick={startGame}>
-              🚀 Mulai Permainan (60 Detik)
+              🚀 Start Game (60 Seconds)
             </button>
             <div className="lobby-sub-actions">
               <button className="btn-sub-action" onClick={onSwitchToVersus}>
-                ⚔️ Coba Mode 1 vs 1 (Duo)
+                ⚔️ Try 1 vs 1 Mode (Duo)
               </button>
               <button className="btn-sub-action" onClick={onBackToMenu}>
-                🏠 Kembali ke Menu
+                🏠 Back to Menu
               </button>
             </div>
           </div>
@@ -214,11 +214,11 @@ export default function SoloGame({ initialTopicId, onBackToMenu, onSwitchToVersu
           {/* Game HUD */}
           <div className="game-hud">
             <div className="hud-box hud-timer">
-              <span className="hud-label">Waktu:</span>
+              <span className="hud-label">Time:</span>
               <span className={`hud-val ${timeLeft <= 10 ? 'hud-danger' : ''}`}>{timeLeft}s</span>
             </div>
             <div className="hud-box hud-score">
-              <span className="hud-label">Skor:</span>
+              <span className="hud-label">Score:</span>
               <span className="hud-val">{score}</span>
             </div>
             <div className="hud-box hud-streak">
@@ -266,9 +266,9 @@ export default function SoloGame({ initialTopicId, onBackToMenu, onSwitchToVersu
             <div className="answer-feedback-box">
               <div className="feedback-status">
                 {selectedOption === currentQ.correctIndex ? (
-                  <span className="text-correct">🎉 Benar! +{Math.round(100 * Math.min(3, 1 + (streak - 1) * 0.5))} Poin</span>
+                  <span className="text-correct">🎉 Correct! +{Math.round(100 * Math.min(3, 1 + (streak - 1) * 0.5))} Points</span>
                 ) : (
-                  <span className="text-wrong">❌ Kurang Tepat! Jawaban benar: {currentQ.options[currentQ.correctIndex]}</span>
+                  <span className="text-wrong">❌ Incorrect! Correct answer: {currentQ.options[currentQ.correctIndex]}</span>
                 )}
               </div>
 
@@ -277,16 +277,16 @@ export default function SoloGame({ initialTopicId, onBackToMenu, onSwitchToVersu
                   className="btn-explain"
                   onClick={() => setShowExplanation(!showExplanation)}
                 >
-                  💡 {showExplanation ? 'Tutup Penjelasan' : 'Lihat Penjelasan'}
+                  💡 {showExplanation ? 'Close Explanation' : 'View Explanation'}
                 </button>
                 <button className="btn-next-q" onClick={handleNextQuestion}>
-                  Soal Berikutnya ➡️
+                  Next Question ➡️
                 </button>
               </div>
 
               {showExplanation && (
                 <div className="explanation-drawer">
-                  <strong>Pembahasan:</strong>
+                  <strong>Explanation:</strong>
                   <p>{currentQ.explanation}</p>
                 </div>
               )}
@@ -297,8 +297,8 @@ export default function SoloGame({ initialTopicId, onBackToMenu, onSwitchToVersu
 
       {gameState === 'gameover' && (
         <div className="game-card game-over-card">
-          <div className="game-badge">🏁 Waktu Habis!</div>
-          <h2 className="gameover-title">Hasil Permainan Solo</h2>
+          <div className="game-badge">🏁 Time's Up!</div>
+          <h2 className="gameover-title">Solo Game Results</h2>
 
           <div className="rank-badge-box" style={{ backgroundColor: getRank().color }}>
             <div className="rank-letter">{getRank().rank}</div>
@@ -307,15 +307,15 @@ export default function SoloGame({ initialTopicId, onBackToMenu, onSwitchToVersu
 
           <div className="score-summary-grid">
             <div className="summary-stat">
-              <span className="stat-label">Total Skor</span>
+              <span className="stat-label">Total Score</span>
               <span className="stat-number">{score}</span>
             </div>
             <div className="summary-stat">
-              <span className="stat-label">Jawaban Benar</span>
+              <span className="stat-label">Correct Answers</span>
               <span className="stat-number">{stats.correct}</span>
             </div>
             <div className="summary-stat">
-              <span className="stat-label">Jawaban Salah</span>
+              <span className="stat-label">Wrong Answers</span>
               <span className="stat-number">{stats.wrong}</span>
             </div>
             <div className="summary-stat">
@@ -326,16 +326,16 @@ export default function SoloGame({ initialTopicId, onBackToMenu, onSwitchToVersu
 
           <div className="gameover-actions">
             <button className="btn-main-action btn-play" onClick={startGame}>
-              🔄 Main Lagi
+              🔄 Play Again
             </button>
             <button className="btn-sub-action" onClick={() => setGameState('lobby')}>
-              ⚙️ Ganti Topik
+              ⚙️ Change Topic
             </button>
             <button className="btn-sub-action" onClick={onSwitchToVersus}>
-              ⚔️ Tantang Teman (1 vs 1)
+              ⚔️ Challenge a Friend (1 vs 1)
             </button>
             <button className="btn-sub-action" onClick={onBackToMenu}>
-              🏠 Menu Utama
+              🏠 Main Menu
             </button>
           </div>
         </div>
