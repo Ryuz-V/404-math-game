@@ -3576,16 +3576,21 @@ kbd {
 .games-hero-section {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: stretch;
     background-color: #00d0ff; /* Project blue color instead of orange */
-    padding: 5rem 10%;
+    padding: 1.5rem 0 0 10%;
     border-bottom: 3px solid #000;
+    overflow: hidden;
 }
 
 .games-hero-content {
     flex: 1;
     max-width: 600px;
     z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 1.5rem;
 }
 
 .games-hero-title {
@@ -3670,17 +3675,16 @@ kbd {
     flex: 1;
     display: flex;
     justify-content: flex-end;
-    align-items: center;
+    align-items: flex-end;
     position: relative;
 }
 
 .games-hero-image img {
-    max-width: 100%;
+    max-width: none;
     height: auto;
-    max-height: 450px;
+    max-height: 540px !important;
     filter: drop-shadow(8px 8px 0px #000);
-    transform: rotate(5deg);
-    animation: floatArcade 3s ease-in-out infinite;
+    transform: rotate(-24deg) !important;
 }
 
 @keyframes floatArcade {
@@ -3720,7 +3724,6 @@ kbd {
     }
     
     .games-hero-image img {
-        transform: rotate(0deg);
         animation: none;
     }
 }
@@ -3860,77 +3863,26 @@ kbd {
     filter: drop-shadow(0 2px 2px rgba(0,0,0,0.05));
 }
 
-/* Search Bar */
-.ql-search-section {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 3rem;
-}
-
-.ql-search-bar {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    max-width: 800px;
-    background: #fff;
-    border: 1px solid #eee;
-    border-radius: 30px;
-    padding: 0.5rem 0.5rem 0.5rem 1.5rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-}
-
-.ql-search-icon {
-    font-size: 1.25rem;
-    margin-right: 0.75rem;
-    color: #666;
-}
-
-.ql-search-bar input {
-    flex: 1;
-    border: none;
-    outline: none;
-    font-size: 1.1rem;
-    font-family: inherit;
-    font-weight: 500;
-    background: transparent;
-    color: #333;
-}
-
-.ql-search-bar input::placeholder {
-    color: #aaa;
-}
-
-.ql-search-submit {
-    background: #e91e63;
-    border: none;
-    border-radius: 50%;
-    width: 45px;
-    height: 45px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(233,30,99,0.3);
-    transition: all 0.2s ease;
-    color: #fff;
-    font-size: 1.2rem;
-}
-
-.ql-search-submit:hover {
-    transform: scale(1.05);
-    background: #d81b60;
-}
-
 /* Filters */
 .ql-filters {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 1rem;
+    margin-top: 4rem;
     margin-bottom: 3rem;
     font-weight: 600;
     flex-wrap: wrap;
     color: #555;
+    width: 100%;
+}
+
+.ql-filters::before,
+.ql-filters::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: #e0e0e0;
 }
 
 .ql-filter-label {
@@ -3993,16 +3945,6 @@ kbd {
 
 .ql-see-all:hover {
     text-decoration: underline;
-}
-
-.ql-badge-early {
-    background: #fff3e0;
-    color: #f57c00;
-    border: none;
-    padding: 0.35rem 0.85rem;
-    font-size: 0.8rem;
-    font-weight: 700;
-    border-radius: 12px;
 }
 
 .ql-cards-grid {

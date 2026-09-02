@@ -100,7 +100,6 @@ export default function QuizLibrary({ onSelectQuiz }: QuizLibraryProps) {
             <h3>Curriculum-aligned mathematics resources</h3>
             <div className="ql-cat-actions">
               <button className="ql-see-all">See all ➡️</button>
-              <span className="ql-badge-early">Early access</span>
             </div>
           </div>
           
@@ -129,7 +128,6 @@ export default function QuizLibrary({ onSelectQuiz }: QuizLibraryProps) {
             <h3>Standards-aligned mathematics resources</h3>
             <div className="ql-cat-actions">
               <button className="ql-see-all">See all ➡️</button>
-              <span className="ql-badge-early">Early access</span>
             </div>
           </div>
           
@@ -153,6 +151,7 @@ export default function QuizLibrary({ onSelectQuiz }: QuizLibraryProps) {
         </div>
 
       </div>
+    </div>
     </div>
   );
 }

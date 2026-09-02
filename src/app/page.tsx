@@ -504,7 +504,6 @@ export default function Home() {
               <div className="games-hero-content">
                 <h1 className="games-hero-title">PLAYGROUND</h1>
                 <p className="games-hero-subtitle">Play that gets every student learning</p>
-                
                 <div className="games-hero-buttons">
                   <button className="games-btn-primary">
                     Try Playground &rarr;
