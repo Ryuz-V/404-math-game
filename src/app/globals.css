@@ -3593,7 +3593,8 @@ kbd {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-bottom: 3.5rem;
+    padding-bottom: 7rem;
+    align-self: center;
 }
 
 .games-hero-title {
@@ -3693,12 +3694,14 @@ kbd {
     filter: none !important;
     transform: scale(1.18) !important;
     transform-origin: bottom right !important;
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    transition: none !important;
     animation: none !important;
 }
 
 .games-hero-image:hover img {
-    transform: scale(1.22) !important;
+    transform: scale(1.18) !important;
+    transition: none !important;
+    animation: none !important;
 }
 
 @media (max-width: 900px) {
@@ -3812,7 +3815,7 @@ kbd {
 }
 
 .ql-tab-btn:hover .ql-card-shape-svg {
-    filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.08));
+    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.18));
 }
 
 .ql-tab-btn.tab-center {
@@ -3831,7 +3834,7 @@ kbd {
     height: 100%;
     pointer-events: none;
     z-index: 0;
-    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.05));
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.1));
     transition: filter 0.2s ease;
 }
 
@@ -3860,13 +3863,13 @@ kbd {
     align-items: center;
     justify-content: center;
     border: 1px solid #e2e8f0;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     transition: all 0.2s ease;
 }
 
 .ql-tab-icon-wrapper.active-tab-ring {
     border: 2px solid #0f172a;
-    box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.08), 0 3px 8px rgba(15, 23, 42, 0.12);
+    box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.08), 0 3px 8px rgba(0, 0, 0, 0.15);
 }
 
 .ql-tab-text {
