@@ -108,20 +108,6 @@ export default function Home() {
       delay: 0.6
     });
 
-    // Stacking features showcase
-    const featureRows = gsap.utils.toArray('.feature-row');
-    featureRows.forEach((row: any, i) => {
-      if (i < featureRows.length - 1) {
-        ScrollTrigger.create({
-          trigger: row,
-          start: "top 15%",
-          endTrigger: featureRows[featureRows.length - 1] as Element,
-          end: "top 15%",
-          pin: true,
-          pinSpacing: false,
-        });
-      }
-    });
 
     gsap.fromTo('.marquee-content', 
       { x: '0%' },
@@ -363,7 +349,7 @@ export default function Home() {
 
             {/* FEATURES SHOWCASE SECTION */}
             <section className="features-showcase">
-              <div className="feature-row" style={{ backgroundColor: '#fff', position: 'relative', zIndex: 1, padding: '2rem 0' }}>
+              <div className="feature-row" style={{ backgroundColor: '#fff', padding: '2rem 0' }}>
                 <div className="feature-text">
                   <h2 style={{ color: '#000000', fontSize: '48px' }}>Learning is Fun with Friends</h2>
                   <p>Learning Math404 with friends is more fun and exciting! Explore various math materials, test your skills through quizzes, and face daily challenges.</p>
@@ -373,7 +359,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="feature-row reverse" style={{ backgroundColor: '#fff', position: 'relative', zIndex: 2, padding: '2rem 0' }}>
+              <div className="feature-row reverse" style={{ backgroundColor: '#fff', padding: '2rem 0' }}>
                 <div className="feature-text">
                   <h2 style={{ color: '#000000', fontSize: '48px' }}>Comprehensive Materials</h2>
                   <p>Learn mathematics completely and structurally, from basic concepts to more challenging materials. Find easy-to-understand explanations, examples, and practice questions to improve your skills.</p>
@@ -383,7 +369,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="feature-row" style={{ backgroundColor: '#fff', position: 'relative', zIndex: 3, padding: '2rem 0' }}>
+              <div className="feature-row" style={{ backgroundColor: '#fff', padding: '2rem 0' }}>
                 <div className="feature-text">
                   <h2 style={{ color: '#000000' }}>Exciting and Fun Challenges</h2>
                   <p>Ready to test your skills? Face various math challenges, solve problems, earn scores, and prove how far you can go!</p>
