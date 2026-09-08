@@ -656,14 +656,6 @@ export default function Home() {
         {/* VIEW 3: MATERI KELAS 12 (Resources) */}
         {currentView === 'materi' && (
           <div>
-            <div style={{ padding: '1rem 5%', background: '#fff', borderBottom: '2px solid #000', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <button className="btn-back-main" onClick={() => setCurrentView('home')}>
-                ⬅️ Back to Home
-              </button>
-              <button className="btn-back-main" style={{ background: '#ffdc00' }} onClick={() => setCurrentView('menu')}>
-                🎮 Open Game Menu
-              </button>
-            </div>
             <MateriSection
               onStartSoloWithTopic={handleStartSoloWithTopic}
               onStartVersus={() => setCurrentView('versus')}
