@@ -20,6 +20,7 @@ export const metadata: Metadata = {
 };
 
 import SmoothScroll from '@/components/SmoothScroll';
+import HydrationFix from '@/components/HydrationFix';
 
 export default function RootLayout({
   children,
@@ -29,6 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${lilita.variable}`} suppressHydrationWarning>
       <body className={inter.className} suppressHydrationWarning>
+        <HydrationFix />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

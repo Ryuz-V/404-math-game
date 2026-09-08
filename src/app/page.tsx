@@ -23,6 +23,7 @@ export default function Home() {
   const container = useRef<HTMLDivElement>(null);
   const [currentView, setCurrentView] = useState<'home' | 'menu' | 'materi' | 'solo' | 'versus' | 'leaderboard' | 'about' | 'quiz-library'>('home');
   const [selectedTopicId, setSelectedTopicId] = useState<string | undefined>(undefined);
+  const [selectedCard, setSelectedCard] = useState<'learning' | 'quizz' | 'games'>('learning');
 
   // Auth & Profile State
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -106,6 +107,20 @@ export default function Home() {
       stagger: 0.1,
       ease: 'elastic.out(1, 0.5)',
       delay: 0.6
+    });
+
+    // Continuous floating and rotating animation for math symbols
+    gsap.to('.math-symbol', {
+      y: '-=30',
+      rotation: '+=15',
+      duration: 4,
+      yoyo: true,
+      repeat: -1,
+      ease: 'sine.inOut',
+      stagger: {
+        amount: 2,
+        from: 'random'
+      }
     });
 
 
@@ -257,46 +272,17 @@ export default function Home() {
           )}
         </div>
         
-        {/* User Auth Buttons */}
+        {/* Settings Button */}
         <div className="auth-buttons">
-          {isLoggedIn ? (
-            <>
-              <button
-                className="btn btn-login"
-                title="Click to edit profile"
-                onClick={handleOpenProfileOrLogin}
-              >
-                {userProfile.avatar} {userProfile.name}
-              </button>
-              <button
-                className="btn btn-signup"
-                onClick={handleLogout}
-              >
-                Logout
-              </button>
-            </>
-          ) : (
-            <>
-              <button
-                className="btn btn-login"
-                onClick={() => {
-                  setAuthMode('login');
-                  setIsAuthOpen(true);
-                }}
-              >
-                Log in
-              </button>
-              <button
-                className="btn btn-signup"
-                onClick={() => {
-                  setAuthMode('signup');
-                  setIsAuthOpen(true);
-                }}
-              >
-                Sign up
-              </button>
-            </>
-          )}
+          <button 
+            className="settings-btn"
+            title="Settings"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          </button>
         </div>
       </header>
 
@@ -380,7 +366,7 @@ export default function Home() {
               </div>
             </section>
 
-            {/* TOPICS SECTION (Matching Screenshot 2 & 3) */}
+            {/* TOPICS SECTION */}
             <section className="topics-section">
               <div className="section-header">
                 <div>
@@ -392,93 +378,171 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="topics-filter">
-                <button className="filter-btn active">Learning</button>
-                <button className="filter-btn">Quiz</button>
-                <button className="filter-btn">Games</button>
-              </div>
-
               <div className="topics-grid">
-                <div className="topic-card" onClick={() => handleStartSoloWithTopic('kaidah-pencacahan')}>
-                  <div className="topic-card-top card-bg-yellow">
-                    <div className="topic-icon">🔢</div>
-                  </div>
-                  <div className="topic-card-bottom">
-                    <h3>Algebra</h3>
-                    <p>Master equations, inequalities, and functions to build a strong mathematical foundation.</p>
-                    <div className="topic-card-footer">
-                      <span>📄 List</span>
+                {/* Learning Card */}
+                <div className={`new-topic-card card-blue ${selectedCard === 'learning' ? 'active' : ''}`} onClick={() => setSelectedCard('learning')}>
+                  <div className="new-topic-badge badge-blue">
+                    <div className="badge-icon-box" style={{ background: '#023c3d', borderRadius: '4px', color: '#fff' }}>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
                     </div>
                   </div>
+                  <h3>Learning</h3>
+                  <p>Explore various math materials structurally, from basic concepts to more challenging materials.</p>
                 </div>
 
-                <div className="topic-card" onClick={() => handleStartSoloWithTopic('dimensi-tiga')}>
-                  <div className="topic-card-top card-bg-pink">
-                    <div className="topic-icon">📐</div>
-                  </div>
-                  <div className="topic-card-bottom">
-                    <h3>Geometry</h3>
-                    <p>Explore shapes, sizes, properties of space, and visual reasoning.</p>
-                    <div className="topic-card-footer">
-                      <span>📄 List</span>
+                {/* Quizz Card */}
+                <div className={`new-topic-card card-purple ${selectedCard === 'quizz' ? 'active' : ''}`} onClick={() => setSelectedCard('quizz')}>
+                  <div className="new-topic-badge badge-purple">
+                    <div className="badge-icon-box" style={{ background: 'transparent', color: '#2a1228' }}>
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                      </svg>
                     </div>
                   </div>
+                  <h3>Quizz</h3>
+                  <p>Test your math understanding with timed quizzes, score streaks, and step-by-step explanations.</p>
                 </div>
 
-                <div className="topic-card" onClick={() => handleStartSoloWithTopic('kalkulus-lanjut')}>
-                  <div className="topic-card-top card-bg-blue">
-                    <div className="topic-icon">📈</div>
-                  </div>
-                  <div className="topic-card-bottom">
-                    <h3>Calculus</h3>
-                    <p>Understand limits, derivatives, integrals, and the mathematics of continuous change.</p>
-                    <div className="topic-card-footer">
-                      <span>📄 List</span>
+                {/* Games Card */}
+                <div className={`new-topic-card card-yellow ${selectedCard === 'games' ? 'active' : ''}`} onClick={() => setSelectedCard('games')}>
+                  <div className="new-topic-badge badge-yellow">
+                    <div className="badge-icon-box" style={{ background: 'transparent', color: '#2a1228' }}>
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="4" y1="6" x2="20" y2="6"></line>
+                        <line x1="4" y1="12" x2="16" y2="12"></line>
+                        <line x1="4" y1="18" x2="20" y2="18"></line>
+                      </svg>
                     </div>
                   </div>
-                </div>
-
-                <div className="topic-card" onClick={() => handleStartSoloWithTopic('statistika')}>
-                  <div className="topic-card-top card-bg-green">
-                    <div className="topic-icon">📊</div>
-                  </div>
-                  <div className="topic-card-bottom">
-                    <h3>Statistics</h3>
-                    <p>Learn to collect, analyze, interpret, and present data effectively.</p>
-                    <div className="topic-card-footer">
-                      <span>📄 List</span>
-                    </div>
-                  </div>
+                  <h3>Games</h3>
+                  <p>Challenge your friends in a split-screen duel or enjoy interactive math arcade games.</p>
                 </div>
               </div>
 
-              <div className="see-more-container">
-                <a href="#" className="btn-view-all">
-                  See more topics
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: '8px' }}>
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                  </svg>
-                </a>
+              {/* Topics Details Section */}
+              <div className="topic-details-container">
+                {selectedCard === 'learning' && (
+                  <div className="topic-details-list">
+                    <div className="topic-detail-item">
+                      <div className="detail-number-box"><span>1</span></div>
+                      <div className="detail-text-content">
+                        <h4>Comprehensive Curriculum</h4>
+                        <p>Learn mathematics completely and structurally, from basic concepts to more challenging materials.</p>
+                      </div>
+                    </div>
+                    <div className="topic-detail-item">
+                      <div className="detail-number-box"><span>2</span></div>
+                      <div className="detail-text-content">
+                        <h4>Step-by-step explanations</h4>
+                        <p>Find easy-to-understand explanations, examples, and practice questions to improve your skills.</p>
+                      </div>
+                    </div>
+                    <div className="topic-detail-item">
+                      <div className="detail-number-box"><span>3</span></div>
+                      <div className="detail-text-content">
+                        <h4>Interactive examples</h4>
+                        <p>Engage with interactive examples designed around common student misconceptions to solidify understanding.</p>
+                      </div>
+                    </div>
+                    <div className="topic-detail-item">
+                      <div className="detail-number-box"><span>4</span></div>
+                      <div className="detail-text-content">
+                        <h4>Visual Learning</h4>
+                        <p>Utilize diagrams and visual aids to grasp complex mathematical concepts easily and effectively.</p>
+                      </div>
+                    </div>
+                    <div className="topic-details-cta">
+                      <button className="btn-subscribe" onClick={() => setCurrentView('materi')}>See More!</button>
+                    </div>
+                  </div>
+                )}
+                {selectedCard === 'quizz' && (
+                  <div className="topic-details-list">
+                    <div className="topic-detail-item">
+                      <div className="detail-number-box"><span>1</span></div>
+                      <div className="detail-text-content">
+                        <h4>Timed Challenges</h4>
+                        <p>Test your skills under pressure with our timed quizzes to improve your speed and accuracy.</p>
+                      </div>
+                    </div>
+                    <div className="topic-detail-item">
+                      <div className="detail-number-box"><span>2</span></div>
+                      <div className="detail-text-content">
+                        <h4>Score Streaks</h4>
+                        <p>Earn multipliers and special badges by answering questions correctly in a continuous row.</p>
+                      </div>
+                    </div>
+                    <div className="topic-detail-item">
+                      <div className="detail-number-box"><span>3</span></div>
+                      <div className="detail-text-content">
+                        <h4>Detailed Analytics</h4>
+                        <p>Review your mistakes and learn from them with our comprehensive post-quiz analytics dashboard.</p>
+                      </div>
+                    </div>
+                    <div className="topic-detail-item">
+                      <div className="detail-number-box"><span>4</span></div>
+                      <div className="detail-text-content">
+                        <h4>Adaptive Difficulty</h4>
+                        <p>Questions automatically get harder as you improve, ensuring you are always appropriately challenged.</p>
+                      </div>
+                    </div>
+                    <div className="topic-details-cta">
+                      <button className="btn-subscribe" onClick={() => setCurrentView('quiz-library')}>Start Quizz Now</button>
+                    </div>
+                  </div>
+                )}
+                {selectedCard === 'games' && (
+                  <div className="topic-details-list">
+                    <div className="topic-detail-item">
+                      <div className="detail-number-box"><span>1</span></div>
+                      <div className="detail-text-content">
+                        <h4>1 vs 1 Duel Mode</h4>
+                        <p>Challenge your friends on the same keyboard. Player 1 (A/S/D/F) vs Player 2 (H/J/K/L) compete for speed & accuracy.</p>
+                      </div>
+                    </div>
+                    <div className="topic-detail-item">
+                      <div className="detail-number-box"><span>2</span></div>
+                      <div className="detail-text-content">
+                        <h4>Arcade Mode</h4>
+                        <p>Play solo and climb the leaderboard. Survive as long as you can in endless mathematical challenges.</p>
+                      </div>
+                    </div>
+                    <div className="topic-detail-item">
+                      <div className="detail-number-box"><span>3</span></div>
+                      <div className="detail-text-content">
+                        <h4>Earn Achievements</h4>
+                        <p>Unlock special badges, avatars, and titles as you play and conquer various game modes.</p>
+                      </div>
+                    </div>
+                    <div className="topic-detail-item">
+                      <div className="detail-number-box"><span>4</span></div>
+                      <div className="detail-text-content">
+                        <h4>Fun Power-ups</h4>
+                        <p>Use exciting power-ups to gain an advantage or disrupt your opponents in intense multiplayer modes.</p>
+                      </div>
+                    </div>
+                    <div className="topic-details-cta">
+                      <button className="btn-subscribe" onClick={() => setCurrentView('menu')}>See More!</button>
+                    </div>
+                  </div>
+                )}
               </div>
             </section>
 
-            {/* CTA SECTION (Matching Screenshot 4 & 5) */}
+            {/* CTA SECTION  */}
             <section className="cta-section">
               <h2>Ready to master math?</h2>
-              <p>Join thousands of students who are already improving their grades and understanding of complex mathematical concepts.</p>
+              <p>Join thousands of fun and challenging games with your friends. Explore various math challenges, solve puzzles, and test your skills in a fun learning environment.</p>
               <button className="btn-subscribe" onClick={() => setCurrentView('menu')}>Get Started Now</button>
-              
-              <div className="decoration pink-semi-circle" style={{ top: '10%', right: '15%', left: 'auto', bottom: 'auto', transform: 'rotate(45deg)' }}>
-                <svg width="60" height="60" viewBox="0 0 40 40">
-                  <path d="M 10 10 A 15 15 0 1 0 30 30" fill="none" stroke="#ff6b6b" strokeWidth="7" strokeLinecap="round"/>
-                </svg>
-              </div>
-              <div className="decoration blue-quarter-circle" style={{ bottom: '10%', left: '10%', right: 'auto', top: 'auto', transform: 'rotate(-45deg)' }}>
-                <svg width="60" height="60" viewBox="0 0 60 60">
-                  <path d="M 0 60 A 60 60 0 0 1 60 0 L 60 60 Z" fill="#00d0ff" stroke="#000" strokeWidth="4" strokeLinejoin="round"/>
-                </svg>
-              </div>
+              <div className="decoration math-symbol" style={{ top: '15%', right: '18%', color: '#ff6b6b', fontSize: '10rem', transform: 'rotate(25deg)' }}>+</div>
+              <div className="decoration math-symbol" style={{ bottom: '15%', left: '12%', color: '#00d0ff', fontSize: '12rem', transform: 'rotate(-15deg)' }}>×</div>
+              <div className="decoration math-symbol" style={{ top: '25%', left: '15%', color: '#ffd166', fontSize: '9rem', transform: 'rotate(-30deg)' }}>÷</div>
+              <div className="decoration math-symbol" style={{ bottom: '25%', right: '22%', color: '#06d6a0', fontSize: '8rem', transform: 'rotate(10deg)' }}>%</div>
+              <div className="decoration math-symbol" style={{ top: '65%', left: '8%', color: '#ef476f', fontSize: '10rem', transform: 'rotate(45deg)' }}>=</div>
+              <div className="decoration math-symbol" style={{ top: '50%', right: '8%', color: '#118ab2', fontSize: '9rem', transform: 'rotate(-20deg)' }}>−</div>
             </section>
           </>
         )}
