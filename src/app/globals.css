@@ -4076,11 +4076,11 @@ kbd {
 .ql-top-gradient {
     background: #ffffff;
     padding-top: 3.5rem;
-    padding-bottom: 2.5rem;
+    padding-bottom: 0.5rem;
 }
 
 .ql-container {
-    max-width: 1140px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 0 1.5rem;
 }
@@ -4095,7 +4095,7 @@ kbd {
 .ql-tabs-wrapper {
     display: flex;
     justify-content: center;
-    margin-bottom: 2rem;
+    margin-bottom: 0.5rem;
     width: 100%;
 }
 
@@ -4274,7 +4274,7 @@ kbd {
 
 /* Main Body & Browse Filter Line */
 .ql-main-body {
-    padding-top: 1.5rem;
+    padding-top: 0;
 }
 
 .ql-browse-line {
@@ -4282,7 +4282,7 @@ kbd {
     align-items: center;
     justify-content: center;
     gap: 1.25rem;
-    margin: 2rem 0 3rem 0;
+    margin: 0.5rem 0 2rem 0;
     position: relative;
 }
 
