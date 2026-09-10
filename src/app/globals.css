@@ -85,7 +85,7 @@ body {
     border-radius: 4px;
     font-size: 0.95rem;
     outline: none;
-    width: 380px;
+    width: 430px;
     font-family: inherit;
     transition: box-shadow 0.2s;
 }
@@ -116,7 +116,7 @@ body {
     align-items: center;
     justify-content: center;
     padding: 8px;
-    margin-right: 1.5rem;
+    margin-right: 2rem;
     color: #000;
 }
 
