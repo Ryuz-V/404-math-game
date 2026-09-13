@@ -202,13 +202,7 @@ export default function Home() {
           >
             Resources
           </a>
-          <a
-            href="#"
-            style={{ fontWeight: currentView === 'leaderboard' ? 800 : 600 }}
-            onClick={(e) => { e.preventDefault(); setCurrentView('leaderboard'); }}
-          >
-            Leaderboard
-          </a>
+          {/* leaderboard opsional */}
           <a
             href="#"
             style={{ fontWeight: currentView === 'quiz-library' || currentView === 'solo' ? 800 : 600 }}
@@ -272,17 +266,33 @@ export default function Home() {
           )}
         </div>
         
-        {/* Settings Button */}
+        {/* Auth Buttons */}
         <div className="auth-buttons">
-          <button 
-            className="settings-btn"
-            title="Settings"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
-              <circle cx="12" cy="12" r="3"></circle>
-            </svg>
-          </button>
+          {!isLoggedIn ? (
+            <>
+              <button 
+                className="btn btn-login" 
+                onClick={() => { setAuthMode('login'); setIsAuthOpen(true); }}
+              >
+                Log in
+              </button>
+              <button 
+                className="btn btn-signup" 
+                onClick={() => { setAuthMode('signup'); setIsAuthOpen(true); }}
+              >
+                Sign up
+              </button>
+            </>
+          ) : (
+            <button 
+              className="user-profile-btn"
+              onClick={handleOpenProfileOrLogin}
+              title="Profile"
+            >
+              <span style={{ fontSize: '1.2rem' }}>{userProfile.avatar}</span>
+              <span style={{ fontWeight: 'bold' }}>{userProfile.name}</span>
+            </button>
+          )}
         </div>
       </header>
 
@@ -676,14 +686,6 @@ export default function Home() {
         {/* VIEW 4: GAME SOLO (1P / Quiz) */}
         {currentView === 'solo' && (
           <div>
-            <div style={{ padding: '1rem 5%', background: '#fff', borderBottom: '2px solid #000', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <button className="btn-back-main" onClick={() => setCurrentView('home')}>
-                ⬅️ Back to Home
-              </button>
-              <button className="btn-back-main" style={{ background: '#ffdc00' }} onClick={() => setCurrentView('menu')}>
-                🎮 Hub Menu
-              </button>
-            </div>
             <SoloGame
               initialTopicId={selectedTopicId}
               onBackToMenu={() => setCurrentView('menu')}
@@ -696,14 +698,6 @@ export default function Home() {
         {/* VIEW 5: GAME 1 VS 1 (DUO) */}
         {currentView === 'versus' && (
           <div>
-            <div style={{ padding: '1rem 5%', background: '#fff', borderBottom: '2px solid #000', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <button className="btn-back-main" onClick={() => setCurrentView('home')}>
-                ⬅️ Back to Home
-              </button>
-              <button className="btn-back-main" style={{ background: '#ffdc00' }} onClick={() => setCurrentView('menu')}>
-                🎮 Hub Menu
-              </button>
-            </div>
             <VersusGame
               onBackToMenu={() => setCurrentView('menu')}
               onSwitchToSolo={() => setCurrentView('solo')}
@@ -714,14 +708,6 @@ export default function Home() {
         {/* VIEW 6: LEADERBOARD */}
         {currentView === 'leaderboard' && (
           <div>
-            <div style={{ padding: '1rem 5%', background: '#fff', borderBottom: '2px solid #000', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <button className="btn-back-main" onClick={() => setCurrentView('home')}>
-                ⬅️ Back to Home
-              </button>
-              <button className="btn-back-main" style={{ background: '#ffdc00' }} onClick={() => setCurrentView('menu')}>
-                🎮 Hub Menu
-              </button>
-            </div>
             <LeaderboardSection
               onStartSolo={() => {
                 setSelectedTopicId(undefined);
@@ -745,14 +731,6 @@ export default function Home() {
         {/* VIEW 7: ABOUT */}
         {currentView === 'about' && (
           <div>
-            <div style={{ padding: '1rem 5%', background: '#fff', borderBottom: '2px solid #000', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <button className="btn-back-main" onClick={() => setCurrentView('home')}>
-                ⬅️ Back to Home
-              </button>
-              <button className="btn-back-main" style={{ background: '#ffdc00' }} onClick={() => setCurrentView('menu')}>
-                🎮 Hub Menu
-              </button>
-            </div>
             <AboutSection
               onStartMenu={() => setCurrentView('menu')}
               onStartMateri={() => setCurrentView('materi')}
