@@ -297,7 +297,7 @@ export default function SoloGame({ initialTopicId, onBackToMenu, onSwitchToVersu
 
       {gameState === 'gameover' && (
         <div className="game-card game-over-card">
-          <div className="game-badge">🏁 Time's Up!</div>
+          <div className="game-badge">🏁 Time&apos;s Up!</div>
           <h2 className="gameover-title">Solo Game Results</h2>
 
           <div className="rank-badge-box" style={{ backgroundColor: getRank().color }}>
