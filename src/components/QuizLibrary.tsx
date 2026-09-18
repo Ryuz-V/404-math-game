@@ -338,7 +338,7 @@ export default function QuizLibrary({ onSelectQuiz }: QuizLibraryProps) {
         <div className="ql-modal-overlay" onClick={() => setIsCreateModalOpen(false)}>
           <div className="ql-modal-dialog" onClick={(e) => e.stopPropagation()}>
             <div className="ql-modal-header">
-              <h3>Create a Resource</h3>
+              <h3>Create a Quizz</h3>
               <button className="ql-modal-close" onClick={() => setIsCreateModalOpen(false)}>&times;</button>
             </div>
             <div className="ql-modal-body">
