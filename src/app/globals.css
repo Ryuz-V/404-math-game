@@ -1400,7 +1400,711 @@ body {
 
 
 /* =========================================
-   Materi Kelas 12 Styles
+   RESOURCES & MATERI SECTION (CLASSIC NEO-BRUTALIST DESIGN)
+   ========================================= */
+.resources-page-wrapper {
+    background-color: #fff;
+    min-height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: column;
+}
+
+.resources-hero-banner {
+    background-color: #82fed6;
+    border-bottom: 2.5px solid #000;
+    padding: 3.5rem 8% 3rem;
+}
+
+.resources-hero-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+}
+
+.resources-hero-info {
+    flex: 1;
+    min-width: 320px;
+}
+
+.resources-badge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #000;
+    padding: 0.35rem 1rem;
+    font-weight: 800;
+    font-size: 0.85rem;
+    border-radius: 50px;
+    box-shadow: 3px 3px 0px #000;
+    margin-bottom: 1.2rem;
+}
+
+.resources-hero-title {
+    font-size: 2.75rem;
+    font-weight: 900;
+    color: #000;
+    line-height: 1.15;
+    letter-spacing: -1px;
+    margin-bottom: 1rem;
+}
+
+.resources-hero-title span {
+    display: block;
+    color: #004d40;
+}
+
+.resources-hero-desc {
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: #222;
+    line-height: 1.55;
+    max-width: 600px;
+}
+
+.resources-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    flex-shrink: 0;
+}
+
+.resources-stat-box {
+    background-color: #fff;
+    border: 2.5px solid #000;
+    border-radius: 14px;
+    padding: 1.2rem 1.6rem;
+    text-align: center;
+    box-shadow: 4px 4px 0px #000;
+    min-width: 130px;
+}
+
+.resources-stat-num {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #000;
+}
+
+.resources-stat-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #555;
+    margin-top: 0.2rem;
+}
+
+.resources-main-content {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 2.5rem 4% 6rem;
+    width: 100%;
+}
+
+.resources-pill-btn {
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #000;
+    border-radius: 50px;
+    padding: 0.55rem 1.3rem;
+    font-weight: 800;
+    font-size: 0.88rem;
+    cursor: pointer;
+    box-shadow: 3px 3px 0px #000;
+    transition: all 0.15s ease;
+    font-family: inherit;
+    white-space: nowrap;
+}
+
+.resources-pill-btn:hover {
+    background-color: #f7f7f8;
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0px #000;
+}
+
+.resources-pill-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0px #000;
+}
+
+.resources-pill-btn.active {
+    background-color: #ffdc00;
+    color: #000;
+    box-shadow: 3px 3px 0px #000;
+}
+
+.resources-toolbar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-bottom: 2.5rem;
+}
+
+.resources-search-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.resources-search-input {
+    width: 100%;
+    padding: 0.85rem 3rem 0.85rem 1.4rem;
+    border: 2.5px solid #000;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    outline: none;
+    box-shadow: 4px 4px 0px #000;
+    font-family: inherit;
+    transition: box-shadow 0.2s ease;
+}
+
+.resources-search-input:focus {
+    box-shadow: 6px 6px 0px #000;
+    background-color: #fff;
+}
+
+.resources-search-icon {
+    position: absolute;
+    right: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    pointer-events: none;
+}
+
+.resources-category-pills {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.resources-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #eee;
+}
+
+.resources-section-title {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #000;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.resources-count-tag {
+    font-size: 0.85rem;
+    font-weight: 800;
+    background-color: #000;
+    color: #fff;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+}
+
+.resources-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+@media (max-width: 1180px) {
+    .resources-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 720px) {
+    .resources-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.resource-card {
+    background-color: #fff;
+    border: 2.5px solid #000;
+    border-radius: 18px;
+    box-shadow: 6px 6px 0px #000;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.resource-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 9px 9px 0px #000;
+}
+
+.resource-card-banner {
+    padding: 1.4rem 1.6rem;
+    border-bottom: 2px solid #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.resource-card-tag {
+    font-size: 0.75rem;
+    font-weight: 800;
+    background-color: #fff;
+    color: #000;
+    border: 1.5px solid #000;
+    padding: 0.2rem 0.65rem;
+    border-radius: 6px;
+    text-transform: uppercase;
+}
+
+.resource-card-icon {
+    font-size: 2.6rem;
+    width: 58px;
+    height: 58px;
+    background-color: #fff;
+    border: 2px solid #000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 3px 3px 0px #000;
+    flex-shrink: 0;
+}
+
+.resource-card-body {
+    padding: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-between;
+}
+
+.resource-card-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #000;
+    margin-bottom: 0.6rem;
+    line-height: 1.25;
+}
+
+.resource-card-desc {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: #444;
+    line-height: 1.5;
+    margin-bottom: 1.2rem;
+}
+
+.resource-card-stats {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #555;
+    padding: 0.75rem 0;
+    border-top: 1.5px dashed #ccc;
+    border-bottom: 1.5px dashed #ccc;
+    margin-bottom: 1.4rem;
+    flex-wrap: wrap;
+}
+
+.resource-card-actions {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 0.75rem;
+}
+
+.btn-study-action {
+    background-color: #000;
+    color: #fff;
+    border: 2px solid #000;
+    border-radius: 10px;
+    padding: 0.65rem 0.8rem;
+    font-weight: 800;
+    font-size: 0.88rem;
+    cursor: pointer;
+    box-shadow: 3px 3px 0px #000;
+    transition: all 0.15s;
+    font-family: inherit;
+    text-align: center;
+}
+
+.btn-study-action:hover {
+    background-color: #222;
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0px #000;
+}
+
+.btn-study-action:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0px #000;
+}
+
+.btn-quiz-action {
+    background-color: #ffdc00;
+    color: #000;
+    border: 2px solid #000;
+    border-radius: 10px;
+    padding: 0.65rem 0.8rem;
+    font-weight: 800;
+    font-size: 0.88rem;
+    cursor: pointer;
+    box-shadow: 3px 3px 0px #000;
+    transition: all 0.15s;
+    font-family: inherit;
+    text-align: center;
+}
+
+.btn-quiz-action:hover {
+    background-color: #ffe633;
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0px #000;
+}
+
+.btn-quiz-action:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0px #000;
+}
+
+/* Reader Modal */
+.reader-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    padding: 1.5rem;
+}
+
+.reader-modal-card {
+    background-color: #fff;
+    border: 3.5px solid #000;
+    border-radius: 24px;
+    box-shadow: 12px 12px 0px #000;
+    width: 92vw;
+    max-width: 980px;
+    height: 85vh;
+    max-height: 85vh;
+    min-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    animation: modalPop 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes modalPop {
+    from {
+        transform: scale(0.92);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.reader-modal-header {
+    background-color: #82fed6;
+    color: #000;
+    padding: 1.25rem 1.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid #000;
+    flex-shrink: 0;
+}
+
+.reader-modal-title-box {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.reader-modal-icon {
+    font-size: 2.2rem;
+    width: 54px;
+    height: 54px;
+    background-color: #fff;
+    border: 2.5px solid #000;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 3px 3px 0px #000;
+    flex-shrink: 0;
+}
+
+.reader-modal-tag {
+    font-size: 0.72rem;
+    font-weight: 800;
+    background-color: #fff;
+    color: #000;
+    border: 1.5px solid #000;
+    padding: 0.15rem 0.6rem;
+    border-radius: 6px;
+    text-transform: uppercase;
+}
+
+.reader-modal-close-btn {
+    background: #fff;
+    border: 2.5px solid #000;
+    color: #000;
+    font-size: 1.2rem;
+    font-weight: 900;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 3px 3px 0px #000;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+}
+
+.reader-modal-close-btn:hover {
+    background-color: #ff6b6b;
+    color: #fff;
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0px #000;
+}
+
+.reader-modal-close-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0px #000;
+}
+
+.reader-modal-tabs {
+    display: flex;
+    background-color: #f7f7f8;
+    border-bottom: 3px solid #000;
+    overflow-x: auto;
+    flex-shrink: 0;
+}
+
+.reader-tab-btn {
+    flex: 1;
+    padding: 0.95rem 1.2rem;
+    background: #fff;
+    border: none;
+    border-right: 2px solid #000;
+    font-weight: 800;
+    font-size: 0.92rem;
+    color: #333;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+.reader-tab-btn:last-child {
+    border-right: none;
+}
+
+.reader-tab-btn:hover {
+    background-color: #f0fdf4;
+    color: #000;
+}
+
+.reader-tab-btn.active {
+    background-color: #ffdc00;
+    color: #000;
+    box-shadow: inset 0 -4px 0 #000;
+    font-weight: 900;
+}
+
+.reader-modal-body {
+    padding: 2.2rem;
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    flex: 1 1 0px !important;
+    min-height: 0 !important;
+    max-height: 100% !important;
+    background-color: #fff;
+    scroll-behavior: smooth;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: #82fed6 #f1f5f9;
+}
+
+.reader-modal-body::-webkit-scrollbar {
+    width: 10px;
+    display: block;
+}
+
+.reader-modal-body::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-left: 2px solid #000;
+}
+
+.reader-modal-body::-webkit-scrollbar-thumb {
+    background: #82fed6;
+    border: 2px solid #000;
+    border-radius: 6px;
+}
+
+.reader-modal-body::-webkit-scrollbar-thumb:hover {
+    background: #ffdc00;
+}
+
+@media (max-width: 640px) {
+    .reader-modal-card {
+        width: 96vw;
+        height: 92vh;
+        max-height: 92vh;
+        min-height: 92vh;
+        border-radius: 16px;
+    }
+    .reader-modal-body {
+        padding: 1.25rem;
+    }
+}
+
+.reader-modal-footer {
+    padding: 1.2rem 2rem;
+    border-top: 3px solid #000;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+}
+
+.formula-item-card {
+    background-color: #fff;
+    border: 2.5px solid #000;
+    border-radius: 16px;
+    padding: 1.4rem;
+    box-shadow: 4px 4px 0px #000;
+    display: flex;
+    flex-direction: column;
+}
+
+.formula-display {
+    background-color: #ffdc00;
+    border: 2px solid #000;
+    border-radius: 10px;
+    padding: 0.85rem 1.2rem;
+    font-family: monospace;
+    font-weight: 900;
+    font-size: 1.05rem;
+    margin: 0.8rem 0;
+    color: #000;
+    box-shadow: 3px 3px 0px #000;
+    word-break: break-word;
+}
+
+.example-item-card {
+    border: 2.5px solid #000;
+    border-radius: 18px;
+    background-color: #fff;
+    margin-bottom: 1.8rem;
+    overflow: hidden;
+    box-shadow: 5px 5px 0px #000;
+}
+
+.example-card-head {
+    background-color: #ffb17a;
+    border-bottom: 2.5px solid #000;
+    padding: 0.9rem 1.4rem;
+    font-weight: 900;
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.example-card-body {
+    padding: 1.6rem;
+}
+
+.example-steps-box {
+    background-color: #f8fafc;
+    border: 2px solid #000;
+    border-radius: 12px;
+    padding: 1.2rem;
+    margin-bottom: 1.2rem;
+}
+
+.example-answer-box {
+    background-color: #82fed6;
+    border: 2px solid #000;
+    border-radius: 10px;
+    padding: 0.85rem 1.2rem;
+    font-weight: 900;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 2px 2px 0px #000;
+}
+
+.quiz-opt-btn {
+    background-color: #fff;
+    border: 2.5px solid #000;
+    border-radius: 12px;
+    padding: 0.85rem 1.2rem;
+    font-weight: 800;
+    font-size: 0.92rem;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s ease;
+    font-family: inherit;
+    box-shadow: 3px 3px 0px #000;
+}
+
+.quiz-opt-btn:hover:not(:disabled) {
+    background-color: #ffdc00;
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0px #000;
+}
+
+.quiz-opt-btn:active:not(:disabled) {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0px #000;
+}
+
+.quiz-opt-btn:disabled {
+    cursor: default;
+}
+
+.quiz-opt-btn.correct {
+    background-color: #82fed6;
+    border-color: #000;
+    font-weight: 900;
+    box-shadow: 3px 3px 0px #000;
+}
+
+.quiz-opt-btn.wrong {
+    background-color: #ff6b6b;
+    color: #fff;
+    border-color: #000;
+    box-shadow: 3px 3px 0px #000;
+}
+
+/* =========================================
+   Materi Kelas 12 Styles (Fallback)
    ========================================= */
 .materi-container {
     padding: 3rem 8%;
