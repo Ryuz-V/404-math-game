@@ -378,7 +378,7 @@ export default function Home() {
 
             {/* TOPICS SECTION */}
             <section className="topics-section">
-              <div className="section-header">
+              <div className="section-header" style={{ maxWidth: '1200px', margin: '0 auto', marginBottom: '3rem' }}>
                 <div>
                   <h2 className="section-title">Explore All Topics</h2>
                   <p className="section-subtitle">
@@ -389,7 +389,6 @@ export default function Home() {
               </div>
 
               <div className="topics-grid">
-                {/* Learning Card */}
                 <div className={`new-topic-card card-blue ${selectedCard === 'learning' ? 'active' : ''}`} onClick={() => setSelectedCard('learning')}>
                   <div className="new-topic-badge badge-blue">
                     <div className="badge-icon-box" style={{ background: '#023c3d', borderRadius: '4px', color: '#fff' }}>
@@ -398,11 +397,9 @@ export default function Home() {
                       </svg>
                     </div>
                   </div>
-                  <h3>Learning</h3>
-                  <p>Explore various math materials structurally, from basic concepts to more challenging materials.</p>
+                  <h3>Games</h3>
+                  <p>Come play a wide variety of fun games that will challenge your brain you can play them on your own or with your loved ones, such as friends, family, and others.</p>
                 </div>
-
-                {/* Quizz Card */}
                 <div className={`new-topic-card card-purple ${selectedCard === 'quizz' ? 'active' : ''}`} onClick={() => setSelectedCard('quizz')}>
                   <div className="new-topic-badge badge-purple">
                     <div className="badge-icon-box" style={{ background: 'transparent', color: '#2a1228' }}>
@@ -412,11 +409,9 @@ export default function Home() {
                       </svg>
                     </div>
                   </div>
-                  <h3>Quizz</h3>
-                  <p>Test your math understanding with timed quizzes, score streaks, and step-by-step explanations.</p>
+                  <h3>Resources</h3>
+                  <p>Dozens of Math Lessons That Will Be Useful for You, helping you deepen your understanding of complex mathematical concepts through interactive learning and practical examples.</p>
                 </div>
-
-                {/* Games Card */}
                 <div className={`new-topic-card card-yellow ${selectedCard === 'games' ? 'active' : ''}`} onClick={() => setSelectedCard('games')}>
                   <div className="new-topic-badge badge-yellow">
                     <div className="badge-icon-box" style={{ background: 'transparent', color: '#2a1228' }}>
@@ -427,8 +422,8 @@ export default function Home() {
                       </svg>
                     </div>
                   </div>
-                  <h3>Games</h3>
-                  <p>Challenge your friends in a split-screen duel or enjoy interactive math arcade games.</p>
+                  <h3>Quizz</h3>
+                  <p>Challenge Yourself with Exciting Math Quizzes, designed to test your knowledge, sharpen your problem solving skills, and reinforce what you've learned.</p>
                 </div>
               </div>
 
@@ -541,8 +536,7 @@ export default function Home() {
                 )}
               </div>
             </section>
-
-            {/* CTA SECTION  */}
+            
             <section className="cta-section">
               <h2>Ready to master math?</h2>
               <p>Join thousands of fun and challenging games with your friends. Explore various math challenges, solve puzzles, and test your skills in a fun learning environment.</p>
