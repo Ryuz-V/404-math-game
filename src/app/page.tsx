@@ -389,7 +389,7 @@ export default function Home() {
               </div>
 
               <div className="topics-grid">
-                <div className={`new-topic-card card-blue ${selectedCard === 'learning' ? 'active' : ''}`} onClick={() => setSelectedCard('learning')}>
+                <div className={`new-topic-card card-blue ${selectedCard === 'games' ? 'active' : ''}`} onClick={() => setSelectedCard('games')}>
                   <div className="new-topic-badge badge-blue">
                     <div className="badge-icon-box" style={{ background: '#023c3d', borderRadius: '4px', color: '#fff' }}>
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
@@ -400,7 +400,7 @@ export default function Home() {
                   <h3>Games</h3>
                   <p>Come play a wide variety of fun games that will challenge your brain you can play them on your own or with your loved ones, such as friends, family, and others.</p>
                 </div>
-                <div className={`new-topic-card card-purple ${selectedCard === 'quizz' ? 'active' : ''}`} onClick={() => setSelectedCard('quizz')}>
+                <div className={`new-topic-card card-purple ${selectedCard === 'learning' ? 'active' : ''}`} onClick={() => setSelectedCard('learning')}>
                   <div className="new-topic-badge badge-purple">
                     <div className="badge-icon-box" style={{ background: 'transparent', color: '#2a1228' }}>
                       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -412,7 +412,7 @@ export default function Home() {
                   <h3>Resources</h3>
                   <p>Dozens of Math Lessons That Will Be Useful for You, helping you deepen your understanding of complex mathematical concepts through interactive learning and practical examples.</p>
                 </div>
-                <div className={`new-topic-card card-yellow ${selectedCard === 'games' ? 'active' : ''}`} onClick={() => setSelectedCard('games')}>
+                <div className={`new-topic-card card-yellow ${selectedCard === 'quizz' ? 'active' : ''}`} onClick={() => setSelectedCard('quizz')}>
                   <div className="new-topic-badge badge-yellow">
                     <div className="badge-icon-box" style={{ background: 'transparent', color: '#2a1228' }}>
                       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
@@ -427,40 +427,41 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Topics Details Section */}
+              {/* Topics Details Section agak kebalik yang "Learning jadi games, Resource jadi  quizz, yang quizz jadi games"*/}
+              
               <div className="topic-details-container">
                 {selectedCard === 'learning' && (
                   <div className="topic-details-list">
                     <div className="topic-detail-item">
                       <div className="detail-number-box"><span>1</span></div>
                       <div className="detail-text-content">
-                        <h4>Comprehensive Curriculum</h4>
-                        <p>Learn mathematics completely and structurally, from basic concepts to more challenging materials.</p>
+                        <h4>Calculus</h4>
+                        <p>Master the concepts of limits, derivatives, and integrals to solve complex mathematical problems.</p>
                       </div>
                     </div>
                     <div className="topic-detail-item">
                       <div className="detail-number-box"><span>2</span></div>
                       <div className="detail-text-content">
-                        <h4>Step-by-step explanations</h4>
-                        <p>Find easy-to-understand explanations, examples, and practice questions to improve your skills.</p>
+                        <h4>Geometry</h4>
+                        <p>Explore properties of space, shapes, sizes, and relative positions of figures.</p>
                       </div>
                     </div>
                     <div className="topic-detail-item">
                       <div className="detail-number-box"><span>3</span></div>
                       <div className="detail-text-content">
-                        <h4>Interactive examples</h4>
-                        <p>Engage with interactive examples designed around common student misconceptions to solidify understanding.</p>
+                        <h4>Trigonometri</h4>
+                        <p>Learn about relationships involving lengths and angles of triangles and their applications.</p>
                       </div>
                     </div>
                     <div className="topic-detail-item">
                       <div className="detail-number-box"><span>4</span></div>
                       <div className="detail-text-content">
-                        <h4>Visual Learning</h4>
-                        <p>Utilize diagrams and visual aids to grasp complex mathematical concepts easily and effectively.</p>
+                        <h4>Statika</h4>
+                        <p>Understand the mechanics of bodies at rest and analyze loads on physical systems.</p>
                       </div>
                     </div>
                     <div className="topic-details-cta">
-                      <button className="btn-subscribe" onClick={() => setCurrentView('materi')}>See More!</button>
+                      <button className="btn-subscribe" onClick={() => setCurrentView('materi')}>Buka Materi</button>
                     </div>
                   </div>
                 )}
@@ -788,11 +789,6 @@ export default function Home() {
         
         <div className="footer-bottom">
           <p>&copy; 2026 Math101. All rights reserved.</p>
-          <div className="social-links">
-            <Link href="#">Twitter</Link>
-            <Link href="#">LinkedIn</Link>
-            <Link href="#">Instagram</Link>
-          </div>
         </div>
       </footer>
     </div>
