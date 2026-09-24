@@ -269,7 +269,6 @@ export default function QuizLibrary({ onSelectQuiz }: QuizLibraryProps) {
               <a href="#" className="ql-see-all-link" onClick={(e) => { e.preventDefault(); onSelectQuiz('all'); }}>
                 See all <span className="ql-arrow">&rarr;</span>
               </a>
-              <span className="ql-badge-early">Early access</span>
             </div>
           </div>
 
@@ -300,7 +299,6 @@ export default function QuizLibrary({ onSelectQuiz }: QuizLibraryProps) {
               <a href="#" className="ql-see-all-link" onClick={(e) => { e.preventDefault(); onSelectQuiz('all'); }}>
                 See all <span className="ql-arrow">&rarr;</span>
               </a>
-              <span className="ql-badge-early">Early access</span>
             </div>
           </div>
 

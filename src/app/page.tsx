@@ -432,36 +432,60 @@ export default function Home() {
               <div className="topic-details-container">
                 {selectedCard === 'learning' && (
                   <div className="topic-details-list">
-                    <div className="topic-detail-item">
+                    <div className="topic-detail-item cursor-pointer hover:bg-gray-50/50 transition-all hover:scale-[1.01]" onClick={() => { setSelectedTopicId('kalkulus'); setCurrentView('materi'); }}>
                       <div className="detail-number-box"><span>1</span></div>
                       <div className="detail-text-content">
                         <h4>Calculus</h4>
                         <p>Master the concepts of limits, derivatives, and integrals to solve complex mathematical problems.</p>
                       </div>
+                      <div style={{ marginLeft: 'auto', marginRight: '12px', display: 'flex', alignItems: 'center', paddingLeft: '16px', color: '#000000', marginTop: '28px' }}>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                          <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                      </div>
                     </div>
-                    <div className="topic-detail-item">
+                    <div className="topic-detail-item cursor-pointer hover:bg-gray-50/50 transition-all hover:scale-[1.01]" onClick={() => { setSelectedTopicId('geometri'); setCurrentView('materi'); }}>
                       <div className="detail-number-box"><span>2</span></div>
                       <div className="detail-text-content">
                         <h4>Geometry</h4>
                         <p>Explore properties of space, shapes, sizes, and relative positions of figures.</p>
                       </div>
-                    </div>
-                    <div className="topic-detail-item">
-                      <div className="detail-number-box"><span>3</span></div>
-                      <div className="detail-text-content">
-                        <h4>Trigonometri</h4>
-                        <p>Learn about relationships involving lengths and angles of triangles and their applications.</p>
+                      <div style={{ marginLeft: 'auto', marginRight: '12px', display: 'flex', alignItems: 'center', paddingLeft: '16px', color: '#000000', marginTop: '28px' }}>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                          <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
                       </div>
                     </div>
-                    <div className="topic-detail-item">
+                    <div className="topic-detail-item cursor-pointer hover:bg-gray-50/50 transition-all hover:scale-[1.01]" onClick={() => { setSelectedTopicId('trigonometri'); setCurrentView('materi'); }}>
+                      <div className="detail-number-box"><span>3</span></div>
+                      <div className="detail-text-content">
+                        <h4>Trigonometry</h4>
+                        <p>Learn about relationships involving lengths and angles of triangles and their applications.</p>
+                      </div>
+                      <div style={{ marginLeft: 'auto', marginRight: '12px', display: 'flex', alignItems: 'center', paddingLeft: '16px', color: '#000000', marginTop: '28px' }}>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                          <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                      </div>
+                    </div>
+                    <div className="topic-detail-item cursor-pointer hover:bg-gray-50/50 transition-all hover:scale-[1.01]" onClick={() => { setSelectedTopicId('statistika'); setCurrentView('materi'); }}>
                       <div className="detail-number-box"><span>4</span></div>
                       <div className="detail-text-content">
-                        <h4>Statika</h4>
+                        <h4>Statistics</h4>
                         <p>Understand the mechanics of bodies at rest and analyze loads on physical systems.</p>
+                      </div>
+                      <div style={{ marginLeft: 'auto', marginRight: '12px', display: 'flex', alignItems: 'center', paddingLeft: '16px', color: '#000000', marginTop: '28px' }}>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                          <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
                       </div>
                     </div>
                     <div className="topic-details-cta">
-                      <button className="btn-subscribe" onClick={() => setCurrentView('materi')}>Buka Materi</button>
+                      <button className="btn-subscribe" onClick={() => setCurrentView('materi')}>View All</button>
                     </div>
                   </div>
                 )}
@@ -664,6 +688,7 @@ export default function Home() {
             <MateriSection
               onStartSoloWithTopic={handleStartSoloWithTopic}
               onStartVersus={() => setCurrentView('versus')}
+              initialTopicId={selectedTopicId}
             />
           </div>
         )}

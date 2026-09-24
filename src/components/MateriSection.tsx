@@ -1,14 +1,15 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ALL_MATERI, MathTopic } from '../data/mathData';
 
 interface MateriSectionProps {
   onStartSoloWithTopic?: (topicId: string) => void;
   onStartVersus?: () => void;
+  initialTopicId?: string;
 }
 
-export default function MateriSection({ onStartSoloWithTopic }: MateriSectionProps) {
+export default function MateriSection({ onStartSoloWithTopic, initialTopicId }: MateriSectionProps) {
   const [activeModalTopic, setActiveModalTopic] = useState<MathTopic | null>(null);
   const [activeTab, setActiveTab] = useState<'konsep' | 'rumus' | 'contoh' | 'kuis'>('konsep');
   
@@ -23,6 +24,20 @@ export default function MateriSection({ onStartSoloWithTopic }: MateriSectionPro
     setActiveTab('konsep');
     setQuizAnswers({});
   };
+
+  useEffect(() => {
+    if (initialTopicId) {
+      const search = initialTopicId.toLowerCase();
+      const topic = ALL_MATERI.find(m => 
+        m.id === initialTopicId || 
+        m.title.toLowerCase().includes(search) ||
+        m.category.toLowerCase().includes(search)
+      );
+      if (topic) {
+        handleOpenTopic(topic);
+      }
+    }
+  }, [initialTopicId]);
 
   const handleCopyFormula = (formula: string, name: string) => {
     navigator.clipboard.writeText(`${name}: ${formula}`);
