@@ -561,18 +561,6 @@ export default function Home() {
                 )}
               </div>
             </section>
-            
-            <section className="cta-section">
-              <h2>Ready to master math?</h2>
-              <p>Join thousands of fun and challenging games with your friends. Explore various math challenges, solve puzzles, and test your skills in a fun learning environment.</p>
-              <button className="btn-subscribe" onClick={() => setCurrentView('menu')}>Get Started Now</button>
-              <div className="decoration math-symbol" style={{ top: '15%', right: '18%', color: '#ff6b6b', fontSize: '10rem', transform: 'rotate(25deg)' }}>+</div>
-              <div className="decoration math-symbol" style={{ bottom: '15%', left: '12%', color: '#00d0ff', fontSize: '12rem', transform: 'rotate(-15deg)' }}>×</div>
-              <div className="decoration math-symbol" style={{ top: '25%', left: '15%', color: '#ffd166', fontSize: '9rem', transform: 'rotate(-30deg)' }}>÷</div>
-              <div className="decoration math-symbol" style={{ bottom: '25%', right: '22%', color: '#06d6a0', fontSize: '8rem', transform: 'rotate(10deg)' }}>%</div>
-              <div className="decoration math-symbol" style={{ top: '65%', left: '8%', color: '#ef476f', fontSize: '10rem', transform: 'rotate(45deg)' }}>=</div>
-              <div className="decoration math-symbol" style={{ top: '50%', right: '8%', color: '#118ab2', fontSize: '9rem', transform: 'rotate(-20deg)' }}>−</div>
-            </section>
           </>
         )}
 

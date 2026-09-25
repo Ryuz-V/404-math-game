@@ -22,33 +22,13 @@ export default function QuizLibrary({ onSelectQuiz }: QuizLibraryProps) {
   return (
     <div style={{ backgroundColor: '#fafafa', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', color: '#111', height: '100vh', overflow: 'hidden' }}>
       <div style={{ backgroundColor: 'white', padding: '16px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #e5e7eb', flexShrink: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <div style={{ width: '36px', height: '36px', borderRadius: '8px', backgroundColor: '#ec4899', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '18px' }}>FS</div>
-          <h1 style={{ fontSize: '20px', fontWeight: 'bold', letterSpacing: '-0.5px', margin: 0 }}>Fikri Studio</h1>
-          <div style={{ display: 'flex', alignItems: 'center', marginLeft: '16px' }}>
-            <div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: '#facc15', border: '2px solid white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 'bold', zIndex: 30, marginLeft: '-8px' }}>RF</div>
-            <div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: '#f3f4f6', border: '2px solid white', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#6b7280', zIndex: 20, marginLeft: '-8px' }}>👤</div>
-            <div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: '#f3f4f6', border: '2px solid white', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#6b7280', zIndex: 10, marginLeft: '-8px' }}>👤</div>
-            <div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: 'white', border: '2px dashed #d1d5db', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#9ca3af', fontSize: '14px', cursor: 'pointer', marginLeft: '-8px' }}>+</div>
-          </div>
-        </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <button style={{ padding: '8px 16px', backgroundColor: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', fontWeight: 'bold', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '8px', color: '#1f2937', cursor: 'pointer', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }}>Upload</button>
           <button style={{ padding: '8px 16px', backgroundColor: '#2a1a6b', color: 'white', border: 'none', borderRadius: '8px', fontWeight: 'bold', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }}>+ New Content</button>
         </div>
       </div>
-      <div style={{ backgroundColor: 'white', padding: '12px 32px 0 32px', borderBottom: '1px solid #e5e7eb', display: 'flex', alignItems: 'center', gap: '32px', fontSize: '13px', fontWeight: 'bold', color: '#6b7280', flexShrink: 0 }}>
-        <div style={{ paddingBottom: '12px', cursor: 'pointer' }}>Folder</div>
-        <div style={{ paddingBottom: '12px', cursor: 'pointer' }}>Page</div>
-        <div style={{ paddingBottom: '12px', cursor: 'pointer' }}>Course</div>
-        <div style={{ paddingBottom: '12px', cursor: 'pointer', color: '#111827', borderBottom: '2px solid #2a1a6b' }}>Quiz</div>
-        <div style={{ paddingBottom: '12px', cursor: 'pointer' }}>Assignment</div>
-        <div style={{ paddingBottom: '12px', cursor: 'pointer' }}>Learning Path</div>
-        <div style={{ paddingBottom: '12px', cursor: 'pointer' }}>Wiki</div>
-      </div>
       <div style={{ flex: 1, overflowY: 'auto', backgroundColor: '#fafafa' }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%', padding: '32px' }}>
-          
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '32px' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -67,18 +47,6 @@ export default function QuizLibrary({ onSelectQuiz }: QuizLibraryProps) {
                   <div style={{ padding: '6px 12px', backgroundColor: 'white', borderRadius: '6px', boxShadow: '0 1px 2px rgba(0,0,0,0.05)', cursor: 'pointer', color: '#1f2937', fontWeight: 'bold', fontSize: '12px' }}>Grid</div>
                   <div style={{ padding: '6px 12px', color: '#6b7280', cursor: 'pointer', fontWeight: 'bold', fontSize: '12px' }}>List</div>
                 </div>
-              </div>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginTop: '8px' }}>
-              <span style={{ fontWeight: 800, fontSize: '13px', color: '#111827' }}>100 content</span>
-              <div style={{ position: 'relative' }}>
-                <input 
-                  type="text" 
-                  placeholder="Search..." 
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  style={{ padding: '6px 16px', fontSize: '14px', border: 'none', backgroundColor: 'transparent', outline: 'none', color: '#374151', fontWeight: 'bold', width: '256px' }} 
-                />
               </div>
             </div>
           </div>
