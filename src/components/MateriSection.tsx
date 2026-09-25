@@ -9,30 +9,6 @@ interface MateriSectionProps {
   initialTopicId?: string;
 }
 
-const CircularProgress = ({ value, color }: { value: number, color: string }) => {
-  return (
-    <div className="relative w-8 h-8">
-      <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-        <path
-          className="text-gray-100"
-          strokeWidth="3.5"
-          stroke="currentColor"
-          fill="none"
-          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-        />
-        <path
-          stroke={color}
-          strokeWidth="3.5"
-          strokeDasharray={`${value}, 100`}
-          strokeLinecap="round"
-          fill="none"
-          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-        />
-      </svg>
-    </div>
-  );
-};
-
 const getDeterministicStats = (id: string) => {
   let sum = 0;
   for (let i = 0; i < id.length; i++) sum += id.charCodeAt(i);
@@ -134,33 +110,27 @@ export default function MateriSection({ onStartSoloWithTopic, initialTopicId }: 
           <div className="resources-grid">
             {filteredData.map((materi) => {
               const stats = getDeterministicStats(materi.id);
-              const questionCount = materi.quickQuiz?.length || 10;
-              
-              const tags = [
-                materi.category.includes('&') ? materi.category.split('&')[0].trim() : materi.category,
-                materi.difficulty === 'Easy' ? 'Not Urgent' : materi.difficulty === 'Medium' ? 'Neutral' : 'Urgent'
-              ];
 
               return (
                 <div
                   key={materi.id}
                   onClick={() => handleOpenTopic(materi)}
                   className="flex flex-col bg-white p-3 cursor-pointer transition-transform hover:-translate-y-1"
-                  style={{ 
-                    borderRadius: '20px', 
+                  style={{
+                    borderRadius: '20px',
                     boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
                     border: '1px solid #f9fafb'
                   }}
                 >
                   {/* Top Colored Banner */}
-                  <div 
+                  <div
                     className="relative h-32 rounded-[14px] overflow-hidden shrink-0 mb-3"
                     style={{ backgroundColor: materi.color }}
                   >
                     <div className="absolute top-3 left-3 bg-[#4a4575] text-white text-[10.5px] font-bold px-2.5 py-1 rounded shadow-sm">
                       {stats.enrolled} Enrolled
                     </div>
-                    
+
                     <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none overflow-hidden">
                       <span className="text-white text-9xl font-black italic tracking-tighter select-none" style={{ fontFamily: 'Georgia, serif', transform: 'rotate(-5deg) translateY(10px) translateX(-15px)' }}>
                         Aa
@@ -169,63 +139,48 @@ export default function MateriSection({ onStartSoloWithTopic, initialTopicId }: 
                   </div>
 
                   {/* Card Body */}
-                  <div className="flex flex-col grow px-1">
-                    <h3 className="font-extrabold text-[15px] leading-[1.3] text-gray-900 mb-4 line-clamp-2 min-h-[40px]">
+                  <div className="flex flex-col grow px-1 pb-2">
+                    <h3 className="font-extrabold text-[15px] leading-[1.3] text-gray-900 mb-2 line-clamp-2 min-h-[40px]">
                       {materi.title}
                     </h3>
-
-                    {/* Rings and Stats */}
-                    <div className="flex gap-8 mb-5">
-                      <div className="flex flex-col gap-1.5">
-                        <CircularProgress value={stats.accuracy} color="#059669" />
-                        <span className="text-[10px] text-gray-500 font-bold">Accuracy</span>
-                        <div className="flex items-center gap-1">
-                          <span className="text-[13px] font-black text-gray-900">{stats.accuracy}%</span>
-                          <span className="text-[9px] text-gray-400 border border-gray-200 rounded-full w-3.5 h-3.5 flex items-center justify-center font-bold">i</span>
-                        </div>
-                      </div>
-                      <div className="flex flex-col gap-1.5">
-                        <CircularProgress value={stats.completion} color="#059669" />
-                        <span className="text-[10px] text-gray-500 font-bold">Completion Rate</span>
-                        <div className="flex items-center gap-1">
-                          <span className="text-[13px] font-black text-gray-900">{stats.completion}%</span>
-                          <span className="text-[9px] text-gray-400 border border-gray-200 rounded-full w-3.5 h-3.5 flex items-center justify-center font-bold">i</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Tags Row */}
-                    <div className="flex items-center justify-between mb-4 mt-auto">
-                      <div className="flex gap-2">
-                        {tags.map((tag, i) => (
-                          <span key={i} className="bg-gray-50 text-gray-500 text-[10px] font-bold px-2.5 py-1 rounded-md border border-gray-100">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                      <div className="w-7 h-7 bg-gray-50 rounded-full border border-gray-200 flex items-center justify-center text-gray-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-                          <path fillRule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                    </div>
                     
-                    {/* Separator */}
-                    <div className="border-t border-gray-100 mb-3 -mx-1"></div>
+                    {/* Description */}
+                    <p className="text-gray-500 text-[11px] font-medium leading-relaxed mb-4 flex-grow line-clamp-3">
+                      {materi.summary}
+                    </p>
 
-                    {/* Footer */}
-                    <div className="flex items-center justify-between text-[11px] text-gray-400 font-bold">
-                      <div className="flex items-center gap-1.5">
-                        <span>Edited {stats.timeAgo}h ago</span>
-                        <span className="text-gray-300">•</span>
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-[#a5b4fc] text-[15px] leading-none">💬</span> 
-                          <span className="text-gray-600">{questionCount} Question</span>
-                        </div>
+                    {/* Dashed Separator */}
+                    <div className="border-t border-dashed border-gray-200 mb-3"></div>
+
+                    {/* Counts */}
+                    <div className="flex items-center gap-4 text-[10px] font-bold text-gray-500 mb-4">
+                      <div className="flex items-center gap-1">
+                        <span className="text-orange-400 text-[11px]">⚡</span> 
+                        <span>{materi.keyFormulas?.length || 0} Key Formulas</span>
                       </div>
-                      <div className="text-gray-400 hover:text-gray-600 tracking-[2px] leading-none mb-1 cursor-pointer font-black text-sm">
-                        ...
+                      <div className="flex items-center gap-1">
+                        <span className="text-yellow-500 text-[11px]">💡</span> 
+                        <span>{materi.examples?.length || 0} Worked Examples</span>
                       </div>
+                    </div>
+
+                    {/* Buttons */}
+                    <div className="grid grid-cols-2 gap-2 mt-auto">
+                      <button 
+                        onClick={(e) => { e.stopPropagation(); handleOpenTopic(materi); }}
+                        className="bg-black text-white text-[10px] font-bold py-2 rounded-lg border-[1.5px] border-black flex items-center justify-center gap-1.5 hover:bg-gray-800 transition-colors"
+                      >
+                        <span>📖</span> Study Material
+                      </button>
+                      <button 
+                        onClick={(e) => { 
+                          e.stopPropagation(); 
+                          if (onStartSoloWithTopic) onStartSoloWithTopic(materi.id); 
+                        }}
+                        className="bg-[#ffdc00] text-black text-[10px] font-extrabold py-2 rounded-lg border-[1.5px] border-black flex items-center justify-center gap-1.5 hover:bg-[#e6c600] transition-colors"
+                      >
+                        <span>🎯</span> Take Quiz
+                      </button>
                     </div>
                   </div>
                 </div>
