@@ -9,10 +9,46 @@ interface MateriSectionProps {
   initialTopicId?: string;
 }
 
+const CircularProgress = ({ value, color }: { value: number, color: string }) => {
+  return (
+    <div className="relative w-8 h-8">
+      <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+        <path
+          className="text-gray-100"
+          strokeWidth="3.5"
+          stroke="currentColor"
+          fill="none"
+          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+        />
+        <path
+          stroke={color}
+          strokeWidth="3.5"
+          strokeDasharray={`${value}, 100`}
+          strokeLinecap="round"
+          fill="none"
+          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+        />
+      </svg>
+    </div>
+  );
+};
+
+const getDeterministicStats = (id: string) => {
+  let sum = 0;
+  for (let i = 0; i < id.length; i++) sum += id.charCodeAt(i);
+  return {
+    enrolled: (sum % 50) + 10,
+    accuracy: (sum % 60) + 40,
+    completion: (sum % 40) + 60,
+    timeAgo: (sum % 24) + 1
+  };
+};
+
+
 export default function MateriSection({ onStartSoloWithTopic, initialTopicId }: MateriSectionProps) {
   const [activeModalTopic, setActiveModalTopic] = useState<MathTopic | null>(null);
   const [activeTab, setActiveTab] = useState<'konsep' | 'rumus' | 'contoh' | 'kuis'>('konsep');
-  
+
   // Interactive Mini-Quiz state inside modal
   const [quizAnswers, setQuizAnswers] = useState<{ [qIdx: number]: number }>({});
   const [copiedFormula, setCopiedFormula] = useState<string | null>(null);
@@ -28,8 +64,8 @@ export default function MateriSection({ onStartSoloWithTopic, initialTopicId }: 
   useEffect(() => {
     if (initialTopicId) {
       const search = initialTopicId.toLowerCase();
-      const topic = ALL_MATERI.find(m => 
-        m.id === initialTopicId || 
+      const topic = ALL_MATERI.find(m =>
+        m.id === initialTopicId ||
         m.title.toLowerCase().includes(search) ||
         m.category.toLowerCase().includes(search)
       );
@@ -69,7 +105,7 @@ export default function MateriSection({ onStartSoloWithTopic, initialTopicId }: 
     <div className="resources-page-wrapper">
       {/* Main Content Area */}
       <div className="resources-main-content">
-        
+
         {/* Section Header */}
         <div className="resources-section-header">
           <h2 className="resources-section-title">
@@ -96,68 +132,105 @@ export default function MateriSection({ onStartSoloWithTopic, initialTopicId }: 
           </div>
         ) : (
           <div className="resources-grid">
-            {filteredData.map((materi) => (
-              <div
-                key={materi.id}
-                onClick={() => handleOpenTopic(materi)}
-                className="resource-card"
-              >
-                {/* Card Banner */}
-                <div 
-                  className="resource-card-banner"
-                  style={{
-                    backgroundColor: `${materi.color}33`,
-                    background: `linear-gradient(135deg, ${materi.color}55 0%, #ffffff 100%)`
+            {filteredData.map((materi) => {
+              const stats = getDeterministicStats(materi.id);
+              const questionCount = materi.quickQuiz?.length || 10;
+              
+              const tags = [
+                materi.category.includes('&') ? materi.category.split('&')[0].trim() : materi.category,
+                materi.difficulty === 'Easy' ? 'Not Urgent' : materi.difficulty === 'Medium' ? 'Neutral' : 'Urgent'
+              ];
+
+              return (
+                <div
+                  key={materi.id}
+                  onClick={() => handleOpenTopic(materi)}
+                  className="flex flex-col bg-white p-3 cursor-pointer transition-transform hover:-translate-y-1"
+                  style={{ 
+                    borderRadius: '20px', 
+                    boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
+                    border: '1px solid #f9fafb'
                   }}
                 >
-                  <div>
-                    <div style={{ display: 'flex', gap: '0.45rem' }}>
-                      <span className="resource-card-tag" style={{ background: '#000', color: '#fff' }}>
-                        Grade {materi.grade}
+                  {/* Top Colored Banner */}
+                  <div 
+                    className="relative h-32 rounded-[14px] overflow-hidden shrink-0 mb-3"
+                    style={{ backgroundColor: materi.color }}
+                  >
+                    <div className="absolute top-3 left-3 bg-[#4a4575] text-white text-[10.5px] font-bold px-2.5 py-1 rounded shadow-sm">
+                      {stats.enrolled} Enrolled
+                    </div>
+                    
+                    <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none overflow-hidden">
+                      <span className="text-white text-9xl font-black italic tracking-tighter select-none" style={{ fontFamily: 'Georgia, serif', transform: 'rotate(-5deg) translateY(10px) translateX(-15px)' }}>
+                        Aa
                       </span>
-                      <span className="resource-card-tag">{materi.category}</span>
                     </div>
                   </div>
-                  <div className="resource-card-icon">
-                    {materi.icon}
+
+                  {/* Card Body */}
+                  <div className="flex flex-col grow px-1">
+                    <h3 className="font-extrabold text-[15px] leading-[1.3] text-gray-900 mb-4 line-clamp-2 min-h-[40px]">
+                      {materi.title}
+                    </h3>
+
+                    {/* Rings and Stats */}
+                    <div className="flex gap-8 mb-5">
+                      <div className="flex flex-col gap-1.5">
+                        <CircularProgress value={stats.accuracy} color="#059669" />
+                        <span className="text-[10px] text-gray-500 font-bold">Accuracy</span>
+                        <div className="flex items-center gap-1">
+                          <span className="text-[13px] font-black text-gray-900">{stats.accuracy}%</span>
+                          <span className="text-[9px] text-gray-400 border border-gray-200 rounded-full w-3.5 h-3.5 flex items-center justify-center font-bold">i</span>
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-1.5">
+                        <CircularProgress value={stats.completion} color="#059669" />
+                        <span className="text-[10px] text-gray-500 font-bold">Completion Rate</span>
+                        <div className="flex items-center gap-1">
+                          <span className="text-[13px] font-black text-gray-900">{stats.completion}%</span>
+                          <span className="text-[9px] text-gray-400 border border-gray-200 rounded-full w-3.5 h-3.5 flex items-center justify-center font-bold">i</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Tags Row */}
+                    <div className="flex items-center justify-between mb-4 mt-auto">
+                      <div className="flex gap-2">
+                        {tags.map((tag, i) => (
+                          <span key={i} className="bg-gray-50 text-gray-500 text-[10px] font-bold px-2.5 py-1 rounded-md border border-gray-100">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="w-7 h-7 bg-gray-50 rounded-full border border-gray-200 flex items-center justify-center text-gray-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                          <path fillRule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                    </div>
+                    
+                    {/* Separator */}
+                    <div className="border-t border-gray-100 mb-3 -mx-1"></div>
+
+                    {/* Footer */}
+                    <div className="flex items-center justify-between text-[11px] text-gray-400 font-bold">
+                      <div className="flex items-center gap-1.5">
+                        <span>Edited {stats.timeAgo}h ago</span>
+                        <span className="text-gray-300">•</span>
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-[#a5b4fc] text-[15px] leading-none">💬</span> 
+                          <span className="text-gray-600">{questionCount} Question</span>
+                        </div>
+                      </div>
+                      <div className="text-gray-400 hover:text-gray-600 tracking-[2px] leading-none mb-1 cursor-pointer font-black text-sm">
+                        ...
+                      </div>
+                    </div>
                   </div>
                 </div>
-
-                {/* Card Body */}
-                <div className="resource-card-body">
-                  <h3 className="resource-card-title">{materi.title}</h3>
-                  <p className="resource-card-desc">{materi.summary}</p>
-
-                  <div className="resource-card-stats">
-                    <span>⚡ {materi.keyFormulas.length} Key Formulas</span>
-                    <span>💡 {materi.examples.length} Worked Examples</span>
-                  </div>
-
-                  <div className="resource-card-actions">
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleOpenTopic(materi);
-                      }}
-                      className="btn-study-action"
-                    >
-                      📖 Study Material
-                    </button>
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        if (onStartSoloWithTopic) onStartSoloWithTopic(materi.id);
-                      }}
-                      className="btn-quiz-action"
-                    >
-                      🎯 Take Quiz
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>
@@ -167,7 +240,7 @@ export default function MateriSection({ onStartSoloWithTopic, initialTopicId }: 
           ========================================================================= */}
       {activeModalTopic && (
         <div className="reader-modal-overlay" onClick={() => setActiveModalTopic(null)}>
-          <div 
+          <div
             className="reader-modal-card"
             onClick={(e) => e.stopPropagation()}
           >
@@ -228,7 +301,7 @@ export default function MateriSection({ onStartSoloWithTopic, initialTopicId }: 
             </div>
 
             {/* Modal Body with guaranteed scrolling */}
-            <div 
+            <div
               className="reader-modal-body"
               style={{
                 overflowY: 'auto',
@@ -239,7 +312,7 @@ export default function MateriSection({ onStartSoloWithTopic, initialTopicId }: 
                 WebkitOverflowScrolling: 'touch'
               }}
             >
-              
+
               {/* TAB 1: CONCEPTS & THEORY */}
               {activeTab === 'konsep' && (
                 <div>
@@ -274,8 +347,8 @@ export default function MateriSection({ onStartSoloWithTopic, initialTopicId }: 
                   </h3>
 
                   {activeModalTopic.coreConcepts.map((section, idx) => (
-                    <div 
-                      key={idx} 
+                    <div
+                      key={idx}
                       style={{
                         background: '#f8fafc',
                         border: '2.5px solid #000',
@@ -438,7 +511,7 @@ export default function MateriSection({ onStartSoloWithTopic, initialTopicId }: 
                     const isCorrect = selected === q.correctIndex;
 
                     return (
-                      <div 
+                      <div
                         key={qIdx}
                         style={{
                           background: '#f8fafc',
