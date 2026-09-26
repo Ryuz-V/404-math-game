@@ -107,10 +107,10 @@ export default function MateriSection({ onStartSoloWithTopic, initialTopicId }: 
                 <div 
                   key={materi.id} 
                   onClick={() => handleOpenTopic(materi)} 
-                  style={{ backgroundColor: 'white', borderRadius: '20px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', border: '1px solid #f3f4f6', overflow: 'hidden', cursor: 'pointer', display: 'flex', flexDirection: 'column', transition: 'all 0.2s ease', fontFamily: 'sans-serif' }}
+                  style={{ backgroundColor: 'white', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', border: '1px solid #f3f4f6', overflow: 'hidden', cursor: 'pointer', display: 'flex', flexDirection: 'column', transition: 'all 0.2s ease', fontFamily: 'sans-serif' }}
                 >
                   {/* Fikri Studio Banner */}
-                  <div style={{ height: '140px', margin: '8px', borderRadius: '16px 16px 4px 4px', backgroundColor: materi.color || '#fcd34d', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <div style={{ height: '140px', margin: '8px', borderRadius: '8px 8px 4px 4px', backgroundColor: materi.color || '#fcd34d', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <div style={{ position: 'absolute', top: '10px', left: '10px', backgroundColor: 'rgba(49, 46, 129, 0.8)', color: 'white', fontSize: '10px', fontWeight: 'bold', padding: '4px 8px', borderRadius: '6px', display: 'flex', alignItems: 'center', gap: '6px', boxShadow: '0 1px 2px rgba(0,0,0,0.1)' }}>
                       {stats.enrolled} Enrolled
                     </div>

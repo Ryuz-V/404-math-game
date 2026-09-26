@@ -20,41 +20,43 @@ export default function QuizLibrary({ onSelectQuiz }: QuizLibraryProps) {
     </svg>
   );
   return (
-    <div style={{ backgroundColor: '#fafafa', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', color: '#111', height: '100vh', overflow: 'hidden' }}>
-      <div style={{ backgroundColor: 'white', padding: '16px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #e5e7eb', flexShrink: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <button style={{ padding: '8px 16px', backgroundColor: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', fontWeight: 'bold', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '8px', color: '#1f2937', cursor: 'pointer', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }}>Upload</button>
-          <button style={{ padding: '8px 16px', backgroundColor: '#2a1a6b', color: 'white', border: 'none', borderRadius: '8px', fontWeight: 'bold', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }}>+ New Content</button>
-        </div>
-      </div>
-      <div style={{ flex: 1, overflowY: 'auto', backgroundColor: '#fafafa' }}>
-        <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%', padding: '32px' }}>
+    <div style={{ backgroundColor: '#fafafa', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', color: '#111', minHeight: '100vh' }}>
+      <div style={{ flex: 1, backgroundColor: '#fafafa' }}>
+        <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%', padding: '32px 32px 120px 32px' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '32px' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', backgroundColor: '#eef2ff', color: '#4338ca', padding: '6px 12px', borderRadius: '8px', fontSize: '12px', fontWeight: 'bold', border: '1px solid #e0e7ff' }}>
-                  Total Question: 5 or more 
-                  <span style={{ marginLeft: '4px', cursor: 'pointer' }}>x</span>
-                </div>
-                <button style={{ color: '#4f46e5', fontSize: '12px', fontWeight: 'bold', background: 'none', border: 'none', cursor: 'pointer', padding: '0 8px' }}>Reset</button>
-                <div style={{ width: '1px', height: '20px', backgroundColor: '#d1d5db', margin: '0 4px' }}></div>
-                <button style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#374151', fontSize: '12px', fontWeight: 'bold', background: 'none', border: 'none', cursor: 'pointer' }}>Add Filter</button>
-              </div>
-              
               <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                <button style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#374151', fontSize: '12px', fontWeight: 'bold', background: 'none', border: 'none', cursor: 'pointer' }}>Date Created</button>
                 <div style={{ display: 'flex', alignItems: 'center', backgroundColor: '#f3f4f6', padding: '4px', borderRadius: '8px' }}>
                   <div style={{ padding: '6px 12px', backgroundColor: 'white', borderRadius: '6px', boxShadow: '0 1px 2px rgba(0,0,0,0.05)', cursor: 'pointer', color: '#1f2937', fontWeight: 'bold', fontSize: '12px' }}>Grid</div>
                   <div style={{ padding: '6px 12px', color: '#6b7280', cursor: 'pointer', fontWeight: 'bold', fontSize: '12px' }}>List</div>
                 </div>
               </div>
+              
+              <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                <button style={{ padding: '8px 16px', backgroundColor: 'white', border: '2px solid #000', borderRadius: '6px', fontWeight: 'bold', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '8px', color: '#000', cursor: 'pointer', boxShadow: '4px 4px 0px #000', transition: 'all 0.2s ease' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translate(-2px, -2px)'; e.currentTarget.style.boxShadow = '6px 6px 0px #000'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'translate(0px, 0px)'; e.currentTarget.style.boxShadow = '4px 4px 0px #000'; }}
+                  onMouseDown={(e) => { e.currentTarget.style.transform = 'translate(4px, 4px)'; e.currentTarget.style.boxShadow = '0px 0px 0px #000'; }}
+                  onMouseUp={(e) => { e.currentTarget.style.transform = 'translate(-2px, -2px)'; e.currentTarget.style.boxShadow = '6px 6px 0px #000'; }}
+                >
+                  Upload
+                </button>
+                <button style={{ padding: '8px 16px', backgroundColor: '#2a1a6b', color: 'white', border: '2px solid #000', borderRadius: '6px', fontWeight: 'bold', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', boxShadow: '4px 4px 0px #000', transition: 'all 0.2s ease' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translate(-2px, -2px)'; e.currentTarget.style.boxShadow = '6px 6px 0px #000'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'translate(0px, 0px)'; e.currentTarget.style.boxShadow = '4px 4px 0px #000'; }}
+                  onMouseDown={(e) => { e.currentTarget.style.transform = 'translate(4px, 4px)'; e.currentTarget.style.boxShadow = '0px 0px 0px #000'; }}
+                  onMouseUp={(e) => { e.currentTarget.style.transform = 'translate(-2px, -2px)'; e.currentTarget.style.boxShadow = '6px 6px 0px #000'; }}
+                >
+                  + New Content
+                </button>
+              </div>
             </div>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '24px' }}>
             {mockCards.map((card) => (
-              <div key={card.id} onClick={() => onSelectQuiz(card.id)} style={{ backgroundColor: 'white', borderRadius: '20px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', border: '1px solid #f3f4f6', overflow: 'hidden', cursor: 'pointer', display: 'flex', flexDirection: 'column', transition: 'all 0.2s ease' }}>
+              <div key={card.id} onClick={() => onSelectQuiz(card.id)} style={{ backgroundColor: 'white', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', border: '1px solid #f3f4f6', overflow: 'hidden', cursor: 'pointer', display: 'flex', flexDirection: 'column', transition: 'all 0.2s ease' }}>
                 
-                <div style={{ height: '140px', margin: '8px', borderRadius: '16px 16px 4px 4px', backgroundColor: card.bannerColor, position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ height: '140px', margin: '8px', borderRadius: '8px 8px 4px 4px', backgroundColor: card.bannerColor, position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <div style={{ position: 'absolute', top: '10px', left: '10px', backgroundColor: 'rgba(49, 46, 129, 0.8)', color: 'white', fontSize: '10px', fontWeight: 'bold', padding: '4px 8px', borderRadius: '6px', display: 'flex', alignItems: 'center', gap: '6px', boxShadow: '0 1px 2px rgba(0,0,0,0.1)' }}>
                     {card.enrolled} Enrolled
                   </div>
@@ -68,7 +70,7 @@ export default function QuizLibrary({ onSelectQuiz }: QuizLibraryProps) {
                      <div style={{ position: 'absolute', fontWeight: 900, fontSize: '60px', color: 'rgba(49, 46, 129, 0.1)', transform: 'rotate(-12deg)', left: '32px' }}>Aa</div>
                   </div>
                 </div>
-                <div style={{ padding: '16px 20px 8px 20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                <div style={{ padding: '16px 20px 20px 20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
                   <h3 style={{ fontWeight: 800, fontSize: '16px', lineHeight: 1.4, color: '#111827', marginBottom: '20px', height: '44px', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
                     {card.title}
                   </h3>
