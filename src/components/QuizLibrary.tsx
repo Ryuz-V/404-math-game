@@ -5,6 +5,8 @@ interface QuizLibraryProps {
 }
 export default function QuizLibrary({ onSelectQuiz }: QuizLibraryProps) {
   const [searchQuery, setSearchQuery] = useState('');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  
   const mockCards = [
     { id: '1', enrolled: 10, title: 'Mastering UI Design for Impactful Solutions', accuracy: 40, completion: 60, tags: ['UI/UX', 'Not Urgent'], edited: '2h ago', questions: 10, bannerColor: '#fcd34d' },
     { id: '2', enrolled: 21, title: 'A Symphony of Colors in UI Design', accuracy: 20, completion: 80, tags: ['Instructional Design', 'Not Urgent'], edited: '8h ago', questions: 15, bannerColor: '#bae6fd' },
@@ -23,12 +25,28 @@ export default function QuizLibrary({ onSelectQuiz }: QuizLibraryProps) {
     <div style={{ backgroundColor: '#fafafa', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', color: '#111', minHeight: '100vh' }}>
       <div style={{ flex: 1, backgroundColor: '#fafafa' }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%', padding: '32px 32px 120px 32px' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '32px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '32px', borderBottom: '2px solid #000', paddingBottom: '24px' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', backgroundColor: '#f3f4f6', padding: '4px', borderRadius: '8px' }}>
-                  <div style={{ padding: '6px 12px', backgroundColor: 'white', borderRadius: '6px', boxShadow: '0 1px 2px rgba(0,0,0,0.05)', cursor: 'pointer', color: '#1f2937', fontWeight: 'bold', fontSize: '12px' }}>Grid</div>
-                  <div style={{ padding: '6px 12px', color: '#6b7280', cursor: 'pointer', fontWeight: 'bold', fontSize: '12px' }}>List</div>
+                <div 
+                  style={{ display: 'flex', alignItems: 'center', border: '2px solid #000', borderRadius: '6px', boxShadow: '4px 4px 0px #000', overflow: 'hidden', cursor: 'pointer', transition: 'all 0.2s ease', backgroundColor: 'white' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translate(-2px, -2px)'; e.currentTarget.style.boxShadow = '6px 6px 0px #000'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'translate(0px, 0px)'; e.currentTarget.style.boxShadow = '4px 4px 0px #000'; }}
+                  onMouseDown={(e) => { e.currentTarget.style.transform = 'translate(4px, 4px)'; e.currentTarget.style.boxShadow = '0px 0px 0px #000'; }}
+                  onMouseUp={(e) => { e.currentTarget.style.transform = 'translate(-2px, -2px)'; e.currentTarget.style.boxShadow = '6px 6px 0px #000'; }}
+                >
+                  <div 
+                    onClick={() => setViewMode('grid')}
+                    style={{ padding: '8px 16px', backgroundColor: viewMode === 'grid' ? '#2a1a6b' : 'transparent', color: viewMode === 'grid' ? 'white' : '#000', fontWeight: 'bold', fontSize: '14px', borderRight: '2px solid #000', transition: 'all 0.2s', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  >
+                    Grid
+                  </div>
+                  <div 
+                    onClick={() => setViewMode('list')}
+                    style={{ padding: '8px 16px', backgroundColor: viewMode === 'list' ? '#2a1a6b' : 'transparent', color: viewMode === 'list' ? 'white' : '#000', fontWeight: 'bold', fontSize: '14px', transition: 'all 0.2s', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  >
+                    List
+                  </div>
                 </div>
               </div>
               
@@ -52,9 +70,23 @@ export default function QuizLibrary({ onSelectQuiz }: QuizLibraryProps) {
               </div>
             </div>
           </div>
+          
+          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '24px' }}>
+            <h1 style={{ fontSize: '28px', fontWeight: 700, color: '#000', margin: 0, letterSpacing: '-0.02em' }}>
+              Recomendation
+            </h1>
+            <a href="#" style={{ fontSize: '16px', fontWeight: 600, color: '#000', textDecoration: 'underline', textUnderlineOffset: '4px', display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
+              Lihat semua
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </div>
+
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '24px' }}>
             {mockCards.map((card) => (
-              <div key={card.id} onClick={() => onSelectQuiz(card.id)} style={{ backgroundColor: 'white', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', border: '1px solid #f3f4f6', overflow: 'hidden', cursor: 'pointer', display: 'flex', flexDirection: 'column', transition: 'all 0.2s ease' }}>
+              <div key={card.id} onClick={() => onSelectQuiz(card.id)} style={{ backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', border: '1px solid #f3f4f6', overflow: 'hidden', cursor: 'pointer', display: 'flex', flexDirection: 'column', transition: 'all 0.2s ease' }}>
                 
                 <div style={{ height: '140px', margin: '8px', borderRadius: '8px 8px 4px 4px', backgroundColor: card.bannerColor, position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <div style={{ position: 'absolute', top: '10px', left: '10px', backgroundColor: 'rgba(49, 46, 129, 0.8)', color: 'white', fontSize: '10px', fontWeight: 'bold', padding: '4px 8px', borderRadius: '6px', display: 'flex', alignItems: 'center', gap: '6px', boxShadow: '0 1px 2px rgba(0,0,0,0.1)' }}>

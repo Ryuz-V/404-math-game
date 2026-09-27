@@ -107,7 +107,7 @@ export default function MateriSection({ onStartSoloWithTopic, initialTopicId }: 
                 <div 
                   key={materi.id} 
                   onClick={() => handleOpenTopic(materi)} 
-                  style={{ backgroundColor: 'white', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', border: '1px solid #f3f4f6', overflow: 'hidden', cursor: 'pointer', display: 'flex', flexDirection: 'column', transition: 'all 0.2s ease', fontFamily: 'sans-serif' }}
+                  style={{ backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', border: '1px solid #f3f4f6', overflow: 'hidden', cursor: 'pointer', display: 'flex', flexDirection: 'column', transition: 'all 0.2s ease' }}
                 >
                   {/* Fikri Studio Banner */}
                   <div style={{ height: '140px', margin: '8px', borderRadius: '8px 8px 4px 4px', backgroundColor: materi.color || '#fcd34d', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
