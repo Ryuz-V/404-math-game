@@ -12,6 +12,7 @@ import VersusGame from '../components/VersusGame';
 import LeaderboardSection from '../components/LeaderboardSection';
 import AboutSection from '../components/AboutSection';
 import AuthModal from '../components/AuthModal';
+import Login from '../components/login';
 import QuizLibrary from '../components/QuizLibrary';
 import { MATERI_KELAS_12, MATH_QUESTIONS } from '../data/mathData';
 
@@ -748,9 +749,14 @@ export default function Home() {
       </main>
 
       {/* User Profile & Auth Modal */}
-      <AuthModal
-        key={`${isAuthOpen ? 'open' : 'closed'}-${authMode}-${userProfile.name}-${userProfile.avatar}`}
-        isOpen={isAuthOpen}
+      {isAuthOpen && authMode === 'login' ? (
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999 }}>
+          <Login onClose={() => setIsAuthOpen(false)} />
+        </div>
+      ) : (
+        <AuthModal
+          key={`${isAuthOpen ? 'open' : 'closed'}-${authMode}-${userProfile.name}-${userProfile.avatar}`}
+          isOpen={isAuthOpen}
         onClose={() => setIsAuthOpen(false)}
         mode={authMode}
         isLoggedIn={isLoggedIn}
@@ -759,6 +765,7 @@ export default function Home() {
         onLoginSuccess={handleLoginSuccess}
         onLogout={handleLogout}
       />
+      )}
 
       {/* ORIGINAL FOOTER (Matching Screenshot 5) */}
       <footer className="footer">

@@ -8,12 +8,12 @@ export default function QuizLibrary({ onSelectQuiz }: QuizLibraryProps) {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   
   const mockCards = [
-    { id: '1', enrolled: 10, title: 'Mastering UI Design for Impactful Solutions', accuracy: 40, completion: 60, tags: ['UI/UX', 'Not Urgent'], edited: '2h ago', questions: 10, bannerColor: '#fcd34d' },
-    { id: '2', enrolled: 21, title: 'A Symphony of Colors in UI Design', accuracy: 20, completion: 80, tags: ['Instructional Design', 'Not Urgent'], edited: '8h ago', questions: 15, bannerColor: '#bae6fd' },
-    { id: '3', enrolled: 18, title: 'Bridging Users and UI in Design Harmony', accuracy: 100, completion: 100, tags: ['Experience Design', 'Urgent'], edited: '23h ago', questions: 25, bannerColor: '#d8b4fe' },
-    { id: '4', enrolled: 9, title: 'Creating Engaging Learning Journeys: UI/UX Best Practices', accuracy: 20, completion: 100, tags: ['UI/UX', 'Urgent'], edited: '5d ago', questions: 30, bannerColor: '#93c5fd' },
-    { id: '5', enrolled: 12, title: 'Designing Intuitive User Interfaces', accuracy: 80, completion: 80, tags: ['User Interface (UI)', 'Not Urgent'], edited: '2d ago', questions: 15, bannerColor: '#fde047' },
-    { id: '6', enrolled: 7, title: 'Optimizing User Experience in Educational Platforms', accuracy: 0, completion: 0, tags: ['User Experience', 'Urgent'], edited: '4d ago', questions: 25, bannerColor: '#e9d5ff', isDraft: true },
+    { id: '1', title: 'Soal-Soal Geometri', summary: 'Kumpulan latihan soal geometri datar dan geometri ruang beserta pembahasannya secara lengkap.', accuracy: 40, completion: 60, tags: ['UI/UX', 'Not Urgent'], edited: '2h ago', questions: 10, bannerColor: '#fcd34d' },
+    { id: '2', title: 'Soal-Soal Trigonometri', summary: 'Latihan soal trigonometri dasar, identitas trigonometri, hingga aturan sinus dan kosinus.', accuracy: 20, completion: 80, tags: ['Instructional Design', 'Not Urgent'], edited: '8h ago', questions: 15, bannerColor: '#bae6fd' },
+    { id: '3', title: 'Soal-Soal Kalkulus', summary: 'Kumpulan soal limit, turunan, dan integral fungsi aljabar maupun trigonometri.', accuracy: 100, completion: 100, tags: ['Experience Design', 'Urgent'], edited: '23h ago', questions: 25, bannerColor: '#d8b4fe' },
+    { id: '4', title: 'Creating Engaging Learning Journeys: UI/UX Best Practices', summary: 'Panduan praktik terbaik merancang antarmuka yang menarik, ramah pengguna, dan efektif.', accuracy: 20, completion: 100, tags: ['UI/UX', 'Urgent'], edited: '5d ago', questions: 30, bannerColor: '#93c5fd' },
+    { id: '5', title: 'Designing Intuitive User Interfaces', summary: 'Pelajari cara membuat antarmuka pengguna yang intuitif dan mudah dipahami oleh semua kalangan.', accuracy: 80, completion: 80, tags: ['User Interface (UI)', 'Not Urgent'], edited: '2d ago', questions: 15, bannerColor: '#fde047' },
+    { id: '6', title: 'Optimizing User Experience in Educational Platforms', summary: 'Strategi optimalisasi pengalaman pengguna pada platform edukasi digital secara menyeluruh.', accuracy: 0, completion: 0, tags: ['User Experience', 'Urgent'], edited: '4d ago', questions: 25, bannerColor: '#e9d5ff', isDraft: true },
   ];
   const CircleChart = ({ percentage, color }: { percentage: number, color: string }) => (
     <svg width="28" height="28" viewBox="0 0 36 36" style={{ marginBottom: '4px' }}>
@@ -22,7 +22,7 @@ export default function QuizLibrary({ onSelectQuiz }: QuizLibraryProps) {
     </svg>
   );
   return (
-    <div style={{ backgroundColor: '#fafafa', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', color: '#111', minHeight: '100vh' }}>
+    <div style={{ backgroundColor: '#fafafa', display: 'flex', flexDirection: 'column', color: '#111', minHeight: '100vh' }}>
       <div style={{ flex: 1, backgroundColor: '#fafafa' }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%', padding: '32px 32px 120px 32px' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '32px', borderBottom: '2px solid #000', paddingBottom: '24px' }}>
@@ -76,7 +76,7 @@ export default function QuizLibrary({ onSelectQuiz }: QuizLibraryProps) {
               Recomendation
             </h1>
             <a href="#" style={{ fontSize: '16px', fontWeight: 600, color: '#000', textDecoration: 'underline', textUnderlineOffset: '4px', display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
-              Lihat semua
+              See All
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <polyline points="12 5 19 12 12 19"></polyline>
@@ -85,13 +85,10 @@ export default function QuizLibrary({ onSelectQuiz }: QuizLibraryProps) {
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '24px' }}>
-            {mockCards.map((card) => (
+            {mockCards.slice(0, 3).map((card) => (
               <div key={card.id} onClick={() => onSelectQuiz(card.id)} style={{ backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', border: '1px solid #f3f4f6', overflow: 'hidden', cursor: 'pointer', display: 'flex', flexDirection: 'column', transition: 'all 0.2s ease' }}>
                 
                 <div style={{ height: '140px', margin: '8px', borderRadius: '8px 8px 4px 4px', backgroundColor: card.bannerColor, position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <div style={{ position: 'absolute', top: '10px', left: '10px', backgroundColor: 'rgba(49, 46, 129, 0.8)', color: 'white', fontSize: '10px', fontWeight: 'bold', padding: '4px 8px', borderRadius: '6px', display: 'flex', alignItems: 'center', gap: '6px', boxShadow: '0 1px 2px rgba(0,0,0,0.1)' }}>
-                    {card.enrolled} Enrolled
-                  </div>
                   {card.isDraft && (
                     <div style={{ position: 'absolute', top: '10px', right: '10px', backgroundColor: 'rgba(255, 255, 255, 0.9)', color: '#374151', fontSize: '10px', fontWeight: 'bold', padding: '4px 10px', borderRadius: '6px', boxShadow: '0 1px 2px rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', gap: '6px' }}>
                       <span style={{ width: '6px', height: '6px', backgroundColor: '#9ca3af', borderRadius: '50%' }}></span>
@@ -103,16 +100,18 @@ export default function QuizLibrary({ onSelectQuiz }: QuizLibraryProps) {
                   </div>
                 </div>
                 <div style={{ padding: '16px 20px 20px 20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                  <h3 style={{ fontWeight: 800, fontSize: '16px', lineHeight: 1.4, color: '#111827', marginBottom: '20px', height: '44px', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
+                  <h3 style={{ fontWeight: 800, fontSize: '16px', lineHeight: 1.4, color: '#111827', marginBottom: '12px', height: '44px', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
                     {card.title}
                   </h3>
+                  <p style={{ color: '#6b7280', fontSize: '11px', fontWeight: 500, lineHeight: 1.5, marginBottom: '16px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', flexGrow: 1 }}>
+                    {card.summary}
+                  </p>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '32px', marginBottom: '24px' }}>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
                       <CircleChart percentage={card.accuracy} color={card.accuracy === 100 ? "#10b981" : card.accuracy === 0 ? "#e5e7eb" : "#10b981"} />
                       <span style={{ fontSize: '10px', color: '#6b7280', fontWeight: 800, marginBottom: '2px', marginTop: '4px' }}>Accuracy</span>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                         <span style={{ fontWeight: 900, fontSize: '14px', color: '#111827' }}>{card.accuracy === 0 ? "-" : `${card.accuracy}%`}</span>
-                        <span style={{ color: '#9ca3af', fontSize: '12px', fontWeight: 'bold' }}>(i)</span>
                       </div>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -120,7 +119,83 @@ export default function QuizLibrary({ onSelectQuiz }: QuizLibraryProps) {
                       <span style={{ fontSize: '10px', color: '#6b7280', fontWeight: 800, marginBottom: '2px', marginTop: '4px' }}>Completion Rate</span>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                         <span style={{ fontWeight: 900, fontSize: '14px', color: '#111827' }}>{card.completion === 0 ? "-" : `${card.completion}%`}</span>
-                        <span style={{ color: '#9ca3af', fontSize: '12px', fontWeight: 'bold' }}>(i)</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                    {card.tags.map((tag, idx) => (
+                      <span key={idx} style={{ padding: '4px 10px', backgroundColor: '#f3f4f6', color: '#4b5563', fontSize: '10px', borderRadius: '6px', fontWeight: 'bold', whiteSpace: 'nowrap' }}>
+                        {tag}
+                      </span>
+                    ))}
+                    <div style={{ marginLeft: 'auto', width: '28px', height: '28px', borderRadius: '50%', backgroundColor: '#f9fafb', border: '1px solid #e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#4b5563', fontSize: '12px' }}>👤</div>
+                  </div>
+                </div>
+                <div style={{ padding: '0 20px' }}>
+                  <div style={{ width: '100%', height: '1px', backgroundColor: '#f3f4f6' }}></div>
+                </div>
+                <div style={{ padding: '12px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '11px', color: '#6b7280', fontWeight: 800, backgroundColor: 'white' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span>Edited {card.edited}</span>
+                    <span style={{ color: '#d1d5db' }}>•</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#374151' }}>
+                      <span>💬 {card.questions} Question</span>
+                    </div>
+                  </div>
+                  <button style={{ width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', color: '#374151', background: 'none', border: 'none', fontWeight: 'bold', letterSpacing: '2px', paddingBottom: '4px', cursor: 'pointer' }}>...</button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginTop: '48px', marginBottom: '24px' }}>
+            <h1 style={{ fontSize: '28px', fontWeight: 700, color: '#000', margin: 0, letterSpacing: '-0.02em' }}>
+              Community
+            </h1>
+            <a href="#" style={{ fontSize: '16px', fontWeight: 600, color: '#000', textDecoration: 'underline', textUnderlineOffset: '4px', display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
+              See All
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '24px' }}>
+            {mockCards.slice(3).map((card) => (
+              <div key={card.id} onClick={() => onSelectQuiz(card.id)} style={{ backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', border: '1px solid #f3f4f6', overflow: 'hidden', cursor: 'pointer', display: 'flex', flexDirection: 'column', transition: 'all 0.2s ease' }}>
+                
+                <div style={{ height: '140px', margin: '8px', borderRadius: '8px 8px 4px 4px', backgroundColor: card.bannerColor, position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  {card.isDraft && (
+                    <div style={{ position: 'absolute', top: '10px', right: '10px', backgroundColor: 'rgba(255, 255, 255, 0.9)', color: '#374151', fontSize: '10px', fontWeight: 'bold', padding: '4px 10px', borderRadius: '6px', boxShadow: '0 1px 2px rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <span style={{ width: '6px', height: '6px', backgroundColor: '#9ca3af', borderRadius: '50%' }}></span>
+                      Draft
+                    </div>
+                  )}
+                  <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.7, position: 'relative' }}>
+                     <div style={{ position: 'absolute', fontWeight: 900, fontSize: '60px', color: 'rgba(49, 46, 129, 0.1)', transform: 'rotate(-12deg)', left: '32px' }}>Aa</div>
+                  </div>
+                </div>
+                <div style={{ padding: '16px 20px 20px 20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                  <h3 style={{ fontWeight: 800, fontSize: '16px', lineHeight: 1.4, color: '#111827', marginBottom: '12px', height: '44px', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
+                    {card.title}
+                  </h3>
+                  <p style={{ color: '#6b7280', fontSize: '11px', fontWeight: 500, lineHeight: 1.5, marginBottom: '16px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', flexGrow: 1 }}>
+                    {card.summary}
+                  </p>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '32px', marginBottom: '24px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                      <CircleChart percentage={card.accuracy} color={card.accuracy === 100 ? "#10b981" : card.accuracy === 0 ? "#e5e7eb" : "#10b981"} />
+                      <span style={{ fontSize: '10px', color: '#6b7280', fontWeight: 800, marginBottom: '2px', marginTop: '4px' }}>Accuracy</span>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        <span style={{ fontWeight: 900, fontSize: '14px', color: '#111827' }}>{card.accuracy === 0 ? "-" : `${card.accuracy}%`}</span>
+                      </div>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                      <CircleChart percentage={card.completion} color="#10b981" />
+                      <span style={{ fontSize: '10px', color: '#6b7280', fontWeight: 800, marginBottom: '2px', marginTop: '4px' }}>Completion Rate</span>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        <span style={{ fontWeight: 900, fontSize: '14px', color: '#111827' }}>{card.completion === 0 ? "-" : `${card.completion}%`}</span>
                       </div>
                     </div>
                   </div>

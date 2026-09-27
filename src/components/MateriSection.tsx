@@ -137,7 +137,6 @@ export default function MateriSection({ onStartSoloWithTopic, initialTopicId }: 
                         <span style={{ fontSize: '10px', color: '#6b7280', fontWeight: 800, marginBottom: '2px', marginTop: '4px' }}>Accuracy</span>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                           <span style={{ fontWeight: 900, fontSize: '14px', color: '#111827' }}>{stats.accuracy}%</span>
-                          <span style={{ color: '#9ca3af', fontSize: '12px', fontWeight: 'bold' }}>(i)</span>
                         </div>
                       </div>
                       <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -145,7 +144,6 @@ export default function MateriSection({ onStartSoloWithTopic, initialTopicId }: 
                         <span style={{ fontSize: '10px', color: '#6b7280', fontWeight: 800, marginBottom: '2px', marginTop: '4px' }}>Completion Rate</span>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                           <span style={{ fontWeight: 900, fontSize: '14px', color: '#111827' }}>{stats.completion}%</span>
-                          <span style={{ color: '#9ca3af', fontSize: '12px', fontWeight: 'bold' }}>(i)</span>
                         </div>
                       </div>
                     </div>
