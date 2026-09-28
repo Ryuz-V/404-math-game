@@ -88,7 +88,6 @@ export default function AuthModal({
   };
 
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    // Only close if clicking the dark backdrop itself, not its children
     if (e.target === e.currentTarget) {
       onClose();
     }
@@ -139,7 +138,6 @@ export default function AuthModal({
               </div>
             )}
 
-            {/* Avatar Selection (Available on Sign up and Edit Profile) */}
             {(modalMode === 'signup' || modalMode === 'edit_profile') && (
               <div className="form-group">
                 <label className="form-label">Pilih Avatar Karakter:</label>
