@@ -189,7 +189,7 @@ export default function Home() {
       {/* Header / Navbar Matching Screenshot Exactly */}
       <header className="header">
         <div className="logo" onClick={() => setCurrentView('home')}>
-          Math101
+          <img src="/assets/logo.png" style={{ height: '42px', width: 'auto' }} />
         </div>
         <nav className="nav">
           <a
@@ -804,7 +804,7 @@ export default function Home() {
         <div className="footer-top">
           <div className="footer-brand">
             <Link href="#" className="logo" onClick={(e) => { e.preventDefault(); setCurrentView('home'); }}>
-              Math101
+              <img src="/assets/logo.png" style={{ height: '60px', width: 'auto' }} />
             </Link>
             <p>Empowering students to conquer mathematics through interactive exercises, peer collaboration, and expert solutions.</p>
           </div>

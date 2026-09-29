@@ -14,7 +14,7 @@ const lilita = Lilita_One({
 });
 
 export const metadata: Metadata = {
-  title: 'Math101 - Daily Mathematics Exercises',
+  title: 'Math404 - Daily Mathematics Exercises',
   description: 'Mathematics exercises for all levels with solutions',
 };
 
