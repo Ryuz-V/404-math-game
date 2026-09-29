@@ -14,6 +14,9 @@ import AboutSection from '../components/AboutSection';
 import AuthModal from '../components/AuthModal';
 import Login from '../components/login';
 import QuizLibrary from '../components/QuizLibrary';
+import TugOfWarGame from '../components/TugOfWarGame';
+import FlappyBirdGame from '../components/FlappyBirdGame';
+import SnakeLadderGame from '../components/SnakeLadderGame';
 import { MATERI_KELAS_12, MATH_QUESTIONS } from '../data/mathData';
 
 if (typeof window !== 'undefined') {
@@ -22,7 +25,7 @@ if (typeof window !== 'undefined') {
 
 export default function Home() {
   const container = useRef<HTMLDivElement>(null);
-  const [currentView, setCurrentView] = useState<'home' | 'menu' | 'materi' | 'solo' | 'versus' | 'leaderboard' | 'about' | 'quiz-library'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'menu' | 'materi' | 'solo' | 'versus' | 'leaderboard' | 'about' | 'quiz-library' | 'tug-of-war' | 'flappy-bird' | 'snake-ladder'>('home');
   const [selectedTopicId, setSelectedTopicId] = useState<string | undefined>(undefined);
   const [selectedCard, setSelectedCard] = useState<'learning' | 'quizz' | 'games'>('learning');
 
@@ -424,7 +427,7 @@ export default function Home() {
                     </div>
                   </div>
                   <h3>Quizz</h3>
-                  <p>Challenge Yourself with Exciting Math Quizzes, designed to test your knowledge, sharpen your problem solving skills, and reinforce what you've learned.</p>
+                  <p>Challenge Yourself with Exciting Math Quizzes, designed to test your knowledge, sharpen your problem solving skills, and reinforce what you&apos;ve learned.</p>
                 </div>
               </div>
 
@@ -588,87 +591,116 @@ export default function Home() {
 
             <div className="menu-hub-container" style={{ minHeight: 'auto', paddingTop: '4rem' }}>
               <div className="menu-cards-grid">
-                {/* Menu Card 1: Materi Kelas 12 */}
-              <div
-                className="menu-card-item menu-card-materi"
-                onClick={() => setCurrentView('materi')}
-              >
-                <div className="card-item-top">
-                  <div className="card-item-icon-box">📚</div>
-                  <span className="card-item-tag">High School Curriculum</span>
-                  <h3 className="card-item-title">Grade 12 Math Materials</h3>
-                  <p className="card-item-desc">
-                    Learn formula summaries, key concepts of 3D Geometry, Grouped Statistics, Counting Principles, and Calculus along with practice problems.
-                  </p>
+                {/* Menu Card 1: Snake & Ladders Math */}
+                <div
+                  className="menu-card-item menu-card-snake"
+                  onClick={() => setCurrentView('snake-ladder')}
+                >
+                  <div className="card-item-top">
+                    <div className="card-item-icon-box">🐍</div>
+                    <span className="card-item-tag">100 Tiles • 1P vs Bot • Snake Challenge</span>
+                    <h3 className="card-item-title">Snake & Ladders Math</h3>
+                    <p className="card-item-desc">
+                      Roll the dice to tile 100! Hit a snake? Solve the math problem within 20 seconds before sliding down to its tail!
+                    </p>
+                  </div>
+                  <div className="card-item-action">
+                    <strong>Play Snake & Ladders</strong>
+                    <span>➡️</span>
+                  </div>
                 </div>
-                <div className="card-item-action">
-                  <strong>Open Materials Module</strong>
-                  <span>➡️</span>
-                </div>
-              </div>
 
-              {/* Menu Card 2: Solo Quiz */}
-              <div
-                className="menu-card-item menu-card-solo"
-                onClick={() => {
-                  setSelectedTopicId(undefined);
-                  setCurrentView('solo');
-                }}
-              >
-                <div className="card-item-top">
-                  <div className="card-item-icon-box">🎯</div>
-                  <span className="card-item-tag">1P Practice Mode</span>
-                  <h3 className="card-item-title">Solo Quiz & Practice</h3>
-                  <p className="card-item-desc">
-                    Test your math understanding with timed quizzes, score streaks, helper calculators, and step-by-step explanations.
-                  </p>
+                {/* Menu Card 2: Math Tug of War */}
+                <div
+                  className="menu-card-item menu-card-tug"
+                  onClick={() => setCurrentView('tug-of-war')}
+                >
+                  <div className="card-item-top">
+                    <div className="card-item-icon-box">🚩</div>
+                    <span className="card-item-tag">Fast Math • 1P vs Bot & 2P Local</span>
+                    <h3 className="card-item-title">Math Tug of War</h3>
+                    <p className="card-item-desc">
+                      Race to solve arithmetic (+, -, ×, ÷) to pull the rope to your side & activate Super Pull!
+                    </p>
+                  </div>
+                  <div className="card-item-action">
+                    <strong>Play Tug of War</strong>
+                    <span>➡️</span>
+                  </div>
                 </div>
-                <div className="card-item-action">
-                  <strong>Start Solo Quiz</strong>
-                  <span>➡️</span>
-                </div>
-              </div>
 
-              {/* Menu Card 3: 1 vs 1 Duel */}
-              <div
-                className="menu-card-item menu-card-versus"
-                onClick={() => setCurrentView('versus')}
-              >
-                <div className="card-item-top">
-                  <div className="card-item-icon-box">⚔️</div>
-                  <span className="card-item-tag">2P Duel Mode (1 Keyboard)</span>
-                  <h3 className="card-item-title">1 vs 1 Duel (Against Friends)</h3>
-                  <p className="card-item-desc">
-                    Challenge your friend in a split-screen duel! Player 1 (A/S/D/F) vs Player 2 (H/J/K/L) compete for speed & accuracy.
-                  </p>
+                {/* Menu Card 3: Flappy Math Bird */}
+                <div
+                  className="menu-card-item menu-card-flappy"
+                  onClick={() => setCurrentView('flappy-bird')}
+                >
+                  <div className="card-item-top">
+                    <div className="card-item-icon-box">🐦</div>
+                    <span className="card-item-tag">Reflex + Speed Math (+, -, ×, ÷)</span>
+                    <h3 className="card-item-title">Flappy Math Bird</h3>
+                    <p className="card-item-desc">
+                      Fly through Gate A & Gate B with the correct math answers! Collect coins and extra lives!
+                    </p>
+                  </div>
+                  <div className="card-item-action">
+                    <strong>Play Flappy Bird</strong>
+                    <span>➡️</span>
+                  </div>
                 </div>
-                <div className="card-item-action">
-                  <strong>Start 1 vs 1 Duel</strong>
-                  <span>➡️</span>
-                </div>
-              </div>
 
-              {/* Menu Card 4: Leaderboard */}
-              <div
-                className="menu-card-item menu-card-leaderboard"
-                onClick={() => setCurrentView('leaderboard')}
-              >
-                <div className="card-item-top">
-                  <div className="card-item-icon-box">🏆</div>
-                  <span className="card-item-tag">Rankings & Scores</span>
-                  <h3 className="card-item-title">Leaderboard</h3>
-                  <p className="card-item-desc">
-                    See top-ranked players with the highest scores and defend your championship position on the podium of honor!
-                  </p>
+                {/* Menu Card 4: Classic */}
+                <div
+                  className="menu-card-item menu-card-versus"
+                  onClick={() => setCurrentView('versus')}
+                >
+                  <div className="card-item-top">
+                    <div className="card-item-icon-box">⚔️</div>
+                    <span className="card-item-tag">2P Duel Mode (1 Keyboard)</span>
+                    <h3 className="card-item-title">Classic</h3>
+                    <p className="card-item-desc">
+                      Challenge your friend in a split-screen duel! Player 1 (A/S/D/F) vs Player 2 (H/J/K/L) compete for speed & accuracy.
+                    </p>
+                  </div>
+                  <div className="card-item-action">
+                    <strong>Start Classic</strong>
+                    <span>➡️</span>
+                  </div>
                 </div>
-                <div className="card-item-action">
-                  <strong>View Leaderboard</strong>
-                  <span>➡️</span>
-                </div>
+
+
               </div>
             </div>
-          </div>
           </>
+        )}
+
+        {/* VIEW: ULAR TANGGA MATEMATIKA */}
+        {currentView === 'snake-ladder' && (
+          <div>
+            <SnakeLadderGame
+              onBackToMenu={() => setCurrentView('menu')}
+              onAddScore={handleAddScore}
+            />
+          </div>
+        )}
+
+        {/* VIEW: TARIK TAMBANG MATEMATIKA */}
+        {currentView === 'tug-of-war' && (
+          <div>
+            <TugOfWarGame
+              onBackToMenu={() => setCurrentView('menu')}
+              onAddScore={handleAddScore}
+            />
+          </div>
+        )}
+
+        {/* VIEW: FLAPPY MATH BIRD */}
+        {currentView === 'flappy-bird' && (
+          <div>
+            <FlappyBirdGame
+              onBackToMenu={() => setCurrentView('menu')}
+              onAddScore={handleAddScore}
+            />
+          </div>
         )}
 
         {/* VIEW 3: MATERI KELAS 12 (Resources) */}

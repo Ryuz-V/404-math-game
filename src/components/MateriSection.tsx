@@ -21,7 +21,17 @@ const getDeterministicStats = (id: string) => {
 };
 
 export default function MateriSection({ onStartSoloWithTopic, initialTopicId }: MateriSectionProps) {
-  const [activeModalTopic, setActiveModalTopic] = useState<MathTopic | null>(null);
+  const [activeModalTopic, setActiveModalTopic] = useState<MathTopic | null>(() => {
+    if (initialTopicId) {
+      const search = initialTopicId.toLowerCase();
+      return ALL_MATERI.find(m =>
+        m.id === initialTopicId ||
+        m.title.toLowerCase().includes(search) ||
+        m.category.toLowerCase().includes(search)
+      ) || null;
+    }
+    return null;
+  });
   const [activeTab, setActiveTab] = useState<'konsep' | 'rumus' | 'contoh' | 'kuis'>('konsep');
 
   const [quizAnswers, setQuizAnswers] = useState<{ [qIdx: number]: number }>({});
@@ -34,20 +44,6 @@ export default function MateriSection({ onStartSoloWithTopic, initialTopicId }: 
     setActiveTab('konsep');
     setQuizAnswers({});
   };
-
-  useEffect(() => {
-    if (initialTopicId) {
-      const search = initialTopicId.toLowerCase();
-      const topic = ALL_MATERI.find(m =>
-        m.id === initialTopicId ||
-        m.title.toLowerCase().includes(search) ||
-        m.category.toLowerCase().includes(search)
-      );
-      if (topic) {
-        handleOpenTopic(topic);
-      }
-    }
-  }, [initialTopicId]);
 
   const handleCopyFormula = (formula: string, name: string) => {
     navigator.clipboard.writeText(`${name}: ${formula}`);

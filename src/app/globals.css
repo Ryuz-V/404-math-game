@@ -1250,10 +1250,10 @@ body {
 
 .menu-cards-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 2rem;
     width: 100%;
-    max-width: 1150px;
+    max-width: 1200px;
     margin-bottom: 3rem;
 }
 
@@ -1292,6 +1292,22 @@ body {
 
 .menu-card-versus {
     background-color: #ffb17a;
+}
+
+.menu-card-snake {
+    background-color: #86efac;
+}
+
+.menu-card-tug {
+    background-color: #c084fc;
+}
+
+.menu-card-flappy {
+    background-color: #38bdf8;
+}
+
+.menu-card-leaderboard {
+    background-color: #fde047;
 }
 
 .card-item-top {
@@ -5393,4 +5409,13 @@ kbd {
     .ql-browse-line::after {
         display: none;
     }
+}
+
+/* Hide Next.js dev indicators and badges */
+nextjs-portal,
+[data-nextjs-toast],
+[data-nextjs-dialog-overlay],
+[data-nextjs-toast-wrapper],
+div[data-nextjs-toast] {
+    display: none !important;
 }

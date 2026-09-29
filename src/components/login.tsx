@@ -239,7 +239,7 @@ export default function Login({ onClose }: LoginProps) {
           </div>
           <div style={{ marginTop: '32px', textAlign: 'center', width: '100%', padding: '0 8px' }}>
             <p style={{ color: '#9ca3af', fontSize: '12px', fontWeight: 600, lineHeight: 1.5 }}>
-              Protected by reCAPTCHA Enterprise. Google's <span style={{ fontWeight: 800, color: '#000' }}>Privacy Policy</span> and <span style={{ fontWeight: 800, color: '#000' }}>Terms of Service</span> apply.
+              Protected by reCAPTCHA Enterprise. Google&apos;s <span style={{ fontWeight: 800, color: '#000' }}>Privacy Policy</span> and <span style={{ fontWeight: 800, color: '#000' }}>Terms of Service</span> apply.
             </p>
           </div>
         </div>
