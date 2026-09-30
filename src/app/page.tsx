@@ -13,6 +13,7 @@ import LeaderboardSection from '../components/LeaderboardSection';
 import AboutSection from '../components/AboutSection';
 import AuthModal from '../components/AuthModal';
 import Login from '../components/login';
+import Signup from '../components/signup';
 import QuizLibrary from '../components/QuizLibrary';
 import TugOfWarGame from '../components/TugOfWarGame';
 import FlappyBirdGame from '../components/FlappyBirdGame';
@@ -783,7 +784,11 @@ export default function Home() {
       {/* User Profile & Auth Modal */}
       {isAuthOpen && authMode === 'login' ? (
         <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999 }}>
-          <Login onClose={() => setIsAuthOpen(false)} />
+          <Login onClose={() => setIsAuthOpen(false)} onSwitchToSignup={() => setAuthMode('signup')} />
+        </div>
+      ) : isAuthOpen && authMode === 'signup' ? (
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999 }}>
+          <Signup onClose={() => setIsAuthOpen(false)} onSwitchToLogin={() => setAuthMode('login')} />
         </div>
       ) : (
         <AuthModal

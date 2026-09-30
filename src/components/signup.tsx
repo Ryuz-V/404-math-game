@@ -1,12 +1,12 @@
 "use client";
 import React from 'react';
 
-interface LoginProps {
+interface SignupProps {
   onClose?: () => void;
-  onSwitchToSignup?: () => void;
+  onSwitchToLogin?: () => void;
 }
 
-export default function Login({ onClose, onSwitchToSignup }: LoginProps) {
+export default function Signup({ onClose, onSwitchToLogin }: SignupProps) {
   return (
     <div style={{
       minHeight: '100vh',
@@ -44,7 +44,7 @@ export default function Login({ onClose, onSwitchToSignup }: LoginProps) {
         </button>
         
         <button 
-          onClick={onSwitchToSignup}
+          onClick={onSwitchToLogin}
           style={{
           backgroundColor: '#fff',
           border: '2.5px solid #000',
@@ -70,7 +70,7 @@ export default function Login({ onClose, onSwitchToSignup }: LoginProps) {
           e.currentTarget.style.transform = 'translate(0)';
           e.currentTarget.style.boxShadow = '3px 3px 0px 0px #000';
         }}>
-          SIGN UP
+          LOG IN
         </button>
       </div>
 
@@ -91,7 +91,7 @@ export default function Login({ onClose, onSwitchToSignup }: LoginProps) {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          transform: 'translate(5px, -16px)'
+          transform: 'translate(5px, -18px)'
         }}>
           {/* Header Text */}
           <h2 style={{
@@ -102,11 +102,24 @@ export default function Login({ onClose, onSwitchToSignup }: LoginProps) {
             margin: '0 0 24px 0',
             letterSpacing: '-0.5px'
           }}>
-            Login
+            Sign Up
           </h2>
 
           {/* Form */}
           <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '32px' }}>
+            {/* Name Input */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <label style={{ fontWeight: 800, fontSize: '14px', color: '#000' }}>Name</label>
+              <div style={{ position: 'relative' }}>
+                <input 
+                  type="text" 
+                  placeholder="Enter your Name" 
+                  className="modal-input"
+                  style={{ boxSizing: 'border-box', width: '100%' }}
+                />
+              </div>
+            </div>
+
             {/* Email Input */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <label style={{ fontWeight: 800, fontSize: '14px', color: '#000' }}>Email</label>
@@ -122,23 +135,11 @@ export default function Login({ onClose, onSwitchToSignup }: LoginProps) {
 
             {/* Password Input */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <label style={{ fontWeight: 800, fontSize: '14px', color: '#000' }}>Password</label>
-                <button style={{
-                  background: 'none',
-                  border: 'none',
-                  color: '#000',
-                  fontWeight: 800,
-                  fontSize: '12px',
-                  cursor: 'pointer'
-                }}>
-                  Forgot password?
-                </button>
-              </div>
+              <label style={{ fontWeight: 800, fontSize: '14px', color: '#000' }}>Password</label>
               <div style={{ position: 'relative' }}>
                 <input 
                   type="password" 
-                  placeholder="Enter your password" 
+                  placeholder="Create a password" 
                   className="modal-input"
                   style={{ boxSizing: 'border-box', width: '100%', paddingRight: '48px' }}
                 />
@@ -165,7 +166,7 @@ export default function Login({ onClose, onSwitchToSignup }: LoginProps) {
             </div>
           </div>
 
-          {/* Login Button */}
+          {/* Signup Button */}
           <button style={{
             width: '100%',
             backgroundColor: '#fff',
@@ -193,7 +194,7 @@ export default function Login({ onClose, onSwitchToSignup }: LoginProps) {
             e.currentTarget.style.boxShadow = '4px 4px 0px 0px #000';
           }}
           >
-            Log In
+            Create Account
           </button>
 
           {/* Divider */}
@@ -245,7 +246,7 @@ export default function Login({ onClose, onSwitchToSignup }: LoginProps) {
                 <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
                 <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
               </svg>
-              <span style={{ color: '#000', fontWeight: 800, fontSize: '14px' }}>Continue with Google</span>
+              <span style={{ color: '#000', fontWeight: 800, fontSize: '14px' }}>Sign up with Google</span>
             </button>
           </div>
           <div style={{ marginTop: '32px', textAlign: 'center', width: '100%', padding: '0 8px' }}>
