@@ -102,8 +102,7 @@ export default function MateriSection({ onStartSoloWithTopic, initialTopicId }: 
               return (
                 <div 
                   key={materi.id} 
-                  onClick={() => handleOpenTopic(materi)} 
-                  style={{ backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', border: '1px solid #f3f4f6', overflow: 'hidden', cursor: 'pointer', display: 'flex', flexDirection: 'column', transition: 'all 0.2s ease' }}
+                  style={{ backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', border: '1px solid #f3f4f6', overflow: 'hidden', display: 'flex', flexDirection: 'column', transition: 'all 0.2s ease' }}
                 >
                   {/* Fikri Studio Banner */}
                   <div style={{ height: '140px', margin: '8px', borderRadius: '8px 8px 4px 4px', backgroundColor: materi.color || '#fcd34d', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -126,24 +125,6 @@ export default function MateriSection({ onStartSoloWithTopic, initialTopicId }: 
                       {materi.summary}
                     </p>
 
-                    {/* Fikri Studio Circle Charts */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '32px', marginBottom: '20px' }}>
-                      <div style={{ display: 'flex', flexDirection: 'column' }}>
-                        <CircleChart percentage={stats.accuracy} color={stats.accuracy === 100 ? "#10b981" : stats.accuracy === 0 ? "#e5e7eb" : "#10b981"} />
-                        <span style={{ fontSize: '10px', color: '#6b7280', fontWeight: 800, marginBottom: '2px', marginTop: '4px' }}>Accuracy</span>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                          <span style={{ fontWeight: 900, fontSize: '14px', color: '#111827' }}>{stats.accuracy}%</span>
-                        </div>
-                      </div>
-                      <div style={{ display: 'flex', flexDirection: 'column' }}>
-                        <CircleChart percentage={stats.completion} color="#10b981" />
-                        <span style={{ fontSize: '10px', color: '#6b7280', fontWeight: 800, marginBottom: '2px', marginTop: '4px' }}>Completion Rate</span>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                          <span style={{ fontWeight: 900, fontSize: '14px', color: '#111827' }}>{stats.completion}%</span>
-                        </div>
-                      </div>
-                    </div>
-
                     {/* Tags */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
                       <span style={{ padding: '4px 10px', backgroundColor: '#f3f4f6', color: '#4b5563', fontSize: '10px', borderRadius: '6px', fontWeight: 'bold', whiteSpace: 'nowrap' }}>
@@ -155,15 +136,15 @@ export default function MateriSection({ onStartSoloWithTopic, initialTopicId }: 
                       <div style={{ marginLeft: 'auto', width: '28px', height: '28px', borderRadius: '50%', backgroundColor: '#f9fafb', border: '1px solid #e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#4b5563', fontSize: '12px' }}>👤</div>
                     </div>
                     
-                    {/* Tombol Take Quiz */}
+                    {/* Tombol Open */}
                     <button 
                       onClick={(e) => { 
                         e.stopPropagation(); 
-                        if (onStartSoloWithTopic) onStartSoloWithTopic(materi.id); 
+                        handleOpenTopic(materi);
                       }}
                       style={{ backgroundColor: '#ffdc00', color: 'black', fontSize: '11px', fontWeight: 800, padding: '8px', borderRadius: '8px', border: '1.5px solid black', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer', transition: 'background-color 0.2s', width: '100%', marginTop: 'auto' }}
                     >
-                      <span>🎯</span> Take Quiz
+                      <span>📖</span> Open
                     </button>
                   </div>
                 </div>
