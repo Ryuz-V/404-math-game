@@ -1,12 +1,39 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
+import { login } from '../app/actions/auth';
 
 interface LoginProps {
   onClose?: () => void;
   onSwitchToSignup?: () => void;
+  onLoginSuccess?: (name: string, avatar: string) => void;
 }
 
-export default function Login({ onClose, onSwitchToSignup }: LoginProps) {
+export default function Login({ onClose, onSwitchToSignup, onLoginSuccess }: LoginProps) {
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    const formData = new FormData(e.currentTarget);
+    const result = await login(formData);
+
+    setLoading(false);
+
+    if (result.error) {
+      setError(result.error);
+    } else if (result.success && result.user) {
+      if (onLoginSuccess) {
+        onLoginSuccess(result.user.name || 'User', result.user.avatar || '👑');
+      }
+      if (onClose) {
+        onClose();
+      }
+    }
+  };
+
   return (
     <div style={{
       minHeight: '100vh',
@@ -106,13 +133,21 @@ export default function Login({ onClose, onSwitchToSignup }: LoginProps) {
           </h2>
 
           {/* Form */}
-          <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '32px' }}>
+          <form onSubmit={handleSubmit} style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '32px' }}>
+            {error && (
+              <div style={{ color: 'red', fontWeight: 'bold', textAlign: 'center' }}>
+                {error}
+              </div>
+            )}
+            
             {/* Email Input */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <label style={{ fontWeight: 800, fontSize: '14px', color: '#000' }}>Email</label>
               <div style={{ position: 'relative' }}>
                 <input 
-                  type="text" 
+                  type="email"
+                  name="email"
+                  required
                   placeholder="Enter your Email" 
                   className="modal-input"
                   style={{ boxSizing: 'border-box', width: '100%' }}
@@ -124,7 +159,7 @@ export default function Login({ onClose, onSwitchToSignup }: LoginProps) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <label style={{ fontWeight: 800, fontSize: '14px', color: '#000' }}>Password</label>
-                <button style={{
+                <button type="button" style={{
                   background: 'none',
                   border: 'none',
                   color: '#000',
@@ -137,64 +172,54 @@ export default function Login({ onClose, onSwitchToSignup }: LoginProps) {
               </div>
               <div style={{ position: 'relative' }}>
                 <input 
-                  type="password" 
+                  type="password"
+                  name="password"
+                  required
                   placeholder="Enter your password" 
                   className="modal-input"
                   style={{ boxSizing: 'border-box', width: '100%', paddingRight: '48px' }}
                 />
-                <button style={{
-                  position: 'absolute',
-                  right: '12px',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  background: 'none',
-                  border: 'none',
-                  color: '#000',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '4px'
-                }}>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                    <circle cx="12" cy="12" r="3"></circle>
-                  </svg>
-                </button>
               </div>
             </div>
-          </div>
 
-          {/* Login Button */}
-          <button style={{
-            width: '100%',
-            backgroundColor: '#fff',
-            color: '#000',
-            border: '3px solid #000',
-            borderRadius: '12px',
-            padding: '14px 0',
-            fontSize: '1.1rem',
-            fontWeight: 800,
-            cursor: 'pointer',
-            boxShadow: '4px 4px 0px 0px #000',
-            marginBottom: '24px',
-            transition: 'all 0.1s ease',
-          }}
-          onMouseDown={(e) => {
-            e.currentTarget.style.transform = 'translate(2px, 2px)';
-            e.currentTarget.style.boxShadow = '2px 2px 0px 0px #000';
-          }}
-          onMouseUp={(e) => {
-            e.currentTarget.style.transform = 'translate(0)';
-            e.currentTarget.style.boxShadow = '4px 4px 0px 0px #000';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'translate(0)';
-            e.currentTarget.style.boxShadow = '4px 4px 0px 0px #000';
-          }}
-          >
-            Log In
-          </button>
+            {/* Login Button */}
+            <button type="submit" disabled={loading} style={{
+              width: '100%',
+              backgroundColor: '#fff',
+              color: '#000',
+              border: '3px solid #000',
+              borderRadius: '12px',
+              padding: '14px 0',
+              fontSize: '1.1rem',
+              fontWeight: 800,
+              cursor: loading ? 'not-allowed' : 'pointer',
+              opacity: loading ? 0.7 : 1,
+              boxShadow: '4px 4px 0px 0px #000',
+              marginTop: '12px',
+              transition: 'all 0.1s ease',
+            }}
+            onMouseDown={(e) => {
+              if (!loading) {
+                e.currentTarget.style.transform = 'translate(2px, 2px)';
+                e.currentTarget.style.boxShadow = '2px 2px 0px 0px #000';
+              }
+            }}
+            onMouseUp={(e) => {
+              if (!loading) {
+                e.currentTarget.style.transform = 'translate(0)';
+                e.currentTarget.style.boxShadow = '4px 4px 0px 0px #000';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!loading) {
+                e.currentTarget.style.transform = 'translate(0)';
+                e.currentTarget.style.boxShadow = '4px 4px 0px 0px #000';
+              }
+            }}
+            >
+              {loading ? 'Logging In...' : 'Log In'}
+            </button>
+          </form>
 
           {/* Divider */}
           <div style={{
@@ -225,18 +250,6 @@ export default function Login({ onClose, onSwitchToSignup }: LoginProps) {
               position: 'relative',
               boxShadow: '3px 3px 0px 0px #000',
               transition: 'all 0.1s ease',
-            }}
-            onMouseDown={(e) => {
-              e.currentTarget.style.transform = 'translate(2px, 2px)';
-              e.currentTarget.style.boxShadow = '1px 1px 0px 0px #000';
-            }}
-            onMouseUp={(e) => {
-              e.currentTarget.style.transform = 'translate(0)';
-              e.currentTarget.style.boxShadow = '3px 3px 0px 0px #000';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translate(0)';
-              e.currentTarget.style.boxShadow = '3px 3px 0px 0px #000';
             }}
             >
               <svg style={{ position: 'absolute', left: '20px' }} width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

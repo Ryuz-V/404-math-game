@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import ScrollTrigger from 'gsap/ScrollTrigger';
@@ -19,6 +19,8 @@ import TugOfWarGame from '../components/TugOfWarGame';
 import FlappyBirdGame from '../components/FlappyBirdGame';
 import SnakeLadderGame from '../components/SnakeLadderGame';
 import { MATERI_KELAS_12, MATH_QUESTIONS } from '../data/mathData';
+
+import { getSession, logout } from './actions/auth';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -39,6 +41,19 @@ export default function Home() {
     avatar: '👑',
     score: 0
   });
+
+  useEffect(() => {
+    getSession().then((session) => {
+      if (session?.user) {
+        setIsLoggedIn(true);
+        setUserProfile(prev => ({
+          ...prev,
+          name: session.user.name,
+          avatar: session.user.avatar || '👑'
+        }));
+      }
+    });
+  }, []);
 
   const handleAddScore = (pts: number) => {
     setUserProfile(prev => ({
@@ -181,7 +196,8 @@ export default function Home() {
     setIsLoggedIn(true);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await logout();
     setIsLoggedIn(false);
   };
 
@@ -784,11 +800,11 @@ export default function Home() {
       {/* User Profile & Auth Modal */}
       {isAuthOpen && authMode === 'login' ? (
         <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999 }}>
-          <Login onClose={() => setIsAuthOpen(false)} onSwitchToSignup={() => setAuthMode('signup')} />
+          <Login onClose={() => setIsAuthOpen(false)} onSwitchToSignup={() => setAuthMode('signup')} onLoginSuccess={handleLoginSuccess} />
         </div>
       ) : isAuthOpen && authMode === 'signup' ? (
         <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999 }}>
-          <Signup onClose={() => setIsAuthOpen(false)} onSwitchToLogin={() => setAuthMode('login')} />
+          <Signup onClose={() => setIsAuthOpen(false)} onSwitchToLogin={() => setAuthMode('login')} onLoginSuccess={handleLoginSuccess} />
         </div>
       ) : (
         <AuthModal

@@ -1,12 +1,39 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
+import { signup } from '../app/actions/auth';
 
 interface SignupProps {
   onClose?: () => void;
   onSwitchToLogin?: () => void;
+  onLoginSuccess?: (name: string, avatar: string) => void;
 }
 
-export default function Signup({ onClose, onSwitchToLogin }: SignupProps) {
+export default function Signup({ onClose, onSwitchToLogin, onLoginSuccess }: SignupProps) {
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    const formData = new FormData(e.currentTarget);
+    const result = await signup(formData);
+
+    setLoading(false);
+
+    if (result.error) {
+      setError(result.error);
+    } else if (result.success && result.user) {
+      if (onLoginSuccess) {
+        onLoginSuccess(result.user.name || 'User', result.user.avatar || '👑');
+      }
+      if (onClose) {
+        onClose();
+      }
+    }
+  };
+
   return (
     <div style={{
       minHeight: '100vh',
@@ -106,13 +133,21 @@ export default function Signup({ onClose, onSwitchToLogin }: SignupProps) {
           </h2>
 
           {/* Form */}
-          <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '32px' }}>
+          <form onSubmit={handleSubmit} style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '32px' }}>
+            {error && (
+              <div style={{ color: 'red', fontWeight: 'bold', textAlign: 'center' }}>
+                {error}
+              </div>
+            )}
+
             {/* Name Input */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <label style={{ fontWeight: 800, fontSize: '14px', color: '#000' }}>Name</label>
               <div style={{ position: 'relative' }}>
                 <input 
-                  type="text" 
+                  type="text"
+                  name="name"
+                  required
                   placeholder="Enter your Name" 
                   className="modal-input"
                   style={{ boxSizing: 'border-box', width: '100%' }}
@@ -125,7 +160,9 @@ export default function Signup({ onClose, onSwitchToLogin }: SignupProps) {
               <label style={{ fontWeight: 800, fontSize: '14px', color: '#000' }}>Email</label>
               <div style={{ position: 'relative' }}>
                 <input 
-                  type="text" 
+                  type="email"
+                  name="email"
+                  required
                   placeholder="Enter your Email" 
                   className="modal-input"
                   style={{ boxSizing: 'border-box', width: '100%' }}
@@ -138,64 +175,54 @@ export default function Signup({ onClose, onSwitchToLogin }: SignupProps) {
               <label style={{ fontWeight: 800, fontSize: '14px', color: '#000' }}>Password</label>
               <div style={{ position: 'relative' }}>
                 <input 
-                  type="password" 
+                  type="password"
+                  name="password"
+                  required
                   placeholder="Create a password" 
                   className="modal-input"
                   style={{ boxSizing: 'border-box', width: '100%', paddingRight: '48px' }}
                 />
-                <button style={{
-                  position: 'absolute',
-                  right: '12px',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  background: 'none',
-                  border: 'none',
-                  color: '#000',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '4px'
-                }}>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                    <circle cx="12" cy="12" r="3"></circle>
-                  </svg>
-                </button>
               </div>
             </div>
-          </div>
 
-          {/* Signup Button */}
-          <button style={{
-            width: '100%',
-            backgroundColor: '#fff',
-            color: '#000',
-            border: '3px solid #000',
-            borderRadius: '12px',
-            padding: '14px 0',
-            fontSize: '1.1rem',
-            fontWeight: 800,
-            cursor: 'pointer',
-            boxShadow: '4px 4px 0px 0px #000',
-            marginBottom: '24px',
-            transition: 'all 0.1s ease',
-          }}
-          onMouseDown={(e) => {
-            e.currentTarget.style.transform = 'translate(2px, 2px)';
-            e.currentTarget.style.boxShadow = '2px 2px 0px 0px #000';
-          }}
-          onMouseUp={(e) => {
-            e.currentTarget.style.transform = 'translate(0)';
-            e.currentTarget.style.boxShadow = '4px 4px 0px 0px #000';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'translate(0)';
-            e.currentTarget.style.boxShadow = '4px 4px 0px 0px #000';
-          }}
-          >
-            Create Account
-          </button>
+            {/* Signup Button */}
+            <button type="submit" disabled={loading} style={{
+              width: '100%',
+              backgroundColor: '#fff',
+              color: '#000',
+              border: '3px solid #000',
+              borderRadius: '12px',
+              padding: '14px 0',
+              fontSize: '1.1rem',
+              fontWeight: 800,
+              cursor: loading ? 'not-allowed' : 'pointer',
+              opacity: loading ? 0.7 : 1,
+              boxShadow: '4px 4px 0px 0px #000',
+              marginTop: '12px',
+              transition: 'all 0.1s ease',
+            }}
+            onMouseDown={(e) => {
+              if (!loading) {
+                e.currentTarget.style.transform = 'translate(2px, 2px)';
+                e.currentTarget.style.boxShadow = '2px 2px 0px 0px #000';
+              }
+            }}
+            onMouseUp={(e) => {
+              if (!loading) {
+                e.currentTarget.style.transform = 'translate(0)';
+                e.currentTarget.style.boxShadow = '4px 4px 0px 0px #000';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!loading) {
+                e.currentTarget.style.transform = 'translate(0)';
+                e.currentTarget.style.boxShadow = '4px 4px 0px 0px #000';
+              }
+            }}
+            >
+              {loading ? 'Creating Account...' : 'Create Account'}
+            </button>
+          </form>
 
           {/* Divider */}
           <div style={{
@@ -226,18 +253,6 @@ export default function Signup({ onClose, onSwitchToLogin }: SignupProps) {
               position: 'relative',
               boxShadow: '3px 3px 0px 0px #000',
               transition: 'all 0.1s ease',
-            }}
-            onMouseDown={(e) => {
-              e.currentTarget.style.transform = 'translate(2px, 2px)';
-              e.currentTarget.style.boxShadow = '1px 1px 0px 0px #000';
-            }}
-            onMouseUp={(e) => {
-              e.currentTarget.style.transform = 'translate(0)';
-              e.currentTarget.style.boxShadow = '3px 3px 0px 0px #000';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translate(0)';
-              e.currentTarget.style.boxShadow = '3px 3px 0px 0px #000';
             }}
             >
               <svg style={{ position: 'absolute', left: '20px' }} width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
