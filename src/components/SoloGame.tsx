@@ -2,16 +2,18 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { MATH_QUESTIONS, MATERI_KELAS_12, Question } from '../data/mathData';
+import { UserQuiz } from '../types/quiz';
 
 interface SoloGameProps {
   initialTopicId?: string;
+  customQuiz?: UserQuiz;
   onBackToMenu: () => void;
   onSwitchToVersus: () => void;
   onAddScore?: (points: number) => void;
 }
 
-export default function SoloGame({ initialTopicId, onBackToMenu, onSwitchToVersus, onAddScore }: SoloGameProps) {
-  const [selectedTopic, setSelectedTopic] = useState<string>(initialTopicId || 'all');
+export default function SoloGame({ initialTopicId, customQuiz, onBackToMenu, onSwitchToVersus, onAddScore }: SoloGameProps) {
+  const [selectedTopic, setSelectedTopic] = useState<string>(initialTopicId || (customQuiz ? customQuiz.id : 'all'));
   const [gameState, setGameState] = useState<'lobby' | 'playing' | 'gameover'>('lobby');
   const [filteredQuestions, setFilteredQuestions] = useState<Question[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -28,9 +30,28 @@ export default function SoloGame({ initialTopicId, onBackToMenu, onSwitchToVersu
 
   // Filter and shuffle questions
   const startGame = () => {
-    let pool = MATH_QUESTIONS;
-    if (selectedTopic !== 'all') {
-      pool = MATH_QUESTIONS.filter(q => q.topicId === selectedTopic);
+    let pool: Question[] = [];
+
+    if (customQuiz && customQuiz.questions && customQuiz.questions.length > 0) {
+      pool = customQuiz.questions.map((q, idx) => {
+        const correctIdx = q.choices.findIndex(c => c.isCorrect);
+        return {
+          id: idx + 1,
+          grade: 12,
+          topicId: customQuiz.id,
+          topicTitle: customQuiz.title,
+          question: q.questionText,
+          options: q.choices.map(c => c.text),
+          correctIndex: correctIdx >= 0 ? correctIdx : 0,
+          explanation: q.explanation || 'Jawaban berdasarkan kunci kuis yang dibuat.',
+          difficulty: 'medium'
+        };
+      });
+    } else {
+      pool = MATH_QUESTIONS;
+      if (selectedTopic !== 'all') {
+        pool = MATH_QUESTIONS.filter(q => q.topicId === selectedTopic);
+      }
     }
     const shuffled = [...pool].sort(() => Math.random() - 0.5);
     setFilteredQuestions(shuffled);
@@ -38,7 +59,7 @@ export default function SoloGame({ initialTopicId, onBackToMenu, onSwitchToVersu
     setScore(0);
     setStreak(0);
     setMaxStreak(0);
-    setTimeLeft(60);
+    setTimeLeft(customQuiz ? customQuiz.questions.length * 30 : 60);
     setSelectedOption(null);
     setIsAnswered(false);
     setShowExplanation(false);

@@ -2,14 +2,16 @@
 
 import React, { useState, useEffect } from 'react';
 import { MATH_QUESTIONS, Question } from '../data/mathData';
+import { UserQuiz } from '../types/quiz';
 
 interface QuizViewerProps {
   initialTopicId?: string;
+  customQuiz?: UserQuiz;
   onBackToMenu: () => void;
   onAddScore?: (points: number) => void;
 }
 
-export default function QuizViewer({ initialTopicId, onBackToMenu, onAddScore }: QuizViewerProps) {
+export default function QuizViewer({ initialTopicId, customQuiz, onBackToMenu, onAddScore }: QuizViewerProps) {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number>>({});
@@ -17,6 +19,25 @@ export default function QuizViewer({ initialTopicId, onBackToMenu, onAddScore }:
   const [score, setScore] = useState(0);
 
   useEffect(() => {
+    if (customQuiz && customQuiz.questions && customQuiz.questions.length > 0) {
+      const formatted: Question[] = customQuiz.questions.map((q, idx) => {
+        const correctIdx = q.choices.findIndex(c => c.isCorrect);
+        return {
+          id: idx + 1,
+          grade: 12,
+          topicId: customQuiz.id,
+          topicTitle: customQuiz.title,
+          question: q.questionText,
+          options: q.choices.map(c => c.text),
+          correctIndex: correctIdx >= 0 ? correctIdx : 0,
+          explanation: q.explanation || 'Kunci jawaban kuis.',
+          difficulty: 'medium'
+        };
+      });
+      setQuestions(formatted);
+      return;
+    }
+
     let pool = MATH_QUESTIONS;
     if (initialTopicId && initialTopicId !== 'all') {
       pool = MATH_QUESTIONS.filter(q => q.topicId === initialTopicId);
@@ -27,7 +48,7 @@ export default function QuizViewer({ initialTopicId, onBackToMenu, onAddScore }:
       selectedQuestions = [...MATH_QUESTIONS].sort(() => Math.random() - 0.5).slice(0, 10);
     }
     setQuestions(selectedQuestions);
-  }, [initialTopicId]);
+  }, [initialTopicId, customQuiz]);
 
   const handleSelectOption = (questionId: number, optionIndex: number) => {
     if (isSubmitted) return;

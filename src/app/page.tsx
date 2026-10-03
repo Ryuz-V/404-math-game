@@ -15,11 +15,14 @@ import AuthModal from '../components/AuthModal';
 import Login from '../components/login';
 import Signup from '../components/signup';
 import QuizLibrary from '../components/QuizLibrary';
+import QuizEditor from '../components/QuizEditor';
+import UploadQuizModal from '../components/UploadQuizModal';
 import TugOfWarGame from '../components/TugOfWarGame';
 import FlappyBirdGame from '../components/FlappyBirdGame';
 import SnakeLadderGame from '../components/SnakeLadderGame';
 import QuizViewer from '../components/QuizViewer';
 import { MATERI_KELAS_12, MATH_QUESTIONS } from '../data/mathData';
+import { UserQuiz, QuizQuestion } from '../types/quiz';
 
 import { getSession, logout } from './actions/auth';
 
@@ -29,8 +32,11 @@ if (typeof window !== 'undefined') {
 
 export default function Home() {
   const container = useRef<HTMLDivElement>(null);
-  const [currentView, setCurrentView] = useState<'home' | 'menu' | 'materi' | 'solo' | 'versus' | 'leaderboard' | 'about' | 'quiz-library' | 'quiz-viewer' | 'tug-of-war' | 'flappy-bird' | 'snake-ladder'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'menu' | 'materi' | 'solo' | 'versus' | 'leaderboard' | 'about' | 'quiz-library' | 'quiz-editor' | 'quiz-viewer' | 'tug-of-war' | 'flappy-bird' | 'snake-ladder'>('home');
   const [selectedTopicId, setSelectedTopicId] = useState<string | undefined>(undefined);
+  const [activeCustomQuiz, setActiveCustomQuiz] = useState<UserQuiz | undefined>(undefined);
+  const [editingQuiz, setEditingQuiz] = useState<UserQuiz | null>(null);
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState<'learning' | 'quizz' | 'games'>('learning');
 
   // Auth & Profile State
@@ -205,12 +211,12 @@ export default function Home() {
   return (
     <div ref={container}>
       {/* Header / Navbar Matching Screenshot Exactly */}
-      {currentView !== 'quiz-viewer' && (
-      <header className="header">
-        <div className="logo" onClick={() => setCurrentView('home')}>
-          <img src="/assets/logo.png" style={{ height: '42px', width: 'auto' }} />
-        </div>
-        <nav className="nav">
+      {currentView !== 'quiz-editor' && currentView !== 'quiz-viewer' && (
+        <header className="header">
+          <div className="logo" onClick={() => setCurrentView('home')}>
+            <img src="/assets/logo.png" style={{ height: '42px', width: 'auto' }} />
+          </div>
+          <nav className="nav">
           <a
             href="#"
             style={{ fontWeight: currentView === 'menu' || currentView === 'versus' ? 800 : 600 }}
@@ -332,7 +338,6 @@ export default function Home() {
         </div>
       </header>
       )}
-
 
       <main>
         {/* VIEW 1: ORIGINAL HOMEPAGE (Matching Screenshot 1-5) */}
@@ -751,10 +756,31 @@ export default function Home() {
         {/* VIEW: QUIZ LIBRARY */}
         {currentView === 'quiz-library' && (
           <QuizLibrary 
-            onSelectQuiz={(topicId) => {
+            onSelectQuiz={(topicId, customQuiz) => {
               setSelectedTopicId(topicId === 'all' ? undefined : topicId);
+              setActiveCustomQuiz(customQuiz);
               setCurrentView('quiz-viewer');
-            }} 
+            }}
+            onOpenEditor={(quiz) => {
+              setEditingQuiz(quiz || null);
+              setCurrentView('quiz-editor');
+            }}
+            onOpenUpload={() => setIsUploadModalOpen(true)}
+          />
+        )}
+
+        {/* VIEW: QUIZ EDITOR */}
+        {currentView === 'quiz-editor' && (
+          <QuizEditor
+            initialQuiz={editingQuiz}
+            onBack={() => {
+              setEditingQuiz(null);
+              setCurrentView('quiz-library');
+            }}
+            onPublishSuccess={(savedQuiz) => {
+              setEditingQuiz(null);
+              setCurrentView('quiz-library');
+            }}
           />
         )}
 
@@ -762,7 +788,11 @@ export default function Home() {
         {currentView === 'quiz-viewer' && (
           <QuizViewer
             initialTopicId={selectedTopicId}
-            onBackToMenu={() => setCurrentView('quiz-library')}
+            customQuiz={activeCustomQuiz}
+            onBackToMenu={() => {
+              setActiveCustomQuiz(undefined);
+              setCurrentView('quiz-library');
+            }}
             onAddScore={handleAddScore}
           />
         )}
@@ -772,7 +802,11 @@ export default function Home() {
           <div>
             <SoloGame
               initialTopicId={selectedTopicId}
-              onBackToMenu={() => setCurrentView('menu')}
+              customQuiz={activeCustomQuiz}
+              onBackToMenu={() => {
+                setActiveCustomQuiz(undefined);
+                setCurrentView('quiz-library');
+              }}
               onSwitchToVersus={() => setCurrentView('versus')}
               onAddScore={handleAddScore}
             />
@@ -846,50 +880,78 @@ export default function Home() {
       />
       )}
 
+      {/* Upload Document & Extract Quiz Modal */}
+      <UploadQuizModal
+        isOpen={isUploadModalOpen}
+        onClose={() => setIsUploadModalOpen(false)}
+        onImportQuestions={(data) => {
+          const draftQuiz: UserQuiz = {
+            id: `user-quiz-${Date.now()}`,
+            title: data.title,
+            summary: data.summary,
+            category: data.category,
+            tags: [data.category, 'Draft'],
+            bannerColor: '#d8b4fe',
+            accuracy: 0,
+            completion: 0,
+            isDraft: true,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            editedTimeAgo: 'Just now',
+            authorName: userProfile.name,
+            questions: data.questions
+          };
+          setEditingQuiz(draftQuiz);
+          setCurrentView('quiz-editor');
+        }}
+      />
+
       {/* ORIGINAL FOOTER (Matching Screenshot 5) */}
-      <footer className="footer">
-        <div className="footer-top">
-          <div className="footer-brand">
-            <Link href="#" className="logo" onClick={(e) => { e.preventDefault(); setCurrentView('home'); }}>
-              <img src="/assets/logo.png" style={{ height: '60px', width: 'auto' }} />
-            </Link>
-            <p>Empowering students to conquer mathematics through interactive exercises, peer collaboration, and expert solutions.</p>
+      {currentView !== 'quiz-editor' && (
+        <footer className="footer">
+          <div className="footer-top">
+            <div className="footer-brand">
+              <Link href="#" className="logo" onClick={(e) => { e.preventDefault(); setCurrentView('home'); }}>
+                <img src="/assets/logo.png" style={{ height: '60px', width: 'auto' }} />
+              </Link>
+              <p>Empowering students to conquer mathematics through interactive exercises, peer collaboration, and expert solutions.</p>
+            </div>
+            
+            <div className="footer-links-group">
+              <h4>Learn</h4>
+              <ul>
+                <li><a href="#" onClick={(e) => { e.preventDefault(); handleStartSoloWithTopic('kaidah-pencacahan'); }}>Algebra</a></li>
+                <li><a href="#" onClick={(e) => { e.preventDefault(); handleStartSoloWithTopic('dimensi-tiga'); }}>Geometry</a></li>
+                <li><a href="#" onClick={(e) => { e.preventDefault(); handleStartSoloWithTopic('kalkulus-lanjut'); }}>Calculus</a></li>
+                <li><a href="#" onClick={(e) => { e.preventDefault(); handleStartSoloWithTopic('statistika'); }}>Statistics</a></li>
+              </ul>
+            </div>
+            
+            <div className="footer-links-group">
+              <h4>Company</h4>
+              <ul>
+                <li><a href="#" onClick={(e) => { e.preventDefault(); setCurrentView('about'); }}>About Us</a></li>
+                <li><a href="#" onClick={(e) => { e.preventDefault(); setCurrentView('about'); }}>Careers</a></li>
+                <li><a href="#" onClick={(e) => { e.preventDefault(); setCurrentView('about'); }}>Blog</a></li>
+                <li><a href="#" onClick={(e) => { e.preventDefault(); setCurrentView('about'); }}>Contact</a></li>
+              </ul>
+            </div>
+            
+            <div className="footer-links-group">
+              <h4>Legal</h4>
+              <ul>
+                <li><Link href="#">Terms of Service</Link></li>
+                <li><Link href="#">Privacy Policy</Link></li>
+                <li><Link href="#">Cookie Policy</Link></li>
+              </ul>
+            </div>
           </div>
           
-          <div className="footer-links-group">
-            <h4>Learn</h4>
-            <ul>
-              <li><a href="#" onClick={(e) => { e.preventDefault(); handleStartSoloWithTopic('kaidah-pencacahan'); }}>Algebra</a></li>
-              <li><a href="#" onClick={(e) => { e.preventDefault(); handleStartSoloWithTopic('dimensi-tiga'); }}>Geometry</a></li>
-              <li><a href="#" onClick={(e) => { e.preventDefault(); handleStartSoloWithTopic('kalkulus-lanjut'); }}>Calculus</a></li>
-              <li><a href="#" onClick={(e) => { e.preventDefault(); handleStartSoloWithTopic('statistika'); }}>Statistics</a></li>
-            </ul>
+          <div className="footer-bottom">
+            <p>&copy; 2026 Math101. All rights reserved.</p>
           </div>
-          
-          <div className="footer-links-group">
-            <h4>Company</h4>
-            <ul>
-              <li><a href="#" onClick={(e) => { e.preventDefault(); setCurrentView('about'); }}>About Us</a></li>
-              <li><a href="#" onClick={(e) => { e.preventDefault(); setCurrentView('about'); }}>Careers</a></li>
-              <li><a href="#" onClick={(e) => { e.preventDefault(); setCurrentView('about'); }}>Blog</a></li>
-              <li><a href="#" onClick={(e) => { e.preventDefault(); setCurrentView('about'); }}>Contact</a></li>
-            </ul>
-          </div>
-          
-          <div className="footer-links-group">
-            <h4>Legal</h4>
-            <ul>
-              <li><Link href="#">Terms of Service</Link></li>
-              <li><Link href="#">Privacy Policy</Link></li>
-              <li><Link href="#">Cookie Policy</Link></li>
-            </ul>
-          </div>
-        </div>
-        
-        <div className="footer-bottom">
-          <p>&copy; 2026 Math101. All rights reserved.</p>
-        </div>
-      </footer>
+        </footer>
+      )}
     </div>
   );
 }
