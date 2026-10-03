@@ -18,6 +18,7 @@ import QuizLibrary from '../components/QuizLibrary';
 import TugOfWarGame from '../components/TugOfWarGame';
 import FlappyBirdGame from '../components/FlappyBirdGame';
 import SnakeLadderGame from '../components/SnakeLadderGame';
+import QuizViewer from '../components/QuizViewer';
 import { MATERI_KELAS_12, MATH_QUESTIONS } from '../data/mathData';
 
 import { getSession, logout } from './actions/auth';
@@ -28,7 +29,7 @@ if (typeof window !== 'undefined') {
 
 export default function Home() {
   const container = useRef<HTMLDivElement>(null);
-  const [currentView, setCurrentView] = useState<'home' | 'menu' | 'materi' | 'solo' | 'versus' | 'leaderboard' | 'about' | 'quiz-library' | 'tug-of-war' | 'flappy-bird' | 'snake-ladder'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'menu' | 'materi' | 'solo' | 'versus' | 'leaderboard' | 'about' | 'quiz-library' | 'quiz-viewer' | 'tug-of-war' | 'flappy-bird' | 'snake-ladder'>('home');
   const [selectedTopicId, setSelectedTopicId] = useState<string | undefined>(undefined);
   const [selectedCard, setSelectedCard] = useState<'learning' | 'quizz' | 'games'>('learning');
 
@@ -204,6 +205,7 @@ export default function Home() {
   return (
     <div ref={container}>
       {/* Header / Navbar Matching Screenshot Exactly */}
+      {currentView !== 'quiz-viewer' && (
       <header className="header">
         <div className="logo" onClick={() => setCurrentView('home')}>
           <img src="/assets/logo.png" style={{ height: '42px', width: 'auto' }} />
@@ -306,16 +308,31 @@ export default function Home() {
             </>
           ) : (
             <button 
-              className="user-profile-btn"
               onClick={handleOpenProfileOrLogin}
               title="Profile"
+              style={{ 
+                backgroundColor: '#f3f4f6', 
+                border: '2px solid #000', 
+                boxShadow: 'none',
+                cursor: 'pointer',
+                width: '44px',
+                height: '44px',
+                borderRadius: '50%',
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                padding: 0,
+                marginRight: '2.5rem',
+                alignSelf: 'center'
+              }}
             >
-              <span style={{ fontSize: '1.2rem' }}>{userProfile.avatar}</span>
-              <span style={{ fontWeight: 'bold' }}>{userProfile.name}</span>
+              <span style={{ fontSize: '1.5rem', lineHeight: 1 }}>{userProfile.avatar}</span>
             </button>
           )}
         </div>
       </header>
+      )}
+
 
       <main>
         {/* VIEW 1: ORIGINAL HOMEPAGE (Matching Screenshot 1-5) */}
@@ -736,8 +753,17 @@ export default function Home() {
           <QuizLibrary 
             onSelectQuiz={(topicId) => {
               setSelectedTopicId(topicId === 'all' ? undefined : topicId);
-              setCurrentView('solo');
+              setCurrentView('quiz-viewer');
             }} 
+          />
+        )}
+
+        {/* VIEW: QUIZ VIEWER */}
+        {currentView === 'quiz-viewer' && (
+          <QuizViewer
+            initialTopicId={selectedTopicId}
+            onBackToMenu={() => setCurrentView('quiz-library')}
+            onAddScore={handleAddScore}
           />
         )}
 

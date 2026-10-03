@@ -133,7 +133,6 @@ export default function MateriSection({ onStartSoloWithTopic, initialTopicId }: 
                       <span style={{ padding: '4px 10px', backgroundColor: '#f3f4f6', color: '#4b5563', fontSize: '10px', borderRadius: '6px', fontWeight: 'bold', whiteSpace: 'nowrap' }}>
                         Grade {materi.grade}
                       </span>
-                      <div style={{ marginLeft: 'auto', width: '28px', height: '28px', borderRadius: '50%', backgroundColor: '#f9fafb', border: '1px solid #e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#4b5563', fontSize: '12px' }}>👤</div>
                     </div>
                     
                     {/* Tombol Open */}

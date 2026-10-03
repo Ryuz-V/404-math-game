@@ -4014,8 +4014,7 @@ kbd {
     max-width: 520px;
     background-color: #fff;
     border: 4px solid #000;
-    border-radius: 20px;
-    box-shadow: 12px 12px 0px 0px #000;
+    border-radius: 8px;
     padding: 2.5rem;
     animation: modalPop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }

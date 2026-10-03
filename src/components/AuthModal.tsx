@@ -96,15 +96,35 @@ export default function AuthModal({
   return (
     <div className="modal-backdrop" onClick={handleBackdropClick}>
       <div className="modal-card" onClick={e => e.stopPropagation()}>
-        <div className="modal-header">
-          <div className="game-badge">
-            {modalMode === 'login' && '🔑 Masuk ke Akun'}
-            {modalMode === 'signup' && '✨ Buat Akun Murid Baru'}
-            {modalMode === 'edit_profile' && '✏️ Pengaturan Profil Pemain'}
-          </div>
-          <button type="button" className="modal-close-btn" onClick={onClose} aria-label="Tutup">
-            ✕
+        <div className="modal-header" style={{ display: 'flex', alignItems: 'center', gap: '12px', justifyContent: 'flex-start' }}>
+          <button 
+            type="button" 
+            onClick={onClose} 
+            aria-label="Kembali"
+            style={{
+              background: 'transparent',
+              border: 'none',
+              fontSize: '1.5rem',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: 0,
+              boxShadow: 'none'
+            }}
+          >
+            ←
           </button>
+          {modalMode === 'edit_profile' ? (
+            <div style={{ fontWeight: 'bold', fontSize: '1.2rem', margin: 0 }}>
+              Pengaturan Profil Pemain
+            </div>
+          ) : (
+            <div className="game-badge">
+              {modalMode === 'login' && '🔑 Masuk ke Akun'}
+              {modalMode === 'signup' && '✨ Buat Akun Murid Baru'}
+            </div>
+          )}
         </div>
 
         {isSuccess ? (
@@ -121,22 +141,38 @@ export default function AuthModal({
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="modal-form">
-            <h2 className="modal-title">
-              {modalMode === 'login' && 'Login ke Akun Math101'}
-              {modalMode === 'signup' && 'Daftar Akun Baru'}
-              {modalMode === 'edit_profile' && 'Ubah Profil Pemain'}
-            </h2>
-            <p className="modal-subtitle">
-              {modalMode === 'login' && 'Masuk untuk menyimpan rekor skor kuis dan bermain di papan peringkat.'}
-              {modalMode === 'signup' && 'Pilih avatar favoritmu, buat nickname, dan mulai petualangan matematika!'}
-              {modalMode === 'edit_profile' && 'Ganti avatar stiker dan nama panggilan pemain.'}
-            </p>
+            {modalMode !== 'edit_profile' && (
+              <h2 className="modal-title">
+                {modalMode === 'login' && 'Login ke Akun Math101'}
+                {modalMode === 'signup' && 'Daftar Akun Baru'}
+              </h2>
+            )}
+            {modalMode !== 'edit_profile' && (
+              <p className="modal-subtitle">
+                {modalMode === 'login' && 'Masuk untuk menyimpan rekor skor kuis dan bermain di papan peringkat.'}
+                {modalMode === 'signup' && 'Pilih avatar favoritmu, buat nickname, dan mulai petualangan matematika!'}
+              </p>
+            )}
 
             {errorMessage && (
               <div className="auth-error-banner">
                 ⚠️ {errorMessage}
               </div>
             )}
+
+            {/* Username Input */}
+            <div className="form-group">
+              <label className="form-label">Username / Nama Panggilan:</label>
+              <input
+                type="text"
+                value={username}
+                onChange={e => setUsername(e.target.value)}
+                placeholder="Contoh: Arya_MathAce"
+                className="modal-input"
+                autoComplete="username"
+                required
+              />
+            </div>
 
             {(modalMode === 'signup' || modalMode === 'edit_profile') && (
               <div className="form-group">
@@ -155,20 +191,6 @@ export default function AuthModal({
                 </div>
               </div>
             )}
-
-            {/* Username Input */}
-            <div className="form-group">
-              <label className="form-label">Username / Nama Panggilan:</label>
-              <input
-                type="text"
-                value={username}
-                onChange={e => setUsername(e.target.value)}
-                placeholder="Contoh: Arya_MathAce"
-                className="modal-input"
-                autoComplete="username"
-                required
-              />
-            </div>
 
             {/* Password Input (Login & Signup only) */}
             {modalMode !== 'edit_profile' && (
@@ -237,11 +259,11 @@ export default function AuthModal({
               )}
             </div>
 
-            <div className="modal-actions">
-              <button type="submit" className="btn-modal-submit">
+            <div className="modal-actions" style={{ display: 'flex', gap: '12px', width: '100%' }}>
+              <button type="submit" className="btn-modal-submit" style={{ flex: 1 }}>
                 {modalMode === 'login' && '🚀 Masuk Sekarang'}
                 {modalMode === 'signup' && '✨ Buat Akun & Masuk'}
-                {modalMode === 'edit_profile' && '💾 Simpan Perubahan'}
+                {modalMode === 'edit_profile' && '💾 Save'}
               </button>
 
               {modalMode === 'edit_profile' && isLoggedIn && (
@@ -252,14 +274,11 @@ export default function AuthModal({
                     onLogout();
                     onClose();
                   }}
+                  style={{ flex: 1 }}
                 >
                   🚪 Logout
                 </button>
               )}
-
-              <button type="button" className="btn-modal-cancel" onClick={onClose}>
-                Batal
-              </button>
             </div>
           </form>
         )}
