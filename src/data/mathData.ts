@@ -79,7 +79,7 @@ export const MATERI_KELAS_10: MathTopic[] = [
         title: '1. Sifat-Sifat Pangkat & Eksponen',
         points: [
           'Perkalian basis sama: aᵐ · aⁿ = aᵐ⁺ⁿ.',
-          'Pembagian basis sama: aᵐ / aⁿ = aᵐ⁻ⁿ (dengan a ≠ 0).',
+          'Pembagian basis sama: aᵐ : aⁿ = aᵐ⁻ⁿ (dengan a ≠ 0).',
           'Pangkat dipangkatkan: (aᵐ)ⁿ = aᵐⁿ.',
           'Pangkat perkalian: (a · b)ⁿ = aⁿ · bⁿ.',
           'Pangkat negatif & pecahan: a⁻ⁿ = 1 / aⁿ dan a^(m/n) = ⁿ√(aᵐ).'
@@ -99,7 +99,7 @@ export const MATERI_KELAS_10: MathTopic[] = [
     keyFormulas: [
       {
         name: 'Sifat Perkalian & Pembagian Eksponen',
-        formula: 'aᵐ · aⁿ = aᵐ⁺ⁿ  |  aᵐ / aⁿ = aᵐ⁻ⁿ',
+        formula: 'aᵐ · aⁿ = aᵐ⁺ⁿ  |  aᵐ : aⁿ = aᵐ⁻ⁿ',
         desc: 'Sederhanakan eksponen dengan menjumlahkan/mengurangkan pangkat pada basis yang sama.'
       },
       {
@@ -131,7 +131,7 @@ export const MATERI_KELAS_10: MathTopic[] = [
         question: 'Nilai dari ²log 48 - ²log 3 adalah...',
         options: ['4', '16', '3', '8'],
         correctIndex: 0,
-        explanation: '²log (48 / 3) = ²log 16 = 4 (karena 2⁴ = 16).'
+        explanation: '²log (48 : 3) = ²log 16 = 4 (karena 2⁴ = 16).'
       }
     ]
   },
@@ -185,7 +185,7 @@ export const MATERI_KELAS_10: MathTopic[] = [
         level: 'Basic',
         steps: [
           'Identifikasi nilai koefisien: a = 1, b = -6, c = 5.',
-          'Cari sumbu simetri: x_p = -(-6) / (2 · 1) = 6 / 2 = 3.',
+          'Cari sumbu simetri: x_p = -(-6) : (2 · 1) = 6 : 2 = 3.',
           'Substitusikan x_p ke f(x): y_p = (3)² - 6(3) + 5 = 9 - 18 + 5 = -4.',
           'Karena a = 1 > 0, kurva terbuka ke atas sehingga titik baliknya adalah titik minimum (3, -4).'
         ],
@@ -1192,7 +1192,7 @@ export const MATERI_KELAS_12: MathTopic[] = [
         question: 'Rata-rata data tunggal 4, 6, 8, 10, 12 adalah...',
         options: ['8', '7', '9', '10'],
         correctIndex: 0,
-        explanation: 'Mean = (4 + 6 + 8 + 10 + 12) / 5 = 40 / 5 = 8.'
+        explanation: 'Mean = (4 + 6 + 8 + 10 + 12) : 5 = 40 : 5 = 8.'
       }
     ]
   },
@@ -1581,7 +1581,7 @@ export const MATH_QUESTIONS: Question[] = [
     question: 'Berapakah nilai dari ²log 48 - ²log 3?',
     options: ['4', '16', '3', '8'],
     correctIndex: 0,
-    explanation: '²log (48 / 3) = ²log 16 = 4 (karena 2⁴ = 16).',
+    explanation: '²log (48 : 3) = ²log 16 = 4 (karena 2⁴ = 16).',
     difficulty: 'easy'
   },
   {
@@ -1761,7 +1761,7 @@ export const MATH_QUESTIONS: Question[] = [
     question: 'Nilai dari ₇C₂ (Kombinasi 2 dari 7) adalah...',
     options: ['21', '14', '42', '35'],
     correctIndex: 0,
-    explanation: '₇C₂ = (7 × 6) / (2 × 1) = 42 / 2 = 21.',
+    explanation: '₇C₂ = (7 × 6) : (2 × 1) = 42 : 2 = 21.',
     difficulty: 'easy'
   },
   {

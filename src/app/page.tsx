@@ -20,6 +20,8 @@ import UploadQuizModal from '../components/UploadQuizModal';
 import TugOfWarGame from '../components/TugOfWarGame';
 import FlappyBirdGame from '../components/FlappyBirdGame';
 import SnakeLadderGame from '../components/SnakeLadderGame';
+import TargetShooterGame from '../components/TargetShooterGame';
+import MathSoldierGame from '../components/MathSoldierGame';
 import QuizViewer from '../components/QuizViewer';
 import { MATERI_KELAS_12, MATH_QUESTIONS } from '../data/mathData';
 import { UserQuiz, QuizQuestion } from '../types/quiz';
@@ -32,7 +34,7 @@ if (typeof window !== 'undefined') {
 
 export default function Home() {
   const container = useRef<HTMLDivElement>(null);
-  const [currentView, setCurrentView] = useState<'home' | 'menu' | 'materi' | 'solo' | 'versus' | 'leaderboard' | 'about' | 'quiz-library' | 'quiz-editor' | 'quiz-viewer' | 'tug-of-war' | 'flappy-bird' | 'snake-ladder'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'menu' | 'materi' | 'solo' | 'versus' | 'leaderboard' | 'about' | 'quiz-library' | 'quiz-editor' | 'quiz-viewer' | 'tug-of-war' | 'flappy-bird' | 'snake-ladder' | 'target-shooter' | 'math-soldier'>('home');
   const [selectedTopicId, setSelectedTopicId] = useState<string | undefined>(undefined);
   const [activeCustomQuiz, setActiveCustomQuiz] = useState<UserQuiz | undefined>(undefined);
   const [editingQuiz, setEditingQuiz] = useState<UserQuiz | null>(null);
@@ -61,6 +63,13 @@ export default function Home() {
       }
     });
   }, []);
+
+  // Auto scroll to top on any view switch to prevent layout clipping
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [currentView]);
+
+  const isGameView = ['flappy-bird', 'snake-ladder', 'tug-of-war', 'target-shooter', 'solo', 'versus', 'quiz-editor', 'quiz-viewer'].includes(currentView);
 
   const handleAddScore = (pts: number) => {
     setUserProfile(prev => ({
@@ -628,88 +637,392 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="menu-hub-container" style={{ minHeight: 'auto', paddingTop: '4rem' }}>
-              <div className="menu-cards-grid">
-                {/* Menu Card 1: Snake & Ladders Math */}
+            <div className="menu-hub-container" style={{ minHeight: 'auto', paddingTop: '3.5rem', paddingBottom: '5rem' }}>
+              <div className="modern-games-grid">
+                {/* Game Card 1: Snake & Ladders Math */}
                 <div
-                  className="menu-card-item menu-card-snake"
+                  className="modern-game-card card-snake-theme group"
                   onClick={() => setCurrentView('snake-ladder')}
                 >
-                  <div className="card-item-top">
-                    <div className="card-item-icon-box">🐍</div>
-                    <span className="card-item-tag">100 Tiles • 1P vs Bot • Snake Challenge</span>
-                    <h3 className="card-item-title">Snake & Ladders Math</h3>
-                    <p className="card-item-desc">
-                      Roll the dice to tile 100! Hit a snake? Solve the math problem within 20 seconds before sliding down to its tail!
-                    </p>
+                  {/* Top Visual Game Banner with Blurred In-Game Preview */}
+                  <div className="game-card-banner banner-snake">
+                    <div className="banner-gameplay-bg snake-gameplay-mockup">
+                      <div className="mockup-board-grid">
+                        <div className="mockup-tile tile-win">100 🏆</div>
+                        <div className="mockup-tile">99</div>
+                        <div className="mockup-tile tile-snake">98 🐍</div>
+                        <div className="mockup-tile">97</div>
+                        <div className="mockup-tile tile-ladder">96 🪜</div>
+                        <div className="mockup-tile">95</div>
+                        <div className="mockup-tile">94</div>
+                        <div className="mockup-tile tile-snake">93 🐍</div>
+                      </div>
+                      <div className="mockup-dice-pill">🎲 Dice: 6</div>
+                      <div className="mockup-pawn-dot" />
+                    </div>
+                    <div className="banner-blur-overlay" />
+
+                    <div className="banner-top-row">
+                      <span className="banner-tag-pill tag-green">🎲 BOARD GAME</span>
+                      <span className="banner-player-pill">1P vs Bot</span>
+                    </div>
+
+                    <div className="banner-hero-art">
+                      <div className="banner-icon-bubble">
+                        <span className="hero-emoji">🐍</span>
+                      </div>
+                      <div className="banner-badge-preview">
+                        <span>100 TILES</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="card-item-action">
-                    <strong>Play Snake & Ladders</strong>
-                    <span>➡️</span>
+
+                  {/* Card Content Body */}
+                  <div className="game-card-body">
+                    <div className="game-title-row">
+                      <h3 className="game-card-title">Snake & Ladders Math</h3>
+                    </div>
+
+                    <p className="game-card-description">
+                      Roll the dice towards tile 100! If you land on a snake, solve the math problem within 20s to escape penalty!
+                    </p>
+
+                    <div className="game-feature-tags">
+                      <span className="feature-pill">🏁 100 Tiles</span>
+                      <span className="feature-pill">⏱️ 20s Speed</span>
+                      <span className="feature-pill">🤖 Smart Bot</span>
+                    </div>
+
+                    <div className="game-card-cta">
+                      <span className="cta-text">Play Snake & Ladders</span>
+                      <div className="cta-arrow-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                          <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                {/* Menu Card 2: Math Tug of War */}
+                {/* Game Card 2: Math Tug of War */}
                 <div
-                  className="menu-card-item menu-card-tug"
+                  className="modern-game-card card-tug-theme group"
                   onClick={() => setCurrentView('tug-of-war')}
                 >
-                  <div className="card-item-top">
-                    <div className="card-item-icon-box">🚩</div>
-                    <span className="card-item-tag">Fast Math • 1P vs Bot & 2P Local</span>
-                    <h3 className="card-item-title">Math Tug of War</h3>
-                    <p className="card-item-desc">
-                      Race to solve arithmetic (+, -, ×, ÷) to pull the rope to your side & activate Super Pull!
-                    </p>
+                  {/* Top Visual Game Banner with Blurred In-Game Preview */}
+                  <div className="game-card-banner banner-tug">
+                    <div className="banner-gameplay-bg tug-gameplay-mockup">
+                      <div className="mockup-math-prompt">18 × 4 = ?</div>
+                      <div className="mockup-tug-rope">
+                        <div className="mockup-rope-line" />
+                        <div className="mockup-rope-flag">🚩</div>
+                      </div>
+                      <div className="mockup-team-indicators">
+                        <span className="team-blue">P1: +240 Pull</span>
+                        <span className="team-red">BOT: +180 Pull</span>
+                      </div>
+                    </div>
+                    <div className="banner-blur-overlay" />
+
+                    <div className="banner-top-row">
+                      <span className="banner-tag-pill tag-purple">💥 BATTLE ARENA</span>
+                      <span className="banner-player-pill">1P & 2P Local</span>
+                    </div>
+
+                    <div className="banner-hero-art">
+                      <div className="banner-icon-bubble">
+                        <span className="hero-emoji">🚩</span>
+                      </div>
+                      <div className="banner-badge-preview">
+                        <span>SUPER PULL</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="card-item-action">
-                    <strong>Play Tug of War</strong>
-                    <span>➡️</span>
+
+                  {/* Card Content Body */}
+                  <div className="game-card-body">
+                    <div className="game-title-row">
+                      <h3 className="game-card-title">Math Tug of War</h3>
+                    </div>
+
+                    <p className="game-card-description">
+                      Rapidly solve (+, -, ×, :) arithmetic to pull the rope to your side and activate powerful Super Pull momentum!
+                    </p>
+
+                    <div className="game-feature-tags">
+                      <span className="feature-pill">⚡ Fast Math</span>
+                      <span className="feature-pill">👥 1v1 Battle</span>
+                      <span className="feature-pill">🔥 Combo Meter</span>
+                    </div>
+
+                    <div className="game-card-cta">
+                      <span className="cta-text">Play Tug of War</span>
+                      <div className="cta-arrow-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                          <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                {/* Menu Card 3: Flappy Math Bird */}
+                {/* Game Card 3: Flappy Math Bird */}
                 <div
-                  className="menu-card-item menu-card-flappy"
+                  className="modern-game-card card-flappy-theme group"
                   onClick={() => setCurrentView('flappy-bird')}
                 >
-                  <div className="card-item-top">
-                    <div className="card-item-icon-box">🐦</div>
-                    <span className="card-item-tag">Reflex + Speed Math (+, -, ×, ÷)</span>
-                    <h3 className="card-item-title">Flappy Math Bird</h3>
-                    <p className="card-item-desc">
-                      Fly through Gate A & Gate B with the correct math answers! Collect coins and extra lives!
-                    </p>
+                  {/* Top Visual Game Banner with Blurred In-Game Preview */}
+                  <div className="game-card-banner banner-flappy">
+                    <div className="banner-gameplay-bg flappy-gameplay-mockup">
+                      <div className="mockup-score-hud">🪙 1,240 | ❤️❤️❤️</div>
+                      <div className="mockup-pipes-row">
+                        <div className="mockup-pipe top-pipe">
+                          <span>GATE A: 48</span>
+                        </div>
+                        <div className="mockup-bird-flying">🐦</div>
+                        <div className="mockup-pipe bottom-pipe">
+                          <span>GATE B: 36</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="banner-blur-overlay" />
+
+                    <div className="banner-top-row">
+                      <span className="banner-tag-pill tag-blue">🕹️ ARCADE REFLEX</span>
+                      <span className="banner-player-pill">Endless Run</span>
+                    </div>
+
+                    <div className="banner-hero-art">
+                      <div className="banner-icon-bubble">
+                        <span className="hero-emoji">🐦</span>
+                      </div>
+                      <div className="banner-badge-preview">
+                        <span>GATE A & B</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="card-item-action">
-                    <strong>Play Flappy Bird</strong>
-                    <span>➡️</span>
+
+                  {/* Card Content Body */}
+                  <div className="game-card-body">
+                    <div className="game-title-row">
+                      <h3 className="game-card-title">Flappy Math Bird</h3>
+                    </div>
+
+                    <p className="game-card-description">
+                      Flap through Gate A & Gate B choosing the correct math answers! Collect shiny coins and bonus heart lives!
+                    </p>
+
+                    <div className="game-feature-tags">
+                      <span className="feature-pill">🪽 Jump Timing</span>
+                      <span className="feature-pill">🪙 Coins & Lives</span>
+                      <span className="feature-pill">🏆 High Score</span>
+                    </div>
+
+                    <div className="game-card-cta">
+                      <span className="cta-text">Play Flappy Bird</span>
+                      <div className="cta-arrow-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                          <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                {/* Menu Card 4: Classic */}
+                {/* Game Card 4: Classic 1v1 */}
                 <div
-                  className="menu-card-item menu-card-versus"
+                  className="modern-game-card card-versus-theme group"
                   onClick={() => setCurrentView('versus')}
                 >
-                  <div className="card-item-top">
-                    <div className="card-item-icon-box">⚔️</div>
-                    <span className="card-item-tag">2P Duel Mode (1 Keyboard)</span>
-                    <h3 className="card-item-title">Classic</h3>
-                    <p className="card-item-desc">
-                      Challenge your friend in a split-screen duel! Player 1 (A/S/D/F) vs Player 2 (H/J/K/L) compete for speed & accuracy.
-                    </p>
+                  {/* Top Visual Game Banner with Blurred In-Game Preview */}
+                  <div className="game-card-banner banner-versus">
+                    <div className="banner-gameplay-bg versus-gameplay-mockup">
+                      <div className="mockup-split-left">
+                        <span className="split-p-tag">P1 (A/S/D/F)</span>
+                        <span className="split-score">450 pts</span>
+                      </div>
+                      <div className="mockup-split-divider">
+                        <span>VS</span>
+                      </div>
+                      <div className="mockup-split-right">
+                        <span className="split-p-tag">P2 (H/J/K/L)</span>
+                        <span className="split-score">420 pts</span>
+                      </div>
+                    </div>
+                    <div className="banner-blur-overlay" />
+
+                    <div className="banner-top-row">
+                      <span className="banner-tag-pill tag-orange">🏆 2P SPLIT SCREEN</span>
+                      <span className="banner-player-pill">Ranked Duel</span>
+                    </div>
+
+                    <div className="banner-hero-art">
+                      <div className="banner-icon-bubble">
+                        <span className="hero-emoji">⚔️</span>
+                      </div>
+                      <div className="banner-badge-preview">
+                        <span>1 KEYBOARD</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="card-item-action">
-                    <strong>Start Classic</strong>
-                    <span>➡️</span>
+
+                  {/* Card Content Body */}
+                  <div className="game-card-body">
+                    <div className="game-title-row">
+                      <h3 className="game-card-title">Classic Duel 1v1</h3>
+                    </div>
+
+                    <div className="game-feature-tags">
+                      <span className="feature-pill">⌨️ 1 Keyboard</span>
+                      <span className="feature-pill">👑 Crown Match</span>
+                      <span className="feature-pill">🎯 Precision</span>
+                    </div>
+
+                    <div className="game-card-cta">
+                      <span className="cta-text">Start Classic Duel</span>
+                      <div className="cta-arrow-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                          <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
+                {/* Game Card 5: Math Target Shooter */}
+                <div
+                  className="modern-game-card card-tug-theme group"
+                  onClick={() => setCurrentView('target-shooter')}
+                  style={{ borderColor: '#38bdf8' }}
+                >
+                  <div className="game-card-banner banner-tug" style={{ background: 'linear-gradient(135deg, #0369a1 0%, #0f172a 100%)' }}>
+                    <div className="banner-gameplay-bg">
+                      <div className="mockup-math-prompt" style={{ background: 'rgba(15, 23, 42, 0.9)', borderColor: '#facc15' }}>48 : 6 = ?</div>
+                      <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', marginTop: '12px' }}>
+                        <span style={{ background: '#ec4899', color: '#fff', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: 800 }}>A: 6</span>
+                        <span style={{ background: '#22c55e', color: '#fff', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: 800 }}>B: 8 🎯</span>
+                        <span style={{ background: '#3b82f6', color: '#fff', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: 800 }}>C: 12</span>
+                      </div>
+                    </div>
+                    <div className="banner-blur-overlay" />
 
+                    <div className="banner-top-row">
+                      <span className="banner-tag-pill tag-blue">💥 SHOOTING ARENA</span>
+                      <span className="banner-player-pill">1P & 2P Dual</span>
+                    </div>
+
+                    <div className="banner-hero-art">
+                      <div className="banner-icon-bubble">
+                        <span className="hero-emoji">🎯</span>
+                      </div>
+                      <div className="banner-badge-preview">
+                        <span>+3 POIN</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="game-card-body">
+                    <div className="game-title-row">
+                      <h3 className="game-card-title">Target Shooter Showdown</h3>
+                    </div>
+
+                    <p className="game-card-description">
+                      Tembak 1 dari 5 papan sasaran yang memuat jawaban matematika yang benar! P1 (WASD + Space) vs P2/Bot (Panah + Enter). Peluru max 3 per soal.
+                    </p>
+
+                    <div className="game-feature-tags">
+                      <span className="feature-pill">🎯 5 Papan Sasaran</span>
+                      <span className="feature-pill">🔫 3 Peluru / Soal</span>
+                      <span className="feature-pill">⚡ +3 Poin Hit</span>
+                    </div>
+
+                    <div className="game-card-cta">
+                      <span className="cta-text">Play Target Shooter</span>
+                      <div className="cta-arrow-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                          <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Game Card 6: Math Soldier Zombie Strike */}
+                <div
+                  className="modern-game-card card-tug-theme group"
+                  onClick={() => setCurrentView('math-soldier')}
+                  style={{ borderColor: '#ef4444' }}
+                >
+                  <div className="game-card-banner banner-tug" style={{ background: 'linear-gradient(135deg, #7f1d1d 0%, #0f172a 100%)' }}>
+                    <div className="banner-gameplay-bg">
+                      <div className="mockup-math-prompt" style={{ background: 'rgba(15, 23, 42, 0.9)', borderColor: '#ef4444' }}>7 × 8 = ?</div>
+                      <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', marginTop: '12px' }}>
+                        <span style={{ background: '#22c55e', color: '#fff', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: 800 }}>M4A1 🔫</span>
+                        <span style={{ background: '#eab308', color: '#000', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: 800 }}>AWM 🎯</span>
+                        <span style={{ background: '#a855f7', color: '#fff', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: 800 }}>Raygun 🌌</span>
+                      </div>
+                    </div>
+                    <div className="banner-blur-overlay" />
+
+                    <div className="banner-top-row">
+                      <span className="banner-tag-pill" style={{ background: '#dc2626', color: '#fff' }}>🪖 3D SOLDIER FPS</span>
+                      <span className="banner-player-pill">Survival Wave</span>
+                    </div>
+
+                    <div className="banner-hero-art">
+                      <div className="banner-icon-bubble" style={{ background: 'linear-gradient(135deg, #ef4444, #991b1b)' }}>
+                        <span className="hero-emoji">🧟</span>
+                      </div>
+                      <div className="banner-badge-preview" style={{ borderColor: '#ef4444' }}>
+                        <span>UPGRADE PERSENJATAAN</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="game-card-body">
+                    <div className="game-title-row">
+                      <h3 className="game-card-title">Math Soldier: Zombie Strike</h3>
+                    </div>
+
+                    <p className="game-card-description">
+                      Menjadi tentara FPS! Bergerak dengan WASD & Space, bidik & tembak (Klik Kiri), Scope (Klik Kanan), dan Reload (R). Basmi zombie dan jawab kuis matematika untuk membeli senjata hebat!
+                    </p>
+
+                    <div className="game-feature-tags">
+                      <span className="feature-pill">🪖 WASD + Mouse Scope</span>
+                      <span className="feature-pill">🔫 6 Jenis Senjata</span>
+                      <span className="feature-pill">🧮 Kuis Upgrade Senjata</span>
+                    </div>
+
+                    <div className="game-card-cta">
+                      <span className="cta-text" style={{ color: '#f87171' }}>Play Soldier FPS</span>
+                      <div className="cta-arrow-btn" style={{ background: '#dc2626' }}>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                          <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </>
+        )}
+
+        {/* VIEW: MATH SOLDIER ZOMBIE STRIKE */}
+        {currentView === 'math-soldier' && (
+          <div>
+            <MathSoldierGame
+              onBackToMenu={() => setCurrentView('menu')}
+              onAddScore={handleAddScore}
+            />
+          </div>
         )}
 
         {/* VIEW: ULAR TANGGA MATEMATIKA */}
@@ -726,6 +1039,16 @@ export default function Home() {
         {currentView === 'tug-of-war' && (
           <div>
             <TugOfWarGame
+              onBackToMenu={() => setCurrentView('menu')}
+              onAddScore={handleAddScore}
+            />
+          </div>
+        )}
+
+        {/* VIEW: TARGET SHOOTER SHOWDOWN */}
+        {currentView === 'target-shooter' && (
+          <div>
+            <TargetShooterGame
               onBackToMenu={() => setCurrentView('menu')}
               onAddScore={handleAddScore}
             />
@@ -906,8 +1229,8 @@ export default function Home() {
         }}
       />
 
-      {/* ORIGINAL FOOTER (Matching Screenshot 5) */}
-      {currentView !== 'quiz-editor' && (
+      {/* ORIGINAL FOOTER (Hidden in game views so screen stays fixed & never gets cut off) */}
+      {!isGameView && (
         <footer className="footer">
           <div className="footer-top">
             <div className="footer-brand">

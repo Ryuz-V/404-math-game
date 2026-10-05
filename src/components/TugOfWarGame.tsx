@@ -152,7 +152,7 @@ function generateGrade12TugQuestion(): QuickMathQ {
     const res = Math.floor(Math.random() * 12) + 2;
     const a = b * res;
     ans = res;
-    question = `${a} ÷ ${b} = ?`;
+    question = `${a} : ${b} = ?`;
   }
 
   // Generate 4 unique options
@@ -170,6 +170,324 @@ function generateGrade12TugQuestion(): QuickMathQ {
     options: opts.map(String),
     correctIndex: correctIdx
   };
+}
+
+// ============================================================================
+// REAL TUG OF WAR CANVAS 2D RENDERER (STADIUM, JUTE ROPE, & ATHLETES)
+// ============================================================================
+function drawTugStadium(
+  ctx: CanvasRenderingContext2D,
+  width: number,
+  height: number,
+  groundY: number
+) {
+  // 1. Sky & Floodlights
+  const skyGrad = ctx.createLinearGradient(0, 0, 0, groundY);
+  skyGrad.addColorStop(0, '#0f172a');
+  skyGrad.addColorStop(0.5, '#1e293b');
+  skyGrad.addColorStop(1, '#334155');
+  ctx.fillStyle = skyGrad;
+  ctx.fillRect(0, 0, width, groundY);
+
+  // Stadium Floodlight Cones
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+  ctx.beginPath();
+  ctx.moveTo(90, 0);
+  ctx.lineTo(0, groundY);
+  ctx.lineTo(280, groundY);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.moveTo(width - 90, 0);
+  ctx.lineTo(width - 280, groundY);
+  ctx.lineTo(width, groundY);
+  ctx.closePath();
+  ctx.fill();
+
+  // Cheering Crowd in Background Stands
+  ctx.fillStyle = '#1e293b';
+  ctx.fillRect(0, groundY - 48, width, 48);
+
+  for (let cx = 18; cx < width - 18; cx += 28) {
+    const crowdColor = cx < width / 2 ? '#3b82f6' : '#ef4444';
+    ctx.fillStyle = crowdColor;
+    ctx.beginPath();
+    ctx.arc(cx, groundY - 30, 6, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillRect(cx - 4, groundY - 24, 8, 14);
+  }
+
+  // 2. Green Tournament Turf Grass
+  const grassGrad = ctx.createLinearGradient(0, groundY - 8, 0, height);
+  grassGrad.addColorStop(0, '#15803d');
+  grassGrad.addColorStop(1, '#14532d');
+  ctx.fillStyle = grassGrad;
+  ctx.fillRect(0, groundY - 8, width, height - (groundY - 8));
+
+  // Mowed Lawn Vertical Stripes
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+  for (let sx = 0; sx < width; sx += 60) {
+    ctx.fillRect(sx, groundY - 8, 30, height - (groundY - 8));
+  }
+
+  // 3. Center Worn Dirt/Mud Path
+  const mudGrad = ctx.createRadialGradient(width / 2, groundY + 22, 10, width / 2, groundY + 22, 280);
+  mudGrad.addColorStop(0, '#78350f');
+  mudGrad.addColorStop(0.6, '#92400e');
+  mudGrad.addColorStop(1, 'rgba(21, 128, 61, 0)');
+  ctx.fillStyle = mudGrad;
+  ctx.beginPath();
+  ctx.ellipse(width / 2, groundY + 20, 320, 24, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  // 4. White Chalk Center Line (0m)
+  ctx.strokeStyle = '#ffffff';
+  ctx.lineWidth = 3.5;
+  ctx.beginPath();
+  ctx.moveTo(width / 2, groundY - 25);
+  ctx.lineTo(width / 2, groundY + 45);
+  ctx.stroke();
+
+  // Center Circle on Turf
+  ctx.beginPath();
+  ctx.ellipse(width / 2, groundY + 12, 34, 12, 0, 0, Math.PI * 2);
+  ctx.stroke();
+
+  // Center Mark Label
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '900 11px system-ui';
+  ctx.textAlign = 'center';
+  ctx.fillText('0m', width / 2, groundY - 30);
+
+  // 5. Team Blue Win Limit Line (Left: 16% of width)
+  const leftLimitX = width * 0.16;
+  ctx.strokeStyle = '#38bdf8';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(leftLimitX, groundY - 25);
+  ctx.lineTo(leftLimitX, groundY + 45);
+  ctx.stroke();
+
+  ctx.fillStyle = '#38bdf8';
+  ctx.font = '900 10px system-ui';
+  ctx.fillText('🏁 MENANG BIRU', leftLimitX, groundY - 30);
+
+  // 6. Team Red Win Limit Line (Right: 84% of width)
+  const rightLimitX = width * 0.84;
+  ctx.strokeStyle = '#f87171';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(rightLimitX, groundY - 25);
+  ctx.lineTo(rightLimitX, groundY + 45);
+  ctx.stroke();
+
+  ctx.fillStyle = '#f87171';
+  ctx.font = '900 10px system-ui';
+  ctx.fillText('MENANG MERAH 🏁', rightLimitX, groundY - 30);
+}
+
+function drawTugRopeAndRibbon(
+  ctx: CanvasRenderingContext2D,
+  startX: number,
+  endX: number,
+  ropeY: number,
+  centerRibbonX: number,
+  isPulling: boolean,
+  time: number
+) {
+  ctx.save();
+
+  // Subtle tension vibration
+  const vibY = isPulling ? Math.sin(time * 0.05) * 2.5 : Math.sin(time * 0.005) * 0.8;
+  const currentY = ropeY + vibY;
+
+  // 1. Thick Base Rope Shadow on Grass
+  ctx.strokeStyle = 'rgba(0, 0, 0, 0.25)';
+  ctx.lineWidth = 14;
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.moveTo(startX, currentY + 38);
+  ctx.lineTo(endX, currentY + 38);
+  ctx.stroke();
+
+  // 2. Thick Braided Jute Rope Body
+  ctx.strokeStyle = '#b45309';
+  ctx.lineWidth = 12;
+  ctx.beginPath();
+  ctx.moveTo(startX, currentY);
+  ctx.lineTo(endX, currentY);
+  ctx.stroke();
+  ctx.strokeStyle = '#000000';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // 3. Realistic Twisted Rope Coils / Braid pattern
+  ctx.strokeStyle = '#f59e0b';
+  ctx.lineWidth = 3;
+  for (let rx = startX + 6; rx < endX - 6; rx += 14) {
+    ctx.beginPath();
+    ctx.moveTo(rx, currentY - 5);
+    ctx.lineTo(rx + 8, currentY + 5);
+    ctx.stroke();
+  }
+
+  // 4. Center Red Ribbon / Flag Tied on the Rope
+  const ribX = centerRibbonX;
+  const wave = Math.sin(time * 0.008) * 8;
+
+  // Gold Clasp
+  ctx.fillStyle = '#facc15';
+  ctx.beginPath();
+  ctx.arc(ribX, currentY, 7, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.strokeStyle = '#000';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // Red Center Flag Ribbon (Fluttering downwards towards ground)
+  ctx.fillStyle = '#ef4444';
+  ctx.beginPath();
+  ctx.moveTo(ribX - 6, currentY);
+  ctx.lineTo(ribX - 14 + wave, currentY + 45);
+  ctx.lineTo(ribX + 4 + wave, currentY + 38);
+  ctx.lineTo(ribX + 16 + wave, currentY + 46);
+  ctx.lineTo(ribX + 6, currentY);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = '#000000';
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+
+  // Ribbon Center Gold Star / Dot
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 9px Arial';
+  ctx.textAlign = 'center';
+  ctx.fillText('0', ribX, currentY + 3);
+
+  ctx.restore();
+}
+
+function drawTugAthlete(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  team: 'blue' | 'red',
+  role: 'anchor' | 'mid' | 'captain',
+  leanAngle: number,
+  isPulling: boolean,
+  _isStumbling: boolean,
+  isBot: boolean,
+  _time: number
+) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(leanAngle);
+
+  const primaryCol = team === 'blue' ? '#2563eb' : '#dc2626';
+  const secondaryCol = team === 'blue' ? '#38bdf8' : '#f87171';
+  const darkCol = team === 'blue' ? '#1e3a8a' : '#991b1b';
+
+  // Boots / Sneakers digging into grass
+  ctx.fillStyle = '#1e293b';
+  ctx.beginPath();
+  ctx.roundRect(-14, -8, 28, 10, 4);
+  ctx.fill();
+  ctx.strokeStyle = '#000';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(-12, 0, 24, 3); // Sole
+
+  // Legs / Athletic Track Pants
+  ctx.fillStyle = darkCol;
+  ctx.beginPath();
+  ctx.roundRect(-10, -42, 20, 36, 5);
+  ctx.fill();
+  ctx.stroke();
+  // Team Stripe on pants
+  ctx.fillStyle = secondaryCol;
+  ctx.fillRect(-8, -40, 4, 32);
+
+  // Torso / Team Jersey
+  ctx.fillStyle = primaryCol;
+  ctx.beginPath();
+  ctx.roundRect(-16, -78, 32, 38, 7);
+  ctx.fill();
+  ctx.stroke();
+
+  // Jersey Number / Badge
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '900 12px Arial';
+  ctx.textAlign = 'center';
+  ctx.fillText(role === 'captain' ? 'C' : role === 'mid' ? '2' : '1', 0, -54);
+
+  // Arms and Hands Clamping the Rope
+  ctx.fillStyle = primaryCol;
+  ctx.beginPath();
+  const armReachX = team === 'blue' ? 14 : -14;
+  ctx.roundRect(armReachX > 0 ? 0 : -22, -68, 22, 12, 5);
+  ctx.fill();
+  ctx.stroke();
+
+  // Hands (Gloved hands holding rope tightly!)
+  ctx.fillStyle = '#fde047'; // Grip gloves
+  ctx.beginPath();
+  ctx.arc(armReachX, -62, 7, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.stroke();
+
+  // Head & Face
+  if (isBot) {
+    // Cybernetic AI Robot Head! 🤖
+    ctx.fillStyle = '#64748b';
+    ctx.beginPath();
+    ctx.roundRect(-14, -104, 28, 24, 6);
+    ctx.fill();
+    ctx.stroke();
+
+    // Glowing Red Visor
+    ctx.fillStyle = '#ef4444';
+    ctx.fillRect(-10, -96, 20, 7);
+  } else {
+    // Human Athlete Head
+    ctx.fillStyle = '#fed7aa'; // Skin tone
+    ctx.beginPath();
+    ctx.arc(0, -92, 13, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    // Athletic Headband
+    ctx.fillStyle = secondaryCol;
+    ctx.fillRect(-13, -99, 26, 6);
+    ctx.strokeRect(-13, -99, 26, 6);
+
+    // Hair / Tuft
+    ctx.fillStyle = '#451a03';
+    ctx.beginPath();
+    ctx.arc(0, -103, 10, Math.PI, Math.PI * 2);
+    ctx.fill();
+
+    // Eyes (Determined Grit)
+    ctx.fillStyle = '#0f172a';
+    const eyeDir = team === 'blue' ? -2 : 2;
+    ctx.fillRect(eyeDir - 4, -94, 3, 4);
+    ctx.fillRect(eyeDir + 2, -94, 3, 4);
+
+    // Gritted Teeth / Shouting Mouth
+    ctx.fillStyle = isPulling ? '#b91c1c' : '#ffffff';
+    ctx.fillRect(-4, -85, 8, isPulling ? 5 : 3);
+    ctx.strokeRect(-4, -85, 8, isPulling ? 5 : 3);
+  }
+
+  // Sweat Drop if pulling
+  if (isPulling) {
+    ctx.fillStyle = '#38bdf8';
+    ctx.font = '12px system-ui';
+    ctx.fillText('💦', team === 'blue' ? -18 : 18, -100);
+  }
+
+  ctx.restore();
 }
 
 export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameProps) {
@@ -199,6 +517,16 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
   const [p1Selected, setP1Selected] = useState<number | null>(null);
   const [p2Selected, setP2Selected] = useState<number | null>(null);
 
+  // Canvas & Arena Animation State
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const arenaRef = useRef({
+    currentRopeX: 0,
+    p1PullTimer: 0,
+    p2PullTimer: 0,
+    particles: [] as { x: number; y: number; vx: number; vy: number; color: string; life: number; size: number }[],
+    floatTexts: [] as { x: number; y: number; text: string; color: string; life: number; vy: number }[]
+  });
+
   // Bot timer ref
   const botIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -206,6 +534,9 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
 
   const startGame = () => {
     setRopePosition(0);
+    arenaRef.current.currentRopeX = 0;
+    arenaRef.current.particles = [];
+    arenaRef.current.floatTexts = [];
     setP1Streak(0);
     setP2Streak(0);
     setP1CorrectCount(0);
@@ -305,6 +636,29 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
       setP1PullEffect(true);
       setTimeout(() => setP1PullEffect(false), 400);
 
+      // Trigger Canvas Pull Animation and Particles
+      arenaRef.current.p1PullTimer = 0.5;
+      const currentCenterX = 460 + arenaRef.current.currentRopeX;
+      for (let i = 0; i < 18; i++) {
+        arenaRef.current.particles.push({
+          x: currentCenterX - 180 + (Math.random() - 0.5) * 80,
+          y: 185,
+          vx: -Math.random() * 5 - 2,
+          vy: -Math.random() * 3,
+          color: Math.random() < 0.5 ? '#92400e' : '#38bdf8',
+          life: 25,
+          size: Math.random() * 5 + 3
+        });
+      }
+      arenaRef.current.floatTexts.push({
+        x: currentCenterX - 150,
+        y: 80,
+        text: p1PowerActive ? '💥 SUPER PULL! ⚡' : p1Streak >= 3 ? '🔥 COMBO PULL!' : '💥 HAAAP!',
+        color: '#38bdf8',
+        life: 30,
+        vy: -1.5
+      });
+
       setRopePosition((prev) => {
         const nextPos = Math.max(-100, prev - pullForce);
         checkVictory(nextPos);
@@ -316,7 +670,6 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
       sounds.playWrong();
       setP1Streak(0);
       setP1PowerActive(false);
-      // Musuh TIDAK nambah poin/tarikan saat salah jawab
     }
 
     setTimeout(() => {
@@ -341,6 +694,29 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
       setP2PullEffect(true);
       setTimeout(() => setP2PullEffect(false), 400);
 
+      // Trigger Canvas Pull Animation and Particles
+      arenaRef.current.p2PullTimer = 0.5;
+      const currentCenterX = 460 + arenaRef.current.currentRopeX;
+      for (let i = 0; i < 18; i++) {
+        arenaRef.current.particles.push({
+          x: currentCenterX + 180 + (Math.random() - 0.5) * 80,
+          y: 185,
+          vx: Math.random() * 5 + 2,
+          vy: -Math.random() * 3,
+          color: Math.random() < 0.5 ? '#92400e' : '#f87171',
+          life: 25,
+          size: Math.random() * 5 + 3
+        });
+      }
+      arenaRef.current.floatTexts.push({
+        x: currentCenterX + 150,
+        y: 80,
+        text: p2PowerActive ? '💥 SUPER PULL! ⚡' : p2Streak >= 3 ? '🔥 COMBO PULL!' : '💥 TARIK!',
+        color: '#f87171',
+        life: 30,
+        vy: -1.5
+      });
+
       setRopePosition((prev) => {
         const nextPos = Math.min(100, prev + pullForce);
         checkVictory(nextPos);
@@ -352,7 +728,6 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
       sounds.playWrong();
       setP2Streak(0);
       setP2PowerActive(false);
-      // Musuh TIDAK nambah poin/tarikan saat salah jawab
     }
 
     setTimeout(() => {
@@ -360,6 +735,106 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
       setP2Question(generateGrade12TugQuestion());
     }, 350);
   };
+
+  // Canvas Main Render Loop
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let animId: number;
+    let lastTime = performance.now();
+
+    const render = (nowTime: number) => {
+      const dt = Math.min(0.1, (nowTime - lastTime) / 1000);
+      lastTime = nowTime;
+
+      const width = canvas.width;
+      const height = canvas.height;
+      const groundY = 175;
+
+      // Smoothly lerp currentRopeX towards ropePosition * 3.4
+      const targetX = ropePosition * 3.4;
+      arenaRef.current.currentRopeX += (targetX - arenaRef.current.currentRopeX) * 0.15;
+      const ropeX = arenaRef.current.currentRopeX;
+
+      // Decrement pull timers
+      if (arenaRef.current.p1PullTimer > 0) arenaRef.current.p1PullTimer -= dt;
+      if (arenaRef.current.p2PullTimer > 0) arenaRef.current.p2PullTimer -= dt;
+
+      const isP1Pulling = arenaRef.current.p1PullTimer > 0;
+      const isP2Pulling = arenaRef.current.p2PullTimer > 0;
+
+      // 1. Draw Stadium & Pitch
+      drawTugStadium(ctx, width, height, groundY);
+
+      // 2. Draw Dust & Sweat Particles
+      for (let i = arenaRef.current.particles.length - 1; i >= 0; i--) {
+        const p = arenaRef.current.particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life--;
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+        if (p.life <= 0) arenaRef.current.particles.splice(i, 1);
+      }
+
+      // 3. Draw The Rope & Center Ribbon
+      const centerRibbonX = width / 2 + ropeX;
+      const startX = centerRibbonX - 300;
+      const endX = centerRibbonX + 300;
+      const ropeY = groundY - 55;
+
+      drawTugRopeAndRibbon(ctx, startX, endX, ropeY, centerRibbonX, isP1Pulling || isP2Pulling, nowTime);
+
+      // 4. Draw Team Blue Athletes (Left side)
+      const p1AnchorLean = isP1Pulling ? -0.75 : isP2Pulling ? -0.2 : -0.45;
+      drawTugAthlete(ctx, centerRibbonX - 250, groundY + 8, 'blue', 'anchor', p1AnchorLean, isP1Pulling, isP2Pulling, false, nowTime);
+
+      const p1MidLean = isP1Pulling ? -0.7 : isP2Pulling ? -0.22 : -0.42;
+      drawTugAthlete(ctx, centerRibbonX - 180, groundY + 8, 'blue', 'mid', p1MidLean, isP1Pulling, isP2Pulling, false, nowTime);
+
+      const p1CapLean = isP1Pulling ? -0.65 : isP2Pulling ? -0.25 : -0.38;
+      drawTugAthlete(ctx, centerRibbonX - 110, groundY + 8, 'blue', 'captain', p1CapLean, isP1Pulling, isP2Pulling, false, nowTime);
+
+      // 5. Draw Team Red Athletes (Right side)
+      const p2CapLean = isP2Pulling ? 0.65 : isP1Pulling ? 0.25 : 0.38;
+      drawTugAthlete(ctx, centerRibbonX + 110, groundY + 8, 'red', 'captain', p2CapLean, isP2Pulling, isP1Pulling, false, nowTime);
+
+      const p2MidLean = isP2Pulling ? 0.7 : isP1Pulling ? 0.22 : 0.42;
+      drawTugAthlete(ctx, centerRibbonX + 180, groundY + 8, 'red', 'mid', p2MidLean, isP2Pulling, isP1Pulling, false, nowTime);
+
+      const p2AnchorLean = isP2Pulling ? 0.75 : isP1Pulling ? 0.2 : 0.45;
+      drawTugAthlete(ctx, centerRibbonX + 250, groundY + 8, 'red', 'anchor', p2AnchorLean, isP2Pulling, isP1Pulling, gameMode === 'vs-bot', nowTime);
+
+      // 6. Draw Floating Comic Text Shouts
+      for (let i = arenaRef.current.floatTexts.length - 1; i >= 0; i--) {
+        const ft = arenaRef.current.floatTexts[i];
+        ft.y += ft.vy;
+        ft.life--;
+
+        ctx.save();
+        ctx.fillStyle = ft.color;
+        ctx.font = '900 14px system-ui';
+        ctx.textAlign = 'center';
+        ctx.strokeStyle = '#000000';
+        ctx.lineWidth = 3.5;
+        ctx.strokeText(ft.text, ft.x, ft.y);
+        ctx.fillText(ft.text, ft.x, ft.y);
+        ctx.restore();
+
+        if (ft.life <= 0) arenaRef.current.floatTexts.splice(i, 1);
+      }
+
+      animId = requestAnimationFrame(render);
+    };
+
+    animId = requestAnimationFrame(render);
+    return () => cancelAnimationFrame(animId);
+  }, [ropePosition, gameMode]);
 
   // Trigger Power Pull
   const activateP1Power = () => {
@@ -543,66 +1018,9 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
         <div className="tug-arena">
           {/* TUG ROPE BATTLEFIELD ANIMATION */}
           <div className="tug-battlefield">
-            {/* Background Decor & Stadium */}
-            <div className="tug-stadium-grass">
-              {/* Pitch Lines */}
-              <div className="tug-line line-left-limit"></div>
-              <div className="tug-line line-center"></div>
-              <div className="tug-line line-right-limit"></div>
-
-              {/* Rope and Pullers Layer */}
-              <div
-                className="tug-rope-assembly"
-                style={{
-                  transform: `translateX(${ropePosition * 3.2}px)`,
-                  transition: 'transform 0.22s cubic-bezier(0.2, 0.8, 0.4, 1)'
-                }}
-              >
-                {/* Team 1 Characters (Left - Blue Team) */}
-                <div
-                  className={`tug-team team-left ${p1PullEffect ? 'pulling-pulse' : ''} ${
-                    ropePosition > 15 ? 'stumbling' : ''
-                  }`}
-                >
-                  <div className="character char-1">
-                    <span className="char-emoji">🦁</span>
-                    <span className="char-role">Captain</span>
-                  </div>
-                  <div className="character char-2">
-                    <span className="char-emoji">🦊</span>
-                  </div>
-                  <div className="character char-3">
-                    <span className="char-emoji">🐼</span>
-                  </div>
-                </div>
-
-                {/* The Thick Rope with Left & Right extensions */}
-                <div className="tug-rope-segment">
-                  {/* Center Flag */}
-                  <div className="tug-rope-flag">
-                    🚩
-                    <div className="flag-shadow"></div>
-                  </div>
-                </div>
-
-                {/* Team 2 Characters (Right - Red Team / Bot) */}
-                <div
-                  className={`tug-team team-right ${p2PullEffect ? 'pulling-pulse' : ''} ${
-                    ropePosition < -15 ? 'stumbling' : ''
-                  }`}
-                >
-                  <div className="character char-3">
-                    <span className="char-emoji">🐻</span>
-                  </div>
-                  <div className="character char-2">
-                    <span className="char-emoji">🐺</span>
-                  </div>
-                  <div className="character char-1">
-                    <span className="char-emoji">{gameMode === 'vs-bot' ? '🤖' : '🐯'}</span>
-                    <span className="char-role">{gameMode === 'vs-bot' ? 'AI Bot' : 'P2'}</span>
-                  </div>
-                </div>
-              </div>
+            {/* REAL ANIMATED TUG OF WAR CANVAS ARENA */}
+            <div className="tug-canvas-wrapper">
+              <canvas ref={canvasRef} width={920} height={230} className="tug-canvas" />
             </div>
 
             {/* Tension / Distance Bar */}
@@ -814,11 +1232,12 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
           background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
           color: #fff;
           font-family: inherit;
-          padding: 1.5rem 2rem 3rem;
+          padding: 1rem 2rem 2rem;
           display: flex;
           flex-direction: column;
-          gap: 1.5rem;
+          gap: 1rem;
           user-select: none;
+          box-sizing: border-box;
         }
 
         .tug-nav {
@@ -1037,133 +1456,35 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
           background: #1e293b;
           border: 3.5px solid #000;
           border-radius: 20px;
-          padding: 1.8rem 1.5rem 1.2rem;
+          padding: 1.2rem 1.4rem 1rem;
           box-shadow: 6px 6px 0px #000;
           position: relative;
           overflow: hidden;
-        }
-
-        .tug-stadium-grass {
-          background: #15803d;
-          border: 3px solid #000;
-          border-radius: 14px;
-          height: 170px;
-          position: relative;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          overflow: hidden;
-          background-image: repeating-linear-gradient(90deg, #15803d 0px, #15803d 50px, #166534 50px, #166534 100px);
-        }
-
-        .tug-line {
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          width: 4px;
-          z-index: 1;
-        }
-        .line-center {
-          left: 50%;
-          transform: translateX(-50%);
-          background: #fff;
-          box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
-        }
-        .line-left-limit {
-          left: 15%;
-          background: #00e5ff;
-          border-left: 2px dashed #000;
-        }
-        .line-right-limit {
-          right: 15%;
-          background: #ff4757;
-          border-right: 2px dashed #000;
-        }
-
-        .tug-rope-assembly {
-          display: flex;
-          align-items: center;
-          position: relative;
-          z-index: 2;
-        }
-
-        .tug-team {
-          display: flex;
-          align-items: flex-end;
-          gap: 6px;
-        }
-        .team-left .character {
-          animation: strainLeft 0.7s infinite ease-in-out alternate;
-        }
-        .team-right .character {
-          animation: strainRight 0.7s infinite ease-in-out alternate;
-        }
-        @keyframes strainLeft {
-          0% { transform: rotate(-5deg) translateX(0); }
-          100% { transform: rotate(-16deg) translateX(-6px); }
-        }
-        @keyframes strainRight {
-          0% { transform: rotate(5deg) translateX(0); }
-          100% { transform: rotate(16deg) translateX(6px); }
-        }
-
-        .pulling-pulse .character {
-          animation: bigPull 0.3s ease-out !important;
-        }
-        @keyframes bigPull {
-          0% { transform: scale(1); }
-          50% { transform: scale(1.25) translateY(-10px); }
-          100% { transform: scale(1); }
-        }
-
-        .stumbling .character {
-          animation: stumbleAnim 0.35s infinite alternate !important;
-        }
-        @keyframes stumbleAnim {
-          0% { transform: translateY(0) rotate(8deg); }
-          100% { transform: translateY(-5px) rotate(-8deg); }
-        }
-
-        .character {
           display: flex;
           flex-direction: column;
           align-items: center;
         }
-        .char-emoji {
-          font-size: 3rem;
-          filter: drop-shadow(2px 4px 0px rgba(0,0,0,0.5));
-        }
-        .char-role {
-          background: #000;
-          color: #fff;
-          font-size: 0.65rem;
-          font-weight: 800;
-          padding: 1px 6px;
-          border-radius: 4px;
-        }
 
-        .tug-rope-segment {
-          width: 320px;
-          height: 16px;
-          background: repeating-linear-gradient(45deg, #d97706, #d97706 10px, #b45309 10px, #b45309 20px);
-          border: 2px solid #000;
-          border-radius: 8px;
+        .tug-canvas-wrapper {
           position: relative;
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+          border: 3.5px solid #000;
+          border-radius: 16px;
+          overflow: hidden;
+          box-shadow: 4px 4px 0 #000;
+          max-width: 920px;
+          width: 100%;
+          aspect-ratio: 920 / 230;
+          background: #0f172a;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
 
-        .tug-rope-flag {
-          position: absolute;
-          left: 50%;
-          top: -24px;
-          transform: translateX(-50%);
-          font-size: 2.2rem;
-          filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
-          animation: flagWiggle 0.4s infinite alternate ease-in-out;
-        }
-        @keyframes flagWiggle {
-          0% { transform: translateX(-50%) rotate(-6deg); }
-          100% { transform: translateX(-50%) rotate(6deg); }
+        .tug-canvas {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
         }
 
         /* TENSION GAUGE */

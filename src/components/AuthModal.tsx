@@ -94,7 +94,7 @@ export default function AuthModal({
   };
 
   return (
-    <div className="modal-backdrop" onClick={handleBackdropClick}>
+    <div className="modal-backdrop" data-lenis-prevent="true" onClick={handleBackdropClick}>
       <div className="modal-card" onClick={e => e.stopPropagation()}>
         <div className="modal-header" style={{ display: 'flex', alignItems: 'center', gap: '12px', justifyContent: 'flex-start' }}>
           <button 

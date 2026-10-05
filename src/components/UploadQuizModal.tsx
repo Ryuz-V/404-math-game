@@ -266,7 +266,7 @@ export default function UploadQuizModal({ isOpen, onClose, onImportQuestions }: 
         </div>
 
         {/* Modal Body */}
-        <div style={{ padding: '24px', overflowY: 'auto', flex: 1, display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        <div data-lenis-prevent="true" className="custom-scrollbar" style={{ padding: '24px', overflowY: 'auto', overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch', flex: 1, display: 'flex', flexDirection: 'column', gap: '20px' }}>
           {/* Metadata Row */}
           <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '16px' }}>
             <div>

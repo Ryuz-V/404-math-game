@@ -211,12 +211,12 @@ function generateMathChallenge(): MathQuizQuestion {
     correct = a * b;
     prompt = `${a} × ${b} = ?`;
   } else {
-    topic = 'Pembagian (÷)';
+    topic = 'Pembagian (:)';
     const b = Math.floor(Math.random() * 10) + 2;
     const ans = Math.floor(Math.random() * 12) + 2;
     const a = b * ans;
     correct = ans;
-    prompt = `${a} ÷ ${b} = ?`;
+    prompt = `${a} : ${b} = ?`;
   }
 
   const set = new Set<number>([correct]);
@@ -1556,12 +1556,13 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
           min-height: calc(100vh - 80px);
           background: #0f172a;
           color: #ffffff;
-          padding: 1.2rem 1.8rem 3rem;
+          padding: 1rem 1.8rem 2rem;
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 1.2rem;
+          gap: 1rem;
           user-select: none;
+          box-sizing: border-box;
         }
 
         /* NAVBAR */
