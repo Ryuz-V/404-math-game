@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { UserQuiz } from '../types/quiz';
-import { getUserQuizzes, deleteUserQuiz } from '../utils/quizStorage';
+import { getUserQuizzes, deleteUserQuiz, saveUserQuiz } from '../utils/quizStorage';
 
 interface QuizLibraryProps {
   onSelectQuiz: (topicId: string, customQuiz?: UserQuiz) => void;
@@ -14,15 +14,32 @@ export default function QuizLibrary({ onSelectQuiz, onOpenEditor, onOpenUpload }
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [userQuizzes, setUserQuizzes] = useState<UserQuiz[]>([]);
+  const [publicQuizzes, setPublicQuizzes] = useState<UserQuiz[]>([]);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [isNewQuizModalOpen, setIsNewQuizModalOpen] = useState(false);
+  const [newQuizTitle, setNewQuizTitle] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    setUserQuizzes(getUserQuizzes());
+    // Fetch public quizzes from database
+    import('../app/actions/quizzes').then(({ getPublicQuizzesFromDb, getUserQuizzesFromDb }) => {
+      getPublicQuizzesFromDb().then(setPublicQuizzes).catch(console.error);
+      getUserQuizzesFromDb().then((res) => {
+        setIsLoggedIn(!!res?.loggedIn);
+        if (res && res.loggedIn) {
+          // If logged in, ONLY use DB quizzes for strict account separation
+          setUserQuizzes(res.quizzes || []);
+        } else {
+          // If not logged in, stick with empty quizzes
+          setUserQuizzes([]);
+        }
+      }).catch(console.error);
+    });
   }, []);
 
   const handleDelete = (e: React.MouseEvent, quizId: string) => {
     e.stopPropagation();
-    if (confirm('Apakah Anda yakin ingin menghapus kuis ini?')) {
+    if (confirm('Are you sure you want to delete this quiz?')) {
       const updated = deleteUserQuiz(quizId);
       setUserQuizzes(updated);
       setActiveDropdown(null);
@@ -37,14 +54,6 @@ export default function QuizLibrary({ onSelectQuiz, onOpenEditor, onOpenUpload }
     }
   };
 
-  const mockCards = [
-    { id: 'dimensi-tiga', title: 'Soal-Soal Geometri', summary: 'Kumpulan latihan soal geometri datar dan geometri ruang beserta pembahasannya secara lengkap.', accuracy: 40, completion: 60, tags: ['UI/UX', 'Not Urgent'], edited: '2h ago', questions: 10, bannerColor: '#fcd34d' },
-    { id: 'kalkulus-lanjut', title: 'Soal-Soal Trigonometri', summary: 'Latihan soal trigonometri dasar, identitas trigonometri, hingga aturan sinus dan kosinus.', accuracy: 20, completion: 80, tags: ['Instructional Design', 'Not Urgent'], edited: '8h ago', questions: 15, bannerColor: '#bae6fd' },
-    { id: 'integral-kalkulus', title: 'Soal-Soal Kalkulus', summary: 'Kumpulan soal limit, turunan, dan integral fungsi aljabar maupun trigonometri.', accuracy: 100, completion: 100, tags: ['Experience Design', 'Urgent'], edited: '23h ago', questions: 25, bannerColor: '#d8b4fe' },
-    { id: 'statistika', title: 'Creating Engaging Learning Journeys: UI/UX Best Practices', summary: 'Panduan praktik terbaik merancang antarmuka yang menarik, ramah pengguna, dan efektif.', accuracy: 20, completion: 100, tags: ['UI/UX', 'Urgent'], edited: '5d ago', questions: 30, bannerColor: '#93c5fd' },
-    { id: 'kaidah-pencacahan', title: 'Designing Intuitive User Interfaces', summary: 'Pelajari cara membuat antarmuka pengguna yang intuitif dan mudah dipahami oleh semua kalangan.', accuracy: 80, completion: 80, tags: ['User Interface (UI)', 'Not Urgent'], edited: '2d ago', questions: 15, bannerColor: '#fde047' },
-    { id: 'peluang-majemuk', title: 'Optimizing User Experience in Educational Platforms', summary: 'Strategi optimalisasi pengalaman pengguna pada platform edukasi digital secara menyeluruh.', accuracy: 0, completion: 0, tags: ['User Experience', 'Urgent'], edited: '4d ago', questions: 25, bannerColor: '#e9d5ff', isDraft: true },
-  ];
 
   const CircleChart = ({ percentage, color }: { percentage: number, color: string }) => (
     <svg width="28" height="28" viewBox="0 0 36 36" style={{ marginBottom: '4px' }}>
@@ -88,18 +97,21 @@ export default function QuizLibrary({ onSelectQuiz, onOpenEditor, onOpenUpload }
                   onMouseEnter={(e) => { e.currentTarget.style.transform = 'translate(-2px, -2px)'; e.currentTarget.style.boxShadow = '6px 6px 0px #000'; }}
                   onMouseLeave={(e) => { e.currentTarget.style.transform = 'translate(0px, 0px)'; e.currentTarget.style.boxShadow = '4px 4px 0px #000'; }}
                 >
-                  <span>📄</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d8b4fe" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                   <span>Upload</span>
                 </button>
 
                 {/* + New Content Button */}
                 <button 
-                  onClick={() => onOpenEditor && onOpenEditor()}
+                  onClick={() => {
+                    setNewQuizTitle('');
+                    setIsNewQuizModalOpen(true);
+                  }}
                   style={{ padding: '8px 20px', backgroundColor: '#2a1a6b', color: 'white', border: '2px solid #000', borderRadius: '6px', fontWeight: 'bold', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', boxShadow: '4px 4px 0px #000', transition: 'all 0.2s ease' }}
                   onMouseEnter={(e) => { e.currentTarget.style.transform = 'translate(-2px, -2px)'; e.currentTarget.style.boxShadow = '6px 6px 0px #000'; }}
                   onMouseLeave={(e) => { e.currentTarget.style.transform = 'translate(0px, 0px)'; e.currentTarget.style.boxShadow = '4px 4px 0px #000'; }}
                 >
-                  <span>+</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                   <span>New Content</span>
                 </button>
               </div>
@@ -121,15 +133,15 @@ export default function QuizLibrary({ onSelectQuiz, onOpenEditor, onOpenUpload }
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: viewMode === 'grid' ? 'repeat(auto-fill, minmax(320px, 1fr))' : '1fr', gap: '24px' }}>
-            {mockCards.slice(0, 3).map((card) => (
+            {publicQuizzes.slice(0, 3).map((card) => (
               <div 
                 key={card.id} 
-                onClick={() => onSelectQuiz(card.id)} 
+                onClick={() => onSelectQuiz(card.id, card)} 
                 style={{ backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', border: '1px solid #f3f4f6', overflow: 'hidden', cursor: 'pointer', display: 'flex', flexDirection: 'column', transition: 'all 0.2s ease' }}
                 onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-3px)'}
                 onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
               >
-                <div style={{ height: '140px', margin: '8px', borderRadius: '8px 8px 4px 4px', backgroundColor: card.bannerColor, position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ height: '140px', margin: '8px', borderRadius: '8px 8px 4px 4px', backgroundColor: card.bannerColor || '#d8b4fe', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.7, position: 'relative' }}>
                      <div style={{ position: 'absolute', fontWeight: 900, fontSize: '60px', color: 'rgba(49, 46, 129, 0.1)', transform: 'rotate(-12deg)', left: '32px' }}>Aa</div>
                   </div>
@@ -157,13 +169,15 @@ export default function QuizLibrary({ onSelectQuiz, onOpenEditor, onOpenUpload }
                       </div>
                     </div>
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                    {card.tags.map((tag, idx) => (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', flexWrap: 'wrap' }}>
+                    {card.tags?.map((tag, idx) => (
                       <span key={idx} style={{ padding: '4px 10px', backgroundColor: '#f3f4f6', color: '#4b5563', fontSize: '10px', borderRadius: '6px', fontWeight: 'bold', whiteSpace: 'nowrap' }}>
                         {tag}
                       </span>
                     ))}
-                    <div style={{ marginLeft: 'auto', width: '28px', height: '28px', borderRadius: '50%', backgroundColor: '#f9fafb', border: '1px solid #e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#4b5563', fontSize: '12px' }}>👤</div>
+                    <div style={{ marginLeft: 'auto', width: '28px', height: '28px', borderRadius: '50%', backgroundColor: '#f9fafb', border: '1px solid #e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#4b5563', fontSize: '12px' }}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    </div>
                   </div>
                 </div>
                 <div style={{ padding: '0 20px' }}>
@@ -171,10 +185,10 @@ export default function QuizLibrary({ onSelectQuiz, onOpenEditor, onOpenUpload }
                 </div>
                 <div style={{ padding: '12px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '11px', color: '#6b7280', fontWeight: 800, backgroundColor: 'white' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span>Edited {card.edited}</span>
+                    <span>Edited {card.editedTimeAgo}</span>
                     <span style={{ color: '#d1d5db' }}>•</span>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#374151' }}>
-                      <span>💬 {card.questions} Question</span>
+                      <span>💬 {card.questions?.length || 0} Question</span>
                     </div>
                   </div>
                   <button style={{ width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', color: '#374151', background: 'none', border: 'none', fontWeight: 'bold', letterSpacing: '2px', cursor: 'pointer' }}>...</button>
@@ -186,7 +200,7 @@ export default function QuizLibrary({ onSelectQuiz, onOpenEditor, onOpenUpload }
           {/* SECTION 2: COMMUNITY (Photo 2) */}
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginTop: '48px', marginBottom: '24px' }}>
             <h1 style={{ fontSize: '28px', fontWeight: 800, color: '#000', margin: 0, letterSpacing: '-0.02em' }}>
-              Community
+              Most People Like It
             </h1>
             <a href="#" style={{ fontSize: '16px', fontWeight: 600, color: '#000', textDecoration: 'underline', textUnderlineOffset: '4px', display: 'flex', alignItems: 'center', gap: '4px', cursor: 'pointer' }}>
               See All
@@ -198,21 +212,15 @@ export default function QuizLibrary({ onSelectQuiz, onOpenEditor, onOpenUpload }
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: viewMode === 'grid' ? 'repeat(auto-fill, minmax(320px, 1fr))' : '1fr', gap: '24px' }}>
-            {mockCards.slice(3).map((card) => (
+            {publicQuizzes.map((card) => (
               <div 
                 key={card.id} 
-                onClick={() => onSelectQuiz(card.id)} 
+                onClick={() => onSelectQuiz(card.id, card)} 
                 style={{ backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', border: '1px solid #f3f4f6', overflow: 'hidden', cursor: 'pointer', display: 'flex', flexDirection: 'column', transition: 'all 0.2s ease' }}
                 onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-3px)'}
                 onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
               >
-                <div style={{ height: '140px', margin: '8px', borderRadius: '8px 8px 4px 4px', backgroundColor: card.bannerColor, position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {card.isDraft && (
-                    <div style={{ position: 'absolute', top: '10px', right: '10px', backgroundColor: 'rgba(255, 255, 255, 0.9)', color: '#374151', fontSize: '10px', fontWeight: 'bold', padding: '4px 10px', borderRadius: '6px', boxShadow: '0 1px 2px rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <span style={{ width: '6px', height: '6px', backgroundColor: '#9ca3af', borderRadius: '50%' }}></span>
-                      Draft
-                    </div>
-                  )}
+                <div style={{ height: '140px', margin: '8px', borderRadius: '8px 8px 4px 4px', backgroundColor: card.bannerColor || '#d8b4fe', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.7, position: 'relative' }}>
                      <div style={{ position: 'absolute', fontWeight: 900, fontSize: '60px', color: 'rgba(49, 46, 129, 0.1)', transform: 'rotate(-12deg)', left: '32px' }}>Aa</div>
                   </div>
@@ -240,13 +248,15 @@ export default function QuizLibrary({ onSelectQuiz, onOpenEditor, onOpenUpload }
                       </div>
                     </div>
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                    {card.tags.map((tag, idx) => (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', flexWrap: 'wrap' }}>
+                    {card.tags?.map((tag, idx) => (
                       <span key={idx} style={{ padding: '4px 10px', backgroundColor: '#f3f4f6', color: '#4b5563', fontSize: '10px', borderRadius: '6px', fontWeight: 'bold', whiteSpace: 'nowrap' }}>
                         {tag}
                       </span>
                     ))}
-                    <div style={{ marginLeft: 'auto', width: '28px', height: '28px', borderRadius: '50%', backgroundColor: '#f9fafb', border: '1px solid #e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#4b5563', fontSize: '12px' }}>👤</div>
+                    <div style={{ marginLeft: 'auto', width: '28px', height: '28px', borderRadius: '50%', backgroundColor: '#f9fafb', border: '1px solid #e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#4b5563', fontSize: '12px' }}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    </div>
                   </div>
                 </div>
                 <div style={{ padding: '0 20px' }}>
@@ -254,10 +264,10 @@ export default function QuizLibrary({ onSelectQuiz, onOpenEditor, onOpenUpload }
                 </div>
                 <div style={{ padding: '12px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '11px', color: '#6b7280', fontWeight: 800, backgroundColor: 'white' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span>Edited {card.edited}</span>
+                    <span>Edited {card.editedTimeAgo}</span>
                     <span style={{ color: '#d1d5db' }}>•</span>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#374151' }}>
-                      <span>💬 {card.questions} Question</span>
+                      <span>💬 {card.questions?.length || 0} Question</span>
                     </div>
                   </div>
                   <button style={{ width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', color: '#374151', background: 'none', border: 'none', fontWeight: 'bold', letterSpacing: '2px', cursor: 'pointer' }}>...</button>
@@ -267,7 +277,9 @@ export default function QuizLibrary({ onSelectQuiz, onOpenEditor, onOpenUpload }
           </div>
 
           {/* SECTION 3: YOUR QUIZZ (Requested by User!) */}
-          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginTop: '48px', marginBottom: '24px' }}>
+          {isLoggedIn && (
+            <>
+              <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginTop: '48px', marginBottom: '24px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <h1 style={{ fontSize: '28px', fontWeight: 800, color: '#000', margin: 0, letterSpacing: '-0.02em' }}>
                 Your Quizz
@@ -286,7 +298,10 @@ export default function QuizLibrary({ onSelectQuiz, onOpenEditor, onOpenUpload }
             </div>
             
             <button 
-              onClick={() => onOpenEditor && onOpenEditor()}
+              onClick={() => {
+                setNewQuizTitle('');
+                setIsNewQuizModalOpen(true);
+              }}
               style={{ fontSize: '14px', fontWeight: 700, color: '#2a1a6b', background: 'none', border: 'none', textDecoration: 'underline', textUnderlineOffset: '4px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
             >
               + Create New Quizz
@@ -306,23 +321,31 @@ export default function QuizLibrary({ onSelectQuiz, onOpenEditor, onOpenUpload }
               justifyContent: 'center',
               gap: '12px'
             }}>
-              <span style={{ fontSize: '48px' }}>📝</span>
-              <h3 style={{ fontSize: '18px', fontWeight: 800, color: '#111', margin: 0 }}>Belum ada kuis yang dibuat</h3>
+              <span style={{ fontSize: '48px', color: '#9ca3af', marginBottom: '8px' }}>
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              </span>
+              <h3 style={{ fontSize: '18px', fontWeight: 800, color: '#111', margin: 0 }}>No quizzes created yet</h3>
               <p style={{ fontSize: '13px', color: '#6b7280', margin: 0, maxWidth: '400px' }}>
-                Mulai buat kuis pertamamu atau upload dokumen untuk mengubah catatan menjadi soal latihan interaktif!
+                Start creating your first quiz or upload a document to turn your notes into interactive practice questions!
               </p>
               <div style={{ display: 'flex', gap: '12px', marginTop: '12px' }}>
                 <button
                   onClick={() => onOpenUpload && onOpenUpload()}
                   style={{ padding: '8px 18px', backgroundColor: '#fff', border: '2px solid #000', borderRadius: '6px', fontWeight: 800, fontSize: '13px', cursor: 'pointer', boxShadow: '3px 3px 0px #000' }}
                 >
-                  📄 Upload Dokumen
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d8b4fe" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                    Upload Document
+                  </div>
                 </button>
                 <button
-                  onClick={() => onOpenEditor && onOpenEditor()}
+                  onClick={() => {
+                    setNewQuizTitle('');
+                    setIsNewQuizModalOpen(true);
+                  }}
                   style={{ padding: '8px 20px', backgroundColor: '#2a1a6b', color: '#fff', border: '2px solid #000', borderRadius: '6px', fontWeight: 800, fontSize: '13px', cursor: 'pointer', boxShadow: '3px 3px 0px #000' }}
                 >
-                  + Buat Kuis Baru
+                  + Create New Quiz
                 </button>
               </div>
             </div>
@@ -331,7 +354,7 @@ export default function QuizLibrary({ onSelectQuiz, onOpenEditor, onOpenUpload }
               {userQuizzes.map((quiz) => (
                 <div 
                   key={quiz.id} 
-                  onClick={() => onSelectQuiz(quiz.id, quiz)} 
+                  onClick={() => onOpenEditor && onOpenEditor(quiz)} 
                   style={{
                     backgroundColor: 'white',
                     borderRadius: '8px',
@@ -366,7 +389,10 @@ export default function QuizLibrary({ onSelectQuiz, onOpenEditor, onOpenUpload }
                       </div>
                     ) : (
                       <div style={{ position: 'absolute', top: '10px', right: '10px', backgroundColor: '#2a1a6b', color: '#ffffff', fontSize: '10px', fontWeight: 'bold', padding: '4px 10px', borderRadius: '6px', boxShadow: '0 1px 2px rgba(0,0,0,0.2)', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                        <span>✨ Published</span>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                          <span>Published</span>
+                        </div>
                       </div>
                     )}
                     <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.7, position: 'relative' }}>
@@ -408,8 +434,8 @@ export default function QuizLibrary({ onSelectQuiz, onOpenEditor, onOpenUpload }
                           {tag}
                         </span>
                       ))}
-                      <div style={{ marginLeft: 'auto', width: '28px', height: '28px', borderRadius: '50%', backgroundColor: '#f9fafb', border: '1px solid #e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#4b5563', fontSize: '12px' }} title="Dibuat oleh Anda">
-                        👤
+                      <div style={{ marginLeft: 'auto', width: '28px', height: '28px', borderRadius: '50%', backgroundColor: '#f9fafb', border: '1px solid #e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#4b5563', fontSize: '12px' }} title="Created by you">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                       </div>
                     </div>
                   </div>
@@ -478,8 +504,10 @@ export default function QuizLibrary({ onSelectQuiz, onOpenEditor, onOpenUpload }
                           onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f3f4f6'}
                           onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                         >
-                          <span>✏️</span>
-                          <span>Edit Soal</span>
+                          <span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                          </span>
+                          <span>Edit Quiz</span>
                         </button>
                         <button
                           onClick={() => {
@@ -503,8 +531,10 @@ export default function QuizLibrary({ onSelectQuiz, onOpenEditor, onOpenUpload }
                           onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f3f4f6'}
                           onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                         >
-                          <span>▶️</span>
-                          <span>Mainkan Kuis</span>
+                          <span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                          </span>
+                          <span>Play Quiz</span>
                         </button>
                         <div style={{ height: '1px', backgroundColor: '#e5e7eb', margin: '2px 0' }}></div>
                         <button
@@ -526,8 +556,10 @@ export default function QuizLibrary({ onSelectQuiz, onOpenEditor, onOpenUpload }
                           onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fee2e2'}
                           onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                         >
-                          <span>🗑️</span>
-                          <span>Hapus</span>
+                          <span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                          </span>
+                          <span>Delete</span>
                         </button>
                       </div>
                     )}
@@ -536,9 +568,133 @@ export default function QuizLibrary({ onSelectQuiz, onOpenEditor, onOpenUpload }
               ))}
             </div>
           )}
+          </>
+        )}
 
         </div>
       </div>
+
+      {/* NEW QUIZ MODAL */}
+      {isNewQuizModalOpen && (
+        <div style={{
+          position: 'fixed',
+          top: 0, left: 0, right: 0, bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000
+        }}>
+          <div style={{
+            backgroundColor: '#fff',
+            borderRadius: '12px',
+            border: '2px solid #000',
+            boxShadow: '8px 8px 0px #000',
+            padding: '32px',
+            width: '100%',
+            maxWidth: '400px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '16px'
+          }}>
+            <h2 style={{ margin: 0, fontSize: '24px', fontWeight: 800, color: '#111' }}>New Quiz Name</h2>
+            <p style={{ margin: 0, fontSize: '14px', color: '#6b7280' }}>Please enter a title for your new quiz.</p>
+            
+            <input
+              type="text"
+              value={newQuizTitle}
+              onChange={(e) => setNewQuizTitle(e.target.value)}
+              placeholder="e.g., Basic Math Quiz"
+              style={{
+                width: '100%',
+                padding: '12px 16px',
+                borderRadius: '8px',
+                border: '2px solid #000',
+                fontSize: '14px',
+                fontWeight: 600,
+                outline: 'none',
+                boxSizing: 'border-box'
+              }}
+              autoFocus
+            />
+
+            <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end', marginTop: '8px' }}>
+              <button
+                onClick={() => setIsNewQuizModalOpen(false)}
+                style={{
+                  padding: '10px 16px',
+                  borderRadius: '6px',
+                  border: '2px solid #000',
+                  backgroundColor: '#fff',
+                  fontWeight: 800,
+                  fontSize: '14px',
+                  cursor: 'pointer'
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  if (onOpenEditor) {
+                    const newQuiz: UserQuiz = {
+                      id: `user-quiz-${Date.now()}`,
+                      title: newQuizTitle.trim() || 'Untitled Quiz',
+                      summary: 'A collection of practice questions to test your comprehensive understanding of the material.',
+                      category: 'Math',
+                      tags: ['Draft'],
+                      bannerColor: '#d8b4fe',
+                      accuracy: 0,
+                      completion: 0,
+                      isDraft: true,
+                      createdAt: new Date().toISOString(),
+                      updatedAt: new Date().toISOString(),
+                      editedTimeAgo: 'Just now',
+                      authorName: 'You',
+                      passingScore: 70,
+                      resultPassedMessage: 'Congratulations! You passed the quiz with flying colors!',
+                      resultFailedMessage: 'Don\'t be discouraged! Review the material and try again.',
+                      questions: [
+                        {
+                          id: 'q1',
+                          questionText: '',
+                          type: 'multiple_choice',
+                          required: true,
+                          image: '',
+                          choices: [
+                            { id: 'c1', text: 'Choice A', isCorrect: true },
+                            { id: 'c2', text: 'Choice B', isCorrect: false },
+                            { id: 'c3', text: 'Choice C', isCorrect: false },
+                            { id: 'c4', text: 'Choice D', isCorrect: false }
+                          ],
+                          randomizeOrder: false,
+                          estimationTimeMins: 2,
+                          points: 1
+                        }
+                      ]
+                    };
+                    saveUserQuiz(newQuiz);
+                    onOpenEditor(newQuiz);
+                  }
+                  setIsNewQuizModalOpen(false);
+                }}
+                style={{
+                  padding: '10px 24px',
+                  borderRadius: '6px',
+                  border: '2px solid #000',
+                  backgroundColor: '#2a1a6b',
+                  color: '#fff',
+                  fontWeight: 800,
+                  fontSize: '14px',
+                  cursor: 'pointer',
+                  boxShadow: '3px 3px 0px #000'
+                }}
+              >
+                Create
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

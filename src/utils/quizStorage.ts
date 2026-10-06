@@ -1,80 +1,9 @@
 import { UserQuiz, QuizQuestion } from '../types/quiz';
+import { saveUserQuizToDb, deleteUserQuizFromDb } from '../app/actions/quizzes';
 
 const QUIZ_STORAGE_KEY = 'math404_user_quizzes';
 
-export const DEFAULT_USER_QUIZZES: UserQuiz[] = [
-  {
-    id: 'user-quiz-1',
-    title: 'UI Design Fundamentals & Best Practice',
-    summary: 'Master the core principles of UI/UX design, visual hierarchy, typography, and interactive components.',
-    category: 'UI/UX',
-    tags: ['UI/UX', 'Design System'],
-    bannerColor: '#d8b4fe',
-    accuracy: 85,
-    completion: 90,
-    isDraft: false,
-    createdAt: new Date(Date.now() - 3600000 * 2).toISOString(),
-    updatedAt: new Date(Date.now() - 3600000 * 2).toISOString(),
-    editedTimeAgo: '2h ago',
-    authorName: 'You',
-    passingScore: 75,
-    resultPassedMessage: 'Awesome job! You mastered the UI Design Fundamentals!',
-    resultFailedMessage: 'Good effort! Review the questions and try again.',
-    questions: [
-      {
-        id: 'q1',
-        questionText: 'What does UI stand for in the context of design?',
-        type: 'multiple_choice',
-        required: true,
-        image: '',
-        choices: [
-          { id: 'c1', text: 'User Integration', isCorrect: false },
-          { id: 'c2', text: 'User Interface', isCorrect: true },
-          { id: 'c3', text: 'Universal Interaction', isCorrect: false },
-          { id: 'c4', text: 'User Involvement', isCorrect: false }
-        ],
-        randomizeOrder: false,
-        estimationTimeMins: 2,
-        points: 10,
-        explanation: 'UI stands for User Interface, which refers to the visual layout of the elements that a user interacts with.'
-      },
-      {
-        id: 'q2',
-        questionText: 'Which aspect of UI design focuses on the contrast and visual hierarchy?',
-        type: 'multiple_choice',
-        required: true,
-        image: '',
-        choices: [
-          { id: 'c1', text: 'Visual Design & Layout', isCorrect: true },
-          { id: 'c2', text: 'Database Normalization', isCorrect: false },
-          { id: 'c3', text: 'Server Latency', isCorrect: false },
-          { id: 'c4', text: 'API Gateway Routing', isCorrect: false }
-        ],
-        randomizeOrder: false,
-        estimationTimeMins: 2,
-        points: 10,
-        explanation: 'Visual hierarchy guides the user attention to key elements first through sizing, color, and spacing.'
-      },
-      {
-        id: 'q3',
-        questionText: 'Why is maintaining consistency critical in a design system?',
-        type: 'multiple_choice',
-        required: true,
-        image: '',
-        choices: [
-          { id: 'c1', text: 'It reduces cognitive load and enhances familiarity', isCorrect: true },
-          { id: 'c2', text: 'It makes the file size larger', isCorrect: false },
-          { id: 'c3', text: 'It prevents developers from modifying code', isCorrect: false },
-          { id: 'c4', text: 'It eliminates the need for user testing', isCorrect: false }
-        ],
-        randomizeOrder: false,
-        estimationTimeMins: 2,
-        points: 10,
-        explanation: 'Consistency helps users predict how elements behave, minimizing confusion.'
-      }
-    ]
-  }
-];
+export const DEFAULT_USER_QUIZZES: UserQuiz[] = [];
 
 export function getUserQuizzes(): UserQuiz[] {
   if (typeof window === 'undefined') return DEFAULT_USER_QUIZZES;
@@ -85,7 +14,15 @@ export function getUserQuizzes(): UserQuiz[] {
       return DEFAULT_USER_QUIZZES;
     }
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : DEFAULT_USER_QUIZZES;
+    let quizzes = Array.isArray(parsed) ? parsed : DEFAULT_USER_QUIZZES;
+    
+    // Remove the old hardcoded 'user-quiz-1' if it exists in local storage
+    if (quizzes.some(q => q.id === 'user-quiz-1')) {
+      quizzes = quizzes.filter(q => q.id !== 'user-quiz-1');
+      localStorage.setItem(QUIZ_STORAGE_KEY, JSON.stringify(quizzes));
+    }
+    
+    return quizzes;
   } catch (err) {
     console.error('Failed to load user quizzes from localStorage', err);
     return DEFAULT_USER_QUIZZES;
@@ -117,6 +54,10 @@ export function saveUserQuiz(quiz: UserQuiz): UserQuiz[] {
       ];
     }
     localStorage.setItem(QUIZ_STORAGE_KEY, JSON.stringify(updated));
+    
+    // Sync to DB (fire-and-forget)
+    saveUserQuizToDb(quiz).catch(err => console.error("Failed to sync to DB", err));
+    
     return updated;
   } catch (err) {
     console.error('Failed to save quiz to localStorage', err);
@@ -130,6 +71,10 @@ export function deleteUserQuiz(quizId: string): UserQuiz[] {
     const current = getUserQuizzes();
     const updated = current.filter(q => q.id !== quizId);
     localStorage.setItem(QUIZ_STORAGE_KEY, JSON.stringify(updated));
+    
+    // Sync delete to DB (fire-and-forget)
+    deleteUserQuizFromDb(quizId).catch(err => console.error("Failed to delete from DB", err));
+    
     return updated;
   } catch (err) {
     console.error('Failed to delete quiz from localStorage', err);

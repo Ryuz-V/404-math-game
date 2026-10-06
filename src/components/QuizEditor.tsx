@@ -20,13 +20,14 @@ const BANNER_COLORS = [
 ];
 
 export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: QuizEditorProps) {
+  const [quizId] = useState(initialQuiz?.id || `user-quiz-${Date.now()}`);
   const [title, setTitle] = useState(initialQuiz?.title || 'UI Design Fundamentals & Best Practice');
-  const [summary, setSummary] = useState(initialQuiz?.summary || 'Kumpulan soal latihan untuk menguji pemahaman konsep materi secara komprehensif.');
+  const [summary, setSummary] = useState(initialQuiz?.summary || 'A collection of practice questions to test your comprehensive understanding of the material.');
   const [category, setCategory] = useState(initialQuiz?.category || 'UI/UX');
   const [bannerColor, setBannerColor] = useState(initialQuiz?.bannerColor || '#d8b4fe');
   const [passingScore, setPassingScore] = useState(initialQuiz?.passingScore || 70);
-  const [resultPassedMsg, setResultPassedMsg] = useState(initialQuiz?.resultPassedMessage || 'Selamat! Kamu berhasil lulus kuis ini dengan sangat baik!');
-  const [resultFailedMsg, setResultFailedMsg] = useState(initialQuiz?.resultFailedMessage || 'Jangan berkecil hati! Pelajari kembali materi dan coba lagi.');
+  const [resultPassedMsg, setResultPassedMsg] = useState(initialQuiz?.resultPassedMessage || 'Congratulations! You passed the quiz with flying colors!');
+  const [resultFailedMsg, setResultFailedMsg] = useState(initialQuiz?.resultFailedMessage || 'Don\'t be discouraged! Review the material and try again.');
   
   const [questions, setQuestions] = useState<QuizQuestion[]>(initialQuiz?.questions || [
     {
@@ -92,10 +93,10 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
       required: true,
       image: '',
       choices: [
-        { id: `c-${Date.now()}-1`, text: 'Pilihan Jawaban A', isCorrect: true },
-        { id: `c-${Date.now()}-2`, text: 'Pilihan Jawaban B', isCorrect: false },
-        { id: `c-${Date.now()}-3`, text: 'Pilihan Jawaban C', isCorrect: false },
-        { id: `c-${Date.now()}-4`, text: 'Pilihan Jawaban D', isCorrect: false },
+        { id: `c-${Date.now()}-1`, text: 'Choice A', isCorrect: true },
+        { id: `c-${Date.now()}-2`, text: 'Choice B', isCorrect: false },
+        { id: `c-${Date.now()}-3`, text: 'Choice C', isCorrect: false },
+        { id: `c-${Date.now()}-4`, text: 'Choice D', isCorrect: false },
       ],
       randomizeOrder: false,
       estimationTimeMins: 2,
@@ -109,7 +110,7 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
 
   const handleDeleteQuestion = (qId: string) => {
     if (questions.length <= 1) {
-      alert('Kuis harus memiliki minimal 1 soal.');
+      alert('A quiz must have at least 1 question.');
       return;
     }
     setQuestions(prev => prev.filter(q => q.id !== qId));
@@ -140,7 +141,7 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
           ...q,
           choices: [
             ...q.choices,
-            { id: `c-${Date.now()}-${q.choices.length + 1}`, text: `Pilihan Baru ${q.choices.length + 1}`, isCorrect: false }
+            { id: `c-${Date.now()}-${q.choices.length + 1}`, text: `New Choice ${q.choices.length + 1}`, isCorrect: false }
           ]
         };
       }
@@ -183,7 +184,7 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
     setQuestions(prev => prev.map(q => {
       if (q.id === qId) {
         if (q.choices.length <= 2) {
-          alert('Soal minimal harus memiliki 2 pilihan jawaban.');
+          alert('A question must have at least 2 choices.');
           return q;
         }
         return {
@@ -207,10 +208,10 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
 
   const handleSaveOrPublish = (isDraft: boolean) => {
     const finalQuiz: UserQuiz = {
-      id: initialQuiz?.id || `user-quiz-${Date.now()}`,
-      title: title.trim() || 'Untitled Quizz',
-      summary: summary.trim() || `Kumpulan ${questions.length} soal latihan.`,
-      category: category || 'Matematika',
+      id: quizId,
+      title: title.trim() || 'Untitled Quiz',
+      summary: summary.trim() || `A collection of ${questions.length} practice questions.`,
+      category: category || 'Math',
       tags: [category, isDraft ? 'Draft' : 'Community'],
       bannerColor,
       accuracy: initialQuiz?.accuracy || 0,
@@ -234,6 +235,40 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
     q.questionText.toLowerCase().includes(searchQuery.toLowerCase()) || 
     q.choices.some(c => c.text.toLowerCase().includes(searchQuery.toLowerCase()))
   );
+
+  // Auto-save effect
+  useEffect(() => {
+    const autoSaveTimer = setTimeout(() => {
+      const isDraft = initialQuiz ? initialQuiz.isDraft : true; // Keep its original publish state or default to draft if new
+      
+      const autoSaveQuiz: UserQuiz = {
+        id: quizId,
+        title: title.trim() || 'Untitled Quiz',
+        summary: summary.trim() || `A collection of ${questions.length} practice questions.`,
+        category: category || 'Math',
+        tags: [category, isDraft ? 'Draft' : 'Community'],
+        bannerColor,
+        accuracy: initialQuiz?.accuracy || 0,
+        completion: initialQuiz?.completion || 0,
+        isDraft,
+        createdAt: initialQuiz?.createdAt || new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        editedTimeAgo: 'Just now',
+        authorName: 'You',
+        passingScore,
+        resultPassedMessage: resultPassedMsg,
+        resultFailedMessage: resultFailedMsg,
+        questions
+      };
+
+      saveUserQuiz(autoSaveQuiz);
+    }, 1000);
+
+    return () => clearTimeout(autoSaveTimer);
+  }, [
+    quizId, title, summary, category, bannerColor, passingScore, 
+    resultPassedMsg, resultFailedMsg, questions, initialQuiz
+  ]);
 
   return (
     <div style={{ backgroundColor: '#f4f5f8', minHeight: '100vh', display: 'flex', flexDirection: 'column', color: '#111827', fontFamily: 'inherit' }}>
@@ -276,19 +311,18 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
           >
             ❮
           </button>
-          <span style={{ fontSize: '12px', color: '#9ca3af', fontWeight: 500 }}>
-            {saveStatus}
-          </span>
         </div>
 
         {/* Center: Quiz Title with Icon and Cloud Save Indicator */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: 1, maxWidth: '500px', justifyContent: 'center' }}>
-          <span style={{ fontSize: '18px' }}>📄</span>
+        <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', display: 'flex', alignItems: 'center', gap: '8px', width: '100%', maxWidth: '500px', justifyContent: 'center' }}>
+          <span style={{ display: 'flex', alignItems: 'center' }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d8b4fe" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ fill: '#f3e8ff' }}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          </span>
           <input
             type="text"
             value={title}
             onChange={(e) => { setTitle(e.target.value); setSaveStatus('Edited Just now'); }}
-            placeholder="Judul Kuis..."
+            placeholder="Quiz Title..."
             style={{
               fontSize: '15px',
               fontWeight: 700,
@@ -303,67 +337,14 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
               padding: '2px 4px'
             }}
           />
-          <span style={{ fontSize: '14px', color: '#9ca3af', cursor: 'pointer' }} title="Cloud Auto-save">☁️</span>
+          <span style={{ color: '#9ca3af', cursor: 'pointer', display: 'flex', alignItems: 'center' }} title="Cloud Auto-save">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path></svg>
+          </span>
           <span style={{ fontSize: '11px', color: '#6b7280' }}>▼</span>
         </div>
 
-        {/* Right Side: Collab Avatars, Settings, Preview, Publish */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          {/* Avatar RF + */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <div style={{
-              width: '32px',
-              height: '32px',
-              borderRadius: '50%',
-              backgroundColor: '#fef08a',
-              color: '#854d0e',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '12px',
-              fontWeight: 800,
-              border: '1px solid #fde047'
-            }}>
-              RF
-            </div>
-            <button style={{
-              width: '28px',
-              height: '28px',
-              borderRadius: '50%',
-              border: '1px dashed #d1d5db',
-              backgroundColor: '#fff',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '14px',
-              cursor: 'pointer',
-              color: '#6b7280'
-            }}>
-              +
-            </button>
-          </div>
-
-          {/* Settings Button */}
-          <button
-            onClick={() => setIsSettingsOpen(true)}
-            style={{
-              width: '36px',
-              height: '36px',
-              borderRadius: '8px',
-              border: '1px solid #e5e7eb',
-              backgroundColor: '#ffffff',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '16px',
-              cursor: 'pointer',
-              color: '#4b5563'
-            }}
-            title="Pengaturan Kuis"
-          >
-            ⚙️
-          </button>
-
+        {/* Right Side: Preview, Draft, Publish */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
           {/* Preview Button */}
           <button
             onClick={() => {
@@ -372,57 +353,68 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
               setIsPreviewOpen(true);
             }}
             style={{
-              padding: '8px 16px',
+              padding: '8px 20px',
               borderRadius: '8px',
-              border: '1px solid #e5e7eb',
+              border: '2px solid #000000',
               backgroundColor: '#ffffff',
               display: 'flex',
               alignItems: 'center',
               gap: '6px',
-              fontSize: '13px',
-              fontWeight: 700,
-              color: '#374151',
-              cursor: 'pointer'
+              fontSize: '14px',
+              fontWeight: 800,
+              color: '#000000',
+              cursor: 'pointer',
+              boxShadow: '3px 3px 0px 0px #000000',
+              transition: 'all 0.1s ease',
+              transform: 'translateY(0)',
+            }}
+            onMouseDown={(e) => {
+              e.currentTarget.style.transform = 'translate(3px, 3px)';
+              e.currentTarget.style.boxShadow = '0px 0px 0px 0px #000000';
+            }}
+            onMouseUp={(e) => {
+              e.currentTarget.style.transform = 'translate(0px, 0px)';
+              e.currentTarget.style.boxShadow = '3px 3px 0px 0px #000000';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translate(0px, 0px)';
+              e.currentTarget.style.boxShadow = '3px 3px 0px 0px #000000';
             }}
           >
             <span>▷</span>
             <span>Preview</span>
           </button>
 
-          {/* Save Draft */}
-          <button
-            onClick={() => handleSaveOrPublish(true)}
-            style={{
-              padding: '8px 14px',
-              borderRadius: '8px',
-              border: '1px solid #d1d5db',
-              backgroundColor: '#f9fafb',
-              fontSize: '13px',
-              fontWeight: 700,
-              color: '#4b5563',
-              cursor: 'pointer'
-            }}
-          >
-            Draft
-          </button>
 
-          {/* Publish Button (Purple filled) */}
+
+          {/* Publish Button */}
           <button
             onClick={() => handleSaveOrPublish(false)}
             style={{
-              padding: '8px 22px',
+              padding: '8px 20px',
               borderRadius: '8px',
-              border: 'none',
-              backgroundColor: '#2a1a6b',
-              color: '#ffffff',
+              border: '2px solid #000000',
+              backgroundColor: '#ffffff',
               fontSize: '14px',
               fontWeight: 800,
+              color: '#000000',
               cursor: 'pointer',
-              boxShadow: '0 2px 6px rgba(42, 26, 107, 0.25)',
-              transition: 'all 0.15s ease'
+              boxShadow: '3px 3px 0px 0px #000000',
+              transition: 'all 0.1s ease',
+              transform: 'translateY(0)',
             }}
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#1e124d'}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#2a1a6b'}
+            onMouseDown={(e) => {
+              e.currentTarget.style.transform = 'translate(3px, 3px)';
+              e.currentTarget.style.boxShadow = '0px 0px 0px 0px #000000';
+            }}
+            onMouseUp={(e) => {
+              e.currentTarget.style.transform = 'translate(0px, 0px)';
+              e.currentTarget.style.boxShadow = '3px 3px 0px 0px #000000';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translate(0px, 0px)';
+              e.currentTarget.style.boxShadow = '3px 3px 0px 0px #000000';
+            }}
           >
             Publish
           </button>
@@ -469,7 +461,7 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
                 cursor: 'pointer',
                 color: '#374151'
               }}
-              title="Tambah Soal Baru"
+              title="Add New Question"
             >
               +
             </button>
@@ -486,7 +478,9 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
               padding: '6px 12px',
               border: '1px solid #e5e7eb'
             }}>
-              <span style={{ fontSize: '13px', color: '#9ca3af' }}>🔍</span>
+              <span style={{ color: '#9ca3af', display: 'flex', alignItems: 'center' }}>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </span>
               <input
                 type="text"
                 value={searchQuery}
@@ -561,23 +555,23 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
                         color: '#6b7280'
                       }}>
                         <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                          <span>☑️</span>
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
                           <span>Multiple choice</span>
                         </span>
                         <div style={{ display: 'flex', gap: '6px' }}>
                           <button
                             onClick={(e) => { e.stopPropagation(); handleDuplicateQuestion(q); }}
-                            style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '11px', color: '#9ca3af' }}
-                            title="Duplikat"
+                            style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9ca3af', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                            title="Duplicate"
                           >
-                            📑
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                           </button>
                           <button
                             onClick={(e) => { e.stopPropagation(); handleDeleteQuestion(q.id); }}
-                            style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '11px', color: '#ef4444' }}
-                            title="Hapus"
+                            style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                            title="Delete"
                           >
-                            🗑️
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                           </button>
                         </div>
                       </div>
@@ -612,9 +606,9 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '16px'
+                color: '#7c3aed'
               }}>
-                🖼️
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
               </div>
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: '12px', fontWeight: 800, color: '#111827' }}>Result Screen</div>
@@ -665,7 +659,7 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
                       fontWeight: 700,
                       color: '#1e293b'
                     }}>
-                      <span>☑️</span>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
                       <select
                         value={q.type}
                         onChange={(e) => handleUpdateQuestion(q.id, { type: e.target.value as any })}
@@ -694,13 +688,15 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
                       style={{
                         background: 'none',
                         border: 'none',
-                        fontSize: '16px',
                         cursor: 'pointer',
-                        color: '#94a3b8'
+                        color: '#94a3b8',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
                       }}
-                      title="Hapus Soal"
+                      title="Delete Question"
                     >
-                      🗑️
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                     </button>
                   </div>
                 </div>
@@ -708,14 +704,15 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
                 {/* Question Prompt + Optional Image Area */}
                 <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
                   <div style={{ flex: 1 }}>
-                    <label style={{ display: 'block', fontSize: '13px', fontWeight: 800, color: '#1e293b', marginBottom: '8px' }}>
-                      ❓ Question {idx + 1}*
+                    <label style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', fontWeight: 800, color: '#1e293b', marginBottom: '8px' }}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                      Question {idx + 1}*
                     </label>
                     <textarea
                       rows={3}
                       value={q.questionText}
                       onChange={(e) => handleUpdateQuestion(q.id, { questionText: e.target.value })}
-                      placeholder="Masukkan pertanyaan atau rumus soal matematika di sini..."
+                      placeholder="Enter your question or math formula here..."
                       style={{
                         width: '100%',
                         padding: '12px 16px',
@@ -743,9 +740,9 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
                         <div style={{ position: 'absolute', top: '4px', right: '4px', display: 'flex', gap: '4px' }}>
                           <button
                             onClick={() => handleUpdateQuestion(q.id, { image: '' })}
-                            style={{ backgroundColor: 'rgba(0,0,0,0.6)', color: '#fff', border: 'none', borderRadius: '4px', padding: '2px 6px', fontSize: '10px', cursor: 'pointer' }}
+                            style={{ backgroundColor: 'rgba(0,0,0,0.6)', color: '#fff', border: 'none', borderRadius: '4px', padding: '2px 6px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                           >
-                            🗑️
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                           </button>
                         </div>
                       </div>
@@ -766,7 +763,7 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
                         padding: '8px'
                       }}>
                         <span style={{ fontSize: '18px', marginBottom: '2px' }}>🖼️</span>
-                        <span>Upload Gambar / Diagram</span>
+                        <span>Upload Image / Diagram</span>
                         <input
                           type="file"
                           accept="image/*"
@@ -781,7 +778,7 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
                 {/* Choices Header Toggles */}
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid #f1f5f9', paddingTop: '16px' }}>
                   <span style={{ fontSize: '13px', fontWeight: 800, color: '#1e293b' }}>
-                    Choices* <span style={{ fontSize: '11px', fontWeight: 500, color: '#64748b' }}>(Centang untuk menandai kunci jawaban benar)</span>
+                    Choices* <span style={{ fontSize: '11px', fontWeight: 500, color: '#64748b' }}>(Check to mark correct answers)</span>
                   </span>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '16px', fontSize: '12px', color: '#64748b', fontWeight: 600 }}>
                     <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }}>
@@ -831,7 +828,7 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
                           cursor: 'pointer',
                           flexShrink: 0
                         }}
-                        title="Pilih sebagai kunci jawaban"
+                        title="Select as correct answer"
                       >
                         {choice.isCorrect ? '✓' : ''}
                       </button>
@@ -841,7 +838,7 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
                         type="text"
                         value={choice.text}
                         onChange={(e) => handleUpdateChoice(q.id, choice.id, e.target.value)}
-                        placeholder={`Pilihan ${String.fromCharCode(65 + cIdx)}...`}
+                        placeholder={`Choice ${String.fromCharCode(65 + cIdx)}...`}
                         style={{
                           flex: 1,
                           border: 'none',
@@ -858,10 +855,10 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
                       <button
                         type="button"
                         onClick={() => handleDeleteChoice(q.id, choice.id)}
-                        style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', fontSize: '14px' }}
-                        title="Hapus opsi"
+                        style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                        title="Delete choice"
                       >
-                        🗑️
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                       </button>
                     </div>
                   ))}
@@ -927,34 +924,8 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
                     </select>
                   </div>
 
-                  {/* Estimation Time & Point */}
+                  {/* Point */}
                   <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-                    <div>
-                      <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: '#64748b', marginBottom: '4px' }}>
-                        Estimation time
-                      </label>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <input
-                          type="number"
-                          min="1"
-                          max="60"
-                          value={q.estimationTimeMins}
-                          onChange={(e) => handleUpdateQuestion(q.id, { estimationTimeMins: parseInt(e.target.value) || 1 })}
-                          style={{
-                            width: '54px',
-                            padding: '6px 8px',
-                            borderRadius: '6px',
-                            border: '1px solid #cbd5e1',
-                            fontSize: '13px',
-                            fontWeight: 700,
-                            textAlign: 'center',
-                            outline: 'none'
-                          }}
-                        />
-                        <span style={{ fontSize: '12px', fontWeight: 600, color: '#475569' }}>Mins ⏱️</span>
-                      </div>
-                    </div>
-
                     <div>
                       <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: '#64748b', marginBottom: '4px' }}>
                         Mark as point
@@ -1005,7 +976,7 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
                 boxShadow: '0 2px 4px rgba(0,0,0,0.02)'
               }}
             >
-              <span>+ Tambah Soal Berikutnya</span>
+              <span>+ Add Next Question</span>
             </button>
           </div>
         </main>
@@ -1033,13 +1004,13 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
             padding: '24px'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
-              <h3 style={{ fontSize: '18px', fontWeight: 800, margin: 0 }}>⚙️ Pengaturan Kuis</h3>
+              <h3 style={{ fontSize: '18px', fontWeight: 800, margin: 0 }}>⚙️ Quiz Settings</h3>
               <button onClick={() => setIsSettingsOpen(false)} style={{ background: 'none', border: 'none', fontSize: '18px', cursor: 'pointer' }}>✕</button>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '12px', fontWeight: 800, marginBottom: '6px' }}>Deskripsi Ringkas</label>
+                <label style={{ display: 'block', fontSize: '12px', fontWeight: 800, marginBottom: '6px' }}>Short Description</label>
                 <textarea
                   rows={2}
                   value={summary}
@@ -1050,23 +1021,23 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 800, marginBottom: '6px' }}>Kategori / Mata Pelajaran</label>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 800, marginBottom: '6px' }}>Category / Subject</label>
                   <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
                     style={{ width: '100%', padding: '8px 12px', borderRadius: '8px', border: '2px solid #000', backgroundColor: '#fff', fontSize: '13px', fontWeight: 600 }}
                   >
-                    <option value="UI/UX">UI/UX & Desain</option>
-                    <option value="Kalkulus">Kalkulus</option>
-                    <option value="Geometri">Geometri</option>
-                    <option value="Trigonometri">Trigonometri</option>
-                    <option value="Statistika">Statistika</option>
-                    <option value="Aljabar">Aljabar</option>
-                    <option value="Umum">Umum</option>
+                    <option value="UI/UX">UI/UX & Design</option>
+                    <option value="Calculus">Calculus</option>
+                    <option value="Geometry">Geometry</option>
+                    <option value="Trigonometry">Trigonometry</option>
+                    <option value="Statistics">Statistics</option>
+                    <option value="Algebra">Algebra</option>
+                    <option value="General">General</option>
                   </select>
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 800, marginBottom: '6px' }}>Standar Kelulusan (%)</label>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 800, marginBottom: '6px' }}>Passing Score (%)</label>
                   <input
                     type="number"
                     min="10"
@@ -1080,7 +1051,7 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
 
               {/* Banner Color Picker */}
               <div>
-                <label style={{ display: 'block', fontSize: '12px', fontWeight: 800, marginBottom: '8px' }}>Warna Banner Kartu</label>
+                <label style={{ display: 'block', fontSize: '12px', fontWeight: 800, marginBottom: '8px' }}>Card Banner Color</label>
                 <div style={{ display: 'flex', gap: '10px' }}>
                   {BANNER_COLORS.map(c => (
                     <div
@@ -1112,7 +1083,7 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
                 onClick={() => setIsSettingsOpen(false)}
                 style={{ padding: '10px 20px', backgroundColor: '#2a1a6b', color: '#fff', border: '2px solid #000', borderRadius: '8px', fontWeight: 800, cursor: 'pointer', boxShadow: '2px 2px 0px #000' }}
               >
-                Simpan Pengaturan
+                Save Settings
               </button>
             </div>
           </div>
@@ -1147,7 +1118,7 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '12px', fontWeight: 800, marginBottom: '6px' }}>🎉 Pesan Saat Lulus (Passed Message)</label>
+                <label style={{ display: 'block', fontSize: '12px', fontWeight: 800, marginBottom: '6px' }}>🎉 Passed Message</label>
                 <textarea
                   rows={2}
                   value={resultPassedMsg}
@@ -1157,7 +1128,7 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '12px', fontWeight: 800, marginBottom: '6px' }}>💡 Pesan Saat Belum Lulus (Failed Message)</label>
+                <label style={{ display: 'block', fontSize: '12px', fontWeight: 800, marginBottom: '6px' }}>💡 Failed Message</label>
                 <textarea
                   rows={2}
                   value={resultFailedMsg}
@@ -1172,7 +1143,7 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
                 onClick={() => setIsResultScreenOpen(false)}
                 style={{ padding: '10px 20px', backgroundColor: '#2a1a6b', color: '#fff', border: '2px solid #000', borderRadius: '8px', fontWeight: 800, cursor: 'pointer', boxShadow: '2px 2px 0px #000' }}
               >
-                Selesai
+                Done
               </button>
             </div>
           </div>
@@ -1271,7 +1242,7 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
                       <div>
                         <div style={{ fontSize: '64px', marginBottom: '12px' }}>{isPassed ? '🏆' : '📚'}</div>
                         <h2 style={{ fontSize: '24px', fontWeight: 800, margin: '0 0 8px 0' }}>
-                          {isPassed ? 'Selamat!' : 'Perlu Evaluasi!'}
+                          {isPassed ? 'Congratulations!' : 'Needs Evaluation!'}
                         </h2>
                         <div style={{ fontSize: '32px', fontWeight: 900, color: isPassed ? '#16a34a' : '#dc2626', marginBottom: '16px' }}>
                           {scorePct}% Score
@@ -1284,7 +1255,7 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
                             onClick={() => { setPreviewSubmitted(false); setPreviewAnswers({}); }}
                             style={{ padding: '10px 20px', backgroundColor: '#2a1a6b', color: '#fff', border: '2px solid #000', borderRadius: '8px', fontWeight: 800, cursor: 'pointer', boxShadow: '3px 3px 0px #000' }}
                           >
-                            Coba Ulang Preview
+                            Retry Preview
                           </button>
                         </div>
                       </div>
@@ -1298,13 +1269,13 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
             {!previewSubmitted && (
               <div style={{ padding: '16px 24px', borderTop: '2px solid #000', backgroundColor: '#fafafa', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontSize: '12px', color: '#6b7280', fontWeight: 600 }}>
-                  Terjawab: {Object.keys(previewAnswers).length} dari {questions.length} soal
+                  Answered: {Object.keys(previewAnswers).length} of {questions.length} questions
                 </span>
                 <button
                   onClick={() => setPreviewSubmitted(true)}
                   style={{ padding: '10px 24px', backgroundColor: '#2a1a6b', color: '#fff', border: '2px solid #000', borderRadius: '8px', fontWeight: 800, fontSize: '13px', cursor: 'pointer', boxShadow: '3px 3px 0px #000' }}
                 >
-                  Submit & Lihat Hasil ➔
+                  Submit & View Results ➔
                 </button>
               </div>
             )}

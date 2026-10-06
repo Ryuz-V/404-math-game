@@ -95,4 +95,15 @@ model users {
   activities      activities[]
   activity_scores activity_scores[]
   user_progress   user_progress[]
+  user_quizzes    user_quizzes[]
+}
+
+model user_quizzes {
+  id         String   @id
+  user_id    BigInt?
+  quiz_data  Json
+  is_public  Boolean  @default(false)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  users      users?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }

@@ -1238,25 +1238,32 @@ export default function Home() {
                 <img src="/assets/logo.png" style={{ height: '60px', width: 'auto' }} />
               </Link>
               <p>Empowering students to conquer mathematics through interactive exercises, peer collaboration, and expert solutions.</p>
+              
+              <div className="social-links" style={{ marginTop: '1.5rem' }}>
+                <a href="#" aria-label="X (Twitter)">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
+                </a>
+                <a href="#" aria-label="Facebook">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M9.198 21.5h4v-8.01h3.604l.396-3.98h-4V7.5a1 1 0 0 1 1-1h3v-4h-3a5 5 0 0 0-5 5v2.01h-2l-.396 3.98h2.396v8.01Z" /></svg>
+                </a>
+                <a href="#" aria-label="Instagram">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                </a>
+                <a href="mailto:info@math404.com" aria-label="Email">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                </a>
+              </div>
+
+              <p style={{ color: '#888', fontSize: '0.9rem', marginTop: '1.5rem' }}>&copy; 2026 Math404</p>
             </div>
             
             <div className="footer-links-group">
-              <h4>Learn</h4>
+              <h4>Quicklink</h4>
               <ul>
-                <li><a href="#" onClick={(e) => { e.preventDefault(); handleStartSoloWithTopic('kaidah-pencacahan'); }}>Algebra</a></li>
-                <li><a href="#" onClick={(e) => { e.preventDefault(); handleStartSoloWithTopic('dimensi-tiga'); }}>Geometry</a></li>
-                <li><a href="#" onClick={(e) => { e.preventDefault(); handleStartSoloWithTopic('kalkulus-lanjut'); }}>Calculus</a></li>
-                <li><a href="#" onClick={(e) => { e.preventDefault(); handleStartSoloWithTopic('statistika'); }}>Statistics</a></li>
-              </ul>
-            </div>
-            
-            <div className="footer-links-group">
-              <h4>Company</h4>
-              <ul>
-                <li><a href="#" onClick={(e) => { e.preventDefault(); setCurrentView('about'); }}>About Us</a></li>
-                <li><a href="#" onClick={(e) => { e.preventDefault(); setCurrentView('about'); }}>Careers</a></li>
-                <li><a href="#" onClick={(e) => { e.preventDefault(); setCurrentView('about'); }}>Blog</a></li>
-                <li><a href="#" onClick={(e) => { e.preventDefault(); setCurrentView('about'); }}>Contact</a></li>
+                <li><a href="#" onClick={(e) => { e.preventDefault(); handleStartSoloWithTopic('kaidah-pencacahan'); }}>Games</a></li>
+                <li><a href="#" onClick={(e) => { e.preventDefault(); handleStartSoloWithTopic('dimensi-tiga'); }}>Resource</a></li>
+                <li><a href="#" onClick={(e) => { e.preventDefault(); handleStartSoloWithTopic('kalkulus-lanjut'); }}>Quiz</a></li>
+                <li><a href="#" onClick={(e) => { e.preventDefault(); handleStartSoloWithTopic('statistika'); }}>About</a></li>
               </ul>
             </div>
             
@@ -1268,11 +1275,19 @@ export default function Home() {
                 <li><Link href="#">Cookie Policy</Link></li>
               </ul>
             </div>
+
+            <div className="footer-links-group">
+              <h4>Credit</h4>
+              <ul>
+                <li><Link href="#">@urdhajathniel@gmail.com</Link></li>
+                <li><Link href="#">@anonim</Link></li>
+              </ul>
+            </div>
           </div>
           
-          <div className="footer-bottom">
-            <p>&copy; 2026 Math101. All rights reserved.</p>
-          </div>
+
+          
+          <div className="footer-giant-text">MATH404</div>
         </footer>
       )}
     </div>
