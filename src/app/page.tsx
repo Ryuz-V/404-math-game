@@ -40,6 +40,7 @@ export default function Home() {
   const [editingQuiz, setEditingQuiz] = useState<UserQuiz | null>(null);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState<'learning' | 'quizz' | 'games'>('learning');
+  const [isQuizViewerResult, setIsQuizViewerResult] = useState(false);
 
   // Auth & Profile State
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -220,7 +221,7 @@ export default function Home() {
   return (
     <div ref={container}>
       {/* Header / Navbar Matching Screenshot Exactly */}
-      {currentView !== 'quiz-editor' && currentView !== 'quiz-viewer' && (
+      {(currentView !== 'quiz-editor' && (currentView !== 'quiz-viewer' || isQuizViewerResult)) && (
         <header className="header">
           <div className="logo" onClick={() => setCurrentView('home')}>
             <img src="/assets/logo.png" style={{ height: '42px', width: 'auto' }} />
@@ -1114,9 +1115,11 @@ export default function Home() {
             customQuiz={activeCustomQuiz}
             onBackToMenu={() => {
               setActiveCustomQuiz(undefined);
+              setIsQuizViewerResult(false);
               setCurrentView('quiz-library');
             }}
             onAddScore={handleAddScore}
+            onResultScreenChange={setIsQuizViewerResult}
           />
         )}
 
@@ -1230,7 +1233,7 @@ export default function Home() {
       />
 
       {/* ORIGINAL FOOTER (Hidden in game views so screen stays fixed & never gets cut off) */}
-      {!isGameView && (
+      {(!isGameView || (currentView === 'quiz-viewer' && isQuizViewerResult)) && (
         <footer className="footer">
           <div className="footer-top">
             <div className="footer-brand">
