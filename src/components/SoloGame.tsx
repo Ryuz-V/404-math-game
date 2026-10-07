@@ -43,7 +43,7 @@ export default function SoloGame({ initialTopicId, customQuiz, onBackToMenu, onS
           question: q.questionText,
           options: q.choices.map(c => c.text),
           correctIndex: correctIdx >= 0 ? correctIdx : 0,
-          explanation: q.explanation || 'Jawaban berdasarkan kunci kuis yang dibuat.',
+          explanation: q.explanation || 'Answer berdasarkan kunci kuis yang dibuat.',
           difficulty: 'medium'
         };
       });
@@ -194,7 +194,7 @@ export default function SoloGame({ initialTopicId, customQuiz, onBackToMenu, onS
           </p>
 
           <div className="topic-picker">
-            <label className="picker-label">Select Material Category:</label>
+            <label className="picker-label">Select Materialal Category:</label>
             <div className="picker-grid">
               <button
                 className={`picker-btn ${selectedTopic === 'all' ? 'active' : ''}`}
@@ -287,7 +287,7 @@ export default function SoloGame({ initialTopicId, customQuiz, onBackToMenu, onS
             <div className="answer-feedback-box">
               <div className="feedback-status">
                 {selectedOption === currentQ.correctIndex ? (
-                  <span className="text-correct">🎉 Correct! +{Math.round(100 * Math.min(3, 1 + (streak - 1) * 0.5))} Points</span>
+                  <span className="text-correct">🎉 Correct! +{Math.round(100 * Math.min(3, 1 + (streak - 1) * 0.5))} Pointsts</span>
                 ) : (
                   <span className="text-wrong">❌ Incorrect! Correct answer: {currentQ.options[currentQ.correctIndex]}</span>
                 )}

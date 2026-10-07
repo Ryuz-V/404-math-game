@@ -7,82 +7,13 @@ import { parseDocumentToQuestions } from '../utils/quizStorage';
 interface UploadQuizModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onImportQuestions: (data: { title: string; summary: string; category: string; questions: QuizQuestion[] }) => void;
+  onImportQuestions: (data: { title: string; summary: string; questions: QuizQuestion[] }) => void;
 }
 
-const PRESET_TEMPLATES = [
-  {
-    title: 'Latihan Soal Kalkulus: Turunan & Integral',
-    category: 'Kalkulus',
-    summary: 'Kumpulan soal turunan fungsi aljabar, integral tentu, dan aplikasi garis singgung.',
-    content: `1. Turunan pertama dari fungsi f(x) = 3x^4 - 5x^2 + 7 adalah...
-A. 12x^3 - 10x (kunci)
-B. 12x^4 - 10x
-C. 7x^3 - 10x
-D. 12x^3 + 10x
-
-2. Nilai dari integral ∫ (6x^2 + 4x - 1) dx adalah...
-A. 2x^3 + 2x^2 - x + C (kunci)
-B. 3x^3 + 4x^2 - x + C
-C. 6x^3 + 2x^2 + C
-D. 2x^3 + 4x^2 - x + C
-
-3. Jika f'(x) = 2x + 3 dan f(1) = 6, maka rumus fungsi f(x) adalah...
-A. x^2 + 3x + 2 (kunci)
-B. x^2 + 3x + 6
-C. 2x^2 + 3x + 1
-D. x^2 + 2x + 3`
-  },
-  {
-    title: 'Mastering Trigonometri Dasar & Identitas',
-    category: 'Trigonometri',
-    summary: 'Uji pemahaman perbandingan trigonometri, aturan sinus/kosinus, dan sudut berelasi.',
-    content: `1. Nilai dari sin(30°) + cos(60°) adalah...
-A. 1 (kunci)
-B. 1/2
-C. √3/2
-D. 0
-
-2. Pada segitiga siku-siku ABC di B, jika sin A = 3/5, maka nilai tan A adalah...
-A. 3/4 (kunci)
-B. 4/3
-C. 4/5
-D. 3/5
-
-3. Nilai dari sin²(45°) + cos²(45°) adalah...
-A. 1 (kunci)
-B. 1/2
-C. 2
-D. √2`
-  },
-  {
-    title: 'UI/UX Design Fundamentals & Usability',
-    category: 'UI/UX',
-    summary: 'Pertanyaan fundamental mengenai desain antarmuka, affordance, dan konsistensi sistem.',
-    content: `1. Apa kepanjangan dari istilah UI dalam perancangan produk digital?
-A. User Interface (kunci)
-B. User Interaction
-C. Universal Integration
-D. User Information
-
-2. Prinsip visual hierarchy pada desain antarmuka bertujuan untuk...
-A. Mengarahkan fokus dan urutan baca pengguna secara alami (kunci)
-B. Menghabiskan ruang kosong pada layar
-C. Menambah warna sebanyak mungkin
-D. Memperlambat navigasi pengguna
-
-3. Mengapa konsistensi tombol dan tipografi sangat krusial dalam design system?
-A. Mengurangi beban kognitif dan mempermudah adaptasi pengguna (kunci)
-B. Membuat kode lebih rumit
-C. Mengurangi estetika visual
-D. Menghilangkan kebutuhan uji coba usability`
-  }
-];
-
 export default function UploadQuizModal({ isOpen, onClose, onImportQuestions }: UploadQuizModalProps) {
-  const [activeTab, setActiveTab] = useState<'upload' | 'paste' | 'template'>('upload');
+  const [activeTab, setActiveTab] = useState<'upload' | 'paste'>('upload');
   const [title, setTitle] = useState('');
-  const [category, setCategory] = useState('Matematika');
+
   const [pastedText, setPastedText] = useState('');
   const [fileName, setFileName] = useState('');
   const [parsedPreview, setParsedPreview] = useState<QuizQuestion[]>([]);
@@ -109,7 +40,7 @@ export default function UploadQuizModal({ isOpen, onClose, onImportQuestions }: 
     } catch (err) {
       console.error(err);
       // Fallback sample questions
-      const fallbackQuestions = parseDocumentToQuestions(`1. Soal dari dokumen ${file.name}\nA. Jawaban Benar (kunci)\nB. Jawaban Alternatif`);
+      const fallbackQuestions = parseDocumentToQuestions(`1. Question from document ${file.name}\nA. Correct Answer (key)\nB. Alternative Answer`);
       setParsedPreview(fallbackQuestions);
     } finally {
       setIsProcessing(false);
@@ -126,22 +57,13 @@ export default function UploadQuizModal({ isOpen, onClose, onImportQuestions }: 
     }
   };
 
-  const handleSelectTemplate = (template: typeof PRESET_TEMPLATES[0]) => {
-    setTitle(template.title);
-    setCategory(template.category);
-    setPastedText(template.content);
-    const questions = parseDocumentToQuestions(template.content);
-    setParsedPreview(questions);
-  };
-
   const handleImport = () => {
     const finalTitle = title.trim() || 'New Quiz from Document';
-    const questionsToUse = parsedPreview.length > 0 ? parsedPreview : parseDocumentToQuestions(pastedText || '1. Pertanyaan contoh\nA. Pilihan A (kunci)\nB. Pilihan B');
+    const questionsToUse = parsedPreview.length > 0 ? parsedPreview : parseDocumentToQuestions(pastedText || '1. Example question\nA. Option A (key)\nB. Option B');
     
     onImportQuestions({
       title: finalTitle,
-      category,
-      summary: `Quiz dengan ${questionsToUse.length} pertanyaan seputar ${category}.`,
+      summary: `Quiz with ${questionsToUse.length} questions.`,
       questions: questionsToUse
     });
     onClose();
@@ -171,7 +93,7 @@ export default function UploadQuizModal({ isOpen, onClose, onImportQuestions }: 
           maxWidth: '780px',
           borderRadius: '16px',
           border: '3px solid #000000',
-          boxShadow: '10px 10px 0px #000000',
+          boxShadow: 'none',
           overflow: 'hidden',
           display: 'flex',
           flexDirection: 'column',
@@ -200,36 +122,14 @@ export default function UploadQuizModal({ isOpen, onClose, onImportQuestions }: 
               justifyContent: 'center',
               fontSize: '20px'
             }}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d8b4fe" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ fill: '#f3e8ff' }}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ fill: 'none' }}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
             </div>
             <div>
               <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#000', margin: 0 }}>
-                Upload Document & Create Quizz
+                Upload & Create Quiz
               </h2>
-              <p style={{ fontSize: '13px', color: '#6b7280', margin: 0, fontWeight: 500 }}>
-                Ekstrak soal secara otomatis dari dokumen, catatan, atau bank soal
-              </p>
             </div>
           </div>
-          <button 
-            onClick={onClose}
-            style={{
-              width: '36px',
-              height: '36px',
-              borderRadius: '50%',
-              border: '2px solid #000',
-              backgroundColor: '#fff',
-              cursor: 'pointer',
-              fontWeight: 'bold',
-              fontSize: '16px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '2px 2px 0px #000'
-            }}
-          >
-            ✕
-          </button>
         </div>
 
         {/* Tabs */}
@@ -239,9 +139,8 @@ export default function UploadQuizModal({ isOpen, onClose, onImportQuestions }: 
           backgroundColor: '#f3f4f6'
         }}>
           {[
-            { id: 'upload', label: <div style={{ display: 'flex', alignItems: 'center', gap: '6px', justifyContent: 'center' }}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>Upload File (.pdf, .txt, .docx, .md)</div> },
-            { id: 'paste', label: <div style={{ display: 'flex', alignItems: 'center', gap: '6px', justifyContent: 'center' }}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>Paste Text / Catatan</div> },
-            { id: 'template', label: <div style={{ display: 'flex', alignItems: 'center', gap: '6px', justifyContent: 'center' }}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>AI / Preset Template</div> },
+            { id: 'upload', label: <div style={{ display: 'flex', alignItems: 'center', gap: '6px', justifyContent: 'center' }}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>Upload File</div> },
+            { id: 'paste', label: <div style={{ display: 'flex', alignItems: 'center', gap: '6px', justifyContent: 'center' }}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>Paste Text / Notes</div> },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -268,16 +167,16 @@ export default function UploadQuizModal({ isOpen, onClose, onImportQuestions }: 
         {/* Modal Body */}
         <div data-lenis-prevent="true" className="custom-scrollbar" style={{ padding: '24px', overflowY: 'auto', overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch', flex: 1, display: 'flex', flexDirection: 'column', gap: '20px' }}>
           {/* Metadata Row */}
-          <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '16px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px' }}>
             <div>
               <label style={{ display: 'block', fontSize: '12px', fontWeight: 800, color: '#111', marginBottom: '6px' }}>
-                JUDUL QUIZZ
+                QUIZ TITLE
               </label>
               <input
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="Contoh: Soal Latihan Kalkulus Bab 1..."
+                placeholder="Example: Calculus Chapter 1 Practice..."
                 style={{
                   width: '100%',
                   padding: '10px 14px',
@@ -286,38 +185,11 @@ export default function UploadQuizModal({ isOpen, onClose, onImportQuestions }: 
                   fontSize: '14px',
                   fontWeight: 600,
                   outline: 'none',
-                  boxShadow: '2px 2px 0px #000'
+                  boxShadow: 'none'
                 }}
               />
             </div>
-            <div>
-              <label style={{ display: 'block', fontSize: '12px', fontWeight: 800, color: '#111', marginBottom: '6px' }}>
-                KATEGORI
-              </label>
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                style={{
-                  width: '100%',
-                  padding: '10px 14px',
-                  borderRadius: '8px',
-                  border: '2px solid #000',
-                  fontSize: '14px',
-                  fontWeight: 600,
-                  outline: 'none',
-                  backgroundColor: '#fff',
-                  boxShadow: '2px 2px 0px #000'
-                }}
-              >
-                <option value="Kalkulus">Kalkulus</option>
-                <option value="Geometri">Geometri</option>
-                <option value="Trigonometri">Trigonometri</option>
-                <option value="Statistika">Statistika</option>
-                <option value="Aljabar">Aljabar</option>
-                <option value="UI/UX">UI/UX & Desain</option>
-                <option value="Umum">Umum / General</option>
-              </select>
-            </div>
+
           </div>
 
           {/* Tab 1: Upload File */}
@@ -346,15 +218,13 @@ export default function UploadQuizModal({ isOpen, onClose, onImportQuestions }: 
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#faf5ff'}
               >
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', marginBottom: '10px' }}>
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#d8b4fe" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ fill: '#f3e8ff' }}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#6b7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ fill: 'none' }}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                 </div>
                 <div style={{ fontWeight: 800, fontSize: '16px', color: '#111', marginBottom: '4px' }}>
-                  {fileName ? `File Terpilih: ${fileName}` : 'Klik atau Tarik File Dokumen ke Sini'}
+                  {fileName ? `Selected File: ${fileName}` : 'Click or Drag Document File Here'}
                 </div>
                 <div style={{ fontSize: '12px', color: '#6b7280', fontWeight: 500 }}>
-                  Mendukung PDF, Word (.docx), TXT, Markdown (.md), atau JSON
+                  Supports PDF, Word (.docx), TXT, Markdown (.md), or JSON
                 </div>
                 <button
                   type="button"
@@ -366,11 +236,11 @@ export default function UploadQuizModal({ isOpen, onClose, onImportQuestions }: 
                     borderRadius: '8px',
                     fontWeight: 800,
                     fontSize: '13px',
-                    boxShadow: '3px 3px 0px #000',
+                    boxShadow: 'none',
                     cursor: 'pointer'
                   }}
                 >
-                  Pilih File Dari Komputer
+                  Select File From Computer
                 </button>
               </div>
             </div>
@@ -380,13 +250,13 @@ export default function UploadQuizModal({ isOpen, onClose, onImportQuestions }: 
           {activeTab === 'paste' && (
             <div>
               <label style={{ display: 'block', fontSize: '12px', fontWeight: 800, color: '#111', marginBottom: '6px' }}>
-                TEMPEL TEKS SOAL (Format: 1. Soal, A. Pilihan, B. Pilihan...)
+                PASTE QUESTION TEXT (Format: 1. Question, A. Option, B. Option...)
               </label>
               <textarea
                 rows={7}
                 value={pastedText}
                 onChange={(e) => handleTextChange(e.target.value)}
-                placeholder={`Contoh:\n1. Berapakah hasil dari 15 x 8?\nA. 120 (kunci)\nB. 110\nC. 130\nD. 100\n\n2. Sudut siku-siku memiliki besar derajat...\nA. 90 derajat (kunci)\nB. 180 derajat`}
+                placeholder={`Example:\n1. What is the result of 15 x 8?\nA. 120 (key)\nB. 110\nC. 130\nD. 100\n\n2. A right angle has a degree of...\nA. 90 degrees (key)\nB. 180 degrees`}
                 style={{
                   width: '100%',
                   padding: '12px 14px',
@@ -396,59 +266,10 @@ export default function UploadQuizModal({ isOpen, onClose, onImportQuestions }: 
                   fontFamily: 'monospace',
                   lineHeight: 1.5,
                   outline: 'none',
-                  boxShadow: '2px 2px 0px #000',
+                  boxShadow: 'none',
                   resize: 'vertical'
                 }}
               />
-            </div>
-          )}
-
-          {/* Tab 3: Template Generator */}
-          {activeTab === 'template' && (
-            <div>
-              <div style={{ fontSize: '12px', fontWeight: 800, color: '#111', marginBottom: '10px' }}>
-                PILIH TEMPLATE ATAU TOPIK INSTAN:
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                {PRESET_TEMPLATES.map((tmpl, idx) => (
-                  <div
-                    key={idx}
-                    onClick={() => handleSelectTemplate(tmpl)}
-                    style={{
-                      padding: '12px 16px',
-                      borderRadius: '8px',
-                      border: '2px solid #000',
-                      backgroundColor: title === tmpl.title ? '#f5f3ff' : '#ffffff',
-                      boxShadow: '3px 3px 0px #000',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      transition: 'all 0.15s ease'
-                    }}
-                  >
-                    <div>
-                      <div style={{ fontWeight: 800, fontSize: '14px', color: '#111' }}>
-                        {tmpl.title}
-                      </div>
-                      <div style={{ fontSize: '11px', color: '#6b7280', marginTop: '2px' }}>
-                        {tmpl.summary}
-                      </div>
-                    </div>
-                    <span style={{
-                      padding: '4px 10px',
-                      backgroundColor: '#e0e7ff',
-                      color: '#3730a3',
-                      borderRadius: '6px',
-                      fontSize: '11px',
-                      fontWeight: 800,
-                      border: '1px solid #c7d2fe'
-                    }}>
-                      {tmpl.category}
-                    </span>
-                  </div>
-                ))}
-              </div>
             </div>
           )}
 
@@ -467,10 +288,10 @@ export default function UploadQuizModal({ isOpen, onClose, onImportQuestions }: 
                 <span style={{ fontSize: '20px' }}>✅</span>
                 <div>
                   <strong style={{ color: '#166534', fontSize: '13px' }}>
-                    {parsedPreview.length} Soal Berhasil Dikenali & Siap Diedit!
+                    {parsedPreview.length} Questions Successfully Recognized & Ready to Edit!
                   </strong>
                   <p style={{ margin: 0, fontSize: '11px', color: '#15803d' }}>
-                    Soal akan dimuat langsung ke Page Editor untuk penyesuaian kunci jawaban, poin, dan waktu.
+                    Questions will be loaded directly into the Editor Page for adjusting answer keys, points, and time.
                   </p>
                 </div>
               </div>
@@ -498,10 +319,10 @@ export default function UploadQuizModal({ isOpen, onClose, onImportQuestions }: 
               fontWeight: 700,
               fontSize: '13px',
               cursor: 'pointer',
-              boxShadow: '2px 2px 0px #000'
+              boxShadow: 'none'
             }}
           >
-            Batal
+            Cancel
           </button>
           <button
             onClick={handleImport}
@@ -514,13 +335,13 @@ export default function UploadQuizModal({ isOpen, onClose, onImportQuestions }: 
               fontWeight: 800,
               fontSize: '14px',
               cursor: 'pointer',
-              boxShadow: '3px 3px 0px #000',
+              boxShadow: 'none',
               display: 'flex',
               alignItems: 'center',
               gap: '8px'
             }}
           >
-            <span>Buka di Editor Soal</span>
+            <span>Open in Quiz Editor</span>
             <span>➔</span>
           </button>
         </div>

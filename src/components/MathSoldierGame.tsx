@@ -361,7 +361,7 @@ const WEAPONS_CATALOG: WeaponDef[] = [
     bulletSpread: 0.015,
     zoomFactor: 1.25,
     color: '#94a3b8',
-    description: 'Pistol dinas militer. 1-Hit Kill kepala zombie normal!'
+    description: 'Military service pistol. 1-Hit Kill to normal zombie head!'
   },
   {
     id: 'knife',
@@ -376,7 +376,7 @@ const WEAPONS_CATALOG: WeaponDef[] = [
     bulletSpread: 0,
     zoomFactor: 1.0,
     color: '#e2e8f0',
-    description: 'Tebasan pisau instan super mematikan tanpa perlu reload peluru!',
+    description: 'Instant super deadly knife slash without needing to reload ammo!',
     isMelee: true
   },
   {
@@ -392,7 +392,7 @@ const WEAPONS_CATALOG: WeaponDef[] = [
     bulletSpread: 0.035,
     zoomFactor: 1.35,
     color: '#38bdf8',
-    description: 'Laju tembak super cepat untuk melibas serbuan massal.'
+    description: 'Super fast fire rate to obliterate mass swarms.'
   },
   {
     id: 'shotgun',
@@ -407,7 +407,7 @@ const WEAPONS_CATALOG: WeaponDef[] = [
     bulletSpread: 0.09,
     zoomFactor: 1.15,
     color: '#f59e0b',
-    description: 'Semburan peluru gotri dengan daya hancur luar biasa.'
+    description: 'Blast of buckshot pellets with incredible destructive power.'
   },
   {
     id: 'rifle',
@@ -422,7 +422,7 @@ const WEAPONS_CATALOG: WeaponDef[] = [
     bulletSpread: 0.015,
     zoomFactor: 1.85,
     color: '#10b981',
-    description: 'Senapan serbu militer standar pasukan khusus berakurasi tinggi.'
+    description: 'High-accuracy standard special forces military assault rifle.'
   },
   {
     id: 'sniper',
@@ -437,7 +437,7 @@ const WEAPONS_CATALOG: WeaponDef[] = [
     bulletSpread: 0.001,
     zoomFactor: 3.2,
     color: '#ec4899',
-    description: '1-Shot 1-Kill dengan Scope Pembidik Jarak Jauh ekstrim.'
+    description: '1-Shot 1-Kill with Extreme Long Range Sniper Scope.'
   },
   {
     id: 'plasma',
@@ -452,7 +452,7 @@ const WEAPONS_CATALOG: WeaponDef[] = [
     bulletSpread: 0.01,
     zoomFactor: 2.0,
     color: '#a855f7',
-    description: 'Senjata laser futuristik penembus armor tank & bos mutan.'
+    description: 'Futuristic laser weapon that pierces tank armor & mutant bosses.'
   },
   {
     id: 'minigun',
@@ -467,7 +467,7 @@ const WEAPONS_CATALOG: WeaponDef[] = [
     bulletSpread: 0.03,
     zoomFactor: 1.4,
     color: '#f59e0b',
-    description: 'Senapan putar 6-laras 6000 RPM untuk meratakan seluruh gerombolan musuh!'
+    description: '6-barrel 6000 RPM rotary gun to level entire enemy hordes!'
   },
   {
     id: 'bfg',
@@ -482,7 +482,7 @@ const WEAPONS_CATALOG: WeaponDef[] = [
     bulletSpread: 0.005,
     zoomFactor: 2.2,
     color: '#22c55e',
-    description: 'Super-Weapon legendaris dengan ledakan gelombang plasma hijau nuklir pemusnah masal!'
+    description: 'Legendary Super-Weapon with mass-destructive green nuclear plasma blast!'
   }
 ];
 
@@ -1250,7 +1250,7 @@ export default function MathSoldierGame({ onBackToMenu, onAddScore }: MathSoldie
   // --------------------------------------------------------------------------
   const handleOpenWeaponQuiz = (targetW: WeaponDef) => {
     if (points < targetW.pointCost) {
-      setFloatNotice({ text: `❌ Poin tidak cukup! Butuh ${targetW.pointCost} Poin.`, id: Date.now(), color: '#ef4444' });
+      setFloatNotice({ text: `❌ Points tidak cukup! Butuh ${targetW.pointCost} Poin.`, id: Date.now(), color: '#ef4444' });
       return;
     }
     const quiz = generateSoldierQuiz(selectedOp, 'weapon', targetW);
@@ -1324,7 +1324,7 @@ export default function MathSoldierGame({ onBackToMenu, onAddScore }: MathSoldie
       }, 600);
     } else {
       soldierSounds.playPlayerHurt();
-      setFloatNotice({ text: '❌ JAWABAN SALAH! Coba hitung lagi.', id: Date.now(), color: '#ef4444' });
+      setFloatNotice({ text: '❌ WRONG ANSWER! Coba hitung lagi.', id: Date.now(), color: '#ef4444' });
       setTimeout(() => {
         setQuizAnswerFeedback(null);
       }, 700);
@@ -3201,10 +3201,10 @@ export default function MathSoldierGame({ onBackToMenu, onAddScore }: MathSoldie
             🎯 Target Sisa: <strong style={{ color: '#4ade80' }}>{dayEnemiesRemaining}</strong>
           </span>
           <span style={{ fontSize: '0.9rem', color: '#94a3b8', fontWeight: 700 }}>
-            💰 Poin: <strong style={{ color: '#facc15' }}>{points} Pts</strong>
+            💰 Points: <strong style={{ color: '#facc15' }}>{points} Pts</strong>
           </span>
           <span style={{ fontSize: '0.9rem', color: '#94a3b8', fontWeight: 700 }}>
-            ⭐ Skor: <strong style={{ color: '#38bdf8' }}>{score}</strong>
+            ⭐ Score: <strong style={{ color: '#38bdf8' }}>{score}</strong>
           </span>
 
           {gameState === 'playing' && (
@@ -3422,7 +3422,7 @@ export default function MathSoldierGame({ onBackToMenu, onAddScore }: MathSoldie
                   gap: '4px',
                   opacity: isUnlocked ? 1 : 0.6
                 }}
-                title={isUnlocked ? `Pilih ${wpn.name} (Tekan ${wpn.slotKey})` : `Terkunci: Beli di Toko (${wpn.pointCost} Pts)`}
+                title={isUnlocked ? `Select ${wpn.name} (Tekan ${wpn.slotKey})` : `Terkunci: Beli di Toko (${wpn.pointCost} Pts)`}
               >
                 <kbd style={{ background: '#334155', padding: '1px 4px', borderRadius: '4px', fontSize: '0.65rem', color: '#facc15' }}>{wpn.slotKey}</kbd>
                 <span>{wpn.icon} {wpn.name.split(' ')[0]}</span>
@@ -3503,9 +3503,9 @@ export default function MathSoldierGame({ onBackToMenu, onAddScore }: MathSoldie
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '6px' }}>
                     {[
-                      { id: 'easy', label: '🟢 Mudah', desc: 'Santai & HP musuh rendah' },
+                      { id: 'easy', label: '🟢 Easy', desc: 'Casual & HP musuh rendah' },
                       { id: 'normal', label: '🟡 Standar', desc: 'Seimbang & seru' },
-                      { id: 'hard', label: '🔴 Sulit', desc: 'Cepat & agresif' },
+                      { id: 'hard', label: '🔴 Hard', desc: 'Fast & agresif' },
                       { id: 'nightmare', label: '💀 Super Sulit', desc: 'Musuh brutal & tank elit' }
                     ].map((d) => (
                       <button
@@ -3622,11 +3622,11 @@ export default function MathSoldierGame({ onBackToMenu, onAddScore }: MathSoldie
             >
               <div style={{ maxWidth: '440px', width: '100%', margin: 'auto 0', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <div style={{ fontSize: '3rem', marginBottom: '0.25rem' }}>⏸️ 🛡️</div>
-                <h2 style={{ fontSize: '2rem', fontWeight: 900, color: '#facc15', marginBottom: '0.5rem' }}>
+                <h2 style={{ fontSize: '2rem', fontWeight: 900, color: '#facc15', margin: '0 0 0.5rem' }}>
                   GAME PAUSED (TACTICAL BREAK)
                 </h2>
                 <p style={{ color: '#94a3b8', fontSize: '0.85rem', marginBottom: '1.25rem' }}>
-                  Pertempuran dihentikan sementara. Atur strategi persenjataanmu!
+                  Battle paused. Manage your weapon strategy!
                 </p>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '100%' }}>
@@ -3644,7 +3644,7 @@ export default function MathSoldierGame({ onBackToMenu, onAddScore }: MathSoldie
                       boxShadow: '0 4px 14px rgba(34, 197, 94, 0.4)'
                     }}
                   >
-                    ▶ Lanjutkan Pertempuran (Resume)
+                    ▶ Resume Battle
                   </button>
 
                   <button
@@ -3663,7 +3663,7 @@ export default function MathSoldierGame({ onBackToMenu, onAddScore }: MathSoldie
                       cursor: 'pointer'
                     }}
                   >
-                    🛒 Buka Toko Arsenal & Kuis
+                    🛒 Open Arsenal Shop & Quiz
                   </button>
 
                   <button
@@ -3695,7 +3695,7 @@ export default function MathSoldierGame({ onBackToMenu, onAddScore }: MathSoldie
                       cursor: 'pointer'
                     }}
                   >
-                    🏠 Kembali ke Menu Utama
+                    🏠 Back to Main Menu
                   </button>
                 </div>
               </div>
@@ -3730,21 +3730,21 @@ export default function MathSoldierGame({ onBackToMenu, onAddScore }: MathSoldie
                   DAY {day} COMPLETED!
                 </h2>
                 <p style={{ fontSize: '0.95rem', color: '#94a3b8', marginBottom: '1.25rem' }}>
-                  Semua musuh di Day {day} telah disapu bersih! Bonus: <strong>+40 HP & +200 Poin</strong>!
+                  All enemies on Day {day} eliminated! Bonus: <strong>+40 HP & +200 Pointsts</strong>!
                 </p>
 
                 <div style={{ background: '#1e293b', border: '2px solid #334155', borderRadius: '12px', padding: '1rem 1.5rem', width: '100%', marginBottom: '1.5rem' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
-                    <span style={{ color: '#94a3b8' }}>Total Skor:</span>
+                    <span style={{ color: '#94a3b8' }}>Total Score:</span>
                     <strong style={{ color: '#38bdf8' }}>⭐ {score} Pts</strong>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
-                    <span style={{ color: '#94a3b8' }}>Poin Arsenal:</span>
+                    <span style={{ color: '#94a3b8' }}>Arsenal Pointsts:</span>
                     <strong style={{ color: '#facc15' }}>💰 {points} Pts</strong>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span style={{ color: '#94a3b8' }}>Misi Selanjutnya:</span>
-                    <strong style={{ color: '#4ade80' }}>Day {day + 1} ({getEnemiesForDay(day + 1, selectedDifficulty)} Musuh)</strong>
+                    <span style={{ color: '#94a3b8' }}>Next Mission:</span>
+                    <strong style={{ color: '#4ade80' }}>Day {day + 1} ({getEnemiesForDay(day + 1, selectedDifficulty)} Enemies)</strong>
                   </div>
                 </div>
 
@@ -3764,7 +3764,7 @@ export default function MathSoldierGame({ onBackToMenu, onAddScore }: MathSoldie
                       boxShadow: '0 4px 14px rgba(34, 197, 94, 0.4)'
                     }}
                   >
-                    ▶ Lanjut ke Day {day + 1}
+                    ▶ Proceed to Day {day + 1}
                   </button>
                   <button
                     onClick={() => setIsShopOpen(true)}
@@ -3780,7 +3780,7 @@ export default function MathSoldierGame({ onBackToMenu, onAddScore }: MathSoldie
                       cursor: 'pointer'
                     }}
                   >
-                    🛒 Toko Senjata
+                    🛒 Weapon Shop
                   </button>
                 </div>
               </div>
@@ -3815,20 +3815,20 @@ export default function MathSoldierGame({ onBackToMenu, onAddScore }: MathSoldie
                   VICTORY! FINAL BOSS DEFEATED!
                 </h2>
                 <p style={{ fontSize: '1rem', color: '#94a3b8', marginBottom: '1.25rem' }}>
-                  Selamat, Prajurit! Anda berhasil bertahan hingga <strong>Day 10</strong> dan memusnahkan Final Boss!
+                  Congratulations, Soldier! You survived until <strong>Day 10</strong> and defeated the Final Boss!
                 </p>
 
                 <div style={{ background: '#1e293b', border: '2px solid #facc15', borderRadius: '12px', padding: '1rem 1.5rem', width: '100%', marginBottom: '1.5rem' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
-                    <span style={{ color: '#94a3b8' }}>Total Skor Akhir:</span>
+                    <span style={{ color: '#94a3b8' }}>Final Total Score:</span>
                     <strong style={{ color: '#38bdf8', fontSize: '1.2rem' }}>⭐ {score + 1500} Pts</strong>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
-                    <span style={{ color: '#94a3b8' }}>Total Musuh Dieliminasi:</span>
-                    <strong style={{ color: '#4ade80' }}>{enemiesKilled} Musuh</strong>
+                    <span style={{ color: '#94a3b8' }}>Total Enemies Eliminated:</span>
+                    <strong style={{ color: '#4ade80' }}>{enemiesKilled} Enemies</strong>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span style={{ color: '#94a3b8' }}>Tingkat Kesulitan:</span>
+                    <span style={{ color: '#94a3b8' }}>Difficulty Level:</span>
                     <strong style={{ color: '#facc15' }}>{selectedDifficulty.toUpperCase()}</strong>
                   </div>
                 </div>
@@ -3849,7 +3849,7 @@ export default function MathSoldierGame({ onBackToMenu, onAddScore }: MathSoldie
                       boxShadow: '0 4px 14px rgba(34, 197, 94, 0.4)'
                     }}
                   >
-                    🔄 Main Lagi
+                    🔄 Play Again
                   </button>
                   <button
                     onClick={() => setGameState('lobby')}
@@ -3865,7 +3865,7 @@ export default function MathSoldierGame({ onBackToMenu, onAddScore }: MathSoldie
                       cursor: 'pointer'
                     }}
                   >
-                    Ganti Mode
+                    Change Mode
                   </button>
                 </div>
               </div>
@@ -3900,20 +3900,20 @@ export default function MathSoldierGame({ onBackToMenu, onAddScore }: MathSoldie
                   SOLDIER DOWN! (GAME OVER)
                 </h2>
                 <p style={{ fontSize: '1rem', color: '#94a3b8', marginBottom: '1.25rem' }}>
-                  Gugur dalam pertempuran di <strong>Day {day}</strong> dengan <strong>{enemiesKilled} Musuh Dieliminasi</strong>!
+                  Fallen in battle on <strong>Day {day}</strong> with <strong>{enemiesKilled} Enemies Eliminated</strong>!
                 </p>
 
                 <div style={{ background: '#1e293b', border: '2px solid #334155', borderRadius: '12px', padding: '1rem 1.5rem', width: '100%', marginBottom: '1.5rem' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
-                    <span style={{ color: '#94a3b8' }}>Total Skor:</span>
+                    <span style={{ color: '#94a3b8' }}>Total Score:</span>
                     <strong style={{ color: '#38bdf8' }}>⭐ {score} Pts</strong>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
-                    <span style={{ color: '#94a3b8' }}>Musuh Dieliminasi:</span>
-                    <strong style={{ color: '#4ade80' }}>{enemiesKilled} Musuh</strong>
+                    <span style={{ color: '#94a3b8' }}>Enemies Eliminated:</span>
+                    <strong style={{ color: '#4ade80' }}>{enemiesKilled} Enemies</strong>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span style={{ color: '#94a3b8' }}>Senjata Terbuka:</span>
+                    <span style={{ color: '#94a3b8' }}>Unlocked Weapons:</span>
                     <strong style={{ color: '#facc15' }}>{unlockedWeapons.length} / {WEAPONS_CATALOG.length}</strong>
                   </div>
                 </div>
@@ -3934,7 +3934,7 @@ export default function MathSoldierGame({ onBackToMenu, onAddScore }: MathSoldie
                       boxShadow: '0 4px 14px rgba(34, 197, 94, 0.4)'
                     }}
                   >
-                    🔄 Coba Lagi
+                    🔄 Try Again
                   </button>
                   <button
                     onClick={() => setGameState('lobby')}
@@ -3950,7 +3950,7 @@ export default function MathSoldierGame({ onBackToMenu, onAddScore }: MathSoldie
                       cursor: 'pointer'
                     }}
                   >
-                    Ganti Mode
+                    Change Mode
                   </button>
                 </div>
               </div>
@@ -3997,12 +3997,12 @@ export default function MathSoldierGame({ onBackToMenu, onAddScore }: MathSoldie
                       🛒 ARSENAL & PERSENJATAAN TAKTIS
                     </h2>
                     <p style={{ color: '#94a3b8', fontSize: '0.8rem', margin: '4px 0 0' }}>
-                      Beli senjata / amunisi bantuan + selesaikan <strong>1 Kuis Matematika</strong> untuk membukanya!
+                      Buy weapons / ammo + solve <strong>1 Math Quiz</strong> to unlock them!
                     </p>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
                     <div style={{ textAlign: 'right' }}>
-                      <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>POIN ANDA:</div>
+                      <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>YOUR POINTS:</div>
                       <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#facc15' }}>💰 {points} Pts</div>
                     </div>
                     <button
@@ -4021,7 +4021,7 @@ export default function MathSoldierGame({ onBackToMenu, onAddScore }: MathSoldie
                         alignItems: 'center',
                         justifyContent: 'center'
                       }}
-                      title="Tutup Toko"
+                      title="Close Toko"
                     >
                       ✕
                     </button>
@@ -4068,7 +4068,7 @@ export default function MathSoldierGame({ onBackToMenu, onAddScore }: MathSoldie
                         <div style={{ marginTop: '10px' }}>
                           {isEquipped ? (
                             <button disabled style={{ width: '100%', padding: '6px', background: '#0284c7', color: '#fff', border: 'none', borderRadius: '6px', fontWeight: 800, fontSize: '0.8rem', cursor: 'default' }}>
-                              ✅ Sedang Digunakan (Slot {wpn.slotKey})
+                              ✅ Equipped (Slot {wpn.slotKey})
                             </button>
                           ) : isUnlocked ? (
                             <button
@@ -4080,7 +4080,7 @@ export default function MathSoldierGame({ onBackToMenu, onAddScore }: MathSoldie
                               }}
                               style={{ width: '100%', padding: '6px', background: '#10b981', color: '#fff', border: 'none', borderRadius: '6px', fontWeight: 800, fontSize: '0.8rem', cursor: 'pointer' }}
                             >
-                              Gunakan Senjata Ini (Slot {wpn.slotKey})
+                              Equip This Weapon (Slot {wpn.slotKey})
                             </button>
                           ) : (
                             <button
@@ -4098,7 +4098,7 @@ export default function MathSoldierGame({ onBackToMenu, onAddScore }: MathSoldie
                                 cursor: canAfford ? 'pointer' : 'not-allowed'
                               }}
                             >
-                              {canAfford ? '🧮 Beli (Jawab Kuis)' : 'Poin Kurang'}
+                              {canAfford ? '🧮 Buy (Answer Quiz)' : 'Not enough points'}
                             </button>
                           )}
                         </div>
@@ -4111,37 +4111,37 @@ export default function MathSoldierGame({ onBackToMenu, onAddScore }: MathSoldie
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '8px', marginBottom: '0.75rem' }}>
                   <div style={{ background: '#1e293b', border: '1px solid #10b981', borderRadius: '10px', padding: '8px 10px', textAlign: 'center' }}>
                     <div style={{ fontWeight: 800, color: '#4ade80', fontSize: '0.85rem' }}>💊 +1 Medkit (+50 HP)</div>
-                    <div style={{ fontSize: '0.7rem', color: '#94a3b8', margin: '2px 0 6px' }}>Biaya: 80 Pts</div>
+                    <div style={{ fontSize: '0.7rem', color: '#94a3b8', margin: '2px 0 6px' }}>Cost: 80 Pts</div>
                     <button
                       onClick={() => handleOpenSkillQuiz('medkit')}
                       disabled={points < 80}
                       style={{ width: '100%', padding: '6px', background: points >= 80 ? '#10b981' : '#334155', color: '#fff', border: 'none', borderRadius: '6px', fontWeight: 800, fontSize: '0.75rem', cursor: points >= 80 ? 'pointer' : 'not-allowed' }}
                     >
-                      Beli Medkit + Kuis
+                      Buy Medkit + Quiz
                     </button>
                   </div>
 
                   <div style={{ background: '#1e293b', border: '1px solid #22c55e', borderRadius: '10px', padding: '8px 10px', textAlign: 'center' }}>
-                    <div style={{ fontWeight: 800, color: '#22c55e', fontSize: '0.85rem' }}>💣 +3 Granat Tangan</div>
-                    <div style={{ fontSize: '0.7rem', color: '#94a3b8', margin: '2px 0 6px' }}>Biaya: 100 Pts</div>
+                    <div style={{ fontWeight: 800, color: '#22c55e', fontSize: '0.85rem' }}>💣 +3 Hand Grenades</div>
+                    <div style={{ fontSize: '0.7rem', color: '#94a3b8', margin: '2px 0 6px' }}>Cost: 100 Pts</div>
                     <button
                       onClick={() => handleOpenSkillQuiz('grenade')}
                       disabled={points < 100}
                       style={{ width: '100%', padding: '6px', background: points >= 100 ? '#15803d' : '#334155', color: '#fff', border: 'none', borderRadius: '6px', fontWeight: 800, fontSize: '0.75rem', cursor: points >= 100 ? 'pointer' : 'not-allowed' }}
                     >
-                      Beli Granat + Kuis
+                      Buy Grenade + Quiz
                     </button>
                   </div>
 
                   <div style={{ background: '#1e293b', border: '1px solid #ef4444', borderRadius: '10px', padding: '8px 10px', textAlign: 'center' }}>
-                    <div style={{ fontWeight: 800, color: '#ef4444', fontSize: '0.85rem' }}>🚨 Reset Cooldown Misil</div>
-                    <div style={{ fontSize: '0.7rem', color: '#94a3b8', margin: '2px 0 6px' }}>Biaya: 200 Pts</div>
+                    <div style={{ fontWeight: 800, color: '#ef4444', fontSize: '0.85rem' }}>🚨 Reset Missile Cooldown</div>
+                    <div style={{ fontSize: '0.7rem', color: '#94a3b8', margin: '2px 0 6px' }}>Cost: 200 Pts</div>
                     <button
                       onClick={() => handleOpenSkillQuiz('airstrike')}
                       disabled={points < 200}
                       style={{ width: '100%', padding: '6px', background: points >= 200 ? '#dc2626' : '#334155', color: '#fff', border: 'none', borderRadius: '6px', fontWeight: 800, fontSize: '0.75rem', cursor: points >= 200 ? 'pointer' : 'not-allowed' }}
                     >
-                      Reset Misil + Kuis
+                      Reset Missile + Quiz
                     </button>
                   </div>
                 </div>
@@ -4150,10 +4150,10 @@ export default function MathSoldierGame({ onBackToMenu, onAddScore }: MathSoldie
                 <div style={{ background: '#0284c715', border: '1.5px solid #0284c7', borderRadius: '10px', padding: '10px 14px', marginBottom: '1rem' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                     <span style={{ fontWeight: 800, color: '#38bdf8', fontSize: '0.85rem' }}>
-                      🛡️ PERTAHANAN PAGAR KAWAT BERDURI MILITER (LVL {fenceLevel})
+                      🛡️ MILITARY BARBED WIRE FENCE DEFENSE (LVL {fenceLevel})
                     </span>
                     <span style={{ fontSize: '0.75rem', color: fenceHp > 0 ? '#4ade80' : '#ef4444', fontWeight: 800 }}>
-                      Durabilitas: {fenceHp} / {fenceMaxHp} HP {fenceHp <= 0 ? '(JEBOL!)' : ''}
+                      Durability: {fenceHp} / {fenceMaxHp} HP {fenceHp <= 0 ? '(BROKEN!)' : ''}
                     </span>
                   </div>
 
@@ -4172,7 +4172,7 @@ export default function MathSoldierGame({ onBackToMenu, onAddScore }: MathSoldie
                         cursor: points >= 120 && fenceHp < fenceMaxHp ? 'pointer' : 'not-allowed'
                       }}
                     >
-                      🔧 Perbaiki Pagar (+250 HP) [💰 120 Pts + Kuis]
+                      🔧 Repair Fence (+250 HP) [💰 120 Pts + Quiz]
                     </button>
 
                     <button
@@ -4189,7 +4189,7 @@ export default function MathSoldierGame({ onBackToMenu, onAddScore }: MathSoldie
                         cursor: points >= 250 ? 'pointer' : 'not-allowed'
                       }}
                     >
-                      ⚡ Upgrade Pagar Listrik (+300 Max HP) [💰 250 Pts + Kuis]
+                      ⚡ Electric Fence Upgrade (+300 Max HP) [💰 250 Pts + Quiz]
                     </button>
                   </div>
                 </div>
@@ -4208,7 +4208,7 @@ export default function MathSoldierGame({ onBackToMenu, onAddScore }: MathSoldie
                     cursor: 'pointer'
                   }}
                 >
-                  Tutup Arsenal (Kembali Bertarung)
+                  Close Arsenal (Return to Battle)
                 </button>
               </div>
             </div>
@@ -4240,10 +4240,10 @@ export default function MathSoldierGame({ onBackToMenu, onAddScore }: MathSoldie
                   🪖 MILITARY TACTICAL CALCULATION
                 </div>
                 <h3 style={{ fontSize: '1.3rem', fontWeight: 900, color: '#fff', margin: '0 0 8px' }}>
-                  {activeQuiz.rewardType === 'weapon' && activeQuiz.targetWeapon ? `Buka ${activeQuiz.targetWeapon.name}` : `Konfirmasi Pembelian ${activeQuiz.rewardType.toUpperCase()}`}
+                  {activeQuiz.rewardType === 'weapon' && activeQuiz.targetWeapon ? `Unlock ${activeQuiz.targetWeapon.name}` : `Confirm Purchase ${activeQuiz.rewardType.toUpperCase()}`}
                 </h3>
                 <p style={{ color: '#94a3b8', fontSize: '0.85rem', marginBottom: '1.25rem' }}>
-                  Jawab soal matematika berikut untuk mengonfirmasi amunisi & persenjataan:
+                  Answer the following math question to confirm ammo & weaponry:
                 </p>
 
                 <div style={{ background: '#1e293b', border: '2px solid #facc15', borderRadius: '12px', padding: '1rem', fontSize: '2rem', fontWeight: 900, color: '#facc15', letterSpacing: '2px', marginBottom: '1.25rem' }}>
@@ -4290,7 +4290,7 @@ export default function MathSoldierGame({ onBackToMenu, onAddScore }: MathSoldie
                     marginTop: '8px'
                   }}
                 >
-                  Batalkan Upgrade
+                  Cancel Upgrade
                 </button>
               </div>
             </div>

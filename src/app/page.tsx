@@ -409,7 +409,7 @@ export default function Home() {
 
               <div className="feature-row reverse" style={{ backgroundColor: '#fff', padding: '2rem 0' }}>
                 <div className="feature-text">
-                  <h2 style={{ color: '#000000', fontSize: '48px' }}>Comprehensive Materials</h2>
+                  <h2 style={{ color: '#000000', fontSize: '48px' }}>Comprehensive Materialals</h2>
                   <p>Learn mathematics completely and structurally, from basic concepts to more challenging materials. Find easy-to-understand explanations, examples, and practice questions to improve your skills.</p>
                 </div>
                 <div className="feature-image">
@@ -936,8 +936,8 @@ export default function Home() {
 
                     <div className="game-feature-tags">
                       <span className="feature-pill">🎯 5 Papan Sasaran</span>
-                      <span className="feature-pill">🔫 3 Peluru / Soal</span>
-                      <span className="feature-pill">⚡ +3 Poin Hit</span>
+                      <span className="feature-pill">🔫 3 Peluru / Question</span>
+                      <span className="feature-pill">⚡ +3 Points Hit</span>
                     </div>
 
                     <div className="game-card-cta">
@@ -996,7 +996,7 @@ export default function Home() {
                     <div className="game-feature-tags">
                       <span className="feature-pill">🪖 WASD + Mouse Scope</span>
                       <span className="feature-pill">🔫 6 Jenis Senjata</span>
-                      <span className="feature-pill">🧮 Kuis Upgrade Senjata</span>
+                      <span className="feature-pill">🧮 Quiz Upgrade Senjata</span>
                     </div>
 
                     <div className="game-card-cta">
@@ -1174,7 +1174,7 @@ export default function Home() {
           <div>
             <AboutSection
               onStartMenu={() => setCurrentView('menu')}
-              onStartMateri={() => setCurrentView('materi')}
+              onStartMaterial={() => setCurrentView('materi')}
             />
           </div>
         )}
@@ -1203,7 +1203,7 @@ export default function Home() {
       />
       )}
 
-      {/* Upload Document & Extract Quiz Modal */}
+      {/* Upload  & Extract Quiz Modal */}
       <UploadQuizModal
         isOpen={isUploadModalOpen}
         onClose={() => setIsUploadModalOpen(false)}
@@ -1212,8 +1212,8 @@ export default function Home() {
             id: `user-quiz-${Date.now()}`,
             title: data.title,
             summary: data.summary,
-            category: data.category,
-            tags: [data.category, 'Draft'],
+            category: 'General',
+            tags: ['General', 'Draft'],
             bannerColor: '#d8b4fe',
             accuracy: 0,
             completion: 0,

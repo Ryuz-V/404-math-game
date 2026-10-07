@@ -42,7 +42,6 @@ export default function LeaderboardSection({
   const userHasPoints = (currentUser?.score || 0) > 0;
   const isUserEligible = currentUser?.isLoggedIn && userHasPoints;
 
-  // Compute leaderboard with current user inserted if they have points
   let activeLeaderboard = [...DEFAULT_LEADERBOARD];
 
   if (isUserEligible) {
@@ -55,7 +54,7 @@ export default function LeaderboardSection({
       score: userScore,
       streak: Math.min(15, Math.floor(userScore / 100)),
       versusWins: Math.floor(userScore / 150),
-      badge: userScore >= 1000 ? 'Master Matematika' : userScore >= 500 ? 'Pejuang Mtk' : 'Penantang Baru',
+      badge: userScore >= 1000 ? 'Master Matematika' : userScore >= 500 ? 'Pejuang Mtk' : 'Penantang New',
       color: '#ffdc00'
     };
 
@@ -76,10 +75,10 @@ export default function LeaderboardSection({
   return (
     <div className="leaderboard-container">
       <div className="leaderboard-header">
-        <div className="game-badge">🏆 Papan Peringkat Juara</div>
+        <div className="game-badge">🏆 Papan Leaderboard Juara</div>
         <h1 className="leaderboard-title">Leaderboard Matematika</h1>
         <p className="leaderboard-subtitle">
-          Daftar murid dan master matematika dengan skor tertinggi di Solo Mode dan kemenangan terbanyak di Duel 1 vs 1!
+          Sign Up murid dan master matematika dengan skor tertinggi di Solo Mode dan kemenangan terbanyak di Duel 1 vs 1!
         </p>
 
         {/* User Qualification Banner */}
@@ -92,13 +91,13 @@ export default function LeaderboardSection({
                   {currentUser.name} <span className="badge-pill">Akun Aktif</span>
                 </div>
                 <div className="user-lead-sub">
-                  Total Poin Kamu: <strong>{currentUser.score} Pts</strong>
+                  Total Points Kamu: <strong>{currentUser.score} Pts</strong>
                 </div>
               </div>
             </div>
             <div className="user-lead-right">
               <span className="user-rank-highlight">
-                🎖️ Peringkat #{activeLeaderboard.find(u => u.name === currentUser.name)?.rank || '-'}
+                🎖️ Leaderboard #{activeLeaderboard.find(u => u.name === currentUser.name)?.rank || '-'}
               </span>
             </div>
           </div>
@@ -106,7 +105,7 @@ export default function LeaderboardSection({
           <div className="leaderboard-requirement-box">
             <div className="req-icon">🔒</div>
             <div className="req-info">
-              <h4>Ingin Namamu Masuk ke Papan Peringkat?</h4>
+              <h4>Ingin Namamu Log In ke Papan Leaderboard?</h4>
               <p>
                 {!currentUser?.isLoggedIn
                   ? 'Pastikan kamu sudah login ke akunmu dan kumpulkan poin dengan memainkan Game Solo atau Duel 1 vs 1!'
@@ -120,7 +119,7 @@ export default function LeaderboardSection({
                 </button>
               )}
               <button className="btn-lead-action btn-play-req" onClick={onStartSolo}>
-                🎯 Mainkan Kuis & Kumpulkan Poin
+                🎯 Mainkan Quiz & Kumpulkan Points
               </button>
             </div>
           </div>
@@ -194,7 +193,7 @@ export default function LeaderboardSection({
                 <th>Gelar / Badge</th>
                 <th>Max Streak</th>
                 <th>Kemenangan 1v1</th>
-                <th>Total Skor</th>
+                <th>Total Score</th>
               </tr>
             </thead>
             <tbody>
@@ -235,12 +234,12 @@ export default function LeaderboardSection({
 
         <div className="leaderboard-cta-bar">
           <div>
-            <h3>Tingkatkan Peringkatmu Sekarang!</h3>
+            <h3>Tingkatkan Leaderboardmu Sekarang!</h3>
             <p>Mainkan kuis Solo atau kalahkan temanmu di duel 1 vs 1 untuk mendongkrak total skor akunmu!</p>
           </div>
           <div className="cta-btn-group">
             <button className="btn-lead-action btn-solo" onClick={onStartSolo}>
-              🎯 Main Solo Kuis
+              🎯 Main Solo Quiz
             </button>
             <button className="btn-lead-action btn-versus" onClick={onStartVersus}>
               ⚔️ Duel 1 vs 1

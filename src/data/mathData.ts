@@ -118,9 +118,9 @@ export const MATERI_KELAS_10: MathTopic[] = [
         question: 'Tentukan himpunan penyelesaian dari persamaan eksponen 3^(2x - 1) = 81.',
         level: 'Basic',
         steps: [
-          'Ubah ruas kanan ke basis 3: 81 = 3⁴.',
+          'Edit ruas kanan ke basis 3: 81 = 3⁴.',
           'Samakan pangkat eksponen: 2x - 1 = 4.',
-          'Selesaikan aljabar: 2x = 5 ⟹ x = 5/2 = 2.5.'
+          'Finishkan aljabar: 2x = 5 ⟹ x = 5/2 = 2.5.'
         ],
         answer: 'x = 5/2',
         tips: 'Selalu ubah kedua ruas persamaan ke bilangan berpangkat dengan basis yang sama.'
@@ -218,8 +218,8 @@ export const MATERI_KELAS_10: MathTopic[] = [
       {
         title: '1. Metode Gabungan (Eliminasi-Substitusi)',
         points: [
-          'Langkah 1: Pilih dua pasang persamaan untuk mengeliminasi salah satu variabel yang sama, menghasilkan SPLDV (2 variabel).',
-          'Langkah 2: Selesaikan SPLDV tersebut untuk mendapatkan nilai dua variabel pertama.',
+          'Langkah 1: Select dua pasang persamaan untuk mengeliminasi salah satu variabel yang sama, menghasilkan SPLDV (2 variabel).',
+          'Langkah 2: Finishkan SPLDV tersebut untuk mendapatkan nilai dua variabel pertama.',
           'Langkah 3: Substitusikan kedua nilai variabel yang ditemukan ke salah satu persamaan awal untuk menemukan variabel ketiga.'
         ]
       }
@@ -336,7 +336,7 @@ export const MATERI_KELAS_10: MathTopic[] = [
     readTime: '15 Mins',
     difficulty: 'Easy',
     summary: 'Pola bilangan, rumus suku ke-n (Un) dan jumlah n suku pertama (Sn) barisan aritmatika & geometri, serta deret geometri tak hingga.',
-    detailedOverview: 'Barisan aritmatika memiliki beda (b) yang konstan melalui penjumlahan, sedangkan barisan geometri memiliki rasio (r) yang konstan melalui perkalian. Materi ini sangat sering muncul pada tes UTBK Penalaran Matematika.',
+    detailedOverview: 'Barisan aritmatika memiliki beda (b) yang konstan melalui penjumlahan, sedangkan barisan geometri memiliki rasio (r) yang konstan melalui perkalian. Material ini sangat sering muncul pada tes UTBK Penalaran Matematika.',
     coreConcepts: [
       {
         title: '1. Barisan & Deret Aritmatika',
@@ -523,7 +523,7 @@ export const MATERI_KELAS_10: MathTopic[] = [
         points: [
           'Jangkauan (Range): R = X_maks - X_min.',
           'Jangkauan Antarkuartil: IQR = Q₃ - Q₁.',
-          'Simpangan Kuartil (Jangkauan Semi Antarkuartil): Qd = 1/2 · (Q₃ - Q₁).'
+          'Savegan Kuartil (Jangkauan Semi Antarkuartil): Qd = 1/2 · (Q₃ - Q₁).'
         ]
       }
     ],
@@ -579,13 +579,13 @@ export const MATERI_KELAS_11: MathTopic[] = [
       {
         title: '1. Aturan Komposisi Fungsi',
         points: [
-          '(f ∘ g)(x) = f(g(x)) ⟹ Masukkan fungsi g(x) ke dalam variabel x pada fungsi f.',
+          '(f ∘ g)(x) = f(g(x)) ⟹ Log Inkan fungsi g(x) ke dalam variabel x pada fungsi f.',
           'Secara umum TIDAK komutatif: (f ∘ g)(x) ≠ (g ∘ f)(x).',
           'Invers komposisi: (f ∘ g)⁻¹(x) = (g⁻¹ ∘ f⁻¹)(x).'
         ]
       },
       {
-        title: '2. Trik Cepat Invers Fungsi Pecahan Linear',
+        title: '2. Trik Fast Invers Fungsi Pecahan Linear',
         points: [
           'Jika f(x) = (ax + b) / (cx + d), maka inversnya adalah: f⁻¹(x) = (-dx + b) / (cx - a).',
           'Tukar posisi koefisien a dan d lalu ubah tandanya (dikalikan -1).'

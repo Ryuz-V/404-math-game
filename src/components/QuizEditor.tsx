@@ -890,7 +890,7 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
                   </button>
                 </div>
 
-                {/* Bottom Row Settings: Randomize, Estimation Time, Mark Point */}
+                {/* Bottom Row Settings: Randomize, Estimation Time, Mark Pointst */}
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -924,7 +924,7 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
                     </select>
                   </div>
 
-                  {/* Point */}
+                  {/* Pointst */}
                   <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
                     <div>
                       <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: '#64748b', marginBottom: '4px' }}>
@@ -948,7 +948,7 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
                             outline: 'none'
                           }}
                         />
-                        <span style={{ fontSize: '12px', fontWeight: 600, color: '#475569' }}>Points 🔸</span>
+                        <span style={{ fontSize: '12px', fontWeight: 600, color: '#475569' }}>Pointsts 🔸</span>
                       </div>
                     </div>
                   </div>

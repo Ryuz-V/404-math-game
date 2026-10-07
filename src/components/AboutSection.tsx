@@ -4,10 +4,10 @@ import React from 'react';
 
 interface AboutSectionProps {
   onStartMenu: () => void;
-  onStartMateri: () => void;
+  onStartMaterial: () => void;
 }
 
-export default function AboutSection({ onStartMenu, onStartMateri }: AboutSectionProps) {
+export default function AboutSection({ onStartMenu, onStartMaterial }: AboutSectionProps) {
   return (
     <div style={{ minHeight: '100vh', fontFamily: 'system-ui, -apple-system, sans-serif', color: '#111827' }}>
       <div style={{ padding: '40px 4.8rem' }}>
@@ -169,7 +169,7 @@ export default function AboutSection({ onStartMenu, onStartMateri }: AboutSectio
                   PLAY GAMES NOW
                 </button>
                 <button 
-                  onClick={onStartMateri}
+                  onClick={onStartMaterial}
                   style={{ backgroundColor: 'white', color: '#064e3b', padding: '14px', fontWeight: 800, border: '2px solid #064e3b', cursor: 'pointer', textTransform: 'uppercase', fontSize: '0.75rem', width: '100%' }}
                 >
                   LEARN MATERI

@@ -29,7 +29,7 @@ export default function AuthModal({
   const [username, setUsername] = useState(currentUsername || '');
   const [password, setPassword] = useState('');
   const [avatar, setAvatar] = useState(currentAvatar || '⚡');
-  const [grade, setGrade] = useState('Kelas 12 SMA - IPA');
+  const [grade, setGrade] = useState('12th Grade - Science');
   const [errorMessage, setErrorMessage] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
   const [successText, setSuccessText] = useState('');
@@ -41,17 +41,17 @@ export default function AuthModal({
     setErrorMessage('');
 
     if (!username.trim()) {
-      setErrorMessage('Silakan masukkan nama pengguna / nickname!');
+      setErrorMessage('Please enter a username / nickname!');
       return;
     }
 
     if (modalMode === 'login') {
       if (!password) {
-        setErrorMessage('Silakan masukkan password!');
+        setErrorMessage('Please enter a password!');
         return;
       }
       onLoginSuccess(username.trim(), avatar);
-      setSuccessText(`Berhasil masuk! Selamat datang, ${username.trim()}!`);
+      setSuccessText(`Successfully logged in! Welcome, ${username.trim()}!`);
       setIsSuccess(true);
       setTimeout(() => {
         setIsSuccess(false);
@@ -60,11 +60,11 @@ export default function AuthModal({
       }, 1400);
     } else if (modalMode === 'signup') {
       if (password.length < 3) {
-        setErrorMessage('Password minimal 3 karakter!');
+        setErrorMessage('Password must be at least 3 characters!');
         return;
       }
       onLoginSuccess(username.trim(), avatar);
-      setSuccessText(`Akun berhasil dibuat! Selamat datang di Math101, ${username.trim()}!`);
+      setSuccessText(`Account successfully created! Welcome to Math101, ${username.trim()}!`);
       setIsSuccess(true);
       setTimeout(() => {
         setIsSuccess(false);
@@ -73,12 +73,12 @@ export default function AuthModal({
       }, 1400);
     } else if (modalMode === 'edit_profile') {
       if (!isLoggedIn) {
-        setErrorMessage('Anda harus login terlebih dahulu untuk mengubah profil!');
+        setErrorMessage('You must login first to edit your profile!');
         setModalMode('login');
         return;
       }
       onLoginSuccess(username.trim(), avatar);
-      setSuccessText('Profil dan avatar berhasil diperbarui!');
+      setSuccessText('Profile and avatar successfully updated!');
       setIsSuccess(true);
       setTimeout(() => {
         setIsSuccess(false);
@@ -100,7 +100,7 @@ export default function AuthModal({
           <button 
             type="button" 
             onClick={onClose} 
-            aria-label="Kembali"
+            aria-label="Back"
             style={{
               background: 'transparent',
               border: 'none',
@@ -117,12 +117,12 @@ export default function AuthModal({
           </button>
           {modalMode === 'edit_profile' ? (
             <div style={{ fontWeight: 'bold', fontSize: '1.2rem', margin: 0 }}>
-              Pengaturan Profil Pemain
+              Player Profile Settings
             </div>
           ) : (
             <div className="game-badge">
-              {modalMode === 'login' && '🔑 Masuk ke Akun'}
-              {modalMode === 'signup' && '✨ Buat Akun Murid Baru'}
+              {modalMode === 'login' && '🔑 Login to Account'}
+              {modalMode === 'signup' && '✨ Create New Student Account'}
             </div>
           )}
         </div>
@@ -136,21 +136,21 @@ export default function AuthModal({
               <strong>{username}</strong>
             </div>
             <p style={{ color: '#666', marginTop: '1rem', fontSize: '0.9rem' }}>
-              Menyiapkan sesi belajar dan permainan...
+              Preparing learning session and game...
             </p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="modal-form">
             {modalMode !== 'edit_profile' && (
               <h2 className="modal-title">
-                {modalMode === 'login' && 'Login ke Akun Math101'}
-                {modalMode === 'signup' && 'Daftar Akun Baru'}
+                {modalMode === 'login' && 'Login to Math101 Account'}
+                {modalMode === 'signup' && 'Register New Account'}
               </h2>
             )}
             {modalMode !== 'edit_profile' && (
               <p className="modal-subtitle">
-                {modalMode === 'login' && 'Masuk untuk menyimpan rekor skor kuis dan bermain di papan peringkat.'}
-                {modalMode === 'signup' && 'Pilih avatar favoritmu, buat nickname, dan mulai petualangan matematika!'}
+                {modalMode === 'login' && 'Login to save your quiz score records and play on the leaderboard.'}
+                {modalMode === 'signup' && 'Choose your favorite avatar, create a nickname, and start your math adventure!'}
               </p>
             )}
 
@@ -162,12 +162,12 @@ export default function AuthModal({
 
             {/* Username Input */}
             <div className="form-group">
-              <label className="form-label">Username / Nama Panggilan:</label>
+              <label className="form-label">Username / Nickname:</label>
               <input
                 type="text"
                 value={username}
                 onChange={e => setUsername(e.target.value)}
-                placeholder="Contoh: Arya_MathAce"
+                placeholder="Example: Arya_MathAce"
                 className="modal-input"
                 autoComplete="username"
                 required
@@ -176,7 +176,7 @@ export default function AuthModal({
 
             {(modalMode === 'signup' || modalMode === 'edit_profile') && (
               <div className="form-group">
-                <label className="form-label">Pilih Avatar Karakter:</label>
+                <label className="form-label">Choose Character Avatar:</label>
                 <div className="avatar-grid">
                   {AVATARS.map((item, idx) => (
                     <button
@@ -200,7 +200,7 @@ export default function AuthModal({
                   type="password"
                   value={password}
                   onChange={e => setPassword(e.target.value)}
-                  placeholder="Masukkan kata sandi..."
+                  placeholder="Enter password..."
                   className="modal-input"
                   autoComplete={modalMode === 'login' ? 'current-password' : 'new-password'}
                   required
@@ -211,16 +211,16 @@ export default function AuthModal({
             {/* Grade Selection */}
             {modalMode === 'signup' && (
               <div className="form-group">
-                <label className="form-label">Tingkat Pendidikan:</label>
+                <label className="form-label">Education Level:</label>
                 <select
                   value={grade}
                   onChange={e => setGrade(e.target.value)}
                   className="modal-select"
                 >
-                  <option value="Kelas 12 SMA - IPA">Kelas 12 SMA - IPA</option>
-                  <option value="Kelas 12 SMA - IPS">Kelas 12 SMA - IPS</option>
-                  <option value="Persiapan UTBK / SNBT">Persiapan UTBK / SNBT</option>
-                  <option value="Umum">Umum / Pecinta Matematika</option>
+                  <option value="12th Grade - Science">12th Grade - Science</option>
+                  <option value="12th Grade - Social">12th Grade - Social</option>
+                  <option value="UTBK / SNBT Prep">UTBK / SNBT Prep</option>
+                  <option value="General">General / Math Enthusiast</option>
                 </select>
               </div>
             )}
@@ -229,7 +229,7 @@ export default function AuthModal({
             <div className="auth-mode-switch">
               {modalMode === 'login' && (
                 <p>
-                  Belum punya akun?{' '}
+                  Don't have an account?{' '}
                   <button
                     type="button"
                     className="link-btn"
@@ -238,13 +238,13 @@ export default function AuthModal({
                       setErrorMessage('');
                     }}
                   >
-                    Daftar di sini
+                    Register here
                   </button>
                 </p>
               )}
               {modalMode === 'signup' && (
                 <p>
-                  Sudah punya akun?{' '}
+                  Already have an account?{' '}
                   <button
                     type="button"
                     className="link-btn"
@@ -253,7 +253,7 @@ export default function AuthModal({
                       setErrorMessage('');
                     }}
                   >
-                    Masuk di sini
+                    Login here
                   </button>
                 </p>
               )}
@@ -261,8 +261,8 @@ export default function AuthModal({
 
             <div className="modal-actions" style={{ display: 'flex', gap: '12px', width: '100%' }}>
               <button type="submit" className="btn-modal-submit" style={{ flex: 1 }}>
-                {modalMode === 'login' && '🚀 Masuk Sekarang'}
-                {modalMode === 'signup' && '✨ Buat Akun & Masuk'}
+                {modalMode === 'login' && '🚀 Login Now'}
+                {modalMode === 'signup' && '✨ Create Account & Login'}
                 {modalMode === 'edit_profile' && '💾 Save'}
               </button>
 

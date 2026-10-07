@@ -506,7 +506,7 @@ export default function TargetShooterGame({ onBackToMenu, onAddScore }: TargetSh
       if (p1ReloadTimerRef.current > 0) {
         sounds.playHitWrong();
         floatTextRef.current.push({
-          text: `⏳ Sedang Reload... (${p1ReloadTimerRef.current.toFixed(1)}s)`,
+          text: `⏳ Normal Reload... (${p1ReloadTimerRef.current.toFixed(1)}s)`,
           x: p1Crosshair.current.x,
           y: p1Crosshair.current.y - 25,
           color: '#38bdf8',
@@ -522,7 +522,7 @@ export default function TargetShooterGame({ onBackToMenu, onAddScore }: TargetSh
       if (p2ReloadTimerRef.current > 0) {
         sounds.playHitWrong();
         floatTextRef.current.push({
-          text: `⏳ Sedang Reload... (${p2ReloadTimerRef.current.toFixed(1)}s)`,
+          text: `⏳ Normal Reload... (${p2ReloadTimerRef.current.toFixed(1)}s)`,
           x: p2Crosshair.current.x,
           y: p2Crosshair.current.y - 25,
           color: '#f87171',
@@ -1032,7 +1032,7 @@ export default function TargetShooterGame({ onBackToMenu, onAddScore }: TargetSh
         // Numeric Timer Label
         ctx.fillStyle = roundTimeRef.current > 5 ? '#94a3b8' : '#ef4444';
         ctx.font = 'bold 11px system-ui';
-        ctx.fillText(`⏱️ Sisa Waktu: ${Math.ceil(roundTimeRef.current)}s`, 0, 52);
+        ctx.fillText(`⏱️ Sisa Time: ${Math.ceil(roundTimeRef.current)}s`, 0, 52);
 
         ctx.restore();
       }
@@ -1137,7 +1137,7 @@ export default function TargetShooterGame({ onBackToMenu, onAddScore }: TargetSh
         ctx.lineTo(12, 0);
         ctx.stroke();
 
-        // Center Point
+        // Center Pointst
         ctx.fillStyle = color;
         ctx.beginPath();
         ctx.arc(0, 0, 3.5, 0, Math.PI * 2);
@@ -1191,7 +1191,7 @@ export default function TargetShooterGame({ onBackToMenu, onAddScore }: TargetSh
             cursor: 'pointer'
           }}
         >
-          ← Kembali ke Menu
+          ← Back to Menu
         </button>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
@@ -1199,7 +1199,7 @@ export default function TargetShooterGame({ onBackToMenu, onAddScore }: TargetSh
             🏆 High Score: <strong style={{ color: '#facc15' }}>{highScore} pts</strong>
           </span>
           <span style={{ fontSize: '0.9rem', color: '#94a3b8', fontWeight: 700 }}>
-            Match Progress: <strong style={{ color: '#38bdf8' }}>Soal {roundNumber} / {totalQuestions}</strong>
+            Match Progress: <strong style={{ color: '#38bdf8' }}>Question {roundNumber} / {totalQuestions}</strong>
           </span>
         </div>
       </div>
@@ -1213,7 +1213,7 @@ export default function TargetShooterGame({ onBackToMenu, onAddScore }: TargetSh
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div>
                 <div style={{ fontSize: '0.85rem', fontWeight: 800, color: '#38bdf8' }}>PLAYER 1 (WASD + SPACE)</div>
-                <div style={{ fontSize: '1.6rem', fontWeight: 900 }}>{p1Score} <span style={{ fontSize: '0.9rem', color: '#94a3b8' }}>pts ({p1CorrectCount} Benar)</span></div>
+                <div style={{ fontSize: '1.6rem', fontWeight: 900 }}>{p1Score} <span style={{ fontSize: '0.9rem', color: '#94a3b8' }}>pts ({p1CorrectCount} Correct)</span></div>
               </div>
 
               {/* Ammo Display (3 Bullets) */}
@@ -1267,7 +1267,7 @@ export default function TargetShooterGame({ onBackToMenu, onAddScore }: TargetSh
               🎯 SOAL {roundNumber} / {totalQuestions} (+3 / SOAL)
             </span>
             <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginTop: '6px' }}>
-              Waktu Soal: <strong style={{ color: roundTimeLeft <= 4 ? '#ef4444' : '#4ade80', fontSize: '1rem' }}>{Math.ceil(roundTimeLeft)}s</strong>
+              Time Question: <strong style={{ color: roundTimeLeft <= 4 ? '#ef4444' : '#4ade80', fontSize: '1rem' }}>{Math.ceil(roundTimeLeft)}s</strong>
             </div>
           </div>
 
@@ -1301,7 +1301,7 @@ export default function TargetShooterGame({ onBackToMenu, onAddScore }: TargetSh
                 <div style={{ fontSize: '0.85rem', fontWeight: 800, color: '#f87171' }}>
                   {gameMode === 'vs_ai' ? '🤖 AI BOT' : 'PLAYER 2 (ARROWS + ENTER)'}
                 </div>
-                <div style={{ fontSize: '1.6rem', fontWeight: 900 }}>{p2Score} <span style={{ fontSize: '0.9rem', color: '#94a3b8' }}>pts ({p2CorrectCount} Benar)</span></div>
+                <div style={{ fontSize: '1.6rem', fontWeight: 900 }}>{p2Score} <span style={{ fontSize: '0.9rem', color: '#94a3b8' }}>pts ({p2CorrectCount} Correct)</span></div>
               </div>
             </div>
 
@@ -1364,19 +1364,19 @@ export default function TargetShooterGame({ onBackToMenu, onAddScore }: TargetSh
                   MATH TARGET SHOOTER SHOWDOWN
                 </h1>
                 <p style={{ color: '#94a3b8', fontSize: '0.85rem', marginBottom: '1.25rem', lineHeight: 1.5 }}>
-                  Tembak 1 dari 5 papan jawaban yang benar untuk soal di tengah! Benar = <strong style={{ color: '#4ade80' }}>+3 Poin</strong>. Peluru <strong style={{ color: '#38bdf8' }}>3 butir</strong> dengan waktu <strong>Reload 4 Detik</strong>.
+                  Tembak 1 dari 5 papan jawaban yang benar untuk center question! Correct = <strong style={{ color: '#4ade80' }}>+3 Points</strong>. Peluru <strong style={{ color: '#38bdf8' }}>3 butir</strong>with time<strong>Reload 4 Detik</strong>.
                 </p>
 
                 {/* Match Settings Panel */}
                 <div style={{ background: '#1e293b', border: '2px solid #334155', borderRadius: '14px', padding: '1rem 1.5rem', width: '100%', marginBottom: '1.25rem', textAlign: 'left' }}>
                   <div style={{ fontSize: '0.9rem', fontWeight: 800, color: '#facc15', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    ⚙️ PENGATURAN MATCH SEBELUM MAIN:
+                    ⚙️ MATCH SETTINGS BEFORE PLAYING:
                   </div>
 
                   {/* Question Count Selector (10, 15, 20, 25) */}
                   <div style={{ marginBottom: '0.85rem' }}>
                     <label style={{ display: 'block', fontSize: '0.8rem', color: '#94a3b8', fontWeight: 700, marginBottom: '6px' }}>
-                      🎯 Jumlah Soal Pertandingan:
+                      🎯 Jumlah Question Pertandingan:
                     </label>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px' }}>
                       {[10, 15, 20, 25].map((num) => (
@@ -1395,7 +1395,7 @@ export default function TargetShooterGame({ onBackToMenu, onAddScore }: TargetSh
                             cursor: 'pointer'
                           }}
                         >
-                          {num} Soal {num === 20 ? '⭐' : num === 25 ? '👑' : ''}
+                          {num} Question {num === 20 ? '⭐' : num === 25 ? '👑' : ''}
                         </button>
                       ))}
                     </div>
@@ -1438,13 +1438,13 @@ export default function TargetShooterGame({ onBackToMenu, onAddScore }: TargetSh
                   {/* AI Difficulty Selector */}
                   <div>
                     <label style={{ display: 'block', fontSize: '0.8rem', color: '#94a3b8', fontWeight: 700, marginBottom: '6px' }}>
-                      🤖 Tingkat Kesulitan Bot AI (Jika Solo):
+                      🤖 Difficulty Level Bot AI (Jika Solo):
                     </label>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
                       {[
-                        { id: 'easy', label: '🟢 Santai (Easy)' },
+                        { id: 'easy', label: '🟢 Casual (Easy)' },
                         { id: 'medium', label: '🟡 Standar (Medium)' },
-                        { id: 'hard', label: '🔴 Cepat (Hard)' }
+                        { id: 'hard', label: '🔴 Fast (Hard)' }
                       ].map((diff) => (
                         <button
                           key={diff.id}
@@ -1485,7 +1485,7 @@ export default function TargetShooterGame({ onBackToMenu, onAddScore }: TargetSh
                       boxShadow: '0 4px 14px rgba(2, 132, 199, 0.4)'
                     }}
                   >
-                    🤖 Mulai: Solo vs AI ({totalQuestions} Soal)
+                    🤖 Start: Solo vs AI ({totalQuestions} Question)
                   </button>
                   <button
                     onClick={() => startGame('pvp')}
@@ -1502,7 +1502,7 @@ export default function TargetShooterGame({ onBackToMenu, onAddScore }: TargetSh
                       boxShadow: '0 4px 14px rgba(220, 38, 38, 0.4)'
                     }}
                   >
-                    👥 Mulai: 2 Player Local ({totalQuestions} Soal)
+                    👥 Start: 2 Player Local ({totalQuestions} Question)
                   </button>
                 </div>
 
@@ -1550,10 +1550,10 @@ export default function TargetShooterGame({ onBackToMenu, onAddScore }: TargetSh
                   {winner === 1 ? '👑 🥇 🏆' : winner === 2 ? '🤖 🏆 💥' : '🤝 ⭐ 🎯'}
                 </div>
                 <h2 style={{ fontSize: '2rem', fontWeight: 900, color: winner === 1 ? '#38bdf8' : winner === 2 ? '#f87171' : '#facc15', marginBottom: '0.25rem' }}>
-                  {winner === 1 ? 'PLAYER 1 JUARA MATCH!' : winner === 2 ? (gameMode === 'vs_ai' ? 'BOT AI MENANG!' : 'PLAYER 2 JUARA MATCH!') : 'HASIL SERI / DRAW!'}
+                  {winner === 1 ? 'PLAYER 1 JUARA MATCH!' : winner === 2 ? (gameMode === 'vs_ai' ? 'BOT AI MENANG!' : 'PLAYER 2 JUARA MATCH!') : "IT'S A DRAW!"}
                 </h2>
                 <p style={{ fontSize: '1rem', color: '#94a3b8', marginBottom: '1.25rem' }}>
-                Pertandingan {totalQuestions} Soal Selesai!
+                Pertandingan {totalQuestions} Question Finish!
               </p>
 
               {/* Match Stats Card */}
@@ -1563,8 +1563,8 @@ export default function TargetShooterGame({ onBackToMenu, onAddScore }: TargetSh
                   <span style={{ color: '#f87171', fontWeight: 800 }}>{gameMode === 'vs_ai' ? 'BOT AI' : 'PLAYER 2'}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1.3rem', fontWeight: 900, marginBottom: '8px' }}>
-                  <span style={{ color: '#38bdf8' }}>{p1Score} pts ({p1CorrectCount} Soal)</span>
-                  <span style={{ color: '#f87171' }}>{p2Score} pts ({p2CorrectCount} Soal)</span>
+                  <span style={{ color: '#38bdf8' }}>{p1Score} pts ({p1CorrectCount} Question)</span>
+                  <span style={{ color: '#f87171' }}>{p2Score} pts ({p2CorrectCount} Question)</span>
                 </div>
                 <div style={{ fontSize: '0.8rem', color: '#94a3b8', textAlign: 'center' }}>
                   Akurasi: P1 {Math.round((p1CorrectCount / totalQuestions) * 100)}% | P2 {Math.round((p2CorrectCount / totalQuestions) * 100)}%
@@ -1586,7 +1586,7 @@ export default function TargetShooterGame({ onBackToMenu, onAddScore }: TargetSh
                       boxShadow: '0 4px 14px rgba(34, 197, 94, 0.4)'
                     }}
                   >
-                    🔄 Main Lagi ({totalQuestions} Soal)
+                    🔄 Play Again ({totalQuestions} Question)
                   </button>
                   <button
                     onClick={() => setGameState('lobby')}
@@ -1601,7 +1601,7 @@ export default function TargetShooterGame({ onBackToMenu, onAddScore }: TargetSh
                       cursor: 'pointer'
                     }}
                   >
-                    ⚙️ Ganti Pengaturan
+                    ⚙️ Ganti Settings
                   </button>
                 </div>
               </div>

@@ -409,7 +409,7 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
     setWinnerPlayer(null);
     setShowWhooshBanner(false);
     setGameState('playing');
-    showToast(`🎲 Permainan Dimulai! Giliran ${initialPlayers[0].name}`);
+    showToast(`🎲 Game Started! Giliran ${initialPlayers[0].name}`);
   };
 
   // Custom Gliding Position State for Pawns (for ladder climbing & snake sliding)
@@ -594,7 +594,7 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
 
       setClimbingAction({
         playerIdx: playerIndex,
-        text: `💨 POOF! Keluar di Kotak ${tailTile}! 😵`,
+        text: `💨 POOF! Exit di Kotak ${tailTile}! 😵`,
         type: 'snake'
       });
 
@@ -811,7 +811,7 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
     setActiveQuiz(null);
     sounds.playSwallowGulp();
 
-    showToast(`⏱️ Waktu Habis! ${player.name} digigit ular & meluncur turun ke kotak ${snakeTail}!`);
+    showToast(`⏱️ Time Habis! ${player.name} digigit ular & meluncur turun ke kotak ${snakeTail}!`);
     await slideSnake(activePlayerIdx, snakeHead, snakeTail);
     nextTurn();
   }, [activeQuiz, activePlayerIdx, slideSnake, nextTurn]);
@@ -844,7 +844,7 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
 
     if (isCorrect) {
       sounds.playEscapeCheer();
-      showToast(`🎉 JAWABAN BENAR! ${player.name} selamat dari gigitan ular & tetap di kotak ${snakeHead}!`);
+      showToast(`🎉 CORRECT ANSWER! ${player.name} selamat dari gigitan ular & tetap di kotak ${snakeHead}!`);
 
       setTimeout(() => {
         setActiveQuiz(null);
@@ -858,7 +858,7 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
         setActiveQuiz(null);
         setSelectedAnsIdx(null);
 
-        showToast(`❌ Salah jawab! ${player.name} digigit ular di kotak ${snakeHead} & meluncur ke kotak ${snakeTail}!`);
+        showToast(`❌ Wrong jawab! ${player.name} digigit ular di kotak ${snakeHead} & meluncur ke kotak ${snakeTail}!`);
         await slideSnake(activePlayerIdx, snakeHead, snakeTail);
         nextTurn();
       }, 700);
@@ -1364,7 +1364,7 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
           <div className="quick-rules-card">
             <div className="rule-item">
               <span className="icon">🐍</span>
-              <p><strong>Ular:</strong> Soal Matematika (20 Detik). Benar = Selamat! Salah = Ditelan!</p>
+              <p><strong>Ular:</strong> Question Matematika (20 Detik). Correct = Selamat! Wrong = Ditelan!</p>
             </div>
             <div className="rule-item">
               <span className="icon">🪜</span>
@@ -1387,12 +1387,12 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
             <div className="modal-hero-icon">🐍 🏆 🪜</div>
             <h1 className="modal-hero-title">ULAR TANGGA MATEMATIKA</h1>
             <p className="modal-hero-sub">
-              Pilih jumlah anak, tentukan mode dadu, dan bersainglah mencapai kotak 100 Juara 1!
+              Select jumlah anak, tentukan mode dadu, dan bersainglah mencapai kotak 100 Juara 1!
             </p>
 
-            {/* Selection 1: Jumlah Pemain (2, 3, atau 4 Anak) */}
+            {/* Selection 1: Number of Players (2, 3, atau 4 Anak) */}
             <div className="setup-config-section">
-              <label className="config-label">Pilih Jumlah Pemain:</label>
+              <label className="config-label">Select Number of Players:</label>
               <div className="config-button-row">
                 {([2, 3, 4] as const).map((num) => (
                   <button
@@ -1410,7 +1410,7 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
 
             {/* Selection 2: Mode Dadu (1 Dadu / 2 Dadu) */}
             <div className="setup-config-section">
-              <label className="config-label">Pilih Mode Dadu:</label>
+              <label className="config-label">Select Mode Dadu:</label>
               <div className="config-button-row">
                 <button
                   type="button"
@@ -1427,14 +1427,14 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
                   onClick={() => setDiceMode(2)}
                 >
                   <span>🎲🎲</span>
-                  <strong>2 Dadu (Cepat)</strong>
+                  <strong>2 Dadu (Fast)</strong>
                 </button>
               </div>
             </div>
 
             {/* Selection 3: Mode Lawan (Teman / vs Bot) */}
             <div className="setup-config-section">
-              <label className="config-label">Mode Bermain:</label>
+              <label className="config-label">Play Mode:</label>
               <div className="config-button-row">
                 <button
                   type="button"
@@ -1478,8 +1478,7 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
             </div>
 
             <div className="quiz-avatar-scene">🐍 💨</div>
-            <div className="quiz-for-player">
-              Giliran <strong>{activeQuiz.player.name}</strong> menjawab:
+            <div className="quiz-for-player">Turn<strong>{activeQuiz.player.name}</strong> menjawab:
             </div>
             <h2 className="quiz-math-equation">{activeQuiz.quiz.prompt}</h2>
             <p className="quiz-help-text">
@@ -1538,7 +1537,7 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
 
             <div className="winner-action-buttons">
               <button type="button" className="btn-replay-game" onClick={handleStartGame}>
-                🔄 Main Lagi
+                🔄 Play Again
               </button>
               <button type="button" className="btn-back-hub" onClick={onBackToMenu}>
                 🏠 Menu Game

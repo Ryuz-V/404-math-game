@@ -196,7 +196,7 @@ export default function VersusGame({ onBackToMenu, onSwitchToSolo }: VersusGameP
           <div className="game-badge">⚔️ 1 vs 1 Split Screen Battle</div>
           <h2 className="game-title">Grade 12 Math Battle</h2>
           <p className="game-desc">
-            Compete for speed and accuracy in answering questions with a friend on 1 screen! The first player to reach <strong>{TARGET_SCORE} Points</strong> wins.
+            Compete for speed and accuracy in answering questions with a friend on 1 screen! The first player to reach <strong>{TARGET_SCORE} Pointsts</strong> wins.
           </p>
 
           <div className="versus-player-setup">
@@ -240,7 +240,7 @@ export default function VersusGame({ onBackToMenu, onSwitchToSolo }: VersusGameP
           </div>
 
           <div className="rules-ribbon">
-            💡 <strong>Battle Rules:</strong> Correct = <strong>+100 Points</strong> | Wrong = <strong>-50 Points & Locked This Round</strong>.
+            💡 <strong>Battle Rules:</strong> Correct = <strong>+100 Pointsts</strong> | Wrong = <strong>-50 Pointsts & Locked This Round</strong>.
           </div>
 
           <div className="lobby-actions">
@@ -272,11 +272,11 @@ export default function VersusGame({ onBackToMenu, onSwitchToSolo }: VersusGameP
           <div className="versus-top-bar">
             <div className="p1-score-tag">
               <span className="p-tag-name">{p1Name}</span>
-              <span className="p-tag-score">{p1Score} Points</span>
+              <span className="p-tag-score">{p1Score} Pointsts</span>
             </div>
 
             <div className="battle-target-info">
-              <span>Target: {TARGET_SCORE} Points</span>
+              <span>Target: {TARGET_SCORE} Pointsts</span>
               <div className="score-progress-bar">
                 <div className="bar-p1" style={{ width: `${Math.min(50, (p1Score / TARGET_SCORE) * 50)}%` }}></div>
                 <div className="bar-p2" style={{ width: `${Math.min(50, (p2Score / TARGET_SCORE) * 50)}%` }}></div>
@@ -284,7 +284,7 @@ export default function VersusGame({ onBackToMenu, onSwitchToSolo }: VersusGameP
             </div>
 
             <div className="p2-score-tag">
-              <span className="p-tag-score">{p2Score} Points</span>
+              <span className="p-tag-score">{p2Score} Pointsts</span>
               <span className="p-tag-name">{p2Name}</span>
             </div>
           </div>
@@ -374,12 +374,12 @@ export default function VersusGame({ onBackToMenu, onSwitchToSolo }: VersusGameP
           <div className="final-battle-score">
             <div className={`final-box ${winner === p1Name ? 'champion' : ''}`}>
               <div className="final-name">{p1Name}</div>
-              <div className="final-score">{p1Score} Points</div>
+              <div className="final-score">{p1Score} Pointsts</div>
             </div>
             <div className="final-vs">VS</div>
             <div className={`final-box ${winner === p2Name ? 'champion' : ''}`}>
               <div className="final-name">{p2Name}</div>
-              <div className="final-score">{p2Score} Points</div>
+              <div className="final-score">{p2Score} Pointsts</div>
             </div>
           </div>
 

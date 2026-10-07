@@ -20,7 +20,7 @@ const getDeterministicStats = (id: string) => {
   };
 };
 
-export default function MateriSection({ onStartSoloWithTopic, initialTopicId }: MateriSectionProps) {
+export default function MaterialSection({ onStartSoloWithTopic, initialTopicId }: MateriSectionProps) {
   const [activeModalTopic, setActiveModalTopic] = useState<MathTopic | null>(() => {
     if (initialTopicId) {
       const search = initialTopicId.toLowerCase();
@@ -84,7 +84,7 @@ export default function MateriSection({ onStartSoloWithTopic, initialTopicId }: 
         {filteredData.length === 0 ? (
           <div style={{ background: '#fff', border: '2.5px solid #000', borderRadius: '16px', padding: '3rem', textAlign: 'center', boxShadow: '4px 4px 0 #000' }}>
             <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🔍</div>
-            <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '0.5rem' }}>No Materials Found</h3>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '0.5rem' }}>No Materialals Found</h3>
             <p style={{ color: '#666', fontSize: '0.9rem', marginBottom: '0' }}>No learning modules currently available.</p>
           </div>
         ) : (
@@ -120,7 +120,7 @@ export default function MateriSection({ onStartSoloWithTopic, initialTopicId }: 
                       {materi.title}
                     </h3>
                     
-                    {/* Deskripsi Materi */}
+                    {/* Deskripsi Material */}
                     <p style={{ color: '#6b7280', fontSize: '11px', fontWeight: 500, lineHeight: 1.5, marginBottom: '16px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', flexGrow: 1 }}>
                       {materi.summary}
                     </p>
@@ -188,7 +188,7 @@ export default function MateriSection({ onStartSoloWithTopic, initialTopicId }: 
                     <div style={{ display: 'inline-block', background: '#ffdc00', border: '1.5px solid #000', borderRadius: '6px', padding: '0.2rem 0.6rem', fontWeight: 800, fontSize: '0.8rem', marginBottom: '0.75rem' }}>💡 Module Overview & Learning Outcomes</div>
                     <p style={{ fontSize: '0.95rem', lineHeight: 1.65, margin: 0, color: '#222', fontWeight: 500 }}>{activeModalTopic.detailedOverview}</p>
                   </div>
-                  <h3 style={{ fontSize: '1.2rem', fontWeight: 900, marginBottom: '1rem', color: '#000' }}>Key Curriculum Points</h3>
+                  <h3 style={{ fontSize: '1.2rem', fontWeight: 900, marginBottom: '1rem', color: '#000' }}>Key Curriculum Pointsts</h3>
                   {activeModalTopic.coreConcepts.map((section, idx) => (
                     <div key={idx} style={{ background: '#f8fafc', border: '2.5px solid #000', borderRadius: '16px', padding: '1.4rem', marginBottom: '1.2rem', boxShadow: '4px 4px 0 #000' }}>
                       <h4 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#000', marginBottom: '0.85rem' }}>{section.title}</h4>

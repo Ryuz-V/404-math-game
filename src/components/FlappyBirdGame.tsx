@@ -914,7 +914,7 @@ function drawRetroMario(
     ctx.lineWidth = 3;
     ctx.stroke();
 
-    // Pointer
+    // Pointster
     ctx.beginPath();
     ctx.moveTo(-5, -42);
     ctx.lineTo(0, -32);
@@ -927,7 +927,7 @@ function drawRetroMario(
     ctx.textAlign = 'center';
     ctx.fillText('🍄 MAMMA MIA! LEVEL 25 CLEAR! 🚩', 0, -62);
     ctx.font = '700 9px system-ui';
-    ctx.fillText('Burung tertangkap! Menghitung Skor Akhir...', 0, -48);
+    ctx.fillText('Burung tertangkap! Menghitung Score Akhir...', 0, -48);
   }
 
   ctx.restore();
@@ -2243,7 +2243,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
         {/* Dynamic Day, Time of Day, Lives, Coins, Score */}
         <div className="flappy-stats-bar">
           {/* Day & Time of Day Badge */}
-          <div className={`stat-pill day-pill ${timeOfDay}`} title="Progres Hari & Waktu">
+          <div className={`stat-pill day-pill ${timeOfDay}`} title="Progres Hari & Time">
             <span className="pill-icon">{getTimeIcon(timeOfDay)}</span>
             <span className="pill-val">DAY {day}/25 ({getTimeLabel(timeOfDay)})</span>
           </div>
@@ -2264,7 +2264,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
             <span className="heart-label">{formatLivesText(lives)}/3</span>
           </div>
 
-          <div className={`stat-pill timer-pill ${timerSeconds <= 5 ? 'warning-timer' : ''}`} title="Waktu Jawab Soal">
+          <div className={`stat-pill timer-pill ${timerSeconds <= 5 ? 'warning-timer' : ''}`} title="Time Jawab Question">
             <span className="pill-icon">⏱️</span>
             <span className="pill-val">{timerSeconds}s</span>
           </div>
@@ -2274,7 +2274,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
             <span className="pill-val">{coins}</span>
           </div>
 
-          <div className="stat-pill score-pill" title="Skor Game">
+          <div className="stat-pill score-pill" title="Score Game">
             <span className="pill-icon">⭐</span>
             <span className="pill-val">{score}</span>
           </div>
@@ -2311,7 +2311,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
               </div>
 
               <div className="quiz-prompt-text">{activeQuiz.prompt}</div>
-              <p className="quiz-subtitle">Pilih 1 dari 4 jawaban yang benar di bawah ini:</p>
+              <p className="quiz-subtitle">Select 1 dari 4 jawaban yang benar di bawah ini:</p>
 
               <div className="quiz-options-grid">
                 {activeQuiz.options.map((opt, idx) => {
@@ -2345,7 +2345,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
               </div>
 
               <div className="quiz-footer-hint">
-                Tekan tombol [A], [B], [C], [D] atau klik opsi di atas. (Salah jawab: -½ ❤️ & langsung lanjut!)
+                Tekan tombol [A], [B], [C], [D] atau klik opsi di atas. (Wrong jawab: -½ ❤️ & langsung lanjut!)
               </div>
             </div>
           </div>
@@ -2390,7 +2390,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
               {/* DETAILED SCORE BREAKDOWN */}
               <div className="flappy-score-breakdown">
                 <div className="breakdown-row">
-                  <span className="b-label">📚 Soal Terjawab Benar ({correctAnswersCount} Soal):</span>
+                  <span className="b-label">📚 Question Terjawab Correct ({correctAnswersCount} Soal):</span>
                   <span className="b-val">+{quizPointsEarned} Pts</span>
                 </div>
                 <div className="breakdown-row">
@@ -2446,7 +2446,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
               {/* DETAILED SCORE BREAKDOWN */}
               <div className="flappy-score-breakdown">
                 <div className="breakdown-row">
-                  <span className="b-label">📚 Soal Terjawab Benar ({correctAnswersCount} Soal):</span>
+                  <span className="b-label">📚 Question Terjawab Correct ({correctAnswersCount} Soal):</span>
                   <span className="b-val">+{quizPointsEarned} Pts</span>
                 </div>
                 <div className="breakdown-row">
@@ -2472,7 +2472,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
                     startGame();
                   }}
                 >
-                  🔄 Main Lagi
+                  🔄 Play Again
                 </button>
                 <button
                   type="button"

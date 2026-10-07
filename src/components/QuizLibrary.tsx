@@ -97,7 +97,7 @@ export default function QuizLibrary({ onSelectQuiz, onOpenEditor, onOpenUpload }
                   onMouseEnter={(e) => { e.currentTarget.style.transform = 'translate(-2px, -2px)'; e.currentTarget.style.boxShadow = '6px 6px 0px #000'; }}
                   onMouseLeave={(e) => { e.currentTarget.style.transform = 'translate(0px, 0px)'; e.currentTarget.style.boxShadow = '4px 4px 0px #000'; }}
                 >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d8b4fe" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                   <span>Upload</span>
                 </button>
 
@@ -334,7 +334,7 @@ export default function QuizLibrary({ onSelectQuiz, onOpenEditor, onOpenUpload }
                   style={{ padding: '8px 18px', backgroundColor: '#fff', border: '2px solid #000', borderRadius: '6px', fontWeight: 800, fontSize: '13px', cursor: 'pointer', boxShadow: '3px 3px 0px #000' }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d8b4fe" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                     Upload Document
                   </div>
                 </button>
@@ -589,7 +589,7 @@ export default function QuizLibrary({ onSelectQuiz, onOpenEditor, onOpenUpload }
             backgroundColor: '#fff',
             borderRadius: '12px',
             border: '2px solid #000',
-            boxShadow: '8px 8px 0px #000',
+            boxShadow: 'none',
             padding: '32px',
             width: '100%',
             maxWidth: '400px',
@@ -686,7 +686,7 @@ export default function QuizLibrary({ onSelectQuiz, onOpenEditor, onOpenUpload }
                   fontWeight: 800,
                   fontSize: '14px',
                   cursor: 'pointer',
-                  boxShadow: '3px 3px 0px #000'
+                  boxShadow: 'none'
                 }}
               >
                 Create

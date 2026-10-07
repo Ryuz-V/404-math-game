@@ -97,8 +97,8 @@ export function parseDocumentToQuestions(rawText: string): QuizQuestion[] {
     if (currentQuestion && currentQuestion.questionText) {
       // Ensure at least 2 choices exist
       const choices = currentChoices.length >= 2 ? currentChoices : [
-        { id: `c-${Date.now()}-1`, text: 'Benar / Option A', isCorrect: true },
-        { id: `c-${Date.now()}-2`, text: 'Salah / Option B', isCorrect: false },
+        { id: `c-${Date.now()}-1`, text: 'Correct / Option A', isCorrect: true },
+        { id: `c-${Date.now()}-2`, text: 'Wrong / Option B', isCorrect: false },
         { id: `c-${Date.now()}-3`, text: 'Option C', isCorrect: false },
         { id: `c-${Date.now()}-4`, text: 'Option D', isCorrect: false }
       ];
@@ -176,10 +176,10 @@ export function parseDocumentToQuestions(rawText: string): QuizQuestion[] {
       required: true,
       image: '',
       choices: [
-        { id: 'c1', text: 'Pilihan Jawaban A (Benar)', isCorrect: true },
-        { id: 'c2', text: 'Pilihan Jawaban B', isCorrect: false },
-        { id: 'c3', text: 'Pilihan Jawaban C', isCorrect: false },
-        { id: 'c4', text: 'Pilihan Jawaban D', isCorrect: false }
+        { id: 'c1', text: 'Answer Choice A (Benar)', isCorrect: true },
+        { id: 'c2', text: 'Answer Choice B', isCorrect: false },
+        { id: 'c3', text: 'Answer Choice C', isCorrect: false },
+        { id: 'c4', text: 'Answer Choice D', isCorrect: false }
       ],
       randomizeOrder: false,
       estimationTimeMins: 2,
