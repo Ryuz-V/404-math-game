@@ -20,8 +20,6 @@ import UploadQuizModal from '../components/UploadQuizModal';
 import TugOfWarGame from '../components/TugOfWarGame';
 import FlappyBirdGame from '../components/FlappyBirdGame';
 import SnakeLadderGame from '../components/SnakeLadderGame';
-import TargetShooterGame from '../components/TargetShooterGame';
-import MathSoldierGame from '../components/MathSoldierGame';
 import QuizViewer from '../components/QuizViewer';
 import { MATERI_KELAS_12, MATH_QUESTIONS } from '../data/mathData';
 import { UserQuiz, QuizQuestion } from '../types/quiz';
@@ -34,7 +32,7 @@ if (typeof window !== 'undefined') {
 
 export default function Home() {
   const container = useRef<HTMLDivElement>(null);
-  const [currentView, setCurrentView] = useState<'home' | 'menu' | 'materi' | 'solo' | 'versus' | 'leaderboard' | 'about' | 'quiz-library' | 'quiz-editor' | 'quiz-viewer' | 'tug-of-war' | 'flappy-bird' | 'snake-ladder' | 'target-shooter' | 'math-soldier'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'menu' | 'materi' | 'solo' | 'versus' | 'leaderboard' | 'about' | 'quiz-library' | 'quiz-editor' | 'quiz-viewer' | 'tug-of-war' | 'flappy-bird' | 'snake-ladder'>('home');
   const [selectedTopicId, setSelectedTopicId] = useState<string | undefined>(undefined);
   const [activeCustomQuiz, setActiveCustomQuiz] = useState<UserQuiz | undefined>(undefined);
   const [editingQuiz, setEditingQuiz] = useState<UserQuiz | null>(null);
@@ -70,7 +68,7 @@ export default function Home() {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, [currentView]);
 
-  const isGameView = ['flappy-bird', 'snake-ladder', 'tug-of-war', 'target-shooter', 'solo', 'versus', 'quiz-editor', 'quiz-viewer'].includes(currentView);
+  const isGameView = ['flappy-bird', 'snake-ladder', 'tug-of-war', 'solo', 'versus', 'quiz-editor', 'quiz-viewer'].includes(currentView);
 
   const handleAddScore = (pts: number) => {
     setUserProfile(prev => ({
@@ -629,7 +627,7 @@ export default function Home() {
                     Try Playground &rarr;
                   </button>
                   <button className="games-btn-secondary">
-                    See the game modes
+                    Leaderboard
                   </button>
                 </div>
               </div>
@@ -893,137 +891,9 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-
-                {/* Game Card 5: Math Target Shooter */}
-                <div
-                  className="modern-game-card card-tug-theme group"
-                  onClick={() => setCurrentView('target-shooter')}
-                  style={{ borderColor: '#38bdf8' }}
-                >
-                  <div className="game-card-banner banner-tug" style={{ background: 'linear-gradient(135deg, #0369a1 0%, #0f172a 100%)' }}>
-                    <div className="banner-gameplay-bg">
-                      <div className="mockup-math-prompt" style={{ background: 'rgba(15, 23, 42, 0.9)', borderColor: '#facc15' }}>48 : 6 = ?</div>
-                      <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', marginTop: '12px' }}>
-                        <span style={{ background: '#ec4899', color: '#fff', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: 800 }}>A: 6</span>
-                        <span style={{ background: '#22c55e', color: '#fff', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: 800 }}>B: 8 🎯</span>
-                        <span style={{ background: '#3b82f6', color: '#fff', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: 800 }}>C: 12</span>
-                      </div>
-                    </div>
-                    <div className="banner-blur-overlay" />
-
-                    <div className="banner-top-row">
-                      <span className="banner-tag-pill tag-blue">💥 SHOOTING ARENA</span>
-                      <span className="banner-player-pill">1P & 2P Dual</span>
-                    </div>
-
-                    <div className="banner-hero-art">
-                      <div className="banner-icon-bubble">
-                        <span className="hero-emoji">🎯</span>
-                      </div>
-                      <div className="banner-badge-preview">
-                        <span>+3 POIN</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="game-card-body">
-                    <div className="game-title-row">
-                      <h3 className="game-card-title">Target Shooter Showdown</h3>
-                    </div>
-
-                    <p className="game-card-description">
-                      Tembak 1 dari 5 papan sasaran yang memuat jawaban matematika yang benar! P1 (WASD + Space) vs P2/Bot (Panah + Enter). Peluru max 3 per soal.
-                    </p>
-
-                    <div className="game-feature-tags">
-                      <span className="feature-pill">🎯 5 Papan Sasaran</span>
-                      <span className="feature-pill">🔫 3 Peluru / Question</span>
-                      <span className="feature-pill">⚡ +3 Points Hit</span>
-                    </div>
-
-                    <div className="game-card-cta">
-                      <span className="cta-text">Play Target Shooter</span>
-                      <div className="cta-arrow-btn">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                          <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Game Card 6: Math Soldier Zombie Strike */}
-                <div
-                  className="modern-game-card card-tug-theme group"
-                  onClick={() => setCurrentView('math-soldier')}
-                  style={{ borderColor: '#ef4444' }}
-                >
-                  <div className="game-card-banner banner-tug" style={{ background: 'linear-gradient(135deg, #7f1d1d 0%, #0f172a 100%)' }}>
-                    <div className="banner-gameplay-bg">
-                      <div className="mockup-math-prompt" style={{ background: 'rgba(15, 23, 42, 0.9)', borderColor: '#ef4444' }}>7 × 8 = ?</div>
-                      <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', marginTop: '12px' }}>
-                        <span style={{ background: '#22c55e', color: '#fff', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: 800 }}>M4A1 🔫</span>
-                        <span style={{ background: '#eab308', color: '#000', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: 800 }}>AWM 🎯</span>
-                        <span style={{ background: '#a855f7', color: '#fff', padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: 800 }}>Raygun 🌌</span>
-                      </div>
-                    </div>
-                    <div className="banner-blur-overlay" />
-
-                    <div className="banner-top-row">
-                      <span className="banner-tag-pill" style={{ background: '#dc2626', color: '#fff' }}>🪖 3D SOLDIER FPS</span>
-                      <span className="banner-player-pill">Survival Wave</span>
-                    </div>
-
-                    <div className="banner-hero-art">
-                      <div className="banner-icon-bubble" style={{ background: 'linear-gradient(135deg, #ef4444, #991b1b)' }}>
-                        <span className="hero-emoji">🧟</span>
-                      </div>
-                      <div className="banner-badge-preview" style={{ borderColor: '#ef4444' }}>
-                        <span>UPGRADE PERSENJATAAN</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="game-card-body">
-                    <div className="game-title-row">
-                      <h3 className="game-card-title">Math Soldier: Zombie Strike</h3>
-                    </div>
-
-                    <p className="game-card-description">
-                      Menjadi tentara FPS! Bergerak dengan WASD & Space, bidik & tembak (Klik Kiri), Scope (Klik Kanan), dan Reload (R). Basmi zombie dan jawab kuis matematika untuk membeli senjata hebat!
-                    </p>
-
-                    <div className="game-feature-tags">
-                      <span className="feature-pill">🪖 WASD + Mouse Scope</span>
-                      <span className="feature-pill">🔫 6 Jenis Senjata</span>
-                      <span className="feature-pill">🧮 Quiz Upgrade Senjata</span>
-                    </div>
-
-                    <div className="game-card-cta">
-                      <span className="cta-text" style={{ color: '#f87171' }}>Play Soldier FPS</span>
-                      <div className="cta-arrow-btn" style={{ background: '#dc2626' }}>
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                          <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </>
-        )}
-
-        {/* VIEW: MATH SOLDIER ZOMBIE STRIKE */}
-        {currentView === 'math-soldier' && (
-          <div>
-            <MathSoldierGame
-              onBackToMenu={() => setCurrentView('menu')}
-              onAddScore={handleAddScore}
-            />
-          </div>
         )}
 
         {/* VIEW: ULAR TANGGA MATEMATIKA */}
@@ -1040,16 +910,6 @@ export default function Home() {
         {currentView === 'tug-of-war' && (
           <div>
             <TugOfWarGame
-              onBackToMenu={() => setCurrentView('menu')}
-              onAddScore={handleAddScore}
-            />
-          </div>
-        )}
-
-        {/* VIEW: TARGET SHOOTER SHOWDOWN */}
-        {currentView === 'target-shooter' && (
-          <div>
-            <TargetShooterGame
               onBackToMenu={() => setCurrentView('menu')}
               onAddScore={handleAddScore}
             />

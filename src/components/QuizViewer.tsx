@@ -151,53 +151,53 @@ export default function QuizViewer({ initialTopicId, customQuiz, onBackToMenu, o
         {showResultScreen ? (
           <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
             {/* Body */}
-            <div style={{ flex: 1, padding: '64px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#ffffff' }}>
-              <h2 style={{ fontSize: '40px', fontWeight: 800, color: '#111827', marginBottom: '16px', letterSpacing: '-0.025em' }}>
+            <div style={{ flex: 1, padding: '40px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#ffffff' }}>
+              <h2 style={{ fontSize: '32px', fontWeight: 800, color: '#111827', marginBottom: '8px', letterSpacing: '-0.025em' }}>
                 {score >= 70 ? 'Great Job!' : 'Keep Practicing!'}
               </h2>
-              <p style={{ fontSize: '18px', color: '#6b7280', marginBottom: '64px', fontWeight: 500 }}>
+              <p style={{ fontSize: '16px', color: '#6b7280', marginBottom: '40px', fontWeight: 500 }}>
                 You have completed the quiz. Here is your result.
               </p>
 
               {/* Circular Chart */}
-              <div style={{ position: 'relative', width: '240px', height: '240px', margin: '0 auto 64px' }}>
-                <svg width="240" height="240" viewBox="0 0 100 100" style={{ transform: 'rotate(-90deg)', overflow: 'visible' }}>
+              <div style={{ position: 'relative', width: '180px', height: '180px', margin: '0 auto 40px' }}>
+                <svg width="180" height="180" viewBox="0 0 100 100" style={{ transform: 'rotate(-90deg)', overflow: 'visible' }}>
                   <circle cx="50" cy="50" r="40" fill="transparent" stroke="#f3f4f6" strokeWidth="12" />
                   <circle cx="50" cy="50" r="40" fill="transparent" stroke={score >= 70 ? '#10b981' : (score >= 40 ? '#f59e0b' : '#ef4444')} strokeWidth="12" strokeDasharray={circumference} strokeDashoffset={strokeDashoffset} strokeLinecap="round" style={{ transition: 'stroke-dashoffset 1.5s ease-out' }} />
                 </svg>
                 <div style={{ position: 'absolute', top: '0', left: '0', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
-                  <span style={{ fontSize: '56px', fontWeight: 800, color: '#111827', lineHeight: 1 }}>{score}%</span>
-                  <span style={{ fontSize: '14px', color: '#6b7280', fontWeight: 700, textTransform: 'uppercase', marginTop: '12px', letterSpacing: '0.05em' }}>Accuracy</span>
+                  <span style={{ fontSize: '40px', fontWeight: 800, color: '#111827', lineHeight: 1 }}>{score}%</span>
+                  <span style={{ fontSize: '12px', color: '#6b7280', fontWeight: 700, textTransform: 'uppercase', marginTop: '8px', letterSpacing: '0.05em' }}>Accuracy</span>
                 </div>
               </div>
 
-              <div style={{ display: 'flex', gap: '32px', marginBottom: '64px', width: '100%', maxWidth: '700px' }}>
-                <div style={{ flex: 1, backgroundColor: '#f9fafb', padding: '32px', borderRadius: '24px', border: '1px solid #e5e7eb', textAlign: 'center' }}>
-                  <div style={{ fontSize: '14px', color: '#6b7280', fontWeight: 700, marginBottom: '16px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Correct Answers</div>
-                  <div style={{ fontSize: '48px', fontWeight: 800, color: '#10b981' }}>
-                    {correctCount} <span style={{ fontSize: '24px', color: '#9ca3af', fontWeight: 600 }}>/ {questions.length}</span>
+              <div style={{ display: 'flex', gap: '20px', marginBottom: '40px', width: '100%', maxWidth: '600px' }}>
+                <div style={{ flex: 1, backgroundColor: '#f9fafb', padding: '24px', borderRadius: '4px', border: '1px solid #000000', textAlign: 'center' }}>
+                  <div style={{ fontSize: '12px', color: '#000000', fontWeight: 700, marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Correct Answers</div>
+                  <div style={{ fontSize: '36px', fontWeight: 800, color: '#000000' }}>
+                    {correctCount} <span style={{ fontSize: '18px', color: '#000000', fontWeight: 600 }}>/ {questions.length}</span>
                   </div>
                 </div>
-                <div style={{ flex: 1, backgroundColor: '#f9fafb', padding: '32px', borderRadius: '24px', border: '1px solid #e5e7eb', textAlign: 'center' }}>
-                  <div style={{ fontSize: '14px', color: '#6b7280', fontWeight: 700, marginBottom: '16px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Points Earned</div>
-                  <div style={{ fontSize: '48px', fontWeight: 800, color: '#6366f1' }}>+{score * 10}</div>
+                <div style={{ flex: 1, backgroundColor: '#f9fafb', padding: '24px', borderRadius: '4px', border: '1px solid #000000', textAlign: 'center' }}>
+                  <div style={{ fontSize: '12px', color: '#000000', fontWeight: 700, marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Points Earned</div>
+                  <div style={{ fontSize: '36px', fontWeight: 800, color: '#000000' }}>+{score * 10}</div>
                 </div>
               </div>
 
-              <div style={{ display: 'flex', gap: '20px', width: '100%', maxWidth: '700px' }}>
+              <div style={{ display: 'flex', gap: '16px', width: '100%', maxWidth: '600px' }}>
                 <button
                   onClick={() => { setShowResultScreen(false); setCurrentIndex(0); }}
-                  style={{ flex: 1, padding: '20px', backgroundColor: '#6366f1', color: 'white', border: 'none', borderRadius: '16px', fontWeight: 700, fontSize: '18px', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 14px 0 rgba(99, 102, 241, 0.39)' }}
-                  onMouseOver={(e) => { e.currentTarget.style.backgroundColor = '#4f46e5'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
-                  onMouseOut={(e) => { e.currentTarget.style.backgroundColor = '#6366f1'; e.currentTarget.style.transform = 'translateY(0)'; }}
+                  style={{ flex: 1, padding: '16px', backgroundColor: '#ffffff', color: '#000000', border: '3px solid #000000', borderRadius: '4px', fontWeight: 700, fontSize: '16px', cursor: 'pointer', transition: 'all 0.1s ease-in-out', boxShadow: '5px 5px 0px #000000' }}
+                  onMouseOver={(e) => { e.currentTarget.style.transform = 'translate(2px, 2px)'; e.currentTarget.style.boxShadow = '3px 3px 0px #000000'; }}
+                  onMouseOut={(e) => { e.currentTarget.style.transform = 'translate(0, 0)'; e.currentTarget.style.boxShadow = '5px 5px 0px #000000'; }}
                 >
                   View Results
                 </button>
                 <button
                   onClick={onBackToMenu}
-                  style={{ flex: 1, padding: '20px', backgroundColor: 'white', color: '#4b5563', border: '2px solid #e5e7eb', borderRadius: '16px', fontWeight: 700, fontSize: '18px', cursor: 'pointer', transition: 'all 0.2s' }}
-                  onMouseOver={(e) => { e.currentTarget.style.backgroundColor = '#f9fafb'; e.currentTarget.style.borderColor = '#d1d5db'; }}
-                  onMouseOut={(e) => { e.currentTarget.style.backgroundColor = 'white'; e.currentTarget.style.borderColor = '#e5e7eb'; }}
+                  style={{ flex: 1, padding: '16px', backgroundColor: '#ffffff', color: '#000000', border: '3px solid #000000', borderRadius: '4px', fontWeight: 700, fontSize: '16px', cursor: 'pointer', transition: 'all 0.1s ease-in-out', boxShadow: '5px 5px 0px #000000' }}
+                  onMouseOver={(e) => { e.currentTarget.style.transform = 'translate(2px, 2px)'; e.currentTarget.style.boxShadow = '3px 3px 0px #000000'; }}
+                  onMouseOut={(e) => { e.currentTarget.style.transform = 'translate(0, 0)'; e.currentTarget.style.boxShadow = '5px 5px 0px #000000'; }}
                 >
                   Return to Menu
                 </button>

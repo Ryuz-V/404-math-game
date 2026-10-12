@@ -71,6 +71,141 @@ export default function MaterialSection({ onStartSoloWithTopic, initialTopicId }
     setQuizAnswers({});
   };
 
+  if (activeModalTopic) {
+    return (
+      <div style={{ backgroundColor: '#f9fafb', minHeight: '100vh', padding: '2rem', fontFamily: 'sans-serif' }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+          {/* Header */}
+          <div style={{ marginBottom: '2rem' }}>
+            <button
+              onClick={() => setActiveModalTopic(null)}
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                color: '#4b5563',
+                fontSize: '14px',
+                fontWeight: 600,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                marginBottom: '12px',
+                padding: '4px 0'
+              }}
+            >
+              ← Back to Learning Modules
+            </button>
+            <h1 style={{ fontSize: '32px', fontWeight: 800, color: '#111827', margin: 0, textTransform: 'uppercase' }}>
+              {activeModalTopic.title}
+            </h1>
+          </div>
+
+          <div style={{ backgroundColor: 'white', borderRadius: '12px', padding: '24px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', marginBottom: '24px' }}>
+            <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#111827', marginBottom: '16px', textTransform: 'uppercase' }}>Overview & Concepts</h2>
+            
+            <div style={{ display: 'flex', gap: '16px', marginBottom: '24px' }}>
+              <div style={{ width: '40px', height: '40px', backgroundColor: '#e0e7ff', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', flexShrink: 0 }}>
+                📘
+              </div>
+              <div>
+                <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#111827', margin: '0 0 8px 0' }}>Theory & Learning Outcomes</h3>
+                <p style={{ fontSize: '14px', color: '#4b5563', lineHeight: 1.6, margin: 0 }}>
+                  {activeModalTopic.detailedOverview}
+                </p>
+              </div>
+            </div>
+
+            {activeModalTopic.coreConcepts.map((section, idx) => (
+              <div key={idx} style={{ display: 'flex', gap: '16px', marginBottom: idx === activeModalTopic.coreConcepts.length - 1 ? 0 : '16px', borderTop: '1px solid #f3f4f6', paddingTop: '16px' }}>
+                <div style={{ width: '40px', height: '40px', backgroundColor: '#dcfce7', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', flexShrink: 0 }}>
+                  💡
+                </div>
+                <div>
+                  <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#111827', margin: '0 0 8px 0' }}>{section.title}</h3>
+                  <ul style={{ margin: 0, paddingLeft: '20px', color: '#4b5563', fontSize: '14px', lineHeight: 1.6 }}>
+                    {section.points.map((pt, pIdx) => (
+                      <li key={pIdx} style={{ marginBottom: '4px' }}>{pt}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {activeModalTopic.keyFormulas.length > 0 && (
+            <div style={{ backgroundColor: 'white', borderRadius: '12px', padding: '24px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', marginBottom: '24px' }}>
+              <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#111827', marginBottom: '16px', textTransform: 'uppercase' }}>Key Formulas</h2>
+              {activeModalTopic.keyFormulas.map((f, idx) => (
+                <div key={idx} style={{ display: 'flex', gap: '16px', marginBottom: idx === activeModalTopic.keyFormulas.length - 1 ? 0 : '16px', borderBottom: idx === activeModalTopic.keyFormulas.length - 1 ? 'none' : '1px solid #f3f4f6', paddingBottom: idx === activeModalTopic.keyFormulas.length - 1 ? 0 : '16px' }}>
+                  <div style={{ width: '40px', height: '40px', backgroundColor: '#fef3c7', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', flexShrink: 0 }}>
+                    ⚡
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                      <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#111827', margin: 0 }}>{f.name}</h3>
+                      <button onClick={() => handleCopyFormula(f.formula, f.name)} style={{ background: 'none', border: '1px solid #e5e7eb', padding: '4px 12px', borderRadius: '4px', fontSize: '12px', cursor: 'pointer', color: '#4b5563' }}>
+                        {copiedFormula === f.name ? 'Copied!' : 'Copy'}
+                      </button>
+                    </div>
+                    <div style={{ backgroundColor: '#f8fafc', padding: '12px', borderRadius: '6px', fontFamily: 'monospace', fontSize: '16px', color: '#0f172a', marginBottom: '8px', overflowX: 'auto' }}>
+                      {f.formula}
+                    </div>
+                    <p style={{ fontSize: '14px', color: '#6b7280', margin: 0 }}>{f.desc}</p>
+                    {f.note && (
+                      <div style={{ marginTop: '8px', fontSize: '13px', color: '#b45309', backgroundColor: '#fef3c7', padding: '6px 12px', borderRadius: '4px', display: 'inline-block' }}>
+                        Note: {f.note}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {activeModalTopic.examples.length > 0 && (
+            <div style={{ backgroundColor: 'white', borderRadius: '12px', padding: '24px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', marginBottom: '24px' }}>
+              <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#111827', marginBottom: '16px', textTransform: 'uppercase' }}>Worked Examples</h2>
+              {activeModalTopic.examples.map((ex, idx) => (
+                <div key={idx} style={{ display: 'flex', gap: '16px', marginBottom: idx === activeModalTopic.examples.length - 1 ? 0 : '24px', borderBottom: idx === activeModalTopic.examples.length - 1 ? 'none' : '1px solid #f3f4f6', paddingBottom: idx === activeModalTopic.examples.length - 1 ? 0 : '24px' }}>
+                  <div style={{ width: '40px', height: '40px', backgroundColor: '#fee2e2', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', flexShrink: 0 }}>
+                    📝
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+                      <h3 style={{ fontSize: '15px', fontWeight: 700, color: '#111827', margin: 0, lineHeight: 1.5 }}>{ex.question}</h3>
+                      {ex.level && (
+                        <span style={{ fontSize: '12px', backgroundColor: '#f3f4f6', color: '#4b5563', padding: '2px 8px', borderRadius: '9999px', fontWeight: 600, marginLeft: '12px', flexShrink: 0 }}>
+                          {ex.level}
+                        </span>
+                      )}
+                    </div>
+                    <div style={{ backgroundColor: '#f8fafc', padding: '16px', borderRadius: '8px', marginBottom: '12px' }}>
+                      <div style={{ fontSize: '12px', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', marginBottom: '8px' }}>Step-by-Step Solution:</div>
+                      {ex.steps.map((step, sIdx) => (
+                        <div key={sIdx} style={{ fontSize: '14px', color: '#334155', marginBottom: '6px' }}>
+                          <span style={{ fontWeight: 600, marginRight: '8px' }}>{sIdx + 1}.</span> {step}
+                        </div>
+                      ))}
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '15px', marginBottom: ex.tips ? '12px' : 0 }}>
+                      <span style={{ fontWeight: 600, color: '#111827' }}>Final Answer:</span>
+                      <span style={{ fontFamily: 'monospace', fontWeight: 700, color: '#2563eb', backgroundColor: '#eff6ff', padding: '2px 8px', borderRadius: '4px' }}>{ex.answer}</span>
+                    </div>
+                    {ex.tips && (
+                      <div style={{ marginTop: '12px', fontSize: '13px', color: '#0369a1', backgroundColor: '#e0f2fe', padding: '8px 12px', borderRadius: '6px' }}>
+                        <strong>Exam Strategy:</strong> {ex.tips}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="resources-page-wrapper">
       <div className="resources-main-content">
@@ -84,7 +219,7 @@ export default function MaterialSection({ onStartSoloWithTopic, initialTopicId }
         {filteredData.length === 0 ? (
           <div style={{ background: '#fff', border: '2.5px solid #000', borderRadius: '16px', padding: '3rem', textAlign: 'center', boxShadow: '4px 4px 0 #000' }}>
             <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🔍</div>
-            <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '0.5rem' }}>No Materialals Found</h3>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '0.5rem' }}>No Materials Found</h3>
             <p style={{ color: '#666', fontSize: '0.9rem', marginBottom: '0' }}>No learning modules currently available.</p>
           </div>
         ) : (
@@ -102,38 +237,29 @@ export default function MaterialSection({ onStartSoloWithTopic, initialTopicId }
               return (
                 <div 
                   key={materi.id} 
-                  style={{ backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', border: '1px solid #f3f4f6', overflow: 'hidden', display: 'flex', flexDirection: 'column', transition: 'all 0.2s ease' }}
+                  style={{ backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.08)', border: '1px solid #e5e7eb', overflow: 'hidden', display: 'flex', flexDirection: 'column', transition: 'all 0.2s ease' }}
                 >
-                  {/* Fikri Studio Banner */}
-                  <div style={{ height: '140px', margin: '8px', borderRadius: '8px 8px 4px 4px', backgroundColor: materi.color || '#fcd34d', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <div style={{ position: 'absolute', top: '10px', left: '10px', backgroundColor: 'rgba(49, 46, 129, 0.8)', color: 'white', fontSize: '10px', fontWeight: 'bold', padding: '4px 8px', borderRadius: '6px', display: 'flex', alignItems: 'center', gap: '6px', boxShadow: '0 1px 2px rgba(0,0,0,0.1)' }}>
-                      {stats.enrolled} Enrolled
-                    </div>
+                  {/* Banner Image (Edge to Edge like Image 1) */}
+                  <div style={{ height: '160px', backgroundColor: materi.color || '#fcd34d', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.7, position: 'relative' }}>
                        <div style={{ position: 'absolute', fontWeight: 900, fontSize: '60px', color: 'rgba(49, 46, 129, 0.1)', transform: 'rotate(-12deg)', left: '32px' }}>Aa</div>
                     </div>
                   </div>
 
-                  {/* Card Body dengan Padding/Margin 20px Kiri-Kanan */}
-                  <div style={{ padding: '16px 20px 20px 20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                    <h3 style={{ fontWeight: 800, fontSize: '16px', lineHeight: 1.4, color: '#111827', marginBottom: '12px', height: '44px', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
+                  {/* Card Body */}
+                  <div style={{ padding: '20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                    
+
+
+                    {/* Title (Kept from Image 2) */}
+                    <h3 style={{ fontWeight: 800, fontSize: '18px', lineHeight: 1.4, color: '#111827', marginBottom: '16px' }}>
                       {materi.title}
                     </h3>
-                    
-                    {/* Deskripsi Material */}
-                    <p style={{ color: '#6b7280', fontSize: '11px', fontWeight: 500, lineHeight: 1.5, marginBottom: '16px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', flexGrow: 1 }}>
+
+                    {/* Deskripsi Material (Exception, Kept from Image 2) */}
+                    <p style={{ color: '#6b7280', fontSize: '12px', fontWeight: 500, lineHeight: 1.5, marginBottom: '16px', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                       {materi.summary}
                     </p>
-
-                    {/* Tags */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-                      <span style={{ padding: '4px 10px', backgroundColor: '#f3f4f6', color: '#4b5563', fontSize: '10px', borderRadius: '6px', fontWeight: 'bold', whiteSpace: 'nowrap' }}>
-                        {materi.category}
-                      </span>
-                      <span style={{ padding: '4px 10px', backgroundColor: '#f3f4f6', color: '#4b5563', fontSize: '10px', borderRadius: '6px', fontWeight: 'bold', whiteSpace: 'nowrap' }}>
-                        Grade {materi.grade}
-                      </span>
-                    </div>
                     
                     {/* Tombol Open */}
                     <button 
@@ -141,9 +267,11 @@ export default function MaterialSection({ onStartSoloWithTopic, initialTopicId }
                         e.stopPropagation(); 
                         handleOpenTopic(materi);
                       }}
-                      style={{ backgroundColor: '#ffdc00', color: 'black', fontSize: '11px', fontWeight: 800, padding: '8px', borderRadius: '8px', border: '1.5px solid black', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer', transition: 'background-color 0.2s', width: '100%', marginTop: 'auto' }}
+                      style={{ backgroundColor: '#ffffff', color: '#000000', fontSize: '16px', fontWeight: 800, padding: '12px', borderRadius: '6px', border: '3px solid #000000', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: 'all 0.1s ease-in-out', width: '100%', marginTop: 'auto', boxShadow: '5px 5px 0px #000000' }}
+                      onMouseOver={(e) => { e.currentTarget.style.transform = 'translate(2px, 2px)'; e.currentTarget.style.boxShadow = '3px 3px 0px #000000'; }}
+                      onMouseOut={(e) => { e.currentTarget.style.transform = 'translate(0, 0)'; e.currentTarget.style.boxShadow = '5px 5px 0px #000000'; }}
                     >
-                      <span>📖</span> Open
+                      Open
                     </button>
                   </div>
                 </div>
@@ -152,155 +280,6 @@ export default function MaterialSection({ onStartSoloWithTopic, initialTopicId }
           </div>
         )}
       </div>
-
-      {activeModalTopic && (
-        <div className="reader-modal-overlay" onClick={() => setActiveModalTopic(null)}>
-          <div className="reader-modal-card" onClick={(e) => e.stopPropagation()}>
-            <div className="reader-modal-header">
-              <div className="reader-modal-title-box">
-                <span className="reader-modal-icon">{activeModalTopic.icon}</span>
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: '6px', gap: '0.5rem', flexWrap: 'wrap' }}>
-                    <span className="reader-modal-tag" style={{ background: '#000', color: '#fff' }}>Grade {activeModalTopic.grade}</span>
-                    <span className="reader-modal-tag" style={{ background: '#ffdc00' }}>{activeModalTopic.category}</span>
-                  </div>
-                  <h2 style={{ fontSize: '1.6rem', fontWeight: 900, margin: 0, color: '#000', letterSpacing: '-0.5px' }}>
-                    {activeModalTopic.title}
-                  </h2>
-                </div>
-              </div>
-              <button onClick={() => setActiveModalTopic(null)} className="reader-modal-close-btn" title="Close">✕</button>
-            </div>
-
-            <div className="reader-modal-tabs">
-              <button onClick={() => setActiveTab('konsep')} className={`reader-tab-btn ${activeTab === 'konsep' ? 'active' : ''}`}>📘 Concepts & Theory</button>
-              <button onClick={() => setActiveTab('rumus')} className={`reader-tab-btn ${activeTab === 'rumus' ? 'active' : ''}`}>⚡ Key Formulas ({activeModalTopic.keyFormulas.length})</button>
-              <button onClick={() => setActiveTab('contoh')} className={`reader-tab-btn ${activeTab === 'contoh' ? 'active' : ''}`}>💡 Worked Examples ({activeModalTopic.examples.length})</button>
-              {activeModalTopic.quickQuiz && activeModalTopic.quickQuiz.length > 0 && (
-                <button onClick={() => setActiveTab('kuis')} className={`reader-tab-btn ${activeTab === 'kuis' ? 'active' : ''}`}>🧠 Mini Quiz</button>
-              )}
-            </div>
-
-            <div className="reader-modal-body" style={{ overflowY: 'auto', overflowX: 'hidden', flex: '1 1 0%', minHeight: 0, maxHeight: '100%', WebkitOverflowScrolling: 'touch' }}>
-              {activeTab === 'konsep' && (
-                <div>
-                  <div style={{ background: '#fff', border: '2.5px solid #000', borderRadius: '16px', padding: '1.4rem', marginBottom: '1.8rem', boxShadow: '4px 4px 0 #000' }}>
-                    <div style={{ display: 'inline-block', background: '#ffdc00', border: '1.5px solid #000', borderRadius: '6px', padding: '0.2rem 0.6rem', fontWeight: 800, fontSize: '0.8rem', marginBottom: '0.75rem' }}>💡 Module Overview & Learning Outcomes</div>
-                    <p style={{ fontSize: '0.95rem', lineHeight: 1.65, margin: 0, color: '#222', fontWeight: 500 }}>{activeModalTopic.detailedOverview}</p>
-                  </div>
-                  <h3 style={{ fontSize: '1.2rem', fontWeight: 900, marginBottom: '1rem', color: '#000' }}>Key Curriculum Pointsts</h3>
-                  {activeModalTopic.coreConcepts.map((section, idx) => (
-                    <div key={idx} style={{ background: '#f8fafc', border: '2.5px solid #000', borderRadius: '16px', padding: '1.4rem', marginBottom: '1.2rem', boxShadow: '4px 4px 0 #000' }}>
-                      <h4 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#000', marginBottom: '0.85rem' }}>{section.title}</h4>
-                      <ul style={{ paddingLeft: '1.25rem', margin: 0 }}>
-                        {section.points.map((pt, pIdx) => (
-                          <li key={pIdx} style={{ fontSize: '0.92rem', lineHeight: 1.6, color: '#222', marginBottom: '0.5rem', fontWeight: 500 }}>{pt}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {activeTab === 'rumus' && (
-                <div>
-                  <p style={{ fontSize: '0.85rem', color: '#555', marginBottom: '1.25rem' }}>Use the following formula cheat-sheet cards as a fast reference for homework, exam preparation, and competitions:</p>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1rem' }}>
-                    {activeModalTopic.keyFormulas.map((f, idx) => (
-                      <div key={idx} className="formula-item-card">
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <span style={{ fontWeight: 800, fontSize: '0.9rem' }}>{f.name}</span>
-                          <button onClick={() => handleCopyFormula(f.formula, f.name)} style={{ padding: '0.25rem 0.6rem', fontSize: '0.75rem', fontWeight: 700, background: '#fff', border: '1.5px solid #000', borderRadius: '6px', cursor: 'pointer' }}>
-                            {copiedFormula === f.name ? '✓ Copied!' : '📋 Copy'}
-                          </button>
-                        </div>
-                        <div className="formula-display">{f.formula}</div>
-                        <p style={{ fontSize: '0.8rem', color: '#444', margin: '0 0 0.5rem 0', lineHeight: 1.4 }}>{f.desc}</p>
-                        {f.note && (
-                          <div style={{ background: '#fef3c7', border: '1px solid #f59e0b', borderRadius: '6px', padding: '0.4rem 0.6rem', fontSize: '0.75rem', color: '#92400e', fontWeight: 600 }}>💡 Note: {f.note}</div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {activeTab === 'contoh' && (
-                <div>
-                  {activeModalTopic.examples.map((ex, idx) => (
-                    <div key={idx} className="example-item-card">
-                      <div className="example-card-head">
-                        <span>Worked Example {idx + 1}</span>
-                        {ex.level && <span style={{ background: '#fff', border: '1px solid #000', padding: '0.1rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem' }}>Level: {ex.level}</span>}
-                      </div>
-                      <div className="example-card-body">
-                        <p style={{ fontWeight: 700, fontSize: '0.9rem', marginBottom: '0.75rem', lineHeight: 1.5 }}>{ex.question}</p>
-                        <div className="example-steps-box">
-                          <span style={{ display: 'block', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', color: '#555', marginBottom: '0.4rem' }}>Step-by-Step Solution:</span>
-                          {ex.steps.map((step, sIdx) => (
-                            <div key={sIdx} style={{ fontSize: '0.85rem', color: '#222', lineHeight: 1.5, marginBottom: '0.35rem' }}><strong>{sIdx + 1}.</strong> {step}</div>
-                          ))}
-                        </div>
-                        <div className="example-answer-box">
-                          <span>Final Answer:</span>
-                          <span style={{ fontFamily: 'monospace', fontSize: '1rem' }}>{ex.answer}</span>
-                        </div>
-                        {ex.tips && (
-                          <div style={{ marginTop: '0.75rem', background: '#e0f2fe', border: '1.5px solid #0284c7', borderRadius: '8px', padding: '0.5rem 0.75rem', fontSize: '0.8rem', color: '#0369a1', fontWeight: 600 }}>💡 <strong>Exam Strategy & Tips:</strong> {ex.tips}</div>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {activeTab === 'kuis' && activeModalTopic.quickQuiz && (
-                <div>
-                  <div style={{ background: '#fef9c3', border: '2px solid #ca8a04', borderRadius: '10px', padding: '0.75rem 1rem', fontSize: '0.85rem', color: '#854d0e', fontWeight: 700, marginBottom: '1.25rem' }}>🎯 Test your understanding! Select an option below to receive instant validation and detailed explanations.</div>
-                  {activeModalTopic.quickQuiz.map((q, qIdx) => {
-                    const answered = quizAnswers[qIdx] !== undefined;
-                    const selected = quizAnswers[qIdx];
-                    const isCorrect = selected === q.correctIndex;
-                    return (
-                      <div key={qIdx} style={{ background: '#f8fafc', border: '2px solid #000', borderRadius: '12px', padding: '1.25rem', marginBottom: '1rem', boxShadow: '3px 3px 0 #000' }}>
-                        <h4 style={{ fontSize: '0.95rem', fontWeight: 800, marginBottom: '0.75rem' }}>{qIdx + 1}. {q.question}</h4>
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.5rem' }}>
-                          {q.options.map((opt, optIdx) => {
-                            let btnClass = 'quiz-opt-btn';
-                            if (answered) {
-                              if (optIdx === q.correctIndex) btnClass += ' correct';
-                              else if (optIdx === selected) btnClass += ' wrong';
-                            }
-                            return <button key={optIdx} disabled={answered} onClick={() => handleAnswerQuiz(qIdx, optIdx)} className={btnClass}>{opt}</button>;
-                          })}
-                        </div>
-                        {answered && (
-                          <div style={{ marginTop: '0.75rem', padding: '0.75rem', borderRadius: '8px', border: '2px solid #000', background: isCorrect ? '#dcfce7' : '#fee2e2', color: isCorrect ? '#166534' : '#991b1b', fontSize: '0.85rem' }}>
-                            <div style={{ fontWeight: 800, marginBottom: '0.25rem' }}>{isCorrect ? '🎉 Correct Answer!' : '❌ Incorrect'}</div>
-                            <div>{q.explanation}</div>
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-
-            <div className="reader-modal-footer">
-              <div style={{ display: 'flex', gap: '0.75rem' }}>
-                <button onClick={handlePrevTopic} className="btn-study-action" style={{ padding: '0.65rem 1.2rem', fontSize: '0.9rem' }}>← Previous</button>
-                <button onClick={handleNextTopic} className="btn-study-action" style={{ padding: '0.65rem 1.2rem', fontSize: '0.9rem' }}>Next →</button>
-              </div>
-              <button onClick={() => {
-                const topicId = activeModalTopic.id;
-                setActiveModalTopic(null);
-                if (onStartSoloWithTopic) onStartSoloWithTopic(topicId);
-              }} className="btn-quiz-action" style={{ padding: '0.75rem 1.6rem', fontSize: '0.95rem' }}>🚀 Practice Quiz in Solo Game</button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
