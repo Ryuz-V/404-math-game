@@ -21,10 +21,12 @@ import TugOfWarGame from '../components/TugOfWarGame';
 import FlappyBirdGame from '../components/FlappyBirdGame';
 import SnakeLadderGame from '../components/SnakeLadderGame';
 import QuizViewer from '../components/QuizViewer';
-import { MATERI_KELAS_12, MATH_QUESTIONS } from '../data/mathData';
-import { UserQuiz, QuizQuestion } from '../types/quiz';
+import WaygroundEcosystemSection from '../components/WaygroundEcosystemSection';
+import JoinCodeModal from '../components/JoinCodeModal';
+import { UserQuiz } from '../types/quiz';
 
 import { getSession, logout } from './actions/auth';
+import { saveUserQuiz, getUserQuizzes } from '../utils/quizStorage';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -39,6 +41,7 @@ export default function Home() {
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState<'learning' | 'quizz' | 'games'>('learning');
   const [isQuizViewerResult, setIsQuizViewerResult] = useState(false);
+  const [isJoinCodeModalOpen, setIsJoinCodeModalOpen] = useState(false);
 
   // Auth & Profile State
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -77,29 +80,6 @@ export default function Home() {
     }));
   };
 
-  // Search State
-  const [searchQuery, setSearchQuery] = useState('');
-  const [isSearchFocused, setIsSearchFocused] = useState(false);
-
-  // Search filter
-  const searchResults = searchQuery.trim() === '' ? [] : [
-    ...MATERI_KELAS_12.filter(m => 
-      m.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-      m.summary.toLowerCase().includes(searchQuery.toLowerCase())
-    ).map(m => ({ type: 'materi' as const, id: m.id, title: m.title, category: m.category, icon: m.icon })),
-    ...MATH_QUESTIONS.filter(q => 
-      q.question.toLowerCase().includes(searchQuery.toLowerCase())
-    ).map(q => ({ type: 'question' as const, id: q.topicId, title: q.question, category: q.topicTitle, icon: '❓' }))
-  ];
-
-  const handleSearchSubmit = () => {
-    if (!searchQuery.trim()) return;
-    if (searchResults.length > 0) {
-      handleSelectSearchResult(searchResults[0].type, searchResults[0].id);
-    } else {
-      setCurrentView('materi');
-    }
-  };
 
   useGSAP(() => {
     if (currentView !== 'home') return;
@@ -184,17 +164,30 @@ export default function Home() {
     setCurrentView('solo');
   };
 
-  const handleSelectSearchResult = (type: 'materi' | 'question', topicId: string) => {
-    setSearchQuery('');
-    setIsSearchFocused(false);
-    if (type === 'materi') {
-      setSelectedTopicId(topicId);
-      setCurrentView('materi');
-    } else {
-      setSelectedTopicId(topicId);
-      setCurrentView('solo');
+  const handleJoinWithCode = (code: string) => {
+    setIsJoinCodeModalOpen(false);
+    const cleanCode = code.trim().toLowerCase();
+    
+    // Check if code matches any locally saved quiz
+    const localQuizzes = getUserQuizzes();
+    const matched = localQuizzes.find(q => 
+      q.id.toLowerCase() === cleanCode || 
+      q.title.toLowerCase().includes(cleanCode)
+    );
+    
+    if (matched) {
+      setActiveCustomQuiz(matched);
+      setSelectedTopicId(matched.id);
+      setCurrentView('quiz-viewer');
+      return;
     }
+
+    // Default: start quiz viewer with questions
+    setSelectedTopicId(undefined);
+    setActiveCustomQuiz(undefined);
+    setCurrentView('quiz-viewer');
   };
+
 
   const handleOpenProfileOrLogin = () => {
     if (!isLoggedIn) {
@@ -259,90 +252,59 @@ export default function Home() {
           </a>
         </nav>
 
-        {/* Header Search Input */}
-        <div className="header-search">
-          <input
-            type="text"
-            placeholder="Search..."
-            className="search-input"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onFocus={() => setIsSearchFocused(true)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') handleSearchSubmit();
-            }}
-          />
-          <svg className="search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-
-          {/* Search Dropdown Results */}
-          {isSearchFocused && searchQuery.trim().length > 0 && (
-            <div className="search-results-dropdown">
-              {searchResults.length > 0 ? (
-                searchResults.map((item, idx) => (
-                  <div
-                    key={idx}
-                    className="search-item"
-                    onClick={() => handleSelectSearchResult(item.type, item.id)}
-                  >
-                    <span className="search-item-icon">{item.icon}</span>
-                    <div>
-                      <div className="search-item-title">{item.title}</div>
-                      <div className="search-item-cat">{item.category} • {item.type === 'materi' ? 'Theory Module' : 'Practice'}</div>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="search-no-result">
-                  No results found for &quot;{searchQuery}&quot;
-                </div>
-              )}
-            </div>
-          )}
-        </div>
         
-        {/* Auth Buttons */}
-        <div className="auth-buttons">
-          {!isLoggedIn ? (
-            <>
+        {/* Right side: Enter Code button + Auth buttons */}
+        <div className="header-right-actions">
+          <div className="nav-vertical-divider" />
+          <button 
+            type="button"
+            className="btn-enter-code"
+            onClick={() => setIsJoinCodeModalOpen(true)}
+          >
+            Enter The Code
+          </button>
+
+          {/* Auth Buttons */}
+          <div className="auth-buttons">
+            {!isLoggedIn ? (
+              <>
+                <button 
+                  className="btn btn-login" 
+                  onClick={() => { setAuthMode('login'); setIsAuthOpen(true); }}
+                >
+                  Log in
+                </button>
+                <button 
+                  className="btn btn-signup" 
+                  onClick={() => { setAuthMode('signup'); setIsAuthOpen(true); }}
+                >
+                  Sign up
+                </button>
+              </>
+            ) : (
               <button 
-                className="btn btn-login" 
-                onClick={() => { setAuthMode('login'); setIsAuthOpen(true); }}
+                onClick={handleOpenProfileOrLogin}
+                title="Profile"
+                style={{ 
+                  backgroundColor: '#f3f4f6', 
+                  border: '2px solid #000', 
+                  boxShadow: 'none',
+                  cursor: 'pointer',
+                  width: '44px',
+                  height: '44px',
+                  borderRadius: '50%',
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  padding: 0,
+                  marginRight: '2.5rem',
+                  alignSelf: 'center'
+                }}
               >
-                Log in
+                <span style={{ fontSize: '1.5rem', lineHeight: 1 }}>{userProfile.avatar}</span>
               </button>
-              <button 
-                className="btn btn-signup" 
-                onClick={() => { setAuthMode('signup'); setIsAuthOpen(true); }}
-              >
-                Sign up
-              </button>
-            </>
-          ) : (
-            <button 
-              onClick={handleOpenProfileOrLogin}
-              title="Profile"
-              style={{ 
-                backgroundColor: '#f3f4f6', 
-                border: '2px solid #000', 
-                boxShadow: 'none',
-                cursor: 'pointer',
-                width: '44px',
-                height: '44px',
-                borderRadius: '50%',
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center',
-                padding: 0,
-                marginRight: '2.5rem',
-                alignSelf: 'center'
-              }}
-            >
-              <span style={{ fontSize: '1.5rem', lineHeight: 1 }}>{userProfile.avatar}</span>
-            </button>
-          )}
+            )}
+          </div>
         </div>
       </header>
       )}
@@ -426,6 +388,15 @@ export default function Home() {
                 </div>
               </div>
             </section>
+
+            {/* WAYGROUND ASSESSMENT ECOSYSTEM SECTION */}
+            <WaygroundEcosystemSection
+              onExploreLibrary={() => setCurrentView('quiz-library')}
+              onExploreAssessments={() => {
+                setSelectedTopicId(undefined);
+                setCurrentView('materi');
+              }}
+            />
 
             {/* TOPICS SECTION */}
             <section className="topics-section">
@@ -1087,9 +1058,18 @@ export default function Home() {
             authorName: userProfile.name,
             questions: data.questions
           };
+          // Simpan ke localStorage + database sebelum buka editor
+          saveUserQuiz(draftQuiz);
           setEditingQuiz(draftQuiz);
           setCurrentView('quiz-editor');
         }}
+      />
+
+      {/* Join Code Modal */}
+      <JoinCodeModal
+        isOpen={isJoinCodeModalOpen}
+        onClose={() => setIsJoinCodeModalOpen(false)}
+        onJoin={handleJoinWithCode}
       />
 
       {/* ORIGINAL FOOTER (Hidden in game views so screen stays fixed & never gets cut off) */}
