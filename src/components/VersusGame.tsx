@@ -206,7 +206,7 @@ export default function VersusGame({ onBackToMenu, onSwitchToSolo }: VersusGameP
     <div className="versus-container">
       {gameState === 'lobby' && (
         <div className="versus-card versus-lobby">
-          <div className="game-badge">⚔️ 1 vs 1 Split Screen Battle</div>
+          <div className="game-badge">1 vs 1 Split Screen Battle</div>
           <h2 className="game-title">Grade 12 Math Battle</h2>
           <p className="game-desc">
             Compete for speed and accuracy in answering questions with a friend on 1 screen! The first player to reach <strong>{TARGET_SCORE} Pointsts</strong> wins.
@@ -214,7 +214,7 @@ export default function VersusGame({ onBackToMenu, onSwitchToSolo }: VersusGameP
 
           <div className="versus-player-setup">
             <div className="player-setup-box p1-box">
-              <div className="p-header">🎮 Player 1 (Left Side)</div>
+              <div className="p-header">Player 1 (Left Side)</div>
               <input
                 type="text"
                 value={p1Name}
@@ -234,7 +234,7 @@ export default function VersusGame({ onBackToMenu, onSwitchToSolo }: VersusGameP
             <div className="versus-vs-badge">VS</div>
 
             <div className="player-setup-box p2-box">
-              <div className="p-header">🕹️ Player 2 (Right Side)</div>
+              <div className="p-header">Player 2 (Right Side)</div>
               <input
                 type="text"
                 value={p2Name}
@@ -253,19 +253,19 @@ export default function VersusGame({ onBackToMenu, onSwitchToSolo }: VersusGameP
           </div>
 
           <div className="rules-ribbon">
-            💡 <strong>Battle Rules:</strong> Correct = <strong>+100 Pointsts</strong> | Wrong = <strong>-50 Pointsts & Locked This Round</strong>.
+            <strong>Battle Rules:</strong> Correct = <strong>+100 Pointsts</strong> | Wrong = <strong>-50 Pointsts & Locked This Round</strong>.
           </div>
 
           <div className="lobby-actions">
             <button className="btn-main-action btn-versus-play" onClick={startVersusGame}>
-              🔥 Start 1 vs 1 Battle!
+              Start 1 vs 1 Battle!
             </button>
             <div className="lobby-sub-actions">
               <button className="btn-sub-action" onClick={onSwitchToSolo}>
-                🎯 Solo Mode (1 Player)
+                Solo Mode (1 Player)
               </button>
               <button className="btn-sub-action" onClick={onBackToMenu}>
-                🏠 Back to Menu
+                Back to Menu
               </button>
             </div>
           </div>
@@ -380,7 +380,7 @@ export default function VersusGame({ onBackToMenu, onSwitchToSolo }: VersusGameP
 
       {gameState === 'gameover' && (
         <div className="versus-card versus-winner-card">
-          <div className="winner-crown">👑</div>
+          <div className="winner-crown">WINNER</div>
           <h2 className="winner-title">{winner} WINS!</h2>
           <p className="winner-desc">Successfully reached {TARGET_SCORE} points faster in the math duel!</p>
 
@@ -398,16 +398,16 @@ export default function VersusGame({ onBackToMenu, onSwitchToSolo }: VersusGameP
 
           <div className="gameover-actions">
             <button className="btn-main-action btn-versus-play" onClick={startVersusGame}>
-              🔥 Rematch
+              Rematch
             </button>
             <button className="btn-sub-action" onClick={() => setGameState('lobby')}>
-              ⚙️ Player Settings
+              Player Settings
             </button>
             <button className="btn-sub-action" onClick={onSwitchToSolo}>
-              🎯 Solo Mode
+              Solo Mode
             </button>
             <button className="btn-sub-action" onClick={onBackToMenu}>
-              🏠 Main Menu
+              Main Menu
             </button>
           </div>
         </div>

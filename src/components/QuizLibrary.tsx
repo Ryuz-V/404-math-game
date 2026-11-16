@@ -188,7 +188,7 @@ export default function QuizLibrary({ onSelectQuiz, onOpenEditor, onOpenUpload }
                     <span>Edited {card.editedTimeAgo}</span>
                     <span style={{ color: '#d1d5db' }}>•</span>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#374151' }}>
-                      <span>💬 {card.questions?.length || 0} Question</span>
+                      <span>{card.questions?.length || 0} Questions</span>
                     </div>
                   </div>
                   <button style={{ width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', color: '#374151', background: 'none', border: 'none', fontWeight: 'bold', letterSpacing: '2px', cursor: 'pointer' }}>...</button>
@@ -267,7 +267,7 @@ export default function QuizLibrary({ onSelectQuiz, onOpenEditor, onOpenUpload }
                     <span>Edited {card.editedTimeAgo}</span>
                     <span style={{ color: '#d1d5db' }}>•</span>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#374151' }}>
-                      <span>💬 {card.questions?.length || 0} Question</span>
+                      <span>{card.questions?.length || 0} Questions</span>
                     </div>
                   </div>
                   <button style={{ width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', color: '#374151', background: 'none', border: 'none', fontWeight: 'bold', letterSpacing: '2px', cursor: 'pointer' }}>...</button>
@@ -450,7 +450,7 @@ export default function QuizLibrary({ onSelectQuiz, onOpenEditor, onOpenUpload }
                       <span>Edited {quiz.editedTimeAgo || 'Just now'}</span>
                       <span style={{ color: '#d1d5db' }}>•</span>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#374151' }}>
-                        <span>💬 {quiz.questions?.length || 0} Question</span>
+                        <span>{quiz.questions?.length || 0} Questions</span>
                       </div>
                     </div>
 

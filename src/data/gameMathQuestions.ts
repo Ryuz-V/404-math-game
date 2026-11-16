@@ -1,7 +1,7 @@
 // ============================================================================
 // GAME MATH QUESTIONS REPOSITORY
-// High School (SMA / UTBK) Curriculum: Kalkulus, Trigonometri, Statistika, Geometri
-// Designed for fast-paced math gameplay across all 4 games
+// High School / College-Prep Curriculum: Calculus, Trigonometry, Statistics, Geometry
+// Designed for fast-paced math gameplay across all games
 // ============================================================================
 
 export type MathCurriculumTopic = 'kalkulus' | 'trigonometri' | 'statistika' | 'geometri';
@@ -21,40 +21,40 @@ export interface GameMathQuestion {
 // ----------------------------------------------------------------------------
 export const GAME_MATH_QUESTIONS: GameMathQuestion[] = [
   // ==========================================================================
-  // 1. KALKULUS (Turunan, Limit, Integral)
+  // 1. CALCULUS (Derivatives, Limits, Integrals)
   // ==========================================================================
   {
     id: 'kal-1',
     topic: 'kalkulus',
-    topicLabel: 'Kalkulus',
-    question: 'Jika f(x) = 3x² - 5x + 2, maka nilai f\'(2) = ?',
+    topicLabel: 'Calculus',
+    question: 'If f(x) = 3x² - 5x + 2, what is f\'(2)?',
     options: ['7', '5', '8', '11'],
     correctIndex: 0,
-    explanation: 'f\'(x) = 6x - 5. Maka f\'(2) = 6(2) - 5 = 12 - 5 = 7.'
+    explanation: 'f\'(x) = 6x - 5. Thus f\'(2) = 6(2) - 5 = 12 - 5 = 7.'
   },
   {
     id: 'kal-2',
     topic: 'kalkulus',
-    topicLabel: 'Kalkulus',
-    question: 'Jika f(x) = x³ - 4x, maka nilai f\'(3) = ?',
+    topicLabel: 'Calculus',
+    question: 'If f(x) = x³ - 4x, what is f\'(3)?',
     options: ['23', '21', '25', '19'],
     correctIndex: 0,
-    explanation: 'f\'(x) = 3x² - 4. Maka f\'(3) = 3(9) - 4 = 27 - 4 = 23.'
+    explanation: 'f\'(x) = 3x² - 4. Thus f\'(3) = 3(9) - 4 = 27 - 4 = 23.'
   },
   {
     id: 'kal-3',
     topic: 'kalkulus',
-    topicLabel: 'Kalkulus',
-    question: 'Turunan pertama dari f(x) = 5x⁴ adalah...?',
+    topicLabel: 'Calculus',
+    question: 'What is the derivative of f(x) = 5x⁴?',
     options: ['20x³', '20x⁴', '15x³', '5x³'],
     correctIndex: 0,
-    explanation: 'd/dx (5x⁴) = 5 × 4x³ = 20x³.'
+    explanation: 'd/dx (5x⁴) = 5 · 4x³ = 20x³.'
   },
   {
     id: 'kal-4',
     topic: 'kalkulus',
-    topicLabel: 'Kalkulus',
-    question: 'Nilai dari lim (x→0) [sin(6x) / (2x)] = ?',
+    topicLabel: 'Calculus',
+    question: 'Evaluate lim (x→0) [sin(6x) / (2x)] = ?',
     options: ['3', '6', '2', '0'],
     correctIndex: 0,
     explanation: 'lim (x→0) [sin(ax) / (bx)] = a/b = 6/2 = 3.'
@@ -62,8 +62,8 @@ export const GAME_MATH_QUESTIONS: GameMathQuestion[] = [
   {
     id: 'kal-5',
     topic: 'kalkulus',
-    topicLabel: 'Kalkulus',
-    question: 'Nilai dari lim (x→0) [tan(8x) / (4x)] = ?',
+    topicLabel: 'Calculus',
+    question: 'Evaluate lim (x→0) [tan(8x) / (4x)] = ?',
     options: ['2', '4', '8', '1/2'],
     correctIndex: 0,
     explanation: 'lim (x→0) [tan(ax) / (bx)] = a/b = 8/4 = 2.'
@@ -71,26 +71,26 @@ export const GAME_MATH_QUESTIONS: GameMathQuestion[] = [
   {
     id: 'kal-6',
     topic: 'kalkulus',
-    topicLabel: 'Kalkulus',
-    question: 'Nilai dari lim (x→2) [(x² - 4) / (x - 2)] = ?',
+    topicLabel: 'Calculus',
+    question: 'Evaluate lim (x→2) [(x² - 4) / (x - 2)] = ?',
     options: ['4', '2', '0', '6'],
     correctIndex: 0,
-    explanation: '(x - 2)(x + 2) / (x - 2) = x + 2. Pada x = 2 ⟹ 2 + 2 = 4.'
+    explanation: '(x - 2)(x + 2) / (x - 2) = x + 2. At x = 2 ⟹ 2 + 2 = 4.'
   },
   {
     id: 'kal-7',
     topic: 'kalkulus',
-    topicLabel: 'Kalkulus',
-    question: 'Nilai dari lim (x→3) [(x² - 9) / (x - 3)] = ?',
+    topicLabel: 'Calculus',
+    question: 'Evaluate lim (x→3) [(x² - 9) / (x - 3)] = ?',
     options: ['6', '3', '9', '0'],
     correctIndex: 0,
-    explanation: '(x - 3)(x + 3) / (x - 3) = x + 3. Pada x = 3 ⟹ 3 + 3 = 6.'
+    explanation: '(x - 3)(x + 3) / (x - 3) = x + 3. At x = 3 ⟹ 3 + 3 = 6.'
   },
   {
     id: 'kal-8',
     topic: 'kalkulus',
-    topicLabel: 'Kalkulus',
-    question: 'Hasil dari ∫ 6x² dx adalah...?',
+    topicLabel: 'Calculus',
+    question: 'Evaluate ∫ 6x² dx = ?',
     options: ['2x³ + C', '3x³ + C', '6x³ + C', '12x + C'],
     correctIndex: 0,
     explanation: '∫ 6x² dx = (6/3)x³ + C = 2x³ + C.'
@@ -98,8 +98,8 @@ export const GAME_MATH_QUESTIONS: GameMathQuestion[] = [
   {
     id: 'kal-9',
     topic: 'kalkulus',
-    topicLabel: 'Kalkulus',
-    question: 'Hasil dari ∫ (4x + 3) dx adalah...?',
+    topicLabel: 'Calculus',
+    question: 'Evaluate ∫ (4x + 3) dx = ?',
     options: ['2x² + 3x + C', '4x² + 3x + C', '2x² + C', '4x² + C'],
     correctIndex: 0,
     explanation: '∫ (4x + 3) dx = 2x² + 3x + C.'
@@ -107,8 +107,8 @@ export const GAME_MATH_QUESTIONS: GameMathQuestion[] = [
   {
     id: 'kal-10',
     topic: 'kalkulus',
-    topicLabel: 'Kalkulus',
-    question: 'Nilai integral tentu dari ∫₀² 3x² dx = ?',
+    topicLabel: 'Calculus',
+    question: 'Evaluate the definite integral ∫₀² 3x² dx = ?',
     options: ['8', '6', '12', '4'],
     correctIndex: 0,
     explanation: 'F(x) = x³. F(2) - F(0) = 2³ - 0 = 8.'
@@ -116,8 +116,8 @@ export const GAME_MATH_QUESTIONS: GameMathQuestion[] = [
   {
     id: 'kal-11',
     topic: 'kalkulus',
-    topicLabel: 'Kalkulus',
-    question: 'Nilai integral tentu dari ∫₀¹ (2x + 1) dx = ?',
+    topicLabel: 'Calculus',
+    question: 'Evaluate the definite integral ∫₀¹ (2x + 1) dx = ?',
     options: ['2', '1', '3', '4'],
     correctIndex: 0,
     explanation: 'F(x) = x² + x. F(1) - F(0) = (1 + 1) - 0 = 2.'
@@ -125,26 +125,26 @@ export const GAME_MATH_QUESTIONS: GameMathQuestion[] = [
   {
     id: 'kal-12',
     topic: 'kalkulus',
-    topicLabel: 'Kalkulus',
-    question: 'Turunan pertama dari f(x) = sin x adalah...?',
-    options: ['cos x', '-cos x', 'tan x', '-sin x'],
+    topicLabel: 'Calculus',
+    question: 'What is the derivative of f(x) = sin(x)?',
+    options: ['cos(x)', '-cos(x)', 'tan(x)', '-sin(x)'],
     correctIndex: 0,
-    explanation: 'd/dx (sin x) = cos x.'
+    explanation: 'd/dx (sin(x)) = cos(x).'
   },
   {
     id: 'kal-13',
     topic: 'kalkulus',
-    topicLabel: 'Kalkulus',
-    question: 'Turunan pertama dari f(x) = cos x adalah...?',
-    options: ['-sin x', 'sin x', '-cos x', 'tan x'],
+    topicLabel: 'Calculus',
+    question: 'What is the derivative of f(x) = cos(x)?',
+    options: ['-sin(x)', 'sin(x)', '-cos(x)', 'tan(x)'],
     correctIndex: 0,
-    explanation: 'd/dx (cos x) = -sin x.'
+    explanation: 'd/dx (cos(x)) = -sin(x).'
   },
   {
     id: 'kal-14',
     topic: 'kalkulus',
-    topicLabel: 'Kalkulus',
-    question: 'Titik stasioner f\'(x) = 0 pada f(x) = 2x³ - 6x terjadi saat x² = ?',
+    topicLabel: 'Calculus',
+    question: 'The stationary point f\'(x) = 0 for f(x) = 2x³ - 6x occurs when x² = ?',
     options: ['1', '2', '3', '0'],
     correctIndex: 0,
     explanation: 'f\'(x) = 6x² - 6 = 0 ⟹ 6x² = 6 ⟹ x² = 1.'
@@ -152,187 +152,187 @@ export const GAME_MATH_QUESTIONS: GameMathQuestion[] = [
   {
     id: 'kal-15',
     topic: 'kalkulus',
-    topicLabel: 'Kalkulus',
-    question: 'Nilai dari lim (x→∞) [(4x² + 3) / (2x² - 5)] = ?',
+    topicLabel: 'Calculus',
+    question: 'Evaluate lim (x→∞) [(4x² + 3) / (2x² - 5)] = ?',
     options: ['2', '4', '∞', '0'],
     correctIndex: 0,
-    explanation: 'Koefisien pangkat tertinggi = 4 / 2 = 2.'
+    explanation: 'Ratio of leading coefficients = 4 / 2 = 2.'
   },
 
   // ==========================================================================
-  // 2. TRIGONOMETRI (Sudut Istimewa, Identitas, Segitiga)
+  // 2. TRIGONOMETRY (Special Angles, Identities, Triangles)
   // ==========================================================================
   {
     id: 'trig-1',
     topic: 'trigonometri',
-    topicLabel: 'Trigonometri',
-    question: 'Nilai dari sin 30° adalah...?',
+    topicLabel: 'Trigonometry',
+    question: 'What is the value of sin(30°)?',
     options: ['1/2', '√3/2', '1', '0'],
     correctIndex: 0,
-    explanation: 'Sudut istimewa: sin 30° = 1/2.'
+    explanation: 'Special angle ratio: sin(30°) = 1/2.'
   },
   {
     id: 'trig-2',
     topic: 'trigonometri',
-    topicLabel: 'Trigonometri',
-    question: 'Nilai dari cos 60° adalah...?',
+    topicLabel: 'Trigonometry',
+    question: 'What is the value of cos(60°)?',
     options: ['1/2', '√3/2', '√2/2', '0'],
     correctIndex: 0,
-    explanation: 'Sudut istimewa: cos 60° = 1/2.'
+    explanation: 'Special angle ratio: cos(60°) = 1/2.'
   },
   {
     id: 'trig-3',
     topic: 'trigonometri',
-    topicLabel: 'Trigonometri',
-    question: 'Nilai dari tan 45° adalah...?',
+    topicLabel: 'Trigonometry',
+    question: 'What is the value of tan(45°)?',
     options: ['1', '0', '√3', '1/2'],
     correctIndex: 0,
-    explanation: 'Sudut istimewa: tan 45° = sin 45° / cos 45° = 1.'
+    explanation: 'Special angle ratio: tan(45°) = sin(45°) / cos(45°) = 1.'
   },
   {
     id: 'trig-4',
     topic: 'trigonometri',
-    topicLabel: 'Trigonometri',
-    question: 'Nilai dari sin 90° adalah...?',
+    topicLabel: 'Trigonometry',
+    question: 'What is the value of sin(90°)?',
     options: ['1', '0', '1/2', '-1'],
     correctIndex: 0,
-    explanation: 'Sudut istimewa: sin 90° = 1.'
+    explanation: 'Special angle ratio: sin(90°) = 1.'
   },
   {
     id: 'trig-5',
     topic: 'trigonometri',
-    topicLabel: 'Trigonometri',
-    question: 'Nilai dari cos 0° adalah...?',
+    topicLabel: 'Trigonometry',
+    question: 'What is the value of cos(0°)?',
     options: ['1', '0', '-1', '1/2'],
     correctIndex: 0,
-    explanation: 'Sudut istimewa: cos 0° = 1.'
+    explanation: 'Special angle ratio: cos(0°) = 1.'
   },
   {
     id: 'trig-6',
     topic: 'trigonometri',
-    topicLabel: 'Trigonometri',
-    question: 'Nilai dari sin 150° adalah...?',
+    topicLabel: 'Trigonometry',
+    question: 'What is the value of sin(150°)?',
     options: ['1/2', '-1/2', '√3/2', '-√3/2'],
     correctIndex: 0,
-    explanation: 'sin 150° = sin(180° - 30°) = sin 30° = 1/2 (Kuadran II bernilai positif).'
+    explanation: 'sin(150°) = sin(180° - 30°) = sin(30°) = 1/2 (Quadrant II is positive).'
   },
   {
     id: 'trig-7',
     topic: 'trigonometri',
-    topicLabel: 'Trigonometri',
-    question: 'Nilai dari cos 120° adalah...?',
+    topicLabel: 'Trigonometry',
+    question: 'What is the value of cos(120°)?',
     options: ['-1/2', '1/2', '-√3/2', '√3/2'],
     correctIndex: 0,
-    explanation: 'cos 120° = cos(180° - 60°) = -cos 60° = -1/2.'
+    explanation: 'cos(120°) = cos(180° - 60°) = -cos(60°) = -1/2.'
   },
   {
     id: 'trig-8',
     topic: 'trigonometri',
-    topicLabel: 'Trigonometri',
-    question: 'Identitas trigonometri dasar: sin² x + cos² x = ?',
-    options: ['1', '0', '2', 'tan² x'],
+    topicLabel: 'Trigonometry',
+    question: 'Pythagorean trigonometric identity: sin²(x) + cos²(x) = ?',
+    options: ['1', '0', '2', 'tan²(x)'],
     correctIndex: 0,
-    explanation: 'Identitas Pythagoras trigonometri: sin² x + cos² x = 1.'
+    explanation: 'Fundamental identity: sin²(x) + cos²(x) = 1.'
   },
   {
     id: 'trig-9',
     topic: 'trigonometri',
-    topicLabel: 'Trigonometri',
-    question: 'Nilai dari tan 60° adalah...?',
+    topicLabel: 'Trigonometry',
+    question: 'What is the value of tan(60°)?',
     options: ['√3', '1/√3', '1', '√2'],
     correctIndex: 0,
-    explanation: 'Sudut istimewa: tan 60° = √3.'
+    explanation: 'Special angle ratio: tan(60°) = √3.'
   },
   {
     id: 'trig-10',
     topic: 'trigonometri',
-    topicLabel: 'Trigonometri',
-    question: 'Segitiga siku-siku dengan depan = 3, miring = 5. Nilai sin θ = ?',
+    topicLabel: 'Trigonometry',
+    question: 'In a right triangle with opposite = 3 and hypotenuse = 5, what is sin(θ)?',
     options: ['3/5', '4/5', '3/4', '5/3'],
     correctIndex: 0,
-    explanation: 'sin θ = sisi depan / sisi miring = 3/5.'
+    explanation: 'sin(θ) = opposite / hypotenuse = 3/5.'
   },
   {
     id: 'trig-11',
     topic: 'trigonometri',
-    topicLabel: 'Trigonometri',
-    question: 'Segitiga siku-siku dengan depan = 3, miring = 5. Nilai cos θ = ?',
+    topicLabel: 'Trigonometry',
+    question: 'In a right triangle with opposite = 3 and hypotenuse = 5, what is cos(θ)?',
     options: ['4/5', '3/5', '3/4', '4/3'],
     correctIndex: 0,
-    explanation: 'Sisi samping = √(5² - 3²) = 4. cos θ = samping / miring = 4/5.'
+    explanation: 'Adjacent side = √(5² - 3²) = 4. cos(θ) = adjacent / hypotenuse = 4/5.'
   },
   {
     id: 'trig-12',
     topic: 'trigonometri',
-    topicLabel: 'Trigonometri',
-    question: 'Segitiga siku-siku dengan depan = 6, samping = 8. Nilai tan θ = ?',
+    topicLabel: 'Trigonometry',
+    question: 'In a right triangle with opposite = 6 and adjacent = 8, what is tan(θ)?',
     options: ['3/4', '4/3', '3/5', '4/5'],
     correctIndex: 0,
-    explanation: 'tan θ = sisi depan / sisi samping = 6/8 = 3/4.'
+    explanation: 'tan(θ) = opposite / adjacent = 6/8 = 3/4.'
   },
   {
     id: 'trig-13',
     topic: 'trigonometri',
-    topicLabel: 'Trigonometri',
-    question: 'Berapakah nilai dari 2 · sin 30° · cos 30°?',
+    topicLabel: 'Trigonometry',
+    question: 'What is the value of 2 · sin(30°) · cos(30°)?',
     options: ['√3/2', '1/2', '1', '√2/2'],
     correctIndex: 0,
-    explanation: 'Rumus sudut rangkap sin(2A) = sin 60° = √3/2.'
+    explanation: 'Double angle identity sin(2A) = sin(60°) = √3/2.'
   },
   {
     id: 'trig-14',
     topic: 'trigonometri',
-    topicLabel: 'Trigonometri',
-    question: 'Nilai dari cos 90° adalah...?',
+    topicLabel: 'Trigonometry',
+    question: 'What is the value of cos(90°)?',
     options: ['0', '1', '-1', '1/2'],
     correctIndex: 0,
-    explanation: 'Sudut istimewa: cos 90° = 0.'
+    explanation: 'Special angle ratio: cos(90°) = 0.'
   },
   {
     id: 'trig-15',
     topic: 'trigonometri',
-    topicLabel: 'Trigonometri',
-    question: 'Identitas trigonometri: 1 + tan² x sama dengan...?',
-    options: ['sec² x', 'csc² x', 'cot² x', 'cos² x'],
+    topicLabel: 'Trigonometry',
+    question: 'Trigonometric identity: 1 + tan²(x) is equal to...?',
+    options: ['sec²(x)', 'csc²(x)', 'cot²(x)', 'cos²(x)'],
     correctIndex: 0,
-    explanation: '1 + tan² x = sec² x.'
+    explanation: '1 + tan²(x) = sec²(x).'
   },
 
   // ==========================================================================
-  // 3. STATISTIKA (Mean, Median, Modus, Peluang, Kombinatorika)
+  // 3. STATISTICS (Mean, Median, Mode, Probability, Combinatorics)
   // ==========================================================================
   {
     id: 'stat-1',
     topic: 'statistika',
-    topicLabel: 'Statistika',
-    question: 'Rata-rata (mean) dari data: 4, 6, 8, 10, 12 adalah...?',
+    topicLabel: 'Statistics',
+    question: 'What is the mean of the data set: 4, 6, 8, 10, 12?',
     options: ['8', '7', '9', '10'],
     correctIndex: 0,
-    explanation: 'Jumlah data = 40. n = 5. Mean = 40 / 5 = 8.'
+    explanation: 'Sum = 40. n = 5. Mean = 40 / 5 = 8.'
   },
   {
     id: 'stat-2',
     topic: 'statistika',
-    topicLabel: 'Statistika',
-    question: 'Rata-rata (mean) dari data: 5, 7, 8, 10, 15 adalah...?',
+    topicLabel: 'Statistics',
+    question: 'What is the mean of the data set: 5, 7, 8, 10, 15?',
     options: ['9', '8', '10', '8.5'],
     correctIndex: 0,
-    explanation: 'Jumlah data = 45. n = 5. Mean = 45 / 5 = 9.'
+    explanation: 'Sum = 45. n = 5. Mean = 45 / 5 = 9.'
   },
   {
     id: 'stat-3',
     topic: 'statistika',
-    topicLabel: 'Statistika',
-    question: 'Median dari kumpulan data ganjil: 3, 5, 7, 9, 11 adalah...?',
+    topicLabel: 'Statistics',
+    question: 'What is the median of the data set: 3, 5, 7, 9, 11?',
     options: ['7', '5', '8', '9'],
     correctIndex: 0,
-    explanation: 'Nilai tengah (urutan ke-3) adalah 7.'
+    explanation: 'The middle value (3rd item) is 7.'
   },
   {
     id: 'stat-4',
     topic: 'statistika',
-    topicLabel: 'Statistika',
-    question: 'Median dari data terurut: 4, 6, 8, 12 adalah...?',
+    topicLabel: 'Statistics',
+    question: 'What is the median of the ordered data set: 4, 6, 8, 12?',
     options: ['7', '6', '8', '7.5'],
     correctIndex: 0,
     explanation: 'Median = (6 + 8) / 2 = 14 / 2 = 7.'
@@ -340,53 +340,53 @@ export const GAME_MATH_QUESTIONS: GameMathQuestion[] = [
   {
     id: 'stat-5',
     topic: 'statistika',
-    topicLabel: 'Statistika',
-    question: 'Modus dari data: 2, 3, 3, 5, 7, 7, 7, 8 adalah...?',
+    topicLabel: 'Statistics',
+    question: 'What is the mode of the data set: 2, 3, 3, 5, 7, 7, 7, 8?',
     options: ['7', '3', '5', '8'],
     correctIndex: 0,
-    explanation: 'Angka 7 muncul paling banyak (3 kali).'
+    explanation: 'The number 7 occurs most frequently (3 times).'
   },
   {
     id: 'stat-6',
     topic: 'statistika',
-    topicLabel: 'Statistika',
-    question: 'Jangkauan (Range) dari data: 5, 8, 12, 15, 23 adalah...?',
+    topicLabel: 'Statistics',
+    question: 'What is the range of the data set: 5, 8, 12, 15, 23?',
     options: ['18', '15', '20', '12'],
     correctIndex: 0,
-    explanation: 'Jangkauan = Nilai Terbesar - Nilai Terkecil = 23 - 5 = 18.'
+    explanation: 'Range = Maximum - Minimum = 23 - 5 = 18.'
   },
   {
     id: 'stat-7',
     topic: 'statistika',
-    topicLabel: 'Statistika',
-    question: 'Sebuah dadu dilempar 1x. Peluang muncul angka genap (2, 4, 6) = ?',
+    topicLabel: 'Statistics',
+    question: 'A fair 6-sided die is rolled. Probability of rolling an even number (2, 4, 6) = ?',
     options: ['1/2', '1/3', '1/6', '2/3'],
     correctIndex: 0,
-    explanation: 'Titik sampel = 3 (yaitu 2,4,6). Ruang sampel = 6. Peluang = 3/6 = 1/2.'
+    explanation: '3 favorable outcomes out of 6. Probability = 3/6 = 1/2.'
   },
   {
     id: 'stat-8',
     topic: 'statistika',
-    topicLabel: 'Statistika',
-    question: 'Sebuah dadu dilempar 1x. Peluang muncul bilangan prima (2, 3, 5) = ?',
+    topicLabel: 'Statistics',
+    question: 'A fair 6-sided die is rolled. Probability of rolling a prime number (2, 3, 5) = ?',
     options: ['1/2', '1/3', '2/3', '1/6'],
     correctIndex: 0,
-    explanation: 'Bilangan prima pada dadu: 2, 3, 5 (ada 3). Peluang = 3/6 = 1/2.'
+    explanation: 'Prime outcomes on die: 2, 3, 5 (3 outcomes). Probability = 3/6 = 1/2.'
   },
   {
     id: 'stat-9',
     topic: 'statistika',
-    topicLabel: 'Statistika',
-    question: 'Dua koin dilempar bersama. Peluang keduanya Gambar (GG) adalah...?',
+    topicLabel: 'Statistics',
+    question: 'Two fair coins are flipped. What is the probability of getting two Heads (HH)?',
     options: ['1/4', '1/2', '3/4', '1/8'],
     correctIndex: 0,
-    explanation: 'Ruang sampel: {AA, AG, GA, GG} (ada 4). Peluang GG = 1/4.'
+    explanation: 'Sample space: {HH, HT, TH, TT} (4 outcomes). Probability of HH = 1/4.'
   },
   {
     id: 'stat-10',
     topic: 'statistika',
-    topicLabel: 'Statistika',
-    question: 'Nilai dari ₅P₂ (Permutasi 2 dari 5 unsur) adalah...?',
+    topicLabel: 'Statistics',
+    question: 'Evaluate ₅P₂ (Permutation of 2 from 5 items) = ?',
     options: ['20', '10', '25', '15'],
     correctIndex: 0,
     explanation: '₅P₂ = 5 × 4 = 20.'
@@ -394,8 +394,8 @@ export const GAME_MATH_QUESTIONS: GameMathQuestion[] = [
   {
     id: 'stat-11',
     topic: 'statistika',
-    topicLabel: 'Statistika',
-    question: 'Nilai dari ₅C₂ (Kombinasi 2 dari 5 unsur) adalah...?',
+    topicLabel: 'Statistics',
+    question: 'Evaluate ₅C₂ (Combination of 2 from 5 items) = ?',
     options: ['10', '20', '15', '5'],
     correctIndex: 0,
     explanation: '₅C₂ = (5 × 4) / (2 × 1) = 20 / 2 = 10.'
@@ -403,8 +403,8 @@ export const GAME_MATH_QUESTIONS: GameMathQuestion[] = [
   {
     id: 'stat-12',
     topic: 'statistika',
-    topicLabel: 'Statistika',
-    question: 'Nilai dari ₄C₂ (Kombinasi 2 dari 4 unsur) adalah...?',
+    topicLabel: 'Statistics',
+    question: 'Evaluate ₄C₂ (Combination of 2 from 4 items) = ?',
     options: ['6', '8', '12', '4'],
     correctIndex: 0,
     explanation: '₄C₂ = (4 × 3) / (2 × 1) = 12 / 2 = 6.'
@@ -412,39 +412,39 @@ export const GAME_MATH_QUESTIONS: GameMathQuestion[] = [
   {
     id: 'stat-13',
     topic: 'statistika',
-    topicLabel: 'Statistika',
-    question: 'Jika rata-rata 4 bilangan adalah 15, maka jumlah seluruh bilangan = ?',
+    topicLabel: 'Statistics',
+    question: 'If the average of 4 numbers is 15, what is their total sum?',
     options: ['60', '45', '75', '50'],
     correctIndex: 0,
-    explanation: 'Jumlah data = 4 × 15 = 60.'
+    explanation: 'Total sum = 4 × 15 = 60.'
   },
   {
     id: 'stat-14',
     topic: 'statistika',
-    topicLabel: 'Statistika',
-    question: 'Kuartil tengah (Q₂) dari suatu kumpulan data setara dengan...?',
-    options: ['Median', 'Mean', 'Modus', 'Jangkauan'],
+    topicLabel: 'Statistics',
+    question: 'The second quartile (Q₂) of a data set is equivalent to the...?',
+    options: ['Median', 'Mean', 'Mode', 'Range'],
     correctIndex: 0,
-    explanation: 'Q₂ membagi data menjadi dua bagian yang sama (Median).'
+    explanation: 'Q₂ divides the ordered data set into two equal halves (the Median).'
   },
   {
     id: 'stat-15',
     topic: 'statistika',
-    topicLabel: 'Statistika',
-    question: 'Jika peluang suatu peristiwa adalah p = 0.35, maka peluang komplemennya = ?',
+    topicLabel: 'Statistics',
+    question: 'If the probability of event A is P(A) = 0.35, what is P(A\')?',
     options: ['0.65', '0.35', '0.70', '0.50'],
     correctIndex: 0,
     explanation: 'P(A\') = 1 - P(A) = 1 - 0.35 = 0.65.'
   },
 
   // ==========================================================================
-  // 4. GEOMETRI (Pythagoras, Sudut, Bangun Datar, Dimensi Tiga)
+  // 4. GEOMETRY (Pythagoras, Angles, Plane Shapes, 3D Geometry)
   // ==========================================================================
   {
     id: 'geo-1',
     topic: 'geometri',
-    topicLabel: 'Geometri',
-    question: 'Segitiga siku-siku dengan alas 6 cm dan tinggi 8 cm. Sisi miringnya = ...?',
+    topicLabel: 'Geometry',
+    question: 'A right triangle has legs of 6 cm and 8 cm. What is the hypotenuse?',
     options: ['10 cm', '12 cm', '14 cm', '9 cm'],
     correctIndex: 0,
     explanation: 'c = √(6² + 8²) = √(36 + 64) = √100 = 10 cm.'
@@ -452,8 +452,8 @@ export const GAME_MATH_QUESTIONS: GameMathQuestion[] = [
   {
     id: 'geo-2',
     topic: 'geometri',
-    topicLabel: 'Geometri',
-    question: 'Segitiga siku-siku dengan sisi tegak 5 cm dan 12 cm. Sisi miringnya = ...?',
+    topicLabel: 'Geometry',
+    question: 'A right triangle has legs of 5 cm and 12 cm. What is the hypotenuse?',
     options: ['13 cm', '15 cm', '17 cm', '14 cm'],
     correctIndex: 0,
     explanation: 'c = √(5² + 12²) = √(25 + 144) = √169 = 13 cm.'
@@ -461,71 +461,71 @@ export const GAME_MATH_QUESTIONS: GameMathQuestion[] = [
   {
     id: 'geo-3',
     topic: 'geometri',
-    topicLabel: 'Geometri',
-    question: 'Kubus dengan panjang rusuk 6 cm. Panjang diagonal ruangnya (s√3) = ...?',
+    topicLabel: 'Geometry',
+    question: 'A cube has edge length 6 cm. What is the length of its space diagonal (s√3)?',
     options: ['6√3 cm', '6√2 cm', '12 cm', '18 cm'],
     correctIndex: 0,
-    explanation: 'Diagonal ruang kubus = s√3 = 6√3 cm.'
+    explanation: 'Space diagonal of cube = s√3 = 6√3 cm.'
   },
   {
     id: 'geo-4',
     topic: 'geometri',
-    topicLabel: 'Geometri',
-    question: 'Kubus dengan panjang rusuk 8 cm. Panjang diagonal bidang/sisinya (s√2) = ...?',
+    topicLabel: 'Geometry',
+    question: 'A cube has edge length 8 cm. What is the length of its face diagonal (s√2)?',
     options: ['8√2 cm', '8√3 cm', '16 cm', '4√2 cm'],
     correctIndex: 0,
-    explanation: 'Diagonal sisi kubus = s√2 = 8√2 cm.'
+    explanation: 'Face diagonal of cube = s√2 = 8√2 cm.'
   },
   {
     id: 'geo-5',
     topic: 'geometri',
-    topicLabel: 'Geometri',
-    question: 'Jumlah besar seluruh sudut dalam sebuah segitiga adalah...?',
+    topicLabel: 'Geometry',
+    question: 'What is the sum of the interior angles of a triangle?',
     options: ['180°', '360°', '90°', '270°'],
     correctIndex: 0,
-    explanation: 'Total sudut dalam setiap segitiga adalah 180°.'
+    explanation: 'The interior angles of any planar triangle sum to 180°.'
   },
   {
     id: 'geo-6',
     topic: 'geometri',
-    topicLabel: 'Geometri',
-    question: 'Dua sudut saling berpelurus. Jika sudut A = 70°, maka sudut B = ...?',
+    topicLabel: 'Geometry',
+    question: 'Two angles are supplementary. If angle A = 70°, what is angle B?',
     options: ['110°', '20°', '90°', '120°'],
     correctIndex: 0,
-    explanation: 'Sudut berpelurus berjumlah 180°. Sudut B = 180° - 70° = 110°.'
+    explanation: 'Supplementary angles sum to 180°. Angle B = 180° - 70° = 110°.'
   },
   {
     id: 'geo-7',
     topic: 'geometri',
-    topicLabel: 'Geometri',
-    question: 'Dua sudut saling berpenyiku. Jika sudut A = 35°, maka sudut B = ...?',
+    topicLabel: 'Geometry',
+    question: 'Two angles are complementary. If angle A = 35°, what is angle B?',
     options: ['55°', '145°', '65°', '45°'],
     correctIndex: 0,
-    explanation: 'Sudut berpenyiku berjumlah 90°. Sudut B = 90° - 35° = 55°.'
+    explanation: 'Complementary angles sum to 90°. Angle B = 90° - 35° = 55°.'
   },
   {
     id: 'geo-8',
     topic: 'geometri',
-    topicLabel: 'Geometri',
-    question: 'Luas persegi dengan keliling 36 cm adalah...?',
+    topicLabel: 'Geometry',
+    question: 'A square has perimeter 36 cm. What is its area?',
     options: ['81 cm²', '72 cm²', '64 cm²', '100 cm²'],
     correctIndex: 0,
-    explanation: 'Sisi s = 36 / 4 = 9 cm. Luas = 9² = 81 cm².'
+    explanation: 'Side length s = 36 / 4 = 9 cm. Area = 9² = 81 cm².'
   },
   {
     id: 'geo-9',
     topic: 'geometri',
-    topicLabel: 'Geometri',
-    question: 'Keliling persegi yang luasnya 64 cm² adalah...?',
+    topicLabel: 'Geometry',
+    question: 'A square has area 64 cm². What is its perimeter?',
     options: ['32 cm', '16 cm', '24 cm', '64 cm'],
     correctIndex: 0,
-    explanation: 'Sisi s = √64 = 8 cm. Keliling = 4 × 8 = 32 cm.'
+    explanation: 'Side length s = √64 = 8 cm. Perimeter = 4 × 8 = 32 cm.'
   },
   {
     id: 'geo-10',
     topic: 'geometri',
-    topicLabel: 'Geometri',
-    question: 'Volume kubus dengan panjang rusuk 5 cm adalah...?',
+    topicLabel: 'Geometry',
+    question: 'A cube has edge length 5 cm. What is its volume?',
     options: ['125 cm³', '150 cm³', '100 cm³', '25 cm³'],
     correctIndex: 0,
     explanation: 'Volume = s³ = 5³ = 125 cm³.'
@@ -533,47 +533,47 @@ export const GAME_MATH_QUESTIONS: GameMathQuestion[] = [
   {
     id: 'geo-11',
     topic: 'geometri',
-    topicLabel: 'Geometri',
-    question: 'Luas lingkaran dengan jari-jari r = 7 cm (π = 22/7) adalah...?',
+    topicLabel: 'Geometry',
+    question: 'The area of a circle with radius r = 7 cm (π = 22/7) is...?',
     options: ['154 cm²', '44 cm²', '144 cm²', '88 cm²'],
     correctIndex: 0,
-    explanation: 'Luas = π × r² = (22/7) × 7 × 7 = 154 cm².'
+    explanation: 'Area = π · r² = (22/7) · 7 · 7 = 154 cm².'
   },
   {
     id: 'geo-12',
     topic: 'geometri',
-    topicLabel: 'Geometri',
-    question: 'Keliling lingkaran dengan jari-jari r = 7 cm (π = 22/7) adalah...?',
+    topicLabel: 'Geometry',
+    question: 'The circumference of a circle with radius r = 7 cm (π = 22/7) is...?',
     options: ['44 cm', '88 cm', '154 cm', '22 cm'],
     correctIndex: 0,
-    explanation: 'Keliling = 2 × π × r = 2 × (22/7) × 7 = 44 cm.'
+    explanation: 'Circumference = 2 · π · r = 2 · (22/7) · 7 = 44 cm.'
   },
   {
     id: 'geo-13',
     topic: 'geometri',
-    topicLabel: 'Geometri',
-    question: 'Banyaknya rusuk pada sebuah kubus atau balok adalah...?',
+    topicLabel: 'Geometry',
+    question: 'How many edges does a cube have?',
     options: ['12', '8', '6', '16'],
     correctIndex: 0,
-    explanation: 'Kubus dan balok memiliki 12 rusuk, 6 sisi, dan 8 titik sudut.'
+    explanation: 'A cube has 12 edges, 6 faces, and 8 vertices.'
   },
   {
     id: 'geo-14',
     topic: 'geometri',
-    topicLabel: 'Geometri',
-    question: 'Banyaknya titik sudut pada sebuah kubus adalah...?',
+    topicLabel: 'Geometry',
+    question: 'How many vertices does a cube have?',
     options: ['8', '6', '12', '10'],
     correctIndex: 0,
-    explanation: 'Kubus memiliki 8 titik sudut.'
+    explanation: 'A cube has 8 vertices.'
   },
   {
     id: 'geo-15',
     topic: 'geometri',
-    topicLabel: 'Geometri',
-    question: 'Luas segitiga dengan alas 10 cm dan tinggi 12 cm adalah...?',
+    topicLabel: 'Geometry',
+    question: 'The area of a triangle with base 10 cm and height 12 cm is...?',
     options: ['60 cm²', '120 cm²', '50 cm²', '72 cm²'],
     correctIndex: 0,
-    explanation: 'Luas = 1/2 × alas × tinggi = 1/2 × 10 × 12 = 60 cm².'
+    explanation: 'Area = 1/2 · base · height = 1/2 · 10 · 12 = 60 cm².'
   }
 ];
 
@@ -589,126 +589,109 @@ function generateDynamicCalculus(): GameMathQuestion {
     const a = Math.floor(Math.random() * 5) + 2;
     const b = Math.floor(Math.random() * 7) + 1;
     const xVal = Math.floor(Math.random() * 4) + 1;
-    // f(x) = a*x^2 + b*x => f'(x) = 2ax + b
     const ans = 2 * a * xVal + b;
     const opts = makeDistinctOptions(ans, 4);
     return {
       id,
       topic: 'kalkulus',
-      topicLabel: 'Kalkulus',
-      question: `Jika f(x) = ${a}x² + ${b}x, nilai f'(${xVal}) = ?`,
+      topicLabel: 'Calculus',
+      question: `If f(x) = ${a}x² + ${b}x, what is f'(${xVal})?`,
       options: opts.options,
       correctIndex: opts.correctIndex,
-      explanation: `f'(x) = ${2 * a}x + ${b}. Pada x = ${xVal} ⟹ f'(${xVal}) = ${ans}.`
+      explanation: `f'(x) = ${2 * a}x + ${b}. Thus f'(${xVal}) = ${2 * a}(${xVal}) + ${b} = ${ans}.`
     };
   }
 
   if (t === 'limit_poly') {
-    const c = Math.floor(Math.random() * 6) + 2;
-    const c2 = c * c;
-    // lim x->c (x^2 - c^2)/(x - c) = 2c
-    const ans = 2 * c;
+    const root = Math.floor(Math.random() * 5) + 2;
+    const ans = root * 2;
     const opts = makeDistinctOptions(ans, 4);
     return {
       id,
       topic: 'kalkulus',
-      topicLabel: 'Kalkulus',
-      question: `Nilai dari lim (x→${c}) [(x² - ${c2}) / (x - ${c})] = ?`,
+      topicLabel: 'Calculus',
+      question: `Evaluate lim (x→${root}) [(x² - ${root * root}) / (x - ${root})] = ?`,
       options: opts.options,
       correctIndex: opts.correctIndex,
-      explanation: `Faktorkan pembilang: (x - ${c})(x + ${c}) / (x - ${c}) = x + ${c}. Substitusi x = ${c} ⟹ ${ans}.`
+      explanation: `Factor (x - ${root})(x + ${root}) / (x - ${root}) = x + ${root}. At x = ${root} ⟹ ${root} + ${root} = ${ans}.`
     };
   }
 
   if (t === 'integral_power') {
-    const n = Math.floor(Math.random() * 3) + 2; // 2, 3, 4
-    const upper = Math.floor(Math.random() * 3) + 1; // 1, 2, 3
-    // int_0^upper (n * x^(n-1)) dx = upper^n
-    const coeff = n;
-    const power = n - 1 === 1 ? 'x' : `x^${n - 1}`;
-    const ans = Math.pow(upper, n);
-    const opts = makeDistinctOptions(ans, 4);
+    const coeff = (Math.floor(Math.random() * 4) + 1) * 3;
+    const a = coeff / 3;
     return {
       id,
       topic: 'kalkulus',
-      topicLabel: 'Kalkulus',
-      question: `Nilai integral tentu dari ∫₀^${upper} (${coeff}${power}) dx = ?`,
-      options: opts.options,
-      correctIndex: opts.correctIndex,
-      explanation: `F(x) = x^${n}. F(${upper}) - F(0) = ${upper}^${n} = ${ans}.`
+      topicLabel: 'Calculus',
+      question: `Evaluate ∫ ${coeff}x² dx = ?`,
+      options: [`${a}x³ + C`, `${coeff}x³ + C`, `${a * 2}x² + C`, `${a}x + C`],
+      correctIndex: 0,
+      explanation: `∫ ${coeff}x² dx = (${coeff}/3)x³ + C = ${a}x³ + C.`
     };
   }
 
-  // trig limit
-  const a = Math.floor(Math.random() * 8) + 2;
-  const b = Math.floor(Math.random() * 3) + 1;
-  const ansNum = a;
-  const ansDenom = b;
-  const ansStr = ansNum % ansDenom === 0 ? String(ansNum / ansDenom) : `${ansNum}/${ansDenom}`;
-  const fakeOpts = [ansStr, `${ansNum + 1}`, `${Math.max(1, ansNum - 1)}`, '0'];
-  const shuffled = shuffleWithIndex(fakeOpts, 0);
+  const k = Math.floor(Math.random() * 6) + 2;
+  const m = Math.floor(Math.random() * 3) + 1;
+  const ans = k * m;
+  const opts = makeDistinctOptions(ans, 4);
   return {
     id,
     topic: 'kalkulus',
-    topicLabel: 'Kalkulus',
-    question: `Nilai dari lim (x→0) [sin(${a}x) / (${b}x)] = ?`,
-    options: shuffled.options,
-    correctIndex: shuffled.correctIndex,
-    explanation: `lim (x→0) [sin(ax) / (bx)] = a/b = ${ansStr}.`
+    topicLabel: 'Calculus',
+    question: `Evaluate lim (x→0) [sin(${ans}x) / (${m}x)] = ?`,
+    options: opts.options,
+    correctIndex: opts.correctIndex,
+    explanation: `lim (x→0) [sin(ax) / (bx)] = a/b = ${ans}/${m} = ${k}.`
   };
 }
 
 function generateDynamicTrig(): GameMathQuestion {
-  const trigItems = [
-    { q: 'Nilai dari sin 30° adalah...?', a: '1/2', fakes: ['√3/2', '1', '0'] },
-    { q: 'Nilai dari cos 60° adalah...?', a: '1/2', fakes: ['√3/2', '√2/2', '0'] },
-    { q: 'Nilai dari tan 45° adalah...?', a: '1', fakes: ['0', '√3', '1/2'] },
-    { q: 'Nilai dari sin 90° adalah...?', a: '1', fakes: ['0', '-1', '1/2'] },
-    { q: 'Nilai dari cos 0° adalah...?', a: '1', fakes: ['0', '-1', '1/2'] },
-    { q: 'Nilai dari tan 60° adalah...?', a: '√3', fakes: ['1/√3', '1', '2'] },
-    { q: 'Nilai dari sin 45° adalah...?', a: '√2/2', fakes: ['1/2', '√3/2', '1'] },
-    { q: 'Nilai dari cos 45° adalah...?', a: '√2/2', fakes: ['1/2', '√3/2', '1'] },
-    { q: 'Nilai dari sin 150° adalah...?', a: '1/2', fakes: ['-1/2', '√3/2', '-√3/2'] },
-    { q: 'Nilai dari cos 120° adalah...?', a: '-1/2', fakes: ['1/2', '-√3/2', '√3/2'] },
-    { q: 'Identitas Pythagoras: sin² θ + cos² θ = ?', a: '1', fakes: ['0', '2', 'tan² θ'] },
-    { q: 'Nilai dari cos 90° adalah...?', a: '0', fakes: ['1', '-1', '1/2'] },
-    { q: 'Nilai dari sin 0° adalah...?', a: '0', fakes: ['1', '-1', '1/2'] },
-    { q: 'Segitiga siku-siku (depan=4, miring=5), maka sin θ = ?', a: '4/5', fakes: ['3/5', '4/3', '3/4'] },
-    { q: 'Segitiga siku-siku (depan=4, miring=5), maka cos θ = ?', a: '3/5', fakes: ['4/5', '4/3', '3/4'] }
+  const specials = [
+    { name: 'sin(30°)', val: '1/2', fakes: ['√3/2', '√2/2', '1'] },
+    { name: 'cos(60°)', val: '1/2', fakes: ['√3/2', '√2/2', '0'] },
+    { name: 'sin(60°)', val: '√3/2', fakes: ['1/2', '√2/2', '1'] },
+    { name: 'cos(30°)', val: '√3/2', fakes: ['1/2', '√2/2', '0'] },
+    { name: 'tan(45°)', val: '1', fakes: ['0', '√3', '1/2'] },
+    { name: 'sin(90°)', val: '1', fakes: ['0', '1/2', '-1'] },
+    { name: 'cos(0°)', val: '1', fakes: ['0', '-1', '1/2'] },
+    { name: 'cos(90°)', val: '0', fakes: ['1', '-1', '1/2'] },
+    { name: 'sin(0°)', val: '0', fakes: ['1', '1/2', '-1'] }
   ];
-  const item = trigItems[Math.floor(Math.random() * trigItems.length)];
-  const shuffled = shuffleWithIndex([item.a, ...item.fakes], 0);
+
+  const pick = specials[Math.floor(Math.random() * specials.length)];
+  const shuffled = shuffleWithIndex([pick.val, ...pick.fakes], 0);
+
   return {
     id: `dyn-trig-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
     topic: 'trigonometri',
-    topicLabel: 'Trigonometri',
-    question: item.q,
+    topicLabel: 'Trigonometry',
+    question: `What is the value of ${pick.name}?`,
     options: shuffled.options,
     correctIndex: shuffled.correctIndex,
-    explanation: `Jawaban benar: ${item.a}.`
+    explanation: `Special trigonometric angle ratio: ${pick.name} = ${pick.val}.`
   };
 }
 
 function generateDynamicStats(): GameMathQuestion {
-  const types = ['mean', 'range', 'combo'];
+  const types = ['mean', 'range', 'comb'];
   const t = types[Math.floor(Math.random() * types.length)];
   const id = `dyn-stat-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
   if (t === 'mean') {
-    const base = Math.floor(Math.random() * 10) + 4;
-    const diff = Math.floor(Math.random() * 4) + 1;
-    // 5 consecutive numbers with step diff
+    const base = Math.floor(Math.random() * 10) + 5;
+    const diff = Math.floor(Math.random() * 3) + 1;
     const nums = [base - 2 * diff, base - diff, base, base + diff, base + 2 * diff];
     const ans = base;
     const opts = makeDistinctOptions(ans, 4);
     return {
       id,
       topic: 'statistika',
-      topicLabel: 'Statistika',
-      question: `Rata-rata (mean) dari data: ${nums.join(', ')} adalah...?`,
+      topicLabel: 'Statistics',
+      question: `What is the mean of the data set: ${nums.join(', ')}?`,
       options: opts.options,
       correctIndex: opts.correctIndex,
-      explanation: `Total = ${nums.reduce((a, b) => a + b, 0)}. Dibagi 5 = ${ans}.`
+      explanation: `Total sum = ${nums.reduce((a, b) => a + b, 0)}. Divided by 5 = ${ans}.`
     };
   }
 
@@ -722,23 +705,22 @@ function generateDynamicStats(): GameMathQuestion {
     return {
       id,
       topic: 'statistika',
-      topicLabel: 'Statistika',
-      question: `Jangkauan (Range) dari data: ${minVal}, ${mid1}, ${mid2}, ${maxVal} adalah...?`,
+      topicLabel: 'Statistics',
+      question: `What is the range of the data set: ${minVal}, ${mid1}, ${mid2}, ${maxVal}?`,
       options: opts.options,
       correctIndex: opts.correctIndex,
-      explanation: `Jangkauan = Max - Min = ${maxVal} - ${minVal} = ${ans}.`
+      explanation: `Range = Max - Min = ${maxVal} - ${minVal} = ${ans}.`
     };
   }
 
-  // combination nC2
-  const n = Math.floor(Math.random() * 5) + 4; // 4, 5, 6, 7, 8
+  const n = Math.floor(Math.random() * 5) + 4;
   const ans = (n * (n - 1)) / 2;
   const opts = makeDistinctOptions(ans, 4);
   return {
     id,
     topic: 'statistika',
-    topicLabel: 'Statistika',
-    question: `Nilai dari Kombinasi ₂C_${n} (memilih 2 dari ${n} objek) = ?`,
+    topicLabel: 'Statistics',
+    question: `Evaluate ₂C_${n} (choosing 2 from ${n} objects) = ?`,
     options: opts.options,
     correctIndex: opts.correctIndex,
     explanation: `${n}C₂ = (${n} × ${n - 1}) / 2 = ${ans}.`
@@ -765,8 +747,8 @@ function generateDynamicGeometry(): GameMathQuestion {
     return {
       id,
       topic: 'geometri',
-      topicLabel: 'Geometri',
-      question: `Segitiga siku-siku memiliki sisi tegak ${trip.a} cm dan ${trip.b} cm. Sisi miringnya = ...?`,
+      topicLabel: 'Geometry',
+      question: `A right triangle has legs of ${trip.a} cm and ${trip.b} cm. Hypotenuse = ...?`,
       options: opts.options,
       correctIndex: opts.correctIndex,
       explanation: `c = √(${trip.a}² + ${trip.b}²) = √(${trip.a * trip.a + trip.b * trip.b}) = ${trip.c} cm.`
@@ -781,30 +763,29 @@ function generateDynamicGeometry(): GameMathQuestion {
     return {
       id,
       topic: 'geometri',
-      topicLabel: 'Geometri',
-      question: `Kubus memiliki rusuk ${s} cm. Panjang diagonal ruangnya adalah...?`,
+      topicLabel: 'Geometry',
+      question: `A cube has edge length ${s} cm. What is its space diagonal?`,
       options: shuffled.options,
       correctIndex: shuffled.correctIndex,
-      explanation: `Diagonal ruang kubus = s√3 = ${s}√3 cm.`
+      explanation: `Space diagonal of cube = s√3 = ${s}√3 cm.`
     };
   }
 
   if (t === 'angles') {
-    const ang = Math.floor(Math.random() * 50) + 25; // 25..75
+    const ang = Math.floor(Math.random() * 50) + 25;
     const ans = 180 - ang;
     const opts = makeDistinctOptions(ans, 4, '°');
     return {
       id,
       topic: 'geometri',
-      topicLabel: 'Geometri',
-      question: `Dua sudut saling berpelurus. Jika sudut A = ${ang}°, maka sudut B = ...?`,
+      topicLabel: 'Geometry',
+      question: `Two angles are supplementary. If angle A = ${ang}°, angle B = ...?`,
       options: opts.options,
       correctIndex: opts.correctIndex,
-      explanation: `Sudut berpelurus berjumlah 180°. Sudut B = 180° - ${ang}° = ${ans}°.`
+      explanation: `Supplementary angles sum to 180°. Angle B = 180° - ${ang}° = ${ans}°.`
     };
   }
 
-  // rect area
   const p = Math.floor(Math.random() * 10) + 5;
   const l = Math.floor(Math.random() * 6) + 3;
   const ans = p * l;
@@ -812,11 +793,11 @@ function generateDynamicGeometry(): GameMathQuestion {
   return {
     id,
     topic: 'geometri',
-    topicLabel: 'Geometri',
-    question: `Luas persegi panjang berukuran panjang ${p} cm dan lebar ${l} cm adalah...?`,
+    topicLabel: 'Geometry',
+    question: `What is the area of a rectangle with length ${p} cm and width ${l} cm?`,
     options: opts.options,
     correctIndex: opts.correctIndex,
-    explanation: `Luas = panjang × lebar = ${p} × ${l} = ${ans} cm².`
+    explanation: `Area = length × width = ${p} × ${l} = ${ans} cm².`
   };
 }
 
@@ -855,14 +836,12 @@ export function getRandomGameQuestion(filterTopic?: MathCurriculumTopic): GameMa
     ? filterTopic
     : topics[Math.floor(Math.random() * topics.length)];
 
-  // 60% chance to pick from rich curated pool, 40% chance to generate fresh dynamic question
   const useCurated = Math.random() < 0.6;
 
   if (useCurated) {
     const curatedFiltered = GAME_MATH_QUESTIONS.filter(q => q.topic === chosenTopic);
     if (curatedFiltered.length > 0) {
       const q = curatedFiltered[Math.floor(Math.random() * curatedFiltered.length)];
-      // Shuffle options to ensure randomness each time it is served
       const shuffled = shuffleWithIndex(q.options, q.correctIndex);
       return {
         ...q,
@@ -872,7 +851,6 @@ export function getRandomGameQuestion(filterTopic?: MathCurriculumTopic): GameMa
     }
   }
 
-  // Fallback / Dynamic generators
   switch (chosenTopic) {
     case 'kalkulus':
       return generateDynamicCalculus();
@@ -886,4 +864,3 @@ export function getRandomGameQuestion(filterTopic?: MathCurriculumTopic): GameMa
       return generateDynamicCalculus();
   }
 }
-

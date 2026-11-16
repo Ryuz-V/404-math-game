@@ -3,14 +3,9 @@
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import bcrypt from "bcryptjs";
-import { PrismaClient } from "../../generated/prisma/client";
-import { PrismaPg } from "@prisma/adapter-pg";
-import { Pool } from "pg";
+import { getSupabaseServerClient } from "../../lib/supabase";
 
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-const adapter = new PrismaPg(pool);
-const prisma = new PrismaClient({ adapter });
-const secretKey = "super-secret-math-key-do-not-use-in-production";
+const secretKey = process.env.JWT_SECRET || "super-secret-math-key-do-not-use-in-production";
 const key = new TextEncoder().encode(secretKey);
 
 export async function encrypt(payload: any) {
@@ -34,39 +29,87 @@ export async function signup(formData: FormData) {
   const name = formData.get("name") as string;
 
   if (!email || !password || !name) {
-    return { error: "Semua bidang harus diisi" };
+    return { error: "All fields are required" };
   }
 
+  const supabase = getSupabaseServerClient();
+
   try {
-    const existingUser = await prisma.users.findUnique({ where: { email } });
-    if (existingUser) {
-      return { error: "Email sudah digunakan" };
-    }
-    
-    const existingUsername = await prisma.users.findUnique({ where: { username: name } });
-    if (existingUsername) {
-      return { error: "Username sudah digunakan, silakan pilih nama lain" };
+    // 1. Check if email already registered
+    const { data: existingUser, error: checkEmailErr } = await supabase
+      .from("users")
+      .select("id")
+      .eq("email", email)
+      .maybeSingle();
+
+    if (checkEmailErr) {
+      console.error("Supabase check email error:", checkEmailErr);
+      return { error: "Failed to connect to Supabase database. Please check your credentials." };
     }
 
+    if (existingUser) {
+      return { error: "Email is already in use" };
+    }
+
+    // 2. Check if username already registered
+    const { data: existingUsername, error: checkUserErr } = await supabase
+      .from("users")
+      .select("id")
+      .eq("username", name)
+      .maybeSingle();
+
+    if (checkUserErr) {
+      console.error("Supabase check username error:", checkUserErr);
+      return { error: "Failed to verify username with Supabase." };
+    }
+
+    if (existingUsername) {
+      return { error: "Username is already taken, please choose another name" };
+    }
+
+    // 3. Hash password and insert user
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await prisma.users.create({
-      data: {
+    const { data: newUser, error: insertErr } = await supabase
+      .from("users")
+      .insert({
         email,
         password_hash: hashedPassword,
         username: name,
+      })
+      .select("id, username, email")
+      .single();
+
+    if (insertErr || !newUser) {
+      console.error("Supabase insert user error:", insertErr);
+      return { error: insertErr?.message || "Failed to create account" };
+    }
+
+    // 4. Create session token
+    const session = await encrypt({
+      user: {
+        id: newUser.id.toString(),
+        name: newUser.username,
+        avatar: "👑",
+        email: newUser.email,
       },
     });
 
-    const session = await encrypt({ user: { id: user.id.toString(), name: user.username, avatar: "👑", email: user.email } });
     const cookieStore = await cookies();
-    cookieStore.set("session", session, { httpOnly: true, expires: new Date(Date.now() + 24 * 60 * 60 * 1000) });
+    cookieStore.set("session", session, {
+      httpOnly: true,
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+    });
 
-    return { success: true, user: { name: user.username, avatar: "👑", email: user.email } };
+    return {
+      success: true,
+      user: {
+        name: newUser.username,
+        avatar: "👑",
+        email: newUser.email,
+      },
+    };
   } catch (error: any) {
-    if (error?.message?.includes("ECONNREFUSED") || error?.code === "ECONNREFUSED") {
-      return { error: "Database belum terhubung (ECONNREFUSED). Pastikan DATABASE_URL di file .env sudah diisi dan database aktif." };
-    }
-    return { error: error.message };
+    return { error: error.message || "An error occurred during signup" };
   }
 }
 
@@ -75,30 +118,60 @@ export async function login(formData: FormData) {
   const password = formData.get("password") as string;
 
   if (!email || !password) {
-    return { error: "Email dan password harus diisi" };
+    return { error: "Email and password are required" };
   }
 
+  const supabase = getSupabaseServerClient();
+
   try {
-    const user = await prisma.users.findUnique({ where: { email } });
-    if (!user) {
-      return { error: "Email tidak ditemukan" };
+    // 1. Fetch user by email
+    const { data: user, error: fetchErr } = await supabase
+      .from("users")
+      .select("id, username, email, password_hash")
+      .eq("email", email)
+      .maybeSingle();
+
+    if (fetchErr) {
+      console.error("Supabase fetch user error:", fetchErr);
+      return { error: "Failed to connect to Supabase database. Please check your credentials." };
     }
 
+    if (!user) {
+      return { error: "Email not found" };
+    }
+
+    // 2. Compare password hash
     const isMatch = await bcrypt.compare(password, user.password_hash);
     if (!isMatch) {
-      return { error: "Password salah" };
+      return { error: "Incorrect password" };
     }
 
-    const session = await encrypt({ user: { id: user.id.toString(), name: user.username, avatar: "👑", email: user.email } });
+    // 3. Buat session token
+    const session = await encrypt({
+      user: {
+        id: user.id.toString(),
+        name: user.username,
+        avatar: "👑",
+        email: user.email,
+      },
+    });
+
     const cookieStore = await cookies();
-    cookieStore.set("session", session, { httpOnly: true, expires: new Date(Date.now() + 24 * 60 * 60 * 1000) });
+    cookieStore.set("session", session, {
+      httpOnly: true,
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+    });
 
-    return { success: true, user: { name: user.username, avatar: "👑", email: user.email } };
+    return {
+      success: true,
+      user: {
+        name: user.username,
+        avatar: "👑",
+        email: user.email,
+      },
+    };
   } catch (error: any) {
-    if (error?.message?.includes("ECONNREFUSED") || error?.code === "ECONNREFUSED") {
-      return { error: "Database belum terhubung (ECONNREFUSED). Pastikan DATABASE_URL di file .env sudah diisi dan database aktif." };
-    }
-    return { error: error.message };
+    return { error: error.message || "An error occurred during login" };
   }
 }
 

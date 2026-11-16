@@ -272,7 +272,7 @@ export default function UploadQuizModal({ isOpen, onClose, onImportQuestions }: 
               justifyContent: 'space-between'
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <span style={{ fontSize: '20px' }}>✅</span>
+                <span style={{ fontSize: '18px', fontWeight: 'bold', color: '#166534' }}>✓</span>
                 <div>
                   <strong style={{ color: '#166534', fontSize: '13px' }}>
                     {parsedPreview.length} Questions Successfully Recognized & Ready to Edit!
@@ -329,7 +329,7 @@ export default function UploadQuizModal({ isOpen, onClose, onImportQuestions }: 
             }}
           >
             <span>Open in Quiz Editor</span>
-            <span>➔</span>
+            <span>&rarr;</span>
           </button>
         </div>
       </div>

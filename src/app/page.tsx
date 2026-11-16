@@ -10,7 +10,6 @@ import MateriSection from '../components/MateriSection';
 import SoloGame from '../components/SoloGame';
 import VersusGame from '../components/VersusGame';
 import LeaderboardSection from '../components/LeaderboardSection';
-import AboutSection from '../components/AboutSection';
 import AuthModal from '../components/AuthModal';
 import Login from '../components/login';
 import Signup from '../components/signup';
@@ -21,8 +20,6 @@ import TugOfWarGame from '../components/TugOfWarGame';
 import FlappyBirdGame from '../components/FlappyBirdGame';
 import SnakeLadderGame from '../components/SnakeLadderGame';
 import QuizViewer from '../components/QuizViewer';
-import WaygroundEcosystemSection from '../components/WaygroundEcosystemSection';
-import JoinCodeModal from '../components/JoinCodeModal';
 import { UserQuiz } from '../types/quiz';
 
 import { getSession, logout } from './actions/auth';
@@ -34,14 +31,13 @@ if (typeof window !== 'undefined') {
 
 export default function Home() {
   const container = useRef<HTMLDivElement>(null);
-  const [currentView, setCurrentView] = useState<'home' | 'menu' | 'materi' | 'solo' | 'versus' | 'leaderboard' | 'about' | 'quiz-library' | 'quiz-editor' | 'quiz-viewer' | 'tug-of-war' | 'flappy-bird' | 'snake-ladder'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'menu' | 'materi' | 'solo' | 'versus' | 'leaderboard' | 'quiz-library' | 'quiz-editor' | 'quiz-viewer' | 'tug-of-war' | 'flappy-bird' | 'snake-ladder'>('home');
   const [selectedTopicId, setSelectedTopicId] = useState<string | undefined>(undefined);
   const [activeCustomQuiz, setActiveCustomQuiz] = useState<UserQuiz | undefined>(undefined);
   const [editingQuiz, setEditingQuiz] = useState<UserQuiz | null>(null);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState<'learning' | 'quizz' | 'games'>('learning');
   const [isQuizViewerResult, setIsQuizViewerResult] = useState(false);
-  const [isJoinCodeModalOpen, setIsJoinCodeModalOpen] = useState(false);
 
   // Auth & Profile State
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -164,31 +160,6 @@ export default function Home() {
     setCurrentView('solo');
   };
 
-  const handleJoinWithCode = (code: string) => {
-    setIsJoinCodeModalOpen(false);
-    const cleanCode = code.trim().toLowerCase();
-    
-    // Check if code matches any locally saved quiz
-    const localQuizzes = getUserQuizzes();
-    const matched = localQuizzes.find(q => 
-      q.id.toLowerCase() === cleanCode || 
-      q.title.toLowerCase().includes(cleanCode)
-    );
-    
-    if (matched) {
-      setActiveCustomQuiz(matched);
-      setSelectedTopicId(matched.id);
-      setCurrentView('quiz-viewer');
-      return;
-    }
-
-    // Default: start quiz viewer with questions
-    setSelectedTopicId(undefined);
-    setActiveCustomQuiz(undefined);
-    setCurrentView('quiz-viewer');
-  };
-
-
   const handleOpenProfileOrLogin = () => {
     if (!isLoggedIn) {
       setAuthMode('login');
@@ -243,27 +214,10 @@ export default function Home() {
           >
             Quizz
           </a>
-          <a
-            href="#"
-            style={{ fontWeight: currentView === 'about' ? 800 : 600 }}
-            onClick={(e) => { e.preventDefault(); setCurrentView('about'); }}
-          >
-            About
-          </a>
         </nav>
 
-        
-        {/* Right side: Enter Code button + Auth buttons */}
+        {/* Right side: Auth buttons */}
         <div className="header-right-actions">
-          <div className="nav-vertical-divider" />
-          <button 
-            type="button"
-            className="btn-enter-code"
-            onClick={() => setIsJoinCodeModalOpen(true)}
-          >
-            Enter The Code
-          </button>
-
           {/* Auth Buttons */}
           <div className="auth-buttons">
             {!isLoggedIn ? (
@@ -388,15 +342,6 @@ export default function Home() {
                 </div>
               </div>
             </section>
-
-            {/* WAYGROUND ASSESSMENT ECOSYSTEM SECTION */}
-            <WaygroundEcosystemSection
-              onExploreLibrary={() => setCurrentView('quiz-library')}
-              onExploreAssessments={() => {
-                setSelectedTopicId(undefined);
-                setCurrentView('materi');
-              }}
-            />
 
             {/* TOPICS SECTION */}
             <section className="topics-section">
@@ -621,33 +566,19 @@ export default function Home() {
                   <div className="game-card-banner banner-snake">
                     <div className="banner-gameplay-bg snake-gameplay-mockup">
                       <div className="mockup-board-grid">
-                        <div className="mockup-tile tile-win">100 🏆</div>
+                        <div className="mockup-tile tile-win">100</div>
                         <div className="mockup-tile">99</div>
-                        <div className="mockup-tile tile-snake">98 🐍</div>
+                        <div className="mockup-tile tile-snake">98</div>
                         <div className="mockup-tile">97</div>
-                        <div className="mockup-tile tile-ladder">96 🪜</div>
+                        <div className="mockup-tile tile-ladder">96</div>
                         <div className="mockup-tile">95</div>
                         <div className="mockup-tile">94</div>
-                        <div className="mockup-tile tile-snake">93 🐍</div>
+                        <div className="mockup-tile tile-snake">93</div>
                       </div>
-                      <div className="mockup-dice-pill">🎲 Dice: 6</div>
+                      <div className="mockup-dice-pill">Dice: 6</div>
                       <div className="mockup-pawn-dot" />
                     </div>
                     <div className="banner-blur-overlay" />
-
-                    <div className="banner-top-row">
-                      <span className="banner-tag-pill tag-green">🎲 BOARD GAME</span>
-                      <span className="banner-player-pill">1P vs Bot</span>
-                    </div>
-
-                    <div className="banner-hero-art">
-                      <div className="banner-icon-bubble">
-                        <span className="hero-emoji">🐍</span>
-                      </div>
-                      <div className="banner-badge-preview">
-                        <span>100 TILES</span>
-                      </div>
-                    </div>
                   </div>
 
                   {/* Card Content Body */}
@@ -659,12 +590,6 @@ export default function Home() {
                     <p className="game-card-description">
                       Roll the dice towards tile 100! If you land on a snake, solve high school math challenges (Calculus, Trigonometry, Statistics & Geometry) within 20s to escape penalty!
                     </p>
-
-                    <div className="game-feature-tags">
-                      <span className="feature-pill">🏁 100 Tiles</span>
-                      <span className="feature-pill">📐 4 Topic SMA</span>
-                      <span className="feature-pill">🤖 Smart Bot</span>
-                    </div>
 
                     <div className="game-card-cta">
                       <span className="cta-text">Play Snake & Ladders</span>
@@ -689,7 +614,7 @@ export default function Home() {
                       <div className="mockup-math-prompt">∫ 2x dx = ?</div>
                       <div className="mockup-tug-rope">
                         <div className="mockup-rope-line" />
-                        <div className="mockup-rope-flag">🚩</div>
+                        <div className="mockup-rope-flag" />
                       </div>
                       <div className="mockup-team-indicators">
                         <span className="team-blue">P1: +240 Pull</span>
@@ -697,20 +622,6 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="banner-blur-overlay" />
-
-                    <div className="banner-top-row">
-                      <span className="banner-tag-pill tag-purple">💥 BATTLE ARENA</span>
-                      <span className="banner-player-pill">1P & 2P Local</span>
-                    </div>
-
-                    <div className="banner-hero-art">
-                      <div className="banner-icon-bubble">
-                        <span className="hero-emoji">🚩</span>
-                      </div>
-                      <div className="banner-badge-preview">
-                        <span>SUPER PULL</span>
-                      </div>
-                    </div>
                   </div>
 
                   {/* Card Content Body */}
@@ -722,12 +633,6 @@ export default function Home() {
                     <p className="game-card-description">
                       Rapidly solve Calculus, Trigonometry, Statistics & Geometry problems to pull the rope to your side and activate powerful Super Pull momentum!
                     </p>
-
-                    <div className="game-feature-tags">
-                      <span className="feature-pill">∫ Kalkulus</span>
-                      <span className="feature-pill">📊 Statistika</span>
-                      <span className="feature-pill">👥 1v1 Battle</span>
-                    </div>
 
                     <div className="game-card-cta">
                       <span className="cta-text">Play Tug of War</span>
@@ -749,32 +654,18 @@ export default function Home() {
                   {/* Top Visual Game Banner with Blurred In-Game Preview */}
                   <div className="game-card-banner banner-flappy">
                     <div className="banner-gameplay-bg flappy-gameplay-mockup">
-                      <div className="mockup-score-hud">🪙 1,240 | ❤️❤️❤️</div>
+                      <div className="mockup-score-hud">1,240 pts | 3 Lives</div>
                       <div className="mockup-pipes-row">
                         <div className="mockup-pipe top-pipe">
                           <span>sin 30° = 1/2</span>
                         </div>
-                        <div className="mockup-bird-flying">🐦</div>
+                        <div className="mockup-bird-flying" />
                         <div className="mockup-pipe bottom-pipe">
                           <span>tan 45° = 1</span>
                         </div>
                       </div>
                     </div>
                     <div className="banner-blur-overlay" />
-
-                    <div className="banner-top-row">
-                      <span className="banner-tag-pill tag-blue">🕹️ ARCADE REFLEX</span>
-                      <span className="banner-player-pill">Endless Run</span>
-                    </div>
-
-                    <div className="banner-hero-art">
-                      <div className="banner-icon-bubble">
-                        <span className="hero-emoji">🐦</span>
-                      </div>
-                      <div className="banner-badge-preview">
-                        <span>GATE A & B</span>
-                      </div>
-                    </div>
                   </div>
 
                   {/* Card Content Body */}
@@ -786,12 +677,6 @@ export default function Home() {
                     <p className="game-card-description">
                       Flap through Gate A & Gate B choosing the correct answers for Calculus, Trigonometry, Statistics & Geometry! Collect shiny coins and bonus heart lives!
                     </p>
-
-                    <div className="game-feature-tags">
-                      <span className="feature-pill">📐 Geometri</span>
-                      <span className="feature-pill">⚡ Trigo & Kal</span>
-                      <span className="feature-pill">🏆 High Score</span>
-                    </div>
 
                     <div className="game-card-cta">
                       <span className="cta-text">Play Flappy Bird</span>
@@ -826,20 +711,6 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="banner-blur-overlay" />
-
-                    <div className="banner-top-row">
-                      <span className="banner-tag-pill tag-orange">🏆 2P SPLIT SCREEN</span>
-                      <span className="banner-player-pill">Ranked Duel</span>
-                    </div>
-
-                    <div className="banner-hero-art">
-                      <div className="banner-icon-bubble">
-                        <span className="hero-emoji">⚔️</span>
-                      </div>
-                      <div className="banner-badge-preview">
-                        <span>1 KEYBOARD</span>
-                      </div>
-                    </div>
                   </div>
 
                   {/* Card Content Body */}
@@ -851,12 +722,6 @@ export default function Home() {
                     <p className="game-card-description">
                       Battle head-to-head on a shared keyboard! Race your opponent to solve rapid Calculus, Trigonometry, Statistics & Geometry problems and claim victory!
                     </p>
-
-                    <div className="game-feature-tags">
-                      <span className="feature-pill">⌨️ 1 Keyboard</span>
-                      <span className="feature-pill">👑 4 Materi SMA</span>
-                      <span className="feature-pill">🎯 Precision</span>
-                    </div>
 
                     <div className="game-card-cta">
                       <span className="cta-text">Start Classic Duel</span>
@@ -1009,16 +874,6 @@ export default function Home() {
             />
           </div>
         )}
-
-        {/* VIEW 7: ABOUT */}
-        {currentView === 'about' && (
-          <div>
-            <AboutSection
-              onStartMenu={() => setCurrentView('menu')}
-              onStartMaterial={() => setCurrentView('materi')}
-            />
-          </div>
-        )}
       </main>
 
       {/* User Profile & Auth Modal */}
@@ -1072,13 +927,6 @@ export default function Home() {
         }}
       />
 
-      {/* Join Code Modal */}
-      <JoinCodeModal
-        isOpen={isJoinCodeModalOpen}
-        onClose={() => setIsJoinCodeModalOpen(false)}
-        onJoin={handleJoinWithCode}
-      />
-
       {/* ORIGINAL FOOTER (Hidden in game views so screen stays fixed & never gets cut off) */}
       {(!isGameView || (currentView === 'quiz-viewer' && isQuizViewerResult)) && (
         <footer className="footer">
@@ -1113,7 +961,6 @@ export default function Home() {
                 <li><a href="#" onClick={(e) => { e.preventDefault(); handleStartSoloWithTopic('kaidah-pencacahan'); }}>Games</a></li>
                 <li><a href="#" onClick={(e) => { e.preventDefault(); handleStartSoloWithTopic('dimensi-tiga'); }}>Resource</a></li>
                 <li><a href="#" onClick={(e) => { e.preventDefault(); handleStartSoloWithTopic('kalkulus-lanjut'); }}>Quiz</a></li>
-                <li><a href="#" onClick={(e) => { e.preventDefault(); handleStartSoloWithTopic('statistika'); }}>About</a></li>
               </ul>
             </div>
             

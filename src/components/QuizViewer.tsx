@@ -38,7 +38,7 @@ export default function QuizViewer({ initialTopicId, customQuiz, onBackToMenu, o
           question: q.questionText,
           options: q.choices.map(c => c.text),
           correctIndex: correctIdx >= 0 ? correctIdx : 0,
-          explanation: q.explanation || 'Kunci jawaban kuis.',
+          explanation: q.explanation || 'Quiz answer key and solution.',
           difficulty: 'medium'
         };
       });

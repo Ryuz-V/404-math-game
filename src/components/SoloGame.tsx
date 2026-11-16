@@ -187,7 +187,7 @@ export default function SoloGame({ initialTopicId, customQuiz, onBackToMenu, onS
     <div className="game-container">
       {gameState === 'lobby' && (
         <div className="game-card game-lobby">
-          <div className="game-badge">🕹️ 1 Player Solo Challenge</div>
+          <div className="game-badge">1 Player Solo Challenge</div>
           <h2 className="game-title">Time Attack: Grade 12 Math Quiz</h2>
           <p className="game-desc">
             Answer as many questions as you can in 60 seconds! Get bonus combo streaks to multiply your points.
@@ -200,7 +200,7 @@ export default function SoloGame({ initialTopicId, customQuiz, onBackToMenu, onS
                 className={`picker-btn ${selectedTopic === 'all' ? 'active' : ''}`}
                 onClick={() => setSelectedTopic('all')}
               >
-                🎯 All Mixed Topics
+                All Mixed Topics
               </button>
               {MATERI_KELAS_12.map(m => (
                 <button
@@ -208,7 +208,7 @@ export default function SoloGame({ initialTopicId, customQuiz, onBackToMenu, onS
                   className={`picker-btn ${selectedTopic === m.id ? 'active' : ''}`}
                   onClick={() => setSelectedTopic(m.id)}
                 >
-                  {m.icon} {m.title}
+                  {m.title}
                 </button>
               ))}
             </div>
@@ -216,14 +216,14 @@ export default function SoloGame({ initialTopicId, customQuiz, onBackToMenu, onS
 
           <div className="lobby-actions">
             <button className="btn-main-action btn-play" onClick={startGame}>
-              🚀 Start Game (60 Seconds)
+              Start Game (60 Seconds)
             </button>
             <div className="lobby-sub-actions">
               <button className="btn-sub-action" onClick={onSwitchToVersus}>
-                ⚔️ Try 1 vs 1 Mode (Duo)
+                Try 1 vs 1 Mode (Duo)
               </button>
               <button className="btn-sub-action" onClick={onBackToMenu}>
-                🏠 Back to Menu
+                Back to Menu
               </button>
             </div>
           </div>
@@ -244,7 +244,7 @@ export default function SoloGame({ initialTopicId, customQuiz, onBackToMenu, onS
             </div>
             <div className="hud-box hud-streak">
               <span className="hud-label">Combo:</span>
-              <span className="hud-val">{streak}x 🔥</span>
+              <span className="hud-val">{streak}x</span>
             </div>
           </div>
 
@@ -287,9 +287,9 @@ export default function SoloGame({ initialTopicId, customQuiz, onBackToMenu, onS
             <div className="answer-feedback-box">
               <div className="feedback-status">
                 {selectedOption === currentQ.correctIndex ? (
-                  <span className="text-correct">🎉 Correct! +{Math.round(100 * Math.min(3, 1 + (streak - 1) * 0.5))} Pointsts</span>
+                  <span className="text-correct">Correct! +{Math.round(100 * Math.min(3, 1 + (streak - 1) * 0.5))} Points</span>
                 ) : (
-                  <span className="text-wrong">❌ Incorrect! Correct answer: {currentQ.options[currentQ.correctIndex]}</span>
+                  <span className="text-wrong">Incorrect! Correct answer: {currentQ.options[currentQ.correctIndex]}</span>
                 )}
               </div>
 
@@ -298,10 +298,10 @@ export default function SoloGame({ initialTopicId, customQuiz, onBackToMenu, onS
                   className="btn-explain"
                   onClick={() => setShowExplanation(!showExplanation)}
                 >
-                  💡 {showExplanation ? 'Close Explanation' : 'View Explanation'}
+                  {showExplanation ? 'Close Explanation' : 'View Explanation'}
                 </button>
                 <button className="btn-next-q" onClick={handleNextQuestion}>
-                  Next Question ➡️
+                  Next Question &rarr;
                 </button>
               </div>
 
@@ -318,7 +318,7 @@ export default function SoloGame({ initialTopicId, customQuiz, onBackToMenu, onS
 
       {gameState === 'gameover' && (
         <div className="game-card game-over-card">
-          <div className="game-badge">🏁 Time&apos;s Up!</div>
+          <div className="game-badge">Time&apos;s Up!</div>
           <h2 className="gameover-title">Solo Game Results</h2>
 
           <div className="rank-badge-box" style={{ backgroundColor: getRank().color }}>
@@ -341,22 +341,22 @@ export default function SoloGame({ initialTopicId, customQuiz, onBackToMenu, onS
             </div>
             <div className="summary-stat">
               <span className="stat-label">Max Streak</span>
-              <span className="stat-number">{maxStreak}x 🔥</span>
+              <span className="stat-number">{maxStreak}x</span>
             </div>
           </div>
 
           <div className="gameover-actions">
             <button className="btn-main-action btn-play" onClick={startGame}>
-              🔄 Play Again
+              Play Again
             </button>
             <button className="btn-sub-action" onClick={() => setGameState('lobby')}>
-              ⚙️ Change Topic
+              Change Topic
             </button>
             <button className="btn-sub-action" onClick={onSwitchToVersus}>
-              ⚔️ Challenge a Friend (1 vs 1)
+              Challenge a Friend (1 vs 1)
             </button>
             <button className="btn-sub-action" onClick={onBackToMenu}>
-              🏠 Main Menu
+              Main Menu
             </button>
           </div>
         </div>

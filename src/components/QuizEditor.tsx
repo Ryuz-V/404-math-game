@@ -614,7 +614,7 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
                 <div style={{ fontSize: '12px', fontWeight: 800, color: '#111827' }}>Result Screen</div>
                 <div style={{ fontSize: '11px', color: '#9ca3af' }}>Set your Passed/Failed message</div>
               </div>
-              <span style={{ fontSize: '12px', color: '#9ca3af' }}>➔</span>
+              <span style={{ fontSize: '12px', color: '#9ca3af' }}>&rarr;</span>
             </div>
           </div>
         </aside>
@@ -762,7 +762,7 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
                         textAlign: 'center',
                         padding: '8px'
                       }}>
-                        <span style={{ fontSize: '18px', marginBottom: '2px' }}>🖼️</span>
+                        <span style={{ fontSize: '12px', fontWeight: 600 }}>[+]</span>
                         <span>Upload Image / Diagram</span>
                         <input
                           type="file"
@@ -948,7 +948,7 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
                             outline: 'none'
                           }}
                         />
-                        <span style={{ fontSize: '12px', fontWeight: 600, color: '#475569' }}>Pointsts 🔸</span>
+                        <span style={{ fontSize: '12px', fontWeight: 600, color: '#475569' }}>Points</span>
                       </div>
                     </div>
                   </div>
@@ -982,7 +982,7 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
         </main>
       </div>
 
-      {/* MODAL: QUIZ SETTINGS ⚙️ */}
+      {/* MODAL: QUIZ SETTINGS */}
       {isSettingsOpen && (
         <div style={{
           position: 'fixed',
@@ -1004,7 +1004,7 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
             padding: '24px'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
-              <h3 style={{ fontSize: '18px', fontWeight: 800, margin: 0 }}>⚙️ Quiz Settings</h3>
+              <h3 style={{ fontSize: '18px', fontWeight: 800, margin: 0 }}>Quiz Settings</h3>
               <button onClick={() => setIsSettingsOpen(false)} style={{ background: 'none', border: 'none', fontSize: '18px', cursor: 'pointer' }}>✕</button>
             </div>
 
@@ -1112,13 +1112,13 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
             padding: '24px'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
-              <h3 style={{ fontSize: '18px', fontWeight: 800, margin: 0 }}>🖼️ Result Screen Settings</h3>
+              <h3 style={{ fontSize: '18px', fontWeight: 800, margin: 0 }}>Result Screen Settings</h3>
               <button onClick={() => setIsResultScreenOpen(false)} style={{ background: 'none', border: 'none', fontSize: '18px', cursor: 'pointer' }}>✕</button>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '12px', fontWeight: 800, marginBottom: '6px' }}>🎉 Passed Message</label>
+                <label style={{ display: 'block', fontSize: '12px', fontWeight: 800, marginBottom: '6px' }}>Passed Message</label>
                 <textarea
                   rows={2}
                   value={resultPassedMsg}
@@ -1128,7 +1128,7 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '12px', fontWeight: 800, marginBottom: '6px' }}>💡 Failed Message</label>
+                <label style={{ display: 'block', fontSize: '12px', fontWeight: 800, marginBottom: '6px' }}>Failed Message</label>
                 <textarea
                   rows={2}
                   value={resultFailedMsg}
@@ -1240,7 +1240,7 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
 
                     return (
                       <div>
-                        <div style={{ fontSize: '64px', marginBottom: '12px' }}>{isPassed ? '🏆' : '📚'}</div>
+                        <div style={{ fontSize: '28px', fontWeight: 900, marginBottom: '12px', color: isPassed ? '#16a34a' : '#dc2626' }}>{isPassed ? 'PASSED' : 'TRY AGAIN'}</div>
                         <h2 style={{ fontSize: '24px', fontWeight: 800, margin: '0 0 8px 0' }}>
                           {isPassed ? 'Congratulations!' : 'Needs Evaluation!'}
                         </h2>
@@ -1275,7 +1275,7 @@ export default function QuizEditor({ initialQuiz, onBack, onPublishSuccess }: Qu
                   onClick={() => setPreviewSubmitted(true)}
                   style={{ padding: '10px 24px', backgroundColor: '#2a1a6b', color: '#fff', border: '2px solid #000', borderRadius: '8px', fontWeight: 800, fontSize: '13px', cursor: 'pointer', boxShadow: '3px 3px 0px #000' }}
                 >
-                  Submit & View Results ➔
+                  Submit & View Results &rarr;
                 </button>
               </div>
             )}

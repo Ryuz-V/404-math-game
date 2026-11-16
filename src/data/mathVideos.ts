@@ -271,40 +271,6 @@ export const MATH_VIDEOS: Record<string, MathVideo> = {
       'Aturan rantai untuk fungsi komposisi trigonometri d/dx [f(g(x))]',
       'Gradien garis singgung kurva fungsi trigonometri m = f\'(x₁)'
     ]
-  },
-  'integral-kalkulus': {
-    topicId: 'integral-kalkulus',
-    title: 'Integral Tentu & Luas Daerah: Teorema Dasar Kalkulus & Integrasi Kurva',
-    channel: 'm4th-lab',
-    youtubeId: 'mkpKs8bsp0I',
-    embedUrl: 'https://www.youtube-nocookie.com/embed/mkpKs8bsp0I',
-    watchUrl: 'https://www.youtube.com/watch?v=mkpKs8bsp0I',
-    searchUrl: 'https://www.youtube.com/results?search_query=m4th+lab+integral+luas+daerah',
-    description: 'Teorema Dasar Kalkulus [F(b) - F(a)], menghitung luas daerah di bawah kurva terhadap sumbu X, luas antara dua kurva persekutuan, dan trik rumus cepat parabola L = D√D / (6a²).',
-    duration: '27:20',
-    keyPoints: [
-      'Teorema Dasar Kalkulus ∫ [a ke b] f(x) dx = F(b) - F(a)',
-      'Menentukan batas integrasi dari absis titik potong kurva',
-      'Luas daerah L = ∫ [f(x) - g(x)] dx di antara dua fungsi kurva',
-      'Rumus cepat luas persekutuan parabola dan garis L = D√D / (6a²)'
-    ]
-  },
-  'distribusi-binomial': {
-    topicId: 'distribusi-binomial',
-    title: 'Distribusi Binomial & Kurva Distribusi Normal Baku (Z-Score)',
-    channel: 'm4th-lab',
-    youtubeId: 'ssq7qswqgHI',
-    embedUrl: 'https://www.youtube-nocookie.com/embed/ssq7qswqgHI',
-    watchUrl: 'https://www.youtube.com/watch?v=ssq7qswqgHI',
-    searchUrl: 'https://www.youtube.com/results?search_query=m4th+lab+distribusi+binomial',
-    description: 'Percobaan Bernoulli dengan probabilitas sukses p dan gagal q, fungsi peluang binomial nCx · pˣ · qⁿ⁻ˣ, rata-rata μ = np, varians σ² = npq, dan pembacaan tabel skor Z kurva normal.',
-    duration: '23:55',
-    keyPoints: [
-      'Syarat percobaan Binomial (n percobaan independen, 2 hasil biner)',
-      'Rumus probabilitas P(X = x) = C(n, x) · pˣ · (1 - p)ⁿ⁻ˣ',
-      'Nilai harapan (mean) μ = n · p dan varians σ² = n · p · q',
-      'Kurva normal Gauss standar dan transformasi nilai ke Z-Score: Z = (X - μ) / σ'
-    ]
   }
 };
 

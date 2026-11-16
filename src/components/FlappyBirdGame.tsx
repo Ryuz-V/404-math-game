@@ -224,16 +224,8 @@ function getTimeLabel(t: TimeOfDay): string {
   }
 }
 
-function getTimeIcon(t: TimeOfDay): string {
-  switch (t) {
-    case 'pagi': return '🌅';
-    case 'menjelang-sore': return '☀️';
-    case 'sore': return '🌇';
-    case 'menjelang-malam': return '🌆';
-    case 'malam': return '🌙';
-    case 'fajar': return '🌄';
-    default: return '🌅';
-  }
+function getTimeIcon(_t: TimeOfDay): string {
+  return '';
 }
 
 // Smooth Color Lerp Helper
@@ -278,7 +270,7 @@ interface SkyKeyframe {
 
 const SKY_KEYFRAMES: SkyKeyframe[] = [
   {
-    pos: 0.05, // 🌅 PAGI
+    pos: 0.05, // PAGI
     top: '#0284c7',
     mid: '#38bdf8',
     bottom: '#bae6fd',
@@ -293,7 +285,7 @@ const SKY_KEYFRAMES: SkyKeyframe[] = [
     timePhase: 'pagi'
   },
   {
-    pos: 0.28, // ☀️ MENJELANG SORE (SIANG CERAH)
+    pos: 0.28, // MENJELANG SORE (SIANG CERAH)
     top: '#1d4ed8',
     mid: '#f59e0b',
     bottom: '#fef08a',
@@ -308,7 +300,7 @@ const SKY_KEYFRAMES: SkyKeyframe[] = [
     timePhase: 'menjelang-sore'
   },
   {
-    pos: 0.48, // 🌇 SORE / SENJA (CRIMSON SUNSET)
+    pos: 0.48, // SORE / SENJA (CRIMSON SUNSET)
     top: '#4c0519',
     mid: '#e11d48',
     bottom: '#fed7aa',
@@ -323,7 +315,7 @@ const SKY_KEYFRAMES: SkyKeyframe[] = [
     timePhase: 'sore'
   },
   {
-    pos: 0.68, // 🌆 MENJELANG MALAM (PETANG / DUSK)
+    pos: 0.68, // MENJELANG MALAM (PETANG / DUSK)
     top: '#1e1b4b',
     mid: '#4338ca',
     bottom: '#831843',
@@ -338,7 +330,7 @@ const SKY_KEYFRAMES: SkyKeyframe[] = [
     timePhase: 'menjelang-malam'
   },
   {
-    pos: 0.82, // 🌙 MALAM (DEEP STARRY MIDNIGHT)
+    pos: 0.82, // MALAM (DEEP STARRY MIDNIGHT)
     top: '#020617',
     mid: '#0f172a',
     bottom: '#1e1b4b',
@@ -353,7 +345,7 @@ const SKY_KEYFRAMES: SkyKeyframe[] = [
     timePhase: 'malam'
   },
   {
-    pos: 0.95, // 🌄 MENJELANG PAGI (FAJAR / DAWN)
+    pos: 0.95, // MENJELANG PAGI (FAJAR / DAWN)
     top: '#1e1b4b',
     mid: '#0284c7',
     bottom: '#fed7aa',
@@ -655,7 +647,7 @@ function drawRetroMario(
     drawMarioHead(ctx, -2, -12, 'forward');
 
   } else if (state === 'jump') {
-    // SUPER MARIO LEAP JUMP POSE (CLASSIC JUMP FIST UP 👊)
+    // SUPER MARIO LEAP JUMP POSE (CLASSIC JUMP FIST UP)
     // Speedlines / Jump Arc energy
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
     ctx.lineWidth = 3;
@@ -698,7 +690,7 @@ function drawRetroMario(
     ctx.fill();
     ctx.stroke();
 
-    // Super Jump Raised Left Fist Punching Sky! 👊
+    // Super Jump Raised Left Fist Punching Sky!
     ctx.fillStyle = '#ef4444';
     ctx.beginPath();
     ctx.roundRect(-24, -20, 10, 24, 4);
@@ -783,17 +775,17 @@ function drawRetroMario(
     ctx.textAlign = 'center';
     ctx.strokeStyle = '#000000';
     ctx.lineWidth = 4;
-    ctx.strokeText('💥 GOTCHA!', -30, -32);
-    ctx.fillText('💥 GOTCHA!', -30, -32);
+    ctx.strokeText('GOTCHA!', -30, -32);
+    ctx.fillText('GOTCHA!', -30, -32);
 
   } else if (state === 'victory') {
-    // VICTORY POSE (PEACE SIGN ✌️, CELEBRATION, HOLDING BIRD)
+    // VICTORY POSE (PEACE SIGN, CELEBRATION, HOLDING BIRD)
     const sparkle = (Math.sin(nowTime * 0.01) + 1) * 0.5;
 
     ctx.fillStyle = '#facc15';
     ctx.font = '16px system-ui';
-    ctx.fillText('✨', -28, -36 + sparkle * 4);
-    ctx.fillText('⭐', 28, -40 - sparkle * 4);
+    ctx.fillText('*', -28, -36 + sparkle * 4);
+    ctx.fillText('*', 28, -40 - sparkle * 4);
 
     // Shoes firmly on ground
     ctx.fillStyle = '#78350f';
@@ -838,7 +830,7 @@ function drawRetroMario(
     ctx.fill();
     ctx.stroke();
 
-    // Right Arm Raised High with V-Sign / Peace Sign ✌️
+    // Right Arm Raised High with V-Sign / Peace Sign
     ctx.fillStyle = '#ef4444';
     ctx.beginPath();
     ctx.roundRect(14, -14, 10, 20, 4);
@@ -880,7 +872,7 @@ function drawRetroMario(
     ctx.fillStyle = '#000000';
     ctx.font = '900 11px system-ui';
     ctx.textAlign = 'center';
-    ctx.fillText('🍄 MAMMA MIA! LEVEL 25 CLEAR! 🚩', 0, -62);
+    ctx.fillText('MAMMA MIA! LEVEL 25 CLEAR!', 0, -62);
     ctx.font = '700 9px system-ui';
     ctx.fillText('Burung tertangkap! Menghitung Score Akhir...', 0, -48);
   }
@@ -1242,7 +1234,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
       setCorrectAnswersCount(eng.correctAnswersCount);
       setQuizPointsEarned(eng.quizPointsEarned);
       setCombo(eng.comboCount);
-      setFloatText({ text: `🎉 BENAR! +${earned}`, id: Date.now() });
+      setFloatText({ text: `BENAR! +${earned}`, id: Date.now() });
 
       for (let p = 0; p < 24; p++) {
         eng.particles.push({
@@ -1262,7 +1254,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
       eng.comboCount = 0;
       setLives(eng.livesCount);
       setCombo(0);
-      setFloatText({ text: '❌ SALAH! -½ ❤️', id: Date.now() });
+      setFloatText({ text: 'SALAH! -½ HP', id: Date.now() });
 
       for (let p = 0; p < 18; p++) {
         eng.particles.push({
@@ -1293,7 +1285,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
         if (nextDay !== eng.currentDay) {
           eng.currentDay = nextDay;
           setDay(eng.currentDay);
-          setFloatText({ text: `🌅 DAY ${eng.currentDay}/25!`, id: Date.now() });
+          setFloatText({ text: `DAY ${eng.currentDay}/25!`, id: Date.now() });
         }
       }
       eng.invincibleFrames = 90; // Immunity against accidental post-answer double hits
@@ -1387,7 +1379,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
         ctx.restore();
       }
 
-      // Dynamic Orbital Sun ☀️ (Rises at Dawn, peaks at Midday, descends at Sunset)
+      // Dynamic Orbital Sun (Rises at Dawn, peaks at Midday, descends at Sunset)
       if (atm.sunAlpha > 0.02) {
         ctx.save();
         ctx.globalAlpha = atm.sunAlpha;
@@ -1426,7 +1418,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
         ctx.restore();
       }
 
-      // Dynamic Orbital Crescent Moon 🌙 (Rises at Sunset/Dusk, peaks at Midnight, sets at Dawn)
+      // Dynamic Orbital Crescent Moon (Rises at Sunset/Dusk, peaks at Midnight, sets at Dawn)
       if (atm.moonAlpha > 0.02) {
         ctx.save();
         ctx.globalAlpha = atm.moonAlpha;
@@ -1545,7 +1537,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
             eng.comboCount = 0;
             setLives(eng.livesCount);
             setCombo(0);
-            setFloatText({ text: '⏱️ WAKTU HABIS! -½ ❤️', id: Date.now() });
+            setFloatText({ text: 'WAKTU HABIS! -½ HP', id: Date.now() });
 
             if (eng.livesCount <= 0) {
               handleGameOver(eng.scoreCount);
@@ -1594,7 +1586,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
               eng.comboCount = 0;
               setLives(eng.livesCount);
               setCombo(0);
-              setFloatText({ text: '💥 Menabrak Tanah! -½ ❤️', id: Date.now() });
+              setFloatText({ text: 'Menabrak Tanah! -½ HP', id: Date.now() });
 
               if (eng.livesCount <= 0) {
                 handleGameOver(eng.scoreCount);
@@ -1624,7 +1616,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
                 setCoins(eng.coinsCount);
                 setCoinPointsEarned(eng.coinPointsEarned);
                 setScore(eng.scoreCount);
-                setFloatText({ text: '+50 KOIN! 🪙', id: Date.now() });
+                setFloatText({ text: '+50 KOIN!', id: Date.now() });
 
                 for (let cp = 0; cp < 8; cp++) {
                   eng.particles.push({
@@ -1641,7 +1633,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
                 sounds.playHeal();
                 eng.livesCount = Math.min(3.0, eng.livesCount + 1.0);
                 setLives(eng.livesCount);
-                setFloatText({ text: '+1 NYAWA PULIH! ❤️', id: Date.now() });
+                setFloatText({ text: '+1 NYAWA PULIH!', id: Date.now() });
               }
             }
 
@@ -1681,7 +1673,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
                 mb.caughtBird = true;
                 sounds.playHit();
                 sounds.playCoin();
-                mb.speech = "💥 GOTCHA! MAMMA MIA!";
+                mb.speech = "GOTCHA! MAMMA MIA!";
 
                 for (let s = 0; s < 35; s++) {
                   eng.particles.push({
@@ -1803,7 +1795,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
             eng.marioBossState.marioVx = -3.2;
             eng.marioBossState.marioVy = 0;
             eng.marioBossState.caughtBird = false;
-            eng.marioBossState.speech = '🏃 MARIO MENGEJAR BURUNG!';
+            eng.marioBossState.speech = 'MARIO MENGEJAR BURUNG!';
             eng.marioBossState.triggeredEnd = false;
             eng.marioBossState.fireworks = [];
           }
@@ -1850,7 +1842,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
                   eng.comboCount = 0;
                   setLives(eng.livesCount);
                   setCombo(0);
-                  setFloatText({ text: '⚠️ Tertahan Pipa! -½ ❤️', id: Date.now() });
+                  setFloatText({ text: 'Tertahan Pipa! -½ HP', id: Date.now() });
 
                   if (eng.livesCount <= 0) {
                     handleGameOver(eng.scoreCount);
@@ -1891,7 +1883,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
                 sounds.playScore();
                 eng.scoreCount += 50;
                 setScore(eng.scoreCount);
-                setFloatText({ text: '🚀 Lolos Pipa! +50', id: Date.now() });
+                setFloatText({ text: 'Lolos Pipa! +50', id: Date.now() });
               }
 
               // Advance Day progression (Setiap 2 pipa lolos = +1 Day)
@@ -1900,7 +1892,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
               if (nextDay !== eng.currentDay) {
                 eng.currentDay = nextDay;
                 setDay(eng.currentDay);
-                setFloatText({ text: `🌅 DAY ${eng.currentDay}/25!`, id: Date.now() });
+                setFloatText({ text: `DAY ${eng.currentDay}/25!`, id: Date.now() });
               }
             }
 
@@ -2060,10 +2052,21 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
           ctx.restore();
         } else if (item.type === 'heart') {
           ctx.save();
-          ctx.translate(item.x, bobY);
-          ctx.font = '22px system-ui';
-          ctx.textAlign = 'center';
-          ctx.fillText('❤️', 0, 8);
+          ctx.translate(item.x, bobY - 4);
+          ctx.fillStyle = '#ef4444';
+          ctx.beginPath();
+          const d = 10;
+          ctx.moveTo(0, d / 4);
+          ctx.quadraticCurveTo(0, -d / 2, d / 2, -d / 2);
+          ctx.quadraticCurveTo(d, -d / 2, d, 0);
+          ctx.quadraticCurveTo(d, d / 2, 0, d * 1.2);
+          ctx.quadraticCurveTo(-d, d / 2, -d, 0);
+          ctx.quadraticCurveTo(-d, -d / 2, -d / 2, -d / 2);
+          ctx.quadraticCurveTo(0, -d / 2, 0, d / 4);
+          ctx.fill();
+          ctx.strokeStyle = '#000';
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
           ctx.restore();
         }
       });
@@ -2146,10 +2149,10 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
       if (eng.marioBossState.active && eng.marioBossState.caughtBird) {
         const spinA = nowTime * 0.008;
         ctx.fillStyle = '#facc15';
-        ctx.font = '12px system-ui';
+        ctx.font = 'bold 16px system-ui';
         ctx.textAlign = 'center';
-        ctx.fillText('💫', Math.cos(spinA) * 16, Math.sin(spinA) * 10 - 22);
-        ctx.fillText('⭐', Math.cos(spinA + Math.PI) * 16, Math.sin(spinA + Math.PI) * 10 - 22);
+        ctx.fillText('*', Math.cos(spinA) * 16, Math.sin(spinA) * 10 - 22);
+        ctx.fillText('*', Math.cos(spinA + Math.PI) * 16, Math.sin(spinA + Math.PI) * 10 - 22);
       }
 
       ctx.restore();
@@ -2171,12 +2174,6 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
     return `${whole}`;
   };
 
-  const getTimeIcon = (t: TimeOfDay) => {
-    if (t === 'pagi') return '🌅';
-    if (t === 'sore') return '🌇';
-    return '🌙';
-  };
-
   const getTimeLabel = (t: TimeOfDay) => {
     if (t === 'pagi') return 'PAGI';
     if (t === 'sore') return 'SORE';
@@ -2192,57 +2189,40 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
         </button>
 
         <div className="flappy-title-badge">
-          <span>🐦</span> FLAPPY MATH
+          FLAPPY MATH
         </div>
 
         {/* Dynamic Day, Time of Day, Lives, Coins, Score */}
         <div className="flappy-stats-bar">
           {/* Day & Time of Day Badge */}
           <div className={`stat-pill day-pill ${timeOfDay}`} title="Progres Hari & Time">
-            <span className="pill-icon">{getTimeIcon(timeOfDay)}</span>
             <span className="pill-val">DAY {day}/25 ({getTimeLabel(timeOfDay)})</span>
           </div>
 
           <div className="heart-container" title={`${formatLivesText(lives)} / 3 Nyawa Tersisa`}>
-            {[1, 2, 3].map((slot) => {
-              const isFull = lives >= slot;
-              const isHalf = lives === slot - 0.5;
-              return (
-                <span
-                  key={slot}
-                  className={`heart-icon ${isFull ? 'alive' : isHalf ? 'half' : 'dead'}`}
-                >
-                  {isFull ? '❤️' : isHalf ? '💔' : '🖤'}
-                </span>
-              );
-            })}
-            <span className="heart-label">{formatLivesText(lives)}/3</span>
+            <span className="heart-label" style={{ fontWeight: 800 }}>HP: {formatLivesText(lives)}/3</span>
           </div>
 
           <div className={`stat-pill timer-pill ${timerSeconds <= 5 ? 'warning-timer' : ''}`} title="Time Jawab Question">
-            <span className="pill-icon">⏱️</span>
             <span className="pill-val">{timerSeconds}s</span>
           </div>
 
           <div className="stat-pill coin-pill" title="Total Koin">
-            <span className="pill-icon">🪙</span>
-            <span className="pill-val">{coins}</span>
+            <span className="pill-val">COIN: {coins}</span>
           </div>
 
           <div className="stat-pill score-pill" title="Score Game">
-            <span className="pill-icon">⭐</span>
-            <span className="pill-val">{score}</span>
+            <span className="pill-val">SCORE: {score}</span>
           </div>
 
           {combo > 1 && (
             <div className="stat-pill combo-pill">
-              <span>🔥 x{combo}</span>
+              <span>COMBO x{combo}</span>
             </div>
           )}
 
           <div className="stat-pill high-pill" title="Rekor Tertinggi">
-            <span className="pill-icon">🏆</span>
-            <span className="pill-val">{highScore}</span>
+            <span className="pill-val">BEST: {highScore}</span>
           </div>
         </div>
       </div>
@@ -2259,9 +2239,9 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
           <div className="flappy-overlay quiz-modal-overlay">
             <div className="flappy-quiz-card">
               <div className="quiz-card-header">
-                <span className="quiz-badge">📚 {activeQuiz.topicName}</span>
+                <span className="quiz-badge">{activeQuiz.topicName}</span>
                 <span className={`quiz-timer ${timerSeconds <= 5 ? 'danger' : ''}`}>
-                  ⏱️ {timerSeconds}s
+                  {timerSeconds}s
                 </span>
               </div>
 
@@ -2300,7 +2280,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
               </div>
 
               <div className="quiz-footer-hint">
-                Tekan tombol [A], [B], [C], [D] atau klik opsi di atas. (Wrong jawab: -½ ❤️ & langsung lanjut!)
+                Tekan tombol [A], [B], [C], [D] atau klik opsi di atas. (Wrong jawab: -½ HP & langsung lanjut!)
               </div>
             </div>
           </div>
@@ -2310,7 +2290,6 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
         {gameState === 'idle' && (
           <div className="flappy-overlay start-overlay">
             <div className="flappy-start-card">
-              <div className="start-hero-icon">🐦 ⚡ 👑</div>
               <h1 className="start-hero-title">FLAPPY MATH ADVENTURE</h1>
               <p className="start-hero-subtitle">Jelajahi Day 1 - 25 (Pagi, Sore, Malam) Menuju Final Boss Mario!</p>
 
@@ -2336,7 +2315,6 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
         {gameState === 'boss_ending' && (
           <div className="flappy-overlay" data-lenis-prevent="true">
             <div className="flappy-modal-card boss-win-card">
-              <div className="modal-icon">👑 🍄 ⭐</div>
               <h2 className="modal-title boss-title">DAY 25: PERJALANAN SELESAI!</h2>
               <p className="modal-desc">
                 Hebat! Burung Matematika berhasil menempuh perjalanan dari <strong>Day 1 hingga Day 25 (Pagi, Sore, Malam)</strong> dan akhirnya dihentikan oleh <strong>Super Mario</strong> sang Penjaga Kastil Gorong-Gorong!
@@ -2345,20 +2323,20 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
               {/* DETAILED SCORE BREAKDOWN */}
               <div className="flappy-score-breakdown">
                 <div className="breakdown-row">
-                  <span className="b-label">📚 Question Terjawab Correct ({correctAnswersCount} Soal):</span>
+                  <span className="b-label">Question Terjawab Correct ({correctAnswersCount} Soal):</span>
                   <span className="b-val">+{quizPointsEarned} Pts</span>
                 </div>
                 <div className="breakdown-row">
-                  <span className="b-label">🪙 Koin Terkumpul ({coins} Koin):</span>
+                  <span className="b-label">Koin Terkumpul ({coins} Koin):</span>
                   <span className="b-val">+{coinPointsEarned} Pts</span>
                 </div>
                 <div className="breakdown-row highlight">
-                  <span className="b-label">🏆 Bonus Capaian Day 25:</span>
+                  <span className="b-label">Bonus Capaian Day 25:</span>
                   <span className="b-val">+2,500 Pts</span>
                 </div>
                 <div className="breakdown-total">
                   <span className="total-label">TOTAL SKOR AKHIR</span>
-                  <span className="total-num">⭐ {score + 2500}</span>
+                  <span className="total-num">{score + 2500}</span>
                 </div>
               </div>
 
@@ -2371,7 +2349,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
                     startGame();
                   }}
                 >
-                  🔄 Ulang Petualangan (Day 1)
+                  Ulang Petualangan (Day 1)
                 </button>
                 <button
                   type="button"
@@ -2381,7 +2359,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
                     onBackToMenu();
                   }}
                 >
-                  🏠 Menu Game
+                  Menu Game
                 </button>
               </div>
             </div>
@@ -2392,7 +2370,6 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
         {gameState === 'gameover' && (
           <div className="flappy-overlay" data-lenis-prevent="true">
             <div className="flappy-modal-card gameover">
-              <div className="modal-icon">💀 💥</div>
               <h2 className="modal-title">GAME OVER!</h2>
               <p className="modal-desc">
                 Burungmu kehabisan nyawa di <strong>Day {day} ({getTimeLabel(timeOfDay)})</strong>! Inilah rincian skormu:
@@ -2401,20 +2378,20 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
               {/* DETAILED SCORE BREAKDOWN */}
               <div className="flappy-score-breakdown">
                 <div className="breakdown-row">
-                  <span className="b-label">📚 Question Terjawab Correct ({correctAnswersCount} Soal):</span>
+                  <span className="b-label">Question Terjawab Correct ({correctAnswersCount} Soal):</span>
                   <span className="b-val">+{quizPointsEarned} Pts</span>
                 </div>
                 <div className="breakdown-row">
-                  <span className="b-label">🪙 Koin Terkumpul ({coins} Koin):</span>
+                  <span className="b-label">Koin Terkumpul ({coins} Koin):</span>
                   <span className="b-val">+{coinPointsEarned} Pts</span>
                 </div>
                 <div className="breakdown-row highlight">
-                  <span className="b-label">📅 Bonus Hari (Day {day}):</span>
+                  <span className="b-label">Bonus Hari (Day {day}):</span>
                   <span className="b-val">+{day * 100} Pts</span>
                 </div>
                 <div className="breakdown-total">
                   <span className="total-label">TOTAL SKOR AKHIR</span>
-                  <span className="total-num">⭐ {score + day * 100}</span>
+                  <span className="total-num">{score + day * 100}</span>
                 </div>
               </div>
 
@@ -2427,7 +2404,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
                     startGame();
                   }}
                 >
-                  🔄 Play Again
+                  Play Again
                 </button>
                 <button
                   type="button"
@@ -2437,7 +2414,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
                     onBackToMenu();
                   }}
                 >
-                  🏠 Menu Game
+                  Menu Game
                 </button>
               </div>
             </div>
@@ -2447,7 +2424,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
 
       {/* Controls Hint footer */}
       <div className="flappy-hint-bar">
-        💡 <strong>Tujuan Game:</strong> Bertahan dari <strong>Day 1 sampai Day 25 (Pagi, Sore, Malam)</strong>. Setiap jawaban benar & koin akan dijumlahkan menjadi total skor akhir di hadapan <strong>Super Mario</strong>!
+        <strong>Tujuan Game:</strong> Bertahan dari <strong>Day 1 sampai Day 25 (Pagi, Sore, Malam)</strong>. Setiap jawaban benar & koin akan dijumlahkan menjadi total skor akhir di hadapan <strong>Super Mario</strong>!
       </div>
 
       {/* Flappy Bird Styles */}

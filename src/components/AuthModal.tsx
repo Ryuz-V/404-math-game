@@ -121,15 +121,15 @@ export default function AuthModal({
             </div>
           ) : (
             <div className="game-badge">
-              {modalMode === 'login' && '🔑 Login to Account'}
-              {modalMode === 'signup' && '✨ Create New Student Account'}
+              {modalMode === 'login' && 'Login to Account'}
+              {modalMode === 'signup' && 'Create New Student Account'}
             </div>
           )}
         </div>
 
         {isSuccess ? (
           <div className="modal-success-box">
-            <div className="success-icon">🎉</div>
+            <div className="success-icon">✓</div>
             <h3 style={{ fontSize: '1.4rem', fontWeight: 900, marginBottom: '0.8rem' }}>{successText}</h3>
             <div className="user-preview-pill">
               <span>{avatar}</span>
@@ -156,7 +156,7 @@ export default function AuthModal({
 
             {errorMessage && (
               <div className="auth-error-banner">
-                ⚠️ {errorMessage}
+                {errorMessage}
               </div>
             )}
 
@@ -261,9 +261,9 @@ export default function AuthModal({
 
             <div className="modal-actions" style={{ display: 'flex', gap: '12px', width: '100%' }}>
               <button type="submit" className="btn-modal-submit" style={{ flex: 1 }}>
-                {modalMode === 'login' && '🚀 Login Now'}
-                {modalMode === 'signup' && '✨ Create Account & Login'}
-                {modalMode === 'edit_profile' && '💾 Save'}
+                {modalMode === 'login' && 'Login Now'}
+                {modalMode === 'signup' && 'Create Account & Login'}
+                {modalMode === 'edit_profile' && 'Save'}
               </button>
 
               {modalMode === 'edit_profile' && isLoggedIn && (
@@ -276,7 +276,7 @@ export default function AuthModal({
                   }}
                   style={{ flex: 1 }}
                 >
-                  🚪 Logout
+                  Logout
                 </button>
               )}
             </div>

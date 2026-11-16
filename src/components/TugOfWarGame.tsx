@@ -236,7 +236,7 @@ function drawTugStadium(
 
   ctx.fillStyle = '#38bdf8';
   ctx.font = '900 10px system-ui';
-  ctx.fillText('🏁 BLUE WINS', leftLimitX, groundY - 30);
+  ctx.fillText('BLUE WINS', leftLimitX, groundY - 30);
 
   // 6. Team Red Win Limit Line (Right: 84% of width)
   const rightLimitX = width * 0.84;
@@ -249,7 +249,7 @@ function drawTugStadium(
 
   ctx.fillStyle = '#f87171';
   ctx.font = '900 10px system-ui';
-  ctx.fillText('RED WINS 🏁', rightLimitX, groundY - 30);
+  ctx.fillText('RED WINS', rightLimitX, groundY - 30);
 }
 
 function drawTugRopeAndRibbon(
@@ -404,7 +404,7 @@ function drawTugAthlete(
 
   // Head & Face
   if (isBot) {
-    // Cybernetic AI Robot Head! 🤖
+    // Cybernetic AI Robot Head!
     ctx.fillStyle = '#64748b';
     ctx.beginPath();
     ctx.roundRect(-14, -104, 28, 24, 6);
@@ -448,8 +448,9 @@ function drawTugAthlete(
   // Sweat Drop if pulling
   if (isPulling) {
     ctx.fillStyle = '#38bdf8';
-    ctx.font = '12px system-ui';
-    ctx.fillText('💦', team === 'blue' ? -18 : 18, -100);
+    ctx.beginPath();
+    ctx.arc(team === 'blue' ? -18 : 18, -100, 3, 0, Math.PI * 2);
+    ctx.fill();
   }
 
   ctx.restore();
@@ -618,7 +619,7 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
       arenaRef.current.floatTexts.push({
         x: currentCenterX - 150,
         y: 80,
-        text: p1PowerActive ? '💥 SUPER PULL! ⚡' : p1Streak >= 3 ? '🔥 COMBO PULL!' : '💥 HEAVE!',
+        text: p1PowerActive ? 'SUPER PULL!' : p1Streak >= 3 ? 'COMBO PULL!' : 'HEAVE!',
         color: '#38bdf8',
         life: 30,
         vy: -1.5
@@ -676,7 +677,7 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
       arenaRef.current.floatTexts.push({
         x: currentCenterX + 150,
         y: 80,
-        text: p2PowerActive ? '💥 SUPER PULL! ⚡' : p2Streak >= 3 ? '🔥 COMBO PULL!' : '💥 PULL!',
+        text: p2PowerActive ? 'SUPER PULL!' : p2Streak >= 3 ? 'COMBO PULL!' : 'PULL!',
         color: '#f87171',
         life: 30,
         vy: -1.5
@@ -898,10 +899,10 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
           &larr; Back to Games Hub
         </button>
         <div className="tug-title-badge">
-          <span>🚩</span> MATH TUG OF WAR (12TH GRADE / UTBK)
+          MATH TUG OF WAR
         </div>
         <div className="tug-score-badge">
-          <span>⏱️</span> {timerRemaining}s
+          <span>Time:</span> {timerRemaining}s
         </div>
       </div>
 
@@ -909,7 +910,6 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
       {gameState === 'lobby' && (
         <div className="tug-lobby">
           <div className="tug-lobby-card">
-            <div className="tug-lobby-icon">🏆</div>
             <h1 className="tug-lobby-title">Math Tug of War (12th Grade)</h1>
             <p className="tug-lobby-desc">
               Race to solve <strong>12th Grade Math & UTBK SNBT</strong> questions (Counting Rules, Matrices, Calculus Limits/Derivatives/Integrals, Vectors, Statistics, 3D Geometry) to pull the rope to your team's side!
@@ -921,7 +921,6 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
                 className={`tug-mode-btn ${gameMode === 'vs-bot' ? 'active' : ''}`}
                 onClick={() => setGameMode('vs-bot')}
               >
-                <span className="icon">🤖</span>
                 <div>
                   <strong>1P vs AI Bot</strong>
                   <p>Play tug of war against a smart computer</p>
@@ -932,7 +931,6 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
                 className={`tug-mode-btn ${gameMode === '2p-local' ? 'active' : ''}`}
                 onClick={() => setGameMode('2p-local')}
               >
-                <span className="icon">👥</span>
                 <div>
                   <strong>2P Duel (1 Keyboard)</strong>
                   <p>P1 (A/S/D/F) vs P2 (H/J/K/L)</p>
@@ -951,10 +949,10 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
                       className={`tug-diff-btn ${botDiff === d ? 'active' : ''} ${d}`}
                       onClick={() => setBotDiff(d)}
                     >
-                      {d === 'easy' && '🟢 Easy'}
-                      {d === 'medium' && '🟡 Normal'}
-                      {d === 'hard' && '🔴 Fast'}
-                      {d === 'extreme' && '🔥 Monster Bot'}
+                      {d === 'easy' && 'Easy'}
+                      {d === 'medium' && 'Normal'}
+                      {d === 'hard' && 'Fast'}
+                      {d === 'extreme' && 'Monster Bot'}
                     </button>
                   ))}
                 </div>
@@ -962,7 +960,7 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
             )}
 
             <button className="tug-btn-start" onClick={startGame}>
-              START MATCH 🚩
+              START MATCH
             </button>
           </div>
         </div>
@@ -991,7 +989,7 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
             {/* Tension / Distance Bar */}
             <div className="tug-tension-gauge">
               <div className="tension-label left">
-                🔵 BLUE TEAM (LEFT) {ropePosition < 0 ? `+${Math.abs(Math.round(ropePosition))}% (Pulling Left)` : ''}
+                BLUE TEAM (LEFT) {ropePosition < 0 ? `+${Math.abs(Math.round(ropePosition))}% (Pulling Left)` : ''}
               </div>
               <div className="tension-track">
                 <div className="tension-marker-center"></div>
@@ -1007,11 +1005,10 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
                   className="tension-flag-indicator"
                   style={{ left: `calc(${50 + ropePosition * 0.45}% - 12px)` }}
                 >
-                  🚩
                 </div>
               </div>
               <div className="tension-label right">
-                🔴 {gameMode === 'vs-bot' ? `BOT (${botDiff.toUpperCase()})` : 'RED TEAM (RIGHT)'}{' '}
+                {gameMode === 'vs-bot' ? `BOT (${botDiff.toUpperCase()})` : 'RED TEAM (RIGHT)'}{' '}
                 {ropePosition > 0 ? `+${Math.round(ropePosition)}% (Pulling Right)` : ''}
               </div>
             </div>
@@ -1024,7 +1021,7 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
               <div className="panel-header">
                 <div className="panel-title">
                   <span className="badge-team blue">P1 / BLUE TEAM</span>
-                  {p1Streak >= 3 && <span className="streak-badge">🔥 {p1Streak} Streak!</span>}
+                  {p1Streak >= 3 && <span className="streak-badge">{p1Streak} Streak!</span>}
                 </div>
                 <div className="panel-stats">
                   <span>Pull Score: <strong>{p1CorrectCount}</strong></span>
@@ -1033,7 +1030,7 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
 
               {/* Question Box */}
               <div className="tug-q-box">
-                <div className="q-label">📚 {p1Question.topic || 'SMA Math'}:</div>
+                <div className="q-label">{p1Question.topic || 'SMA Math'}:</div>
                 <div className="q-text">{p1Question.question}</div>
               </div>
 
@@ -1065,7 +1062,7 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
                   className={`tug-power-btn ${p1PowerActive ? 'active' : ''}`}
                   onClick={activateP1Power}
                 >
-                  💥 PRESS SPACE: SUPER PULL (2.5x FORCE)!
+                  PRESS SPACE: SUPER PULL (2.5x FORCE)!
                 </button>
               )}
             </div>
@@ -1077,7 +1074,7 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
                   <span className="badge-team red">
                     {gameMode === 'vs-bot' ? `BOT [${botDiff.toUpperCase()}]` : 'P2 / RED TEAM'}
                   </span>
-                  {p2Streak >= 3 && <span className="streak-badge">🔥 {p2Streak} Streak!</span>}
+                  {p2Streak >= 3 && <span className="streak-badge">{p2Streak} Streak!</span>}
                 </div>
                 <div className="panel-stats">
                   <span>Pull Score: <strong>{p2CorrectCount}</strong></span>
@@ -1087,7 +1084,7 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
               {gameMode === '2p-local' ? (
                 <>
                   <div className="tug-q-box">
-                    <div className="q-label">📚 {p2Question.topic || 'SMA Math'}:</div>
+                    <div className="q-label">{p2Question.topic || 'SMA Math'}:</div>
                     <div className="q-text">{p2Question.question}</div>
                   </div>
 
@@ -1117,14 +1114,14 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
                       className={`tug-power-btn ${p2PowerActive ? 'active' : ''}`}
                       onClick={activateP2Power}
                     >
-                      💥 PRESS ENTER: SUPER PULL (2.5x FORCE)!
+                      PRESS ENTER: SUPER PULL (2.5x FORCE)!
                     </button>
                   )}
                 </>
               ) : (
                 /* Bot Status Display */
                 <div className="bot-status-view">
-                  <div className="bot-avatar">🤖</div>
+                  <div className="bot-avatar">AI</div>
                   <h3>AI Math Engine Active</h3>
                   <p>Bot is calculating solutions in real-time with {botDiff} level accuracy!</p>
                   <div className="bot-power-indicator">
@@ -1143,7 +1140,7 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
         <div className="tug-gameover-overlay">
           <div className="tug-gameover-card">
             <div className="gameover-trophy">
-              {winner === 'Team 1' ? '🏆 🔵' : winner === 'Team 2' ? '🏆 🔴' : '🤝'}
+              {winner === 'Team 1' ? 'BLUE TEAM WINS' : winner === 'Team 2' ? 'RED TEAM WINS' : 'DRAW'}
             </div>
             <h2 className="gameover-title">
               {winner === 'Team 1'
@@ -1177,13 +1174,13 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
 
             <div className="gameover-actions">
               <button className="btn-replay" onClick={startGame}>
-                🔄 Play Again
+                Play Again
               </button>
               <button className="btn-lobby" onClick={() => setGameState('lobby')}>
-                ⚙️ Change Mode
+                Change Mode
               </button>
               <button className="btn-menu" onClick={onBackToMenu}>
-                🏠 Back to Menu
+                Back to Menu
               </button>
             </div>
           </div>

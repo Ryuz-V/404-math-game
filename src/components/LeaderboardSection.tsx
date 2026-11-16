@@ -75,7 +75,7 @@ export default function LeaderboardSection({
   return (
     <div className="leaderboard-container">
       <div className="leaderboard-header">
-        <div className="game-badge">🏆 Papan Leaderboard Juara</div>
+        <div className="game-badge">Papan Leaderboard Juara</div>
         <h1 className="leaderboard-title">Leaderboard Matematika</h1>
         <p className="leaderboard-subtitle">
           Sign Up murid dan master matematika dengan skor tertinggi di Solo Mode dan kemenangan terbanyak di Duel 1 vs 1!
@@ -97,13 +97,18 @@ export default function LeaderboardSection({
             </div>
             <div className="user-lead-right">
               <span className="user-rank-highlight">
-                🎖️ Leaderboard #{activeLeaderboard.find(u => u.name === currentUser.name)?.rank || '-'}
+                Leaderboard #{activeLeaderboard.find(u => u.name === currentUser.name)?.rank || '-'}
               </span>
             </div>
           </div>
         ) : (
           <div className="leaderboard-requirement-box">
-            <div className="req-icon">🔒</div>
+            <div className="req-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+            </div>
             <div className="req-info">
               <h4>Ingin Namamu Log In ke Papan Leaderboard?</h4>
               <p>
@@ -115,11 +120,11 @@ export default function LeaderboardSection({
             <div className="req-actions">
               {!currentUser?.isLoggedIn && (
                 <button className="btn-lead-action btn-login-req" onClick={onOpenLogin}>
-                  🔑 Login Akun
+                  Login Akun
                 </button>
               )}
               <button className="btn-lead-action btn-play-req" onClick={onStartSolo}>
-                🎯 Mainkan Quiz & Kumpulkan Points
+                Mainkan Quiz & Kumpulkan Points
               </button>
             </div>
           </div>
@@ -131,19 +136,19 @@ export default function LeaderboardSection({
               className={`lead-tab ${filter === 'all' ? 'active' : ''}`}
               onClick={() => setFilter('all')}
             >
-              🌟 Semua Kategori
+              Semua Kategori
             </button>
             <button
               className={`lead-tab ${filter === 'solo' ? 'active' : ''}`}
               onClick={() => setFilter('solo')}
             >
-              🎯 Solo Time Attack
+              Solo Time Attack
             </button>
             <button
               className={`lead-tab ${filter === 'versus' ? 'active' : ''}`}
               onClick={() => setFilter('versus')}
             >
-              ⚔️ Duel 1 vs 1 (Duo)
+              Duel 1 vs 1 (Duo)
             </button>
           </div>
         </div>
@@ -164,7 +169,7 @@ export default function LeaderboardSection({
 
             {/* Rank 1 */}
             <div className="podium-item podium-gold">
-              <div className="crown-icon">👑</div>
+              <div className="crown-icon">TOP 1</div>
               <div className="podium-avatar gold-avatar">{activeLeaderboard[0].avatar}</div>
               <div className="podium-rank-badge gold-badge">#1 Juara 1</div>
               <div className="podium-name">{activeLeaderboard[0].name}</div>
@@ -214,15 +219,15 @@ export default function LeaderboardSection({
                     <span className="user-name">
                       {user.name}
                       {currentUser?.isLoggedIn && currentUser.name === user.name && (
-                        <span className="current-user-tag">👑 Kamu</span>
+                        <span className="current-user-tag">Kamu</span>
                       )}
                     </span>
                   </td>
                   <td>
                     <span className="user-badge-tag">{user.badge}</span>
                   </td>
-                  <td className="stat-cell">🔥 {user.streak}x</td>
-                  <td className="stat-cell">⚔️ {user.versusWins} Win</td>
+                  <td className="stat-cell">{user.streak}x</td>
+                  <td className="stat-cell">{user.versusWins} Win</td>
                   <td className="score-cell">
                     <strong>{user.score}</strong> Pts
                   </td>
@@ -239,10 +244,10 @@ export default function LeaderboardSection({
           </div>
           <div className="cta-btn-group">
             <button className="btn-lead-action btn-solo" onClick={onStartSolo}>
-              🎯 Main Solo Quiz
+              Main Solo Quiz
             </button>
             <button className="btn-lead-action btn-versus" onClick={onStartVersus}>
-              ⚔️ Duel 1 vs 1
+              Duel 1 vs 1
             </button>
           </div>
         </div>

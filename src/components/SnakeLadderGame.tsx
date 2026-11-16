@@ -210,10 +210,10 @@ interface PlayerData {
 }
 
 const DEFAULT_PLAYERS: PlayerData[] = [
-  { id: 1, name: 'Anak 1 (Merah)', avatar: '🤠', color: '#ef4444', bgBadge: '#fee2e2', borderColor: '#b91c1c', pos: 1, isBot: false },
-  { id: 2, name: 'Anak 2 (Biru)', avatar: '🐱', color: '#0284c7', bgBadge: '#e0f2fe', borderColor: '#0369a1', pos: 1, isBot: false },
-  { id: 3, name: 'Anak 3 (Kuning)', avatar: '🦊', color: '#f59e0b', bgBadge: '#fef3c7', borderColor: '#b45309', pos: 1, isBot: false },
-  { id: 4, name: 'Anak 4 (Hijau)', avatar: '🐸', color: '#10b981', bgBadge: '#d1fae5', borderColor: '#047857', pos: 1, isBot: false }
+  { id: 1, name: 'Anak 1 (Merah)', avatar: 'P1', color: '#ef4444', bgBadge: '#fee2e2', borderColor: '#b91c1c', pos: 1, isBot: false },
+  { id: 2, name: 'Anak 2 (Biru)', avatar: 'P2', color: '#0284c7', bgBadge: '#e0f2fe', borderColor: '#0369a1', pos: 1, isBot: false },
+  { id: 3, name: 'Anak 3 (Kuning)', avatar: 'P3', color: '#f59e0b', bgBadge: '#fef3c7', borderColor: '#b45309', pos: 1, isBot: false },
+  { id: 4, name: 'Anak 4 (Hijau)', avatar: 'P4', color: '#10b981', bgBadge: '#d1fae5', borderColor: '#047857', pos: 1, isBot: false }
 ];
 
 // Classic Snakes and Ladders Configuration
@@ -375,7 +375,7 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
     setWinnerPlayer(null);
     setShowWhooshBanner(false);
     setGameState('playing');
-    showToast(`🎲 Game Started! Giliran ${initialPlayers[0].name}`);
+    showToast(`Game Started! Giliran ${initialPlayers[0].name}`);
   };
 
   // Custom Gliding Position State for Pawns (for ladder climbing & snake sliding)
@@ -408,7 +408,7 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
 
       setClimbingAction({
         playerIdx: playerIndex,
-        text: `🪜 Naik Tangga! (${fromTile} ➔ ${toTile})`,
+        text: `Naik Tangga! (${fromTile} -> ${toTile})`,
         type: 'ladder'
       });
 
@@ -471,7 +471,7 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
       const midY = (hPos.y + tPos.y) / 2 + perpY;
 
       // ==========================================
-      // PHASE 1: CHOMP / GULP AT SNAKE HEAD 👄
+      // PHASE 1: CHOMP / GULP AT SNAKE HEAD
       // ==========================================
       sounds.playSnakeHiss();
       setSwallowAnim({
@@ -488,7 +488,7 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
 
       setClimbingAction({
         playerIdx: playerIndex,
-        text: `👄 NYAM! Ditelan Ular di Kotak ${headTile}!`,
+        text: `NYAM! Ditelan Ular di Kotak ${headTile}!`,
         type: 'snake'
       });
 
@@ -496,13 +496,13 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
       await new Promise((r) => setTimeout(r, 450));
 
       // ==========================================
-      // PHASE 2: SWALLOWED BULGE TRAVELS DOWN SNAKE BODY 🐍
+      // PHASE 2: SWALLOWED BULGE TRAVELS DOWN SNAKE BODY
       // ==========================================
       sounds.playSwallowGulp();
 
       setClimbingAction({
         playerIdx: playerIndex,
-        text: `🐍 GULP! Di Dalam Perut Ular (${headTile} ➔ ${tailTile})`,
+        text: `GULP! Di Dalam Perut Ular (${headTile} -> ${tailTile})`,
         type: 'snake'
       });
 
@@ -544,7 +544,7 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
       }
 
       // ==========================================
-      // PHASE 3: POPPED OUT AT TAIL 💨
+      // PHASE 3: POPPED OUT AT TAIL
       // ==========================================
       setSwallowAnim({
         active: true,
@@ -560,7 +560,7 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
 
       setClimbingAction({
         playerIdx: playerIndex,
-        text: `💨 POOF! Exit di Kotak ${tailTile}! 😵`,
+        text: `POOF! Exit di Kotak ${tailTile}!`,
         type: 'snake'
       });
 
@@ -629,7 +629,7 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
           await new Promise((r) => setTimeout(r, 200));
         }
 
-        showToast(`🔄 Membal! Lewat ${stepsBackward} langkah dari 100, mundur ke kotak ${finalTarget}!`);
+        showToast(`Membal! Lewat ${stepsBackward} langkah dari 100, mundur ke kotak ${finalTarget}!`);
       }
 
       setIsMoving(false);
@@ -664,7 +664,7 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
       // 2. LADDER ENCOUNTER (CLIMB DIRECTLY UP THE LADDER!)
       if (LADDER_MAP[landedTile]) {
         const ladderTop = LADDER_MAP[landedTile];
-        showToast(`🪜 ${curPlayer.name} MENEMUKAN TANGGA! Naik meluncur dari kotak ${landedTile} ke ${ladderTop}!`);
+        showToast(`${curPlayer.name} MENEMUKAN TANGGA! Naik meluncur dari kotak ${landedTile} ke ${ladderTop}!`);
 
         await new Promise((r) => setTimeout(r, 350));
         await glideLadder(playerIndex, landedTile, ladderTop);
@@ -703,10 +703,10 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
           const botEscapes = Math.random() < 0.5;
           if (botEscapes) {
             sounds.playEscapeCheer();
-            showToast(`🛡️ ${curPlayer.name} (Bot) memecahkan soal & selamat dari ular di ${landedTile}!`);
+            showToast(`${curPlayer.name} (Bot) memecahkan soal & selamat dari ular di ${landedTile}!`);
             nextTurn();
           } else {
-            showToast(`🐍 ${curPlayer.name} (Bot) digigit ular di kotak ${landedTile} & meluncur turun!`);
+            showToast(`${curPlayer.name} (Bot) digigit ular di kotak ${landedTile} & meluncur turun!`);
             await slideSnake(playerIndex, landedTile, snakeTail);
             nextTurn();
           }
@@ -810,7 +810,7 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
 
     if (isCorrect) {
       sounds.playEscapeCheer();
-      showToast(`🎉 CORRECT ANSWER! ${player.name} selamat dari gigitan ular & tetap di kotak ${snakeHead}!`);
+      showToast(`CORRECT ANSWER! ${player.name} selamat dari gigitan ular & tetap di kotak ${snakeHead}!`);
 
       setTimeout(() => {
         setActiveQuiz(null);
@@ -824,7 +824,7 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
         setActiveQuiz(null);
         setSelectedAnsIdx(null);
 
-        showToast(`❌ Wrong jawab! ${player.name} digigit ular di kotak ${snakeHead} & meluncur ke kotak ${snakeTail}!`);
+        showToast(`Wrong jawab! ${player.name} digigit ular di kotak ${snakeHead} & meluncur ke kotak ${snakeTail}!`);
         await slideSnake(activePlayerIdx, snakeHead, snakeTail);
         nextTurn();
       }, 700);
@@ -859,12 +859,12 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
         </button>
 
         <div className="nav-title-box">
-          <span className="title-emoji">🐍🪜</span> ULAR TANGGA MATEMATIKA
+          ULAR TANGGA MATEMATIKA
         </div>
 
         <div className="nav-mode-tags">
-          <span className="mode-pill">👥 {playerCount} Anak</span>
-          <span className="mode-pill">🎲 {diceMode === 1 ? '1 Dadu' : '2 Dadu'}</span>
+          <span className="mode-pill">{playerCount} Anak</span>
+          <span className="mode-pill">{diceMode === 1 ? '1 Dadu' : '2 Dadu'}</span>
         </div>
       </div>
 
@@ -902,7 +902,6 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
                     {/* Tile 100 Grand Trophy */}
                     {isTile100 && (
                       <div className="trophy-100-badge">
-                        <span className="trophy-icon">🏆</span>
                         <strong className="trophy-label">JUARA 1</strong>
                       </div>
                     )}
@@ -933,13 +932,10 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
                 let swallowClass = '';
                 if (isSwallowed) {
                   if (swallowAnim.phase === 'chomp') {
-                    avatarDisplay = '😱';
                     swallowClass = 'pawn-being-chomped';
                   } else if (swallowAnim.phase === 'swallowing') {
-                    avatarDisplay = '😵';
                     swallowClass = 'pawn-inside-stomach';
                   } else if (swallowAnim.phase === 'popped') {
-                    avatarDisplay = '😵💫';
                     swallowClass = 'pawn-popped-tail';
                   }
                 }
@@ -959,9 +955,6 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
                     title={`${p.name} (Kotak ${p.pos})`}
                   >
                     <span className="pawn-avatar-char">{avatarDisplay}</span>
-                    {isSwallowed && swallowAnim.phase === 'swallowing' && (
-                      <span className="swallow-sweat-drop">💦</span>
-                    )}
                   </div>
                 );
               })}
@@ -1160,7 +1153,7 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
                         <ellipse cx="0" cy="0" rx={isGiant ? '32' : '25'} ry={isGiant ? '22' : '17'} fill={snake.color} stroke="#000" strokeWidth="3.5" />
                         {/* Stomach Yellow Scales Pattern */}
                         <ellipse cx="0" cy="0" rx={isGiant ? '22' : '17'} ry={isGiant ? '14' : '11'} fill="#fef08a" opacity="0.85" stroke="#ca8a04" strokeWidth="1.5" strokeDasharray="4,4" />
-                        {/* Digested Sparkles / Bubbles ✨ */}
+                        {/* Digested Sparkles / Bubbles */}
                         <circle cx="-12" cy="-6" r="3.5" fill="#fff" opacity="0.9" />
                         <circle cx="10" cy="5" r="2.5" fill="#fff" opacity="0.9" />
                         <circle cx="4" cy="-7" r="2" fill="#fff" opacity="0.9" />
@@ -1185,7 +1178,7 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
                       fill="none"
                     />
 
-                    {/* ANIMATED OPEN CHOMPING JAWS WITH SHARP FANGS 👄 */}
+                    {/* ANIMATED OPEN CHOMPING JAWS WITH SHARP FANGS */}
                     {isSwallowingThisSnake && swallowAnim?.phase === 'chomp' && (
                       <g>
                         {/* Red Open Gullet / Throat Cavity */}
@@ -1202,7 +1195,7 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
                         
                         {/* Comic Crunch Text */}
                         <text x={hx} y={hy - 26} fontSize="18" fontWeight="900" fill="#facc15" textAnchor="middle" stroke="#000" strokeWidth="3" paintOrder="stroke fill">
-                          CHOMP! 👄
+                          CHOMP!
                         </text>
                       </g>
                     )}
@@ -1210,11 +1203,9 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
                     {/* Snake Tail Tip */}
                     <circle cx={tx} cy={ty} r={isGiant ? '6' : '5'} fill={snake.color} stroke="#000" strokeWidth="1.5" />
 
-                    {/* ANIMATED POOF / SPIT AT TAIL 💨 */}
+                    {/* ANIMATED POOF / SPIT AT TAIL */}
                     {isSwallowingThisSnake && swallowAnim?.phase === 'popped' && (
                       <g>
-                        <text x={tx - 14} y={ty - 12} fontSize="26">💫</text>
-                        <text x={tx + 8} y={ty - 6} fontSize="22">💨</text>
                         <circle cx={tx} cy={ty} r="22" fill="none" stroke="#facc15" strokeWidth="3" opacity="0.85" strokeDasharray="5,3" />
                       </g>
                     )}
@@ -1243,7 +1234,7 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
                 {currentPlayer.name}
               </h3>
             </div>
-            {currentPlayer.isBot && <span className="bot-pill-badge">🤖 BOT</span>}
+            {currentPlayer.isBot && <span className="bot-pill-badge">BOT</span>}
           </div>
 
           {/* 4 Player Status Cards */}
@@ -1279,7 +1270,7 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
           {/* 3D Realistic Tumbling Dice Action Center */}
           <div className="dice-control-box">
             <h4 className="dice-box-title">
-              {diceMode === 1 ? '🎲 1 Dadu (1 - 6)' : '🎲 2 Dadu (2 - 12)'}
+              {diceMode === 1 ? '1 Dadu (1 - 6)' : '2 Dadu (2 - 12)'}
             </h4>
 
             <div className="dice-cubes-row">
@@ -1322,7 +1313,7 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
               onClick={rollDice}
               disabled={isRolling || isMoving || Boolean(activeQuiz) || currentPlayer.isBot || gameState !== 'playing'}
             >
-              {isRolling ? '🎲 Mengocok Dadu...' : isMoving ? '🚶 Melangkah...' : '🎲 LEMPAR DADU!'}
+              {isRolling ? 'Mengocok Dadu...' : isMoving ? 'Melangkah...' : 'LEMPAR DADU!'}
             </button>
           </div>
         </div>
@@ -1334,7 +1325,6 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
       {gameState === 'setup' && (
         <div className="snake-overlay-backdrop">
           <div className="snake-setup-modal">
-            <div className="modal-hero-icon">🐍 🏆 🪜</div>
             <h1 className="modal-hero-title">ULAR TANGGA MATEMATIKA</h1>
             <p className="modal-hero-sub">
               Select jumlah anak, tentukan mode dadu, dan bersainglah mencapai kotak 100 Juara 1!
@@ -1351,7 +1341,6 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
                     className={`config-choice-btn ${playerCount === num ? 'selected' : ''}`}
                     onClick={() => setPlayerCount(num)}
                   >
-                    <span>👥</span>
                     <strong>{num} Anak</strong>
                   </button>
                 ))}
@@ -1367,7 +1356,6 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
                   className={`config-choice-btn ${diceMode === 1 ? 'selected' : ''}`}
                   onClick={() => setDiceMode(1)}
                 >
-                  <span>🎲</span>
                   <strong>1 Dadu (Klasik)</strong>
                 </button>
 
@@ -1376,7 +1364,6 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
                   className={`config-choice-btn ${diceMode === 2 ? 'selected' : ''}`}
                   onClick={() => setDiceMode(2)}
                 >
-                  <span>🎲🎲</span>
                   <strong>2 Dadu (Fast)</strong>
                 </button>
               </div>
@@ -1391,7 +1378,6 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
                   className={`config-choice-btn ${!isBotMode ? 'selected' : ''}`}
                   onClick={() => setIsBotMode(false)}
                 >
-                  <span>👨‍👩‍👦‍👦</span>
                   <strong>Main Bareng Teman</strong>
                 </button>
 
@@ -1400,7 +1386,6 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
                   className={`config-choice-btn ${isBotMode ? 'selected' : ''}`}
                   onClick={() => setIsBotMode(true)}
                 >
-                  <span>🤖</span>
                   <strong>Main Lawan Komputer (Bot)</strong>
                 </button>
               </div>
@@ -1421,17 +1406,16 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
         <div className="snake-overlay-backdrop">
           <div className="snake-quiz-dialog">
             <div className="quiz-dialog-header">
-              <span className="snake-alert-tag">⚠️ KENA ULAR DI KOTAK {activeQuiz.snakeHead}!</span>
+              <span className="snake-alert-tag">KENA ULAR DI KOTAK {activeQuiz.snakeHead}!</span>
               <span style={{ backgroundColor: '#e0e7ff', color: '#3730a3', fontWeight: 800, padding: '4px 10px', borderRadius: '6px', fontSize: '0.82rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                📚 {activeQuiz.quiz.topic}
+                {activeQuiz.quiz.topic}
               </span>
               <span className={`quiz-timer-pill ${quizTimer <= 6 ? 'timer-danger' : ''}`}>
-                ⏱️ {quizTimer}s
+                {quizTimer}s
               </span>
             </div>
 
-            <div className="quiz-avatar-scene">🐍 💨</div>
-            <div className="quiz-for-player">Turn<strong>{activeQuiz.player.name}</strong> menjawab:
+            <div className="quiz-for-player">Turn <strong>{activeQuiz.player.name}</strong> menjawab:
             </div>
             <h2 className="quiz-math-equation">{activeQuiz.quiz.prompt}</h2>
             <p className="quiz-help-text">
@@ -1471,8 +1455,6 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
       {gameState === 'gameover' && winnerPlayer && (
         <div className="snake-overlay-backdrop">
           <div className={`whoosh-winner-modal ${showWhooshBanner ? 'whoosh-in' : ''}`}>
-            <div className="whoosh-sparkles">✨ 🌟 🎆 🌟 ✨</div>
-            <div className="winner-big-trophy">🏆 🥇 👑</div>
             <h1 className="whoosh-headline">WOOOOOSHHH! JUARA 1!</h1>
 
             <div className="winner-highlight-card" style={{ borderColor: winnerPlayer.color }}>
@@ -1490,10 +1472,10 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
 
             <div className="winner-action-buttons">
               <button type="button" className="btn-replay-game" onClick={handleStartGame}>
-                🔄 Play Again
+                Play Again
               </button>
               <button type="button" className="btn-back-hub" onClick={onBackToMenu}>
-                🏠 Menu Game
+                Menu Game
               </button>
             </div>
           </div>
