@@ -183,7 +183,7 @@ function createPipeObstacle(id: number, x: number, op: MathOperator, forceQuiz?:
   }
 
   const bottomPipeY = topPipeHeight + gapHeight;
-  const hasQuiz = forceQuiz !== undefined ? forceQuiz : (Math.random() < 0.45);
+  const hasQuiz = forceQuiz === true;
   const question = hasQuiz ? generateEasyQuizQuestion(op) : undefined;
 
   return {
@@ -1015,6 +1015,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
     invincibleFrames: 0,
     pipes: [] as PipeObstacle[],
     pipesClearedCount: 0,
+    pipesSinceQuiz: 0,
     nextPipeId: 1,
     items: [] as PickupItem[],
     gateSpeed: 2.8,
@@ -1133,13 +1134,13 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
   const startGame = useCallback(() => {
     isAnsweringRef.current = false;
     const p1 = createPipeObstacle(1, 480, selectedOp, false);
-    const p2 = createPipeObstacle(2, 740, selectedOp, true);
-    const p3 = createPipeObstacle(3, 1000, selectedOp, false);
+    const p2 = createPipeObstacle(2, 760, selectedOp, false);
+    const p3 = createPipeObstacle(3, 1040, selectedOp, false);
 
     const initialCoins: PickupItem[] = [
       { id: 1, x: 330, y: 220, type: 'coin', radius: 14, collected: false, floatAngle: 0 },
       { id: 2, x: 610, y: (p1.topPipeHeight + p1.bottomPipeY) / 2, type: 'coin', radius: 14, collected: false, floatAngle: 1.5 },
-      { id: 3, x: 870, y: (p2.topPipeHeight + p2.bottomPipeY) / 2, type: 'coin', radius: 14, collected: false, floatAngle: 3.0 },
+      { id: 3, x: 890, y: (p2.topPipeHeight + p2.bottomPipeY) / 2, type: 'coin', radius: 14, collected: false, floatAngle: 3.0 },
     ];
 
     engineRef.current = {
@@ -1153,6 +1154,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
       invincibleFrames: 0,
       pipes: [p1, p2, p3],
       pipesClearedCount: 0,
+      pipesSinceQuiz: 0,
       nextPipeId: 4,
       items: initialCoins,
       gateSpeed: 2.8,
@@ -1749,8 +1751,14 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
 
             if (rightmostX < width + 100) {
               eng.nextPipeId += 1;
-              const newX = Math.max(width + 80, rightmostX + 260);
-              const newPipe = createPipeObstacle(eng.nextPipeId, newX, eng.op);
+              eng.pipesSinceQuiz = (eng.pipesSinceQuiz || 0) + 1;
+              // Munculkan quiz setiap 5 pipa agar tidak spam soal
+              const shouldHaveQuiz = eng.pipesSinceQuiz >= 5;
+              if (shouldHaveQuiz) {
+                eng.pipesSinceQuiz = 0;
+              }
+              const newX = Math.max(width + 80, rightmostX + 270);
+              const newPipe = createPipeObstacle(eng.nextPipeId, newX, eng.op, shouldHaveQuiz);
               eng.pipes.push(newPipe);
 
               // Spawn coins in gap or between pipes

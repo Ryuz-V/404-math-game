@@ -7,7 +7,7 @@ import { getMathVideoForTopic } from '../data/mathVideos';
 export const TOPIC_PDF_MAP: Record<string, string> = {
   'grade-10-exponents': 'Exponents & Logarithms.pdf',
   'grade-10-quadratics': 'Quadratic Equations & Functions.pdf',
-  'grade-10-spltv': 'System of Linear Equations.pdf',
+  'grade-10-spltv': 'Sistem Persamaan Linear Tiga Variabel.pdf',
   'grade-10-trigonometry': 'Basic Trigonometry & Triangle Rules .pdf',
   'grade-10-sequences': 'Barisan dan Deret Geometri.pdf',
   'grade-11-functions': 'Composite & Inverse Functions.pdf',
@@ -149,8 +149,178 @@ export default function MaterialSection({ onStartSoloWithTopic, initialTopicId }
                       fontSize: '22px',
                       flexShrink: 0
                     }}>
-                      📄
+                      {tab.count}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* =============================================================== */}
+          {/* SECTION 1: TEORI & KONSEP PEMBELAJARAN */}
+          {/* =============================================================== */}
+          {(activeTab === 'all' || activeTab === 'konsep') && (
+            <div style={{
+              backgroundColor: '#ffffff',
+              borderRadius: '16px',
+              padding: '28px',
+              border: '1.5px solid #e2e8f0',
+              marginBottom: '24px',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.03)'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px', borderBottom: '1px solid #f1f5f9', paddingBottom: '14px' }}>
+                <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', margin: 0 }}>
+                  Teori & Capaian Pembelajaran
+                </h2>
+              </div>
+
+              {/* PDF Module Action Card */}
+              {TOPIC_PDF_MAP[activeModalTopic.id] && (
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  backgroundColor: '#ffffff',
+                  border: '1.5px solid #fecaca',
+                  borderRadius: '12px',
+                  padding: '16px 20px',
+                  marginBottom: '20px',
+                  flexWrap: 'wrap',
+                  gap: '14px',
+                  boxShadow: '0 2px 6px rgba(239, 68, 68, 0.06)'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                    <div style={{
+                      width: '42px',
+                      height: '42px',
+                      borderRadius: '8px',
+                      backgroundColor: '#fee2e2',
+                      color: '#dc2626',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontWeight: 900,
+                      fontSize: '14px'
+                    }}>
+                      PDF
                     </div>
+                    <div>
+                      <h4 style={{ fontSize: '15px', fontWeight: 800, color: '#0f172a', margin: '0 0 3px 0' }}>
+                        Modul Kurikulum Resmi Kemendikbud
+                      </h4>
+                      <p style={{ fontSize: '12px', color: '#64748b', margin: 0 }}>
+                        {TOPIC_PDF_MAP[activeModalTopic.id]} • Buku Referensi Standar SMA
+                      </p>
+                    </div>
+                  </div>
+
+                  <a
+                    href={`/assets/file%20materi/${encodeURIComponent(TOPIC_PDF_MAP[activeModalTopic.id])}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      backgroundColor: '#dc2626',
+                      color: '#ffffff',
+                      padding: '9px 18px',
+                      borderRadius: '8px',
+                      fontSize: '13px',
+                      fontWeight: 700,
+                      textDecoration: 'none',
+                      boxShadow: '0 2px 6px rgba(220, 38, 38, 0.25)',
+                      transition: 'all 0.15s ease'
+                    }}
+                  >
+                    <span>Buka Modul PDF</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                      <polyline points="15 3 21 3 21 9"></polyline>
+                      <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
+                  </a>
+                </div>
+              )}
+              
+              {/* Detailed Overview Box */}
+              <div style={{
+                backgroundColor: '#f8fafc',
+                borderRadius: '12px',
+                padding: '18px 22px',
+                marginBottom: '24px',
+                border: '1px solid #e2e8f0'
+              }}>
+                <h3 style={{ fontSize: '15px', fontWeight: 800, color: '#0f172a', margin: '0 0 8px 0' }}>
+                  Penjelasan Umum & Relevansi Kurikulum
+                </h3>
+                <p style={{ fontSize: '14px', color: '#475569', lineHeight: 1.7, margin: 0 }}>
+                  {activeModalTopic.detailedOverview}
+                </p>
+              </div>
+
+              {/* Core Concepts Cards */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                {activeModalTopic.coreConcepts.map((section, idx) => (
+                  <div key={idx} style={{
+                    backgroundColor: '#ffffff',
+                    border: '1px solid #e2e8f0',
+                    borderRadius: '12px',
+                    padding: '18px 22px'
+                  }}>
+                    <h3 style={{ fontSize: '16px', fontWeight: 800, color: '#0f172a', margin: '0 0 12px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span style={{ color: '#64748b', fontWeight: 800 }}>{idx + 1}.</span>
+                      <span>{section.title}</span>
+                    </h3>
+                    <ul style={{ margin: 0, paddingLeft: '22px', color: '#475569', fontSize: '14px', lineHeight: 1.7 }}>
+                      {section.points.map((pt, pIdx) => (
+                        <li key={pIdx} style={{ marginBottom: '6px' }}>
+                          {pt}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* =============================================================== */}
+          {/* SECTION 2: RUMUS-RUMUS PENTING */}
+          {/* =============================================================== */}
+          {(activeTab === 'all' || activeTab === 'rumus') && activeModalTopic.keyFormulas.length > 0 && (
+            <div style={{
+              backgroundColor: '#ffffff',
+              borderRadius: '16px',
+              padding: '28px',
+              border: '1.5px solid #e2e8f0',
+              marginBottom: '24px',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.03)'
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', borderBottom: '1px solid #f1f5f9', paddingBottom: '14px', flexWrap: 'wrap', gap: '8px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', margin: 0 }}>
+                    Rumus Penting ({activeModalTopic.keyFormulas.length})
+                  </h2>
+                </div>
+                <span style={{ fontSize: '12px', color: '#64748b' }}>
+                  Klik tombol salin untuk menyimpan rumus
+                </span>
+              </div>
+
+              {/* Grid 2 Columns on Desktop */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '16px' }}>
+                {activeModalTopic.keyFormulas.map((f, idx) => (
+                  <div key={idx} style={{
+                    backgroundColor: '#ffffff',
+                    border: '1.5px solid #e2e8f0',
+                    borderRadius: '12px',
+                    padding: '18px 20px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between'
+                  }}>
                     <div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                         <h3 style={{ fontSize: '15px', fontWeight: 700, color: '#111827', margin: 0 }}>

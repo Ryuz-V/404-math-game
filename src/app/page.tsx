@@ -976,8 +976,9 @@ export default function Home() {
             <div className="footer-links-group">
               <h4>Credit</h4>
               <ul>
-                <li><Link href="#">@urdhajathniel@gmail.com</Link></li>
-                <li><Link href="#">@anonim</Link></li>
+                <li><Link href="mailto:urdhajathniel@gmail.com">@urdhajathniel@gmail.com</Link></li>
+                <li><Link href="mailto:hafidzalqudsi80@gmail.com">@hafidzalqudsi80@gmail.com</Link></li>
+                <li><Link href="#">@antigravity.ai</Link></li>
               </ul>
             </div>
           </div>

@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { UserQuiz } from '../types/quiz';
 import { getUserQuizzes, deleteUserQuiz, saveUserQuiz } from '../utils/quizStorage';
+import { DEFAULT_FEATURED_QUIZZES } from '../data/defaultQuizzes';
 
 interface QuizLibraryProps {
   onSelectQuiz: (topicId: string, customQuiz?: UserQuiz) => void;
@@ -14,7 +15,7 @@ export default function QuizLibrary({ onSelectQuiz, onOpenEditor, onOpenUpload }
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [userQuizzes, setUserQuizzes] = useState<UserQuiz[]>([]);
-  const [publicQuizzes, setPublicQuizzes] = useState<UserQuiz[]>([]);
+  const [publicQuizzes, setPublicQuizzes] = useState<UserQuiz[]>(DEFAULT_FEATURED_QUIZZES);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [isNewQuizModalOpen, setIsNewQuizModalOpen] = useState(false);
   const [newQuizTitle, setNewQuizTitle] = useState('');
@@ -23,14 +24,24 @@ export default function QuizLibrary({ onSelectQuiz, onOpenEditor, onOpenUpload }
   useEffect(() => {
     // Fetch public quizzes from database
     import('../app/actions/quizzes').then(({ getPublicQuizzesFromDb, getUserQuizzesFromDb }) => {
-      getPublicQuizzesFromDb().then(setPublicQuizzes).catch(console.error);
+      getPublicQuizzesFromDb().then((dbQuizzes) => {
+        if (dbQuizzes && dbQuizzes.length > 0) {
+          const dbIds = new Set(dbQuizzes.map(q => q.id));
+          const combined = [...dbQuizzes, ...DEFAULT_FEATURED_QUIZZES.filter(q => !dbIds.has(q.id))];
+          setPublicQuizzes(combined);
+        } else {
+          setPublicQuizzes(DEFAULT_FEATURED_QUIZZES);
+        }
+      }).catch(() => {
+        setPublicQuizzes(DEFAULT_FEATURED_QUIZZES);
+      });
+
       getUserQuizzesFromDb().then((res) => {
         setIsLoggedIn(!!res?.loggedIn);
         if (res && res.loggedIn) {
-          // If logged in, ONLY use DB quizzes for strict account separation
+          // If logged in, use DB quizzes
           setUserQuizzes(res.quizzes || []);
         } else {
-          // If not logged in, stick with empty quizzes
           setUserQuizzes([]);
         }
       }).catch(console.error);

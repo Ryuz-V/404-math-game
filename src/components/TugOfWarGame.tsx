@@ -459,6 +459,7 @@ function drawTugAthlete(
 export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameProps) {
   const [gameMode, setGameMode] = useState<GameMode>('vs-bot');
   const [botDiff, setBotDiff] = useState<BotDifficulty>('medium');
+  const [botThinkingText, setBotThinkingText] = useState('🤖 AI sedang membaca soal...');
   const [gameState, setGameState] = useState<'lobby' | 'countdown' | 'playing' | 'gameover'>('lobby');
   const [countdown, setCountdown] = useState(3);
 
@@ -825,18 +826,34 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
     }
 
     const intervals: Record<BotDifficulty, { min: number; max: number; acc: number; force: number }> = {
-      easy: { min: 2800, max: 4500, acc: 0.65, force: 7 },
-      medium: { min: 2000, max: 3200, acc: 0.8, force: 9 },
-      hard: { min: 1400, max: 2400, acc: 0.9, force: 12 },
-      extreme: { min: 900, max: 1600, acc: 0.98, force: 15 }
+      easy: { min: 6000, max: 9500, acc: 0.45, force: 4 },
+      medium: { min: 4500, max: 7500, acc: 0.60, force: 6 },
+      hard: { min: 3200, max: 5500, acc: 0.75, force: 8 },
+      extreme: { min: 2200, max: 3800, acc: 0.85, force: 10 }
     };
 
     const config = intervals[botDiff];
+
+    const scheduleNextBotTick = () => {
+      setBotThinkingText('🤖 AI sedang membaca soal...');
+      const delay = Math.floor(Math.random() * (config.max - config.min)) + config.min;
+
+      setTimeout(() => {
+        setBotThinkingText('📐 AI sedang menghitung rumus & variabel...');
+      }, Math.floor(delay * 0.35));
+
+      setTimeout(() => {
+        setBotThinkingText('🤔 AI sedang menimbang opsi jawaban...');
+      }, Math.floor(delay * 0.75));
+
+      botIntervalRef.current = setTimeout(botTick, delay);
+    };
 
     const botTick = () => {
       const isCorrect = Math.random() < config.acc;
       if (isCorrect) {
         sounds.playPull();
+        setBotThinkingText('⚡ AI menjawab benar! Menarik tali!');
         setP2CorrectCount((c) => c + 1);
         setP2Streak((s) => s + 1);
         setP2PullEffect(true);
@@ -848,16 +865,15 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
           return nextPos;
         });
       } else {
+        setBotThinkingText('❌ AI salah hitung! Kehilangan tenaga.');
         setP2Streak(0);
       }
 
-      // Next bot pull
-      const nextDelay = Math.floor(Math.random() * (config.max - config.min)) + config.min;
-      botIntervalRef.current = setTimeout(botTick, nextDelay);
+      // Next bot pull after a pause
+      scheduleNextBotTick();
     };
 
-    const initialDelay = Math.floor(Math.random() * (config.max - config.min)) + config.min;
-    botIntervalRef.current = setTimeout(botTick, initialDelay);
+    scheduleNextBotTick();
 
     return () => {
       if (botIntervalRef.current) clearTimeout(botIntervalRef.current);
@@ -1123,10 +1139,10 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
                 <div className="bot-status-view">
                   <div className="bot-avatar">AI</div>
                   <h3>AI Math Engine Active</h3>
-                  <p>Bot is calculating solutions in real-time with {botDiff} level accuracy!</p>
-                  <div className="bot-power-indicator">
+                  <p>Bot is calculating solutions in real-time ({botDiff.toUpperCase()} mode)</p>
+                  <div className="bot-power-indicator" style={{ backgroundColor: 'rgba(255,255,255,0.08)', padding: '10px 16px', borderRadius: '10px', marginTop: '10px' }}>
                     <div className="bot-pulse-ring"></div>
-                    <span>Bot is pulling the rope...</span>
+                    <span style={{ fontWeight: 700, color: '#facc15' }}>{botThinkingText}</span>
                   </div>
                 </div>
               )}
