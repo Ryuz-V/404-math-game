@@ -63,6 +63,9 @@ export async function signup(formData: FormData) {
 
     return { success: true, user: { name: user.username, avatar: "👑", email: user.email } };
   } catch (error: any) {
+    if (error?.message?.includes("ECONNREFUSED") || error?.code === "ECONNREFUSED") {
+      return { error: "Database belum terhubung (ECONNREFUSED). Pastikan DATABASE_URL di file .env sudah diisi dan database aktif." };
+    }
     return { error: error.message };
   }
 }
@@ -92,6 +95,9 @@ export async function login(formData: FormData) {
 
     return { success: true, user: { name: user.username, avatar: "👑", email: user.email } };
   } catch (error: any) {
+    if (error?.message?.includes("ECONNREFUSED") || error?.code === "ECONNREFUSED") {
+      return { error: "Database belum terhubung (ECONNREFUSED). Pastikan DATABASE_URL di file .env sudah diisi dan database aktif." };
+    }
     return { error: error.message };
   }
 }
