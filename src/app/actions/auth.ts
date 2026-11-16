@@ -191,3 +191,90 @@ export async function getSession() {
     return null;
   }
 }
+
+export async function handleGoogleAuthCallback(userData: {
+  id: string;
+  email: string;
+  name?: string;
+  avatar?: string;
+}) {
+  const supabase = getSupabaseServerClient();
+  const email = userData.email;
+  if (!email) {
+    return { error: "No email provided by Google OAuth." };
+  }
+
+  try {
+    // 1. Check if user with this email exists
+    const { data: existingUser } = await supabase
+      .from("users")
+      .select("id, username, email")
+      .eq("email", email)
+      .maybeSingle();
+
+    let finalUser = existingUser;
+
+    if (!existingUser) {
+      // Clean up requested username
+      let baseUsername = (userData.name || email.split("@")[0] || "User").replace(/[^a-zA-Z0-9_-]/g, "");
+      if (!baseUsername || baseUsername.length < 2) baseUsername = "Player";
+      baseUsername = baseUsername.slice(0, 40);
+
+      // Verify username uniqueness
+      const { data: existingName } = await supabase
+        .from("users")
+        .select("id")
+        .eq("username", baseUsername)
+        .maybeSingle();
+
+      const finalUsername = existingName ? `${baseUsername}_${Math.floor(1000 + Math.random() * 9000)}` : baseUsername;
+
+      const { data: insertedUser, error: insertErr } = await supabase
+        .from("users")
+        .insert({
+          email,
+          username: finalUsername,
+          password_hash: "GOOGLE_OAUTH_ACCOUNT",
+        })
+        .select("id, username, email")
+        .single();
+
+      if (insertErr) {
+        console.error("Error inserting Google OAuth user into Supabase:", insertErr);
+        finalUser = { id: userData.id, username: finalUsername, email };
+      } else {
+        finalUser = insertedUser;
+      }
+    }
+
+    // 2. Create encrypted session JWT
+    const session = await encrypt({
+      user: {
+        id: finalUser?.id ? finalUser.id.toString() : userData.id,
+        name: finalUser?.username || userData.name || email.split("@")[0],
+        avatar: userData.avatar || "👑",
+        email: email,
+      },
+    });
+
+    const cookieStore = await cookies();
+    cookieStore.set("session", session, {
+      httpOnly: true,
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      path: "/",
+    });
+
+    return {
+      success: true,
+      user: {
+        name: finalUser?.username || userData.name || email.split("@")[0],
+        avatar: userData.avatar || "👑",
+        email: email,
+      },
+    };
+  } catch (err: any) {
+    console.error("handleGoogleAuthCallback error:", err);
+    return { error: err.message || "Failed to finalize Google login" };
+  }
+}
+

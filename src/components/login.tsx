@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import { login } from '../app/actions/auth';
+import { supabase } from '../lib/supabase';
 
 interface LoginProps {
   onClose?: () => void;
@@ -11,6 +12,40 @@ interface LoginProps {
 export default function Login({ onClose, onSwitchToSignup, onLoginSuccess }: LoginProps) {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+
+  const handleGoogleSignIn = async () => {
+    setError('');
+    setGoogleLoading(true);
+    try {
+      const redirectUrl = `${window.location.origin}/auth/callback`;
+      const { data, error: oauthErr } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: redirectUrl,
+        },
+      });
+
+      if (oauthErr) {
+        if (
+          oauthErr.message.toLowerCase().includes('not enabled') ||
+          oauthErr.message.toLowerCase().includes('unsupported')
+        ) {
+          setError(
+            'Google Sign-in belum diaktifkan di Supabase Dashboard. Aktifkan di Supabase -> Authentication -> Providers -> Google.'
+          );
+        } else {
+          setError(oauthErr.message);
+        }
+        setGoogleLoading(false);
+      } else if (data?.url) {
+        window.location.href = data.url;
+      }
+    } catch (err: any) {
+      setError(err.message || 'Gagal memulai login Google');
+      setGoogleLoading(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -237,20 +272,43 @@ export default function Login({ onClose, onSwitchToSignup, onLoginSuccess }: Log
 
           {/* Social Buttons */}
           <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <button style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: '100%',
-              backgroundColor: '#fff',
-              border: '2.5px solid #000',
-              borderRadius: '12px',
-              padding: '12px 0',
-              cursor: 'pointer',
-              position: 'relative',
-              boxShadow: '3px 3px 0px 0px #000',
-              transition: 'all 0.1s ease',
-            }}
+            <button
+              type="button"
+              onClick={handleGoogleSignIn}
+              disabled={googleLoading || loading}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '100%',
+                backgroundColor: '#fff',
+                border: '2.5px solid #000',
+                borderRadius: '12px',
+                padding: '12px 0',
+                cursor: googleLoading || loading ? 'not-allowed' : 'pointer',
+                position: 'relative',
+                boxShadow: '3px 3px 0px 0px #000',
+                transition: 'all 0.1s ease',
+                opacity: googleLoading ? 0.7 : 1,
+              }}
+              onMouseDown={(e) => {
+                if (!googleLoading && !loading) {
+                  e.currentTarget.style.transform = 'translate(2px, 2px)';
+                  e.currentTarget.style.boxShadow = '1px 1px 0px 0px #000';
+                }
+              }}
+              onMouseUp={(e) => {
+                if (!googleLoading && !loading) {
+                  e.currentTarget.style.transform = 'translate(0)';
+                  e.currentTarget.style.boxShadow = '3px 3px 0px 0px #000';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!googleLoading && !loading) {
+                  e.currentTarget.style.transform = 'translate(0)';
+                  e.currentTarget.style.boxShadow = '3px 3px 0px 0px #000';
+                }
+              }}
             >
               <svg style={{ position: 'absolute', left: '20px' }} width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -258,7 +316,9 @@ export default function Login({ onClose, onSwitchToSignup, onLoginSuccess }: Log
                 <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
                 <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
               </svg>
-              <span style={{ color: '#000', fontWeight: 800, fontSize: '14px' }}>Continue with Google</span>
+              <span style={{ color: '#000', fontWeight: 800, fontSize: '14px' }}>
+                {googleLoading ? 'Connecting to Google...' : 'Continue with Google'}
+              </span>
             </button>
           </div>
           <div style={{ marginTop: '32px', textAlign: 'center', width: '100%', padding: '0 8px' }}>

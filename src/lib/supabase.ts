@@ -10,7 +10,9 @@ export const supabase = createClient(
   supabaseAnonKey || "placeholder-anon-key",
   {
     auth: {
-      persistSession: false,
+      persistSession: typeof window !== "undefined",
+      autoRefreshToken: typeof window !== "undefined",
+      detectSessionInUrl: true,
     },
   }
 );
