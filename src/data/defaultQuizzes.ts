@@ -871,3 +871,4 @@ export const DEFAULT_FEATURED_QUIZZES: UserQuiz[] = [
     ]
   }
 ];
+
