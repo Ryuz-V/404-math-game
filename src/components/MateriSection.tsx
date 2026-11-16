@@ -73,8 +73,8 @@ export default function MaterialSection({ onStartSoloWithTopic, initialTopicId }
 
   if (activeModalTopic) {
     return (
-      <div style={{ backgroundColor: '#f9fafb', minHeight: '100vh', padding: '2rem', fontFamily: 'sans-serif' }}>
-        <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+      <div style={{ backgroundColor: '#f9fafb', minHeight: '100vh', padding: '2rem 1.25rem', fontFamily: 'sans-serif' }}>
+        <div style={{ maxWidth: '1280px', width: '100%', margin: '0 auto' }}>
           {/* Header */}
           <div style={{ marginBottom: '2rem' }}>
             <button

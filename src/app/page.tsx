@@ -402,7 +402,7 @@ export default function Home() {
             <section className="topics-section">
               <div className="section-header" style={{ maxWidth: '1200px', margin: '0 auto', marginBottom: '3rem' }}>
                 <div>
-                  <h2 className="section-title">Explore All Topics</h2>
+                  <h2 className="section-title">Explore All Topic</h2>
                   <p className="section-subtitle">
                     Explore exciting math topics, master new concepts, <br />
                     and challenge yourself with problems designed to make learning more fun and interactive.
@@ -594,11 +594,14 @@ export default function Home() {
                 <h1 className="games-hero-title">PLAYGROUND</h1>
                 <p className="games-hero-subtitle">Play that gets every student learning</p>
                 <div className="games-hero-buttons">
-                  <button className="games-btn-primary">
+                  <button 
+                    className="games-btn-primary"
+                    onClick={() => {
+                      const el = document.querySelector('.modern-games-grid');
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                  >
                     Try Playground &rarr;
-                  </button>
-                  <button className="games-btn-secondary">
-                    Leaderboard
                   </button>
                 </div>
               </div>
@@ -607,7 +610,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="menu-hub-container" style={{ minHeight: 'auto', paddingTop: '3.5rem', paddingBottom: '5rem' }}>
+            <div className="menu-hub-container" style={{ minHeight: 'auto' }}>
               <div className="modern-games-grid">
                 {/* Game Card 1: Snake & Ladders Math */}
                 <div
@@ -654,12 +657,12 @@ export default function Home() {
                     </div>
 
                     <p className="game-card-description">
-                      Roll the dice towards tile 100! If you land on a snake, solve the math problem within 20s to escape penalty!
+                      Roll the dice towards tile 100! If you land on a snake, solve high school math challenges (Calculus, Trigonometry, Statistics & Geometry) within 20s to escape penalty!
                     </p>
 
                     <div className="game-feature-tags">
                       <span className="feature-pill">🏁 100 Tiles</span>
-                      <span className="feature-pill">⏱️ 20s Speed</span>
+                      <span className="feature-pill">📐 4 Topic SMA</span>
                       <span className="feature-pill">🤖 Smart Bot</span>
                     </div>
 
@@ -683,7 +686,7 @@ export default function Home() {
                   {/* Top Visual Game Banner with Blurred In-Game Preview */}
                   <div className="game-card-banner banner-tug">
                     <div className="banner-gameplay-bg tug-gameplay-mockup">
-                      <div className="mockup-math-prompt">18 × 4 = ?</div>
+                      <div className="mockup-math-prompt">∫ 2x dx = ?</div>
                       <div className="mockup-tug-rope">
                         <div className="mockup-rope-line" />
                         <div className="mockup-rope-flag">🚩</div>
@@ -717,13 +720,13 @@ export default function Home() {
                     </div>
 
                     <p className="game-card-description">
-                      Rapidly solve (+, -, ×, :) arithmetic to pull the rope to your side and activate powerful Super Pull momentum!
+                      Rapidly solve Calculus, Trigonometry, Statistics & Geometry problems to pull the rope to your side and activate powerful Super Pull momentum!
                     </p>
 
                     <div className="game-feature-tags">
-                      <span className="feature-pill">⚡ Fast Math</span>
+                      <span className="feature-pill">∫ Kalkulus</span>
+                      <span className="feature-pill">📊 Statistika</span>
                       <span className="feature-pill">👥 1v1 Battle</span>
-                      <span className="feature-pill">🔥 Combo Meter</span>
                     </div>
 
                     <div className="game-card-cta">
@@ -749,11 +752,11 @@ export default function Home() {
                       <div className="mockup-score-hud">🪙 1,240 | ❤️❤️❤️</div>
                       <div className="mockup-pipes-row">
                         <div className="mockup-pipe top-pipe">
-                          <span>GATE A: 48</span>
+                          <span>sin 30° = 1/2</span>
                         </div>
                         <div className="mockup-bird-flying">🐦</div>
                         <div className="mockup-pipe bottom-pipe">
-                          <span>GATE B: 36</span>
+                          <span>tan 45° = 1</span>
                         </div>
                       </div>
                     </div>
@@ -781,12 +784,12 @@ export default function Home() {
                     </div>
 
                     <p className="game-card-description">
-                      Flap through Gate A & Gate B choosing the correct math answers! Collect shiny coins and bonus heart lives!
+                      Flap through Gate A & Gate B choosing the correct answers for Calculus, Trigonometry, Statistics & Geometry! Collect shiny coins and bonus heart lives!
                     </p>
 
                     <div className="game-feature-tags">
-                      <span className="feature-pill">🪽 Jump Timing</span>
-                      <span className="feature-pill">🪙 Coins & Lives</span>
+                      <span className="feature-pill">📐 Geometri</span>
+                      <span className="feature-pill">⚡ Trigo & Kal</span>
                       <span className="feature-pill">🏆 High Score</span>
                     </div>
 
@@ -845,9 +848,13 @@ export default function Home() {
                       <h3 className="game-card-title">Classic Duel 1v1</h3>
                     </div>
 
+                    <p className="game-card-description">
+                      Battle head-to-head on a shared keyboard! Race your opponent to solve rapid Calculus, Trigonometry, Statistics & Geometry problems and claim victory!
+                    </p>
+
                     <div className="game-feature-tags">
                       <span className="feature-pill">⌨️ 1 Keyboard</span>
-                      <span className="feature-pill">👑 Crown Match</span>
+                      <span className="feature-pill">👑 4 Materi SMA</span>
                       <span className="feature-pill">🎯 Precision</span>
                     </div>
 

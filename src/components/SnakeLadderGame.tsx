@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { getRandomGameQuestion } from '../data/gameMathQuestions';
 
 interface SnakeLadderGameProps {
   onBackToMenu: () => void;
@@ -176,59 +177,24 @@ class SnakeSoundSynth {
 
 const sounds = new SnakeSoundSynth();
 
-// Math Quiz Challenge Generator (+, -, ×, ÷)
+// Math Quiz Challenge Generator (Kalkulus, Trigonometri, Statistika, Geometri)
 interface MathQuizQuestion {
   prompt: string;
-  correct: number;
-  options: number[];
+  correct: string;
+  options: string[];
   correctIndex: number;
   topic: string;
 }
 
 function generateMathChallenge(): MathQuizQuestion {
-  const ops = ['add', 'sub', 'mul', 'div'];
-  const op = ops[Math.floor(Math.random() * ops.length)];
-  let prompt = '';
-  let correct = 0;
-  let topic = '';
-
-  if (op === 'add') {
-    topic = 'Penjumlahan (+)';
-    const a = Math.floor(Math.random() * 45) + 8;
-    const b = Math.floor(Math.random() * 45) + 8;
-    correct = a + b;
-    prompt = `${a} + ${b} = ?`;
-  } else if (op === 'sub') {
-    topic = 'Pengurangan (-)';
-    const a = Math.floor(Math.random() * 50) + 25;
-    const b = Math.floor(Math.random() * (a - 10)) + 6;
-    correct = a - b;
-    prompt = `${a} - ${b} = ?`;
-  } else if (op === 'mul') {
-    topic = 'Perkalian (×)';
-    const a = Math.floor(Math.random() * 11) + 2;
-    const b = Math.floor(Math.random() * 11) + 2;
-    correct = a * b;
-    prompt = `${a} × ${b} = ?`;
-  } else {
-    topic = 'Pembagian (:)';
-    const b = Math.floor(Math.random() * 10) + 2;
-    const ans = Math.floor(Math.random() * 12) + 2;
-    const a = b * ans;
-    correct = ans;
-    prompt = `${a} : ${b} = ?`;
-  }
-
-  const set = new Set<number>([correct]);
-  while (set.size < 4) {
-    const delta = (Math.floor(Math.random() * 7) + 1) * (Math.random() > 0.5 ? 1 : -1);
-    const fake = correct + delta;
-    if (fake >= 0) set.add(fake);
-  }
-  const options = Array.from(set).sort(() => Math.random() - 0.5);
-  const correctIndex = options.indexOf(correct);
-
-  return { prompt, correct, options, correctIndex, topic };
+  const q = getRandomGameQuestion();
+  return {
+    prompt: q.question,
+    correct: q.options[q.correctIndex],
+    options: q.options,
+    correctIndex: q.correctIndex,
+    topic: q.topicLabel
+  };
 }
 
 // Player Definition (Supports 2, 3, or 4 Players)
@@ -1359,22 +1325,6 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
               {isRolling ? '🎲 Mengocok Dadu...' : isMoving ? '🚶 Melangkah...' : '🎲 LEMPAR DADU!'}
             </button>
           </div>
-
-          {/* Quick Info Legend */}
-          <div className="quick-rules-card">
-            <div className="rule-item">
-              <span className="icon">🐍</span>
-              <p><strong>Ular:</strong> Question Matematika (20 Detik). Correct = Selamat! Wrong = Ditelan!</p>
-            </div>
-            <div className="rule-item">
-              <span className="icon">🪜</span>
-              <p><strong>Tangga:</strong> Otomatis naik meluncur ke puncak tangga!</p>
-            </div>
-            <div className="rule-item">
-              <span className="icon">🏆</span>
-              <p><strong>Kotak 100:</strong> Yang pertama sampai dinobatkan Juara 1!</p>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -1472,6 +1422,9 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
           <div className="snake-quiz-dialog">
             <div className="quiz-dialog-header">
               <span className="snake-alert-tag">⚠️ KENA ULAR DI KOTAK {activeQuiz.snakeHead}!</span>
+              <span style={{ backgroundColor: '#e0e7ff', color: '#3730a3', fontWeight: 800, padding: '4px 10px', borderRadius: '6px', fontSize: '0.82rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                📚 {activeQuiz.quiz.topic}
+              </span>
               <span className={`quiz-timer-pill ${quizTimer <= 6 ? 'timer-danger' : ''}`}>
                 ⏱️ {quizTimer}s
               </span>
@@ -2112,28 +2065,6 @@ export default function SnakeLadderGame({ onBackToMenu, onAddScore }: SnakeLadde
         .btn-roll-master:disabled {
           opacity: 0.55;
           cursor: not-allowed;
-        }
-
-        /* QUICK RULES CARD */
-        .quick-rules-card {
-          background: #1e293b;
-          border: 3px solid #000;
-          border-radius: 16px;
-          padding: 0.9rem 1.1rem;
-          box-shadow: 6px 6px 0 #000;
-        }
-        .rule-item {
-          display: flex;
-          gap: 0.6rem;
-          margin-bottom: 0.5rem;
-          font-size: 0.78rem;
-          line-height: 1.35;
-        }
-        .rule-item:last-child {
-          margin-bottom: 0;
-        }
-        .rule-item .icon {
-          font-size: 1.1rem;
         }
 
         /* ================================================================= */

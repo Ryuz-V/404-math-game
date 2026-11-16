@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { getRandomGameQuestion } from '../data/gameMathQuestions';
 
 interface FlappyBirdGameProps {
   onBackToMenu: () => void;
@@ -134,69 +135,23 @@ export type MathOperator = 'all' | 'add' | 'sub' | 'mul' | 'div';
 
 export interface MathQuizQuestion {
   prompt: string;
-  correct: number;
-  options: number[]; // 4 choices (A, B, C, D)
+  correct: string;
+  options: string[]; // 4 choices (A, B, C, D)
   correctIndex: number;
   topicName: string;
 }
 
 // ============================================================================
-// GENERATOR SOAL HITUNG CEPAT MUDAH DENGAN 4 PILIHAN (+, -, ×, ÷)
+// GENERATOR SOAL SMA: KALKULUS, TRIGONOMETRI, STATISTIKA, GEOMETRI
 // ============================================================================
-function generateEasyQuizQuestion(op: MathOperator): MathQuizQuestion {
-  let activeOp = op;
-  if (activeOp === 'all') {
-    const list: MathOperator[] = ['add', 'sub', 'mul', 'div'];
-    activeOp = list[Math.floor(Math.random() * list.length)];
-  }
-
-  let prompt = '';
-  let correct = 0;
-  let topicName = '';
-
-  if (activeOp === 'add') {
-    topicName = 'Penjumlahan (+)';
-    const a = Math.floor(Math.random() * 45) + 6;
-    const b = Math.floor(Math.random() * 45) + 6;
-    correct = a + b;
-    prompt = `${a} + ${b} = ?`;
-  } else if (activeOp === 'sub') {
-    topicName = 'Pengurangan (-)';
-    const a = Math.floor(Math.random() * 50) + 20;
-    const b = Math.floor(Math.random() * (a - 8)) + 4;
-    correct = a - b;
-    prompt = `${a} - ${b} = ?`;
-  } else if (activeOp === 'mul') {
-    topicName = 'Perkalian (×)';
-    const a = Math.floor(Math.random() * 11) + 2;
-    const b = Math.floor(Math.random() * 11) + 2;
-    correct = a * b;
-    prompt = `${a} × ${b} = ?`;
-  } else {
-    topicName = 'Pembagian (:)';
-    const b = Math.floor(Math.random() * 10) + 2;
-    const ans = Math.floor(Math.random() * 12) + 2;
-    const a = b * ans;
-    correct = ans;
-    prompt = `${a} : ${b} = ?`;
-  }
-
-  // Generate 4 distinct options
-  const set = new Set<number>([correct]);
-  while (set.size < 4) {
-    const delta = (Math.floor(Math.random() * 7) + 1) * (Math.random() > 0.5 ? 1 : -1);
-    const fake = correct + delta;
-    if (fake >= 0) set.add(fake);
-  }
-  const opts = Array.from(set).sort(() => Math.random() - 0.5);
-  const correctIdx = opts.indexOf(correct);
-
+function generateEasyQuizQuestion(_op?: MathOperator): MathQuizQuestion {
+  const q = getRandomGameQuestion();
   return {
-    prompt,
-    correct,
-    options: opts,
-    correctIndex: correctIdx,
-    topicName
+    prompt: q.question,
+    correct: q.options[q.correctIndex],
+    options: q.options,
+    correctIndex: q.correctIndex,
+    topicName: q.topicLabel
   };
 }
 

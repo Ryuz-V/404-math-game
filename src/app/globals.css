@@ -147,7 +147,6 @@ body {
 .nav-vertical-divider {
     width: 1.5px;
     height: 28px;
-    background-color: #e5e7eb;
     margin: 0 1.25rem;
 }
 
@@ -157,7 +156,7 @@ body {
     font-size: 0.95rem;
     font-weight: 700;
     padding: 0.55rem 1.35rem;
-    border-radius: 6px;
+    border-radius: 4px;
     border: 2px solid #000000;
     box-shadow: 4px 4px 0px 0px #000000;
     cursor: pointer;
@@ -1327,13 +1326,14 @@ body {
    Menu Selection Hub Screen
    ========================================= */
 .menu-hub-container {
-    padding: 4rem 8%;
+    padding: 3.5rem clamp(1.25rem, 3.5vw, 3rem) 5rem;
     min-height: calc(100vh - 80px);
     background-color: #f7f7f8;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 100%;
 }
 
 .menu-hub-header {
@@ -1373,18 +1373,26 @@ body {
    =================================================== */
 .modern-games-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(285px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
     width: 100%;
-    max-width: 1320px;
+    max-width: 1440px;
     margin-bottom: 3.5rem;
+}
+
+@media (max-width: 640px) {
+    .modern-games-grid {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+        gap: 1.25rem;
+    }
 }
 
 .modern-game-card {
     background-color: #ffffff;
-    border-radius: 22px;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.03);
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     overflow: hidden;
     cursor: pointer;
     display: flex;
@@ -1427,9 +1435,9 @@ body {
    Top Visual Game Banner
    ========================================= */
 .game-card-banner {
-    height: 165px;
+    height: 175px;
     position: relative;
-    padding: 1.1rem 1.25rem;
+    padding: 1.15rem 1.35rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -1791,6 +1799,7 @@ body {
     line-height: 1.5;
     margin-bottom: 1.25rem;
     flex: 1;
+    min-height: 44px;
 }
 
 /* Feature Tags */
@@ -1808,17 +1817,18 @@ body {
     font-size: 0.72rem;
     font-weight: 700;
     border-radius: 8px;
-    padding: 0.25rem 0.6rem;
+    padding: 0.28rem 0.62rem;
     display: inline-flex;
     align-items: center;
     gap: 4px;
+    white-space: nowrap;
 }
 
 /* Action CTA Bar */
 .game-card-cta {
     background-color: #0f172a;
     color: #ffffff;
-    border-radius: 14px;
+    border-radius: 8px;
     padding: 0.8rem 1.15rem;
     display: flex;
     align-items: center;

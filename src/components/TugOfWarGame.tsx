@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { getRandomGameQuestion } from '../data/gameMathQuestions';
 
 interface TugOfWarGameProps {
   onBackToMenu: () => void;
@@ -120,55 +121,19 @@ interface QuickMathQ {
   question: string;
   options: string[];
   correctIndex: number;
+  topic?: string;
 }
 
 // ============================================================================
-// GENERATOR SOAL HITUNG CEPAT RAPID-FIRE (+, -, ×, ÷)
+// GENERATOR SOAL SMA: KALKULUS, TRIGONOMETRI, STATISTIKA, GEOMETRI
 // ============================================================================
 function generateGrade12TugQuestion(): QuickMathQ {
-  const types = ['add', 'sub', 'mul', 'div'];
-  const t = types[Math.floor(Math.random() * types.length)];
-
-  let question = '';
-  let ans = 0;
-
-  if (t === 'add') {
-    const a = Math.floor(Math.random() * 60) + 8;
-    const b = Math.floor(Math.random() * 60) + 8;
-    ans = a + b;
-    question = `${a} + ${b} = ?`;
-  } else if (t === 'sub') {
-    const a = Math.floor(Math.random() * 70) + 20;
-    const b = Math.floor(Math.random() * (a - 10)) + 5;
-    ans = a - b;
-    question = `${a} - ${b} = ?`;
-  } else if (t === 'mul') {
-    const a = Math.floor(Math.random() * 11) + 2;
-    const b = Math.floor(Math.random() * 11) + 2;
-    ans = a * b;
-    question = `${a} × ${b} = ?`;
-  } else {
-    const b = Math.floor(Math.random() * 10) + 2;
-    const res = Math.floor(Math.random() * 12) + 2;
-    const a = b * res;
-    ans = res;
-    question = `${a} : ${b} = ?`;
-  }
-
-  // Generate 4 unique options
-  const set = new Set<number>([ans]);
-  while (set.size < 4) {
-    const delta = (Math.floor(Math.random() * 6) + 1) * (Math.random() > 0.5 ? 1 : -1);
-    const fake = ans + delta;
-    if (fake >= 0) set.add(fake);
-  }
-  const opts = Array.from(set).sort(() => Math.random() - 0.5);
-  const correctIdx = opts.indexOf(ans);
-
+  const q = getRandomGameQuestion();
   return {
-    question,
-    options: opts.map(String),
-    correctIndex: correctIdx
+    question: q.question,
+    options: q.options,
+    correctIndex: q.correctIndex,
+    topic: q.topicLabel
   };
 }
 
@@ -1068,7 +1033,7 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
 
               {/* Question Box */}
               <div className="tug-q-box">
-                <div className="q-label">Quick Math:</div>
+                <div className="q-label">📚 {p1Question.topic || 'SMA Math'}:</div>
                 <div className="q-text">{p1Question.question}</div>
               </div>
 
@@ -1122,7 +1087,7 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
               {gameMode === '2p-local' ? (
                 <>
                   <div className="tug-q-box">
-                    <div className="q-label">Quick Math:</div>
+                    <div className="q-label">📚 {p2Question.topic || 'SMA Math'}:</div>
                     <div className="q-text">{p2Question.question}</div>
                   </div>
 
@@ -1606,10 +1571,11 @@ export default function TugOfWarGame({ onBackToMenu, onAddScore }: TugOfWarGameP
           text-transform: uppercase;
         }
         .q-text {
-          font-size: 2rem;
+          font-size: clamp(1.2rem, 1.8vw, 1.6rem);
           font-weight: 900;
           color: #0f172a;
           margin-top: 0.2rem;
+          line-height: 1.3;
         }
 
         .tug-options-grid {

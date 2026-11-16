@@ -381,7 +381,7 @@ export default function WaygroundEcosystemSection({
                     if (arrow) arrow.style.transform = 'translateX(0)';
                   }}
                 >
-                  <span style={{ textDecoration: 'underline', textUnderlineOffset: '3px' }}>Pelajari selengkapnya</span>
+                  <span style={{ textDecoration: 'underline', textUnderlineOffset: '3px' }}>Learn More</span>
                   <span className="cta-arr2" style={{ fontSize: '1.2rem', display: 'inline-block', transition: 'transform 0.2s ease' }}>
                     &rarr;
                   </span>
@@ -605,7 +605,7 @@ export default function WaygroundEcosystemSection({
                     if (arrow) arrow.style.transform = 'translateX(0)';
                   }}
                 >
-                  <span style={{ textDecoration: 'underline', textUnderlineOffset: '3px' }}>Pelajari Selengkapnya</span>
+                  <span style={{ textDecoration: 'underline', textUnderlineOffset: '3px' }}>Learn More</span>
                   <span className="cta-arr3" style={{ fontSize: '1.2rem', display: 'inline-block', transition: 'transform 0.2s ease' }}>
                     &rarr;
                   </span>
@@ -856,7 +856,7 @@ export default function WaygroundEcosystemSection({
                     if (arrow) arrow.style.transform = 'translateX(0)';
                   }}
                 >
-                  <span style={{ textDecoration: 'underline', textUnderlineOffset: '3px' }}>Jelajahi Perpustakaan</span>
+                  <span style={{ textDecoration: 'underline', textUnderlineOffset: '3px' }}>Explore Quizz</span>
                   <span className="cta-arr4" style={{ fontSize: '1.2rem', display: 'inline-block', transition: 'transform 0.2s ease' }}>
                     &rarr;
                   </span>

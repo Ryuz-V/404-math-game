@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect, useCallback } from 'react';
-import { MATH_QUESTIONS, Question } from '../data/mathData';
+import { Question } from '../data/mathData';
+import { GAME_MATH_QUESTIONS } from '../data/gameMathQuestions';
 
 interface VersusGameProps {
   onBackToMenu: () => void;
@@ -9,6 +10,18 @@ interface VersusGameProps {
 }
 
 const TARGET_SCORE = 500; // First to 500 wins
+
+const VERSUS_QUESTIONS: Question[] = GAME_MATH_QUESTIONS.map((q, idx) => ({
+  id: 1000 + idx,
+  grade: 12,
+  topicId: q.topic,
+  topicTitle: q.topicLabel,
+  question: q.question,
+  options: q.options,
+  correctIndex: q.correctIndex,
+  explanation: q.explanation,
+  difficulty: 'medium'
+}));
 
 export default function VersusGame({ onBackToMenu, onSwitchToSolo }: VersusGameProps) {
   const [gameState, setGameState] = useState<'lobby' | 'countdown' | 'playing' | 'round_result' | 'gameover'>('lobby');
@@ -33,7 +46,7 @@ export default function VersusGame({ onBackToMenu, onSwitchToSolo }: VersusGameP
   const [winner, setWinner] = useState<string | null>(null);
 
   const startVersusGame = () => {
-    const shuffled = [...MATH_QUESTIONS].sort(() => Math.random() - 0.5);
+    const shuffled = [...VERSUS_QUESTIONS].sort(() => Math.random() - 0.5);
     setQuestions(shuffled);
     setCurrentIndex(0);
     setP1Score(0);
@@ -180,7 +193,7 @@ export default function VersusGame({ onBackToMenu, onSwitchToSolo }: VersusGameP
           setGameState('playing');
         } else {
           // Shuffle loop
-          setQuestions([...MATH_QUESTIONS].sort(() => Math.random() - 0.5));
+          setQuestions([...VERSUS_QUESTIONS].sort(() => Math.random() - 0.5));
           setCurrentIndex(0);
           setGameState('playing');
         }
