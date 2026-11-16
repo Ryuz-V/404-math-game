@@ -978,7 +978,6 @@ export default function Home() {
               <ul>
                 <li><Link href="mailto:urdhajathniel@gmail.com">@urdhajathniel@gmail.com</Link></li>
                 <li><Link href="mailto:hafidzalqudsi80@gmail.com">@hafidzalqudsi80@gmail.com</Link></li>
-                <li><Link href="#">@antigravity.ai</Link></li>
               </ul>
             </div>
           </div>
