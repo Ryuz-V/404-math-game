@@ -970,6 +970,10 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
 
   // Game UI States
   const [gameState, setGameState] = useState<'idle' | 'playing' | 'gameover' | 'boss_ending'>('idle');
+  const [isPaused, setIsPaused] = useState(false);
+  const isPausedRef = useRef(false);
+  isPausedRef.current = isPaused;
+
   const [activeQuiz, setActiveQuiz] = useState<MathQuizQuestion | null>(null);
   const [score, setScore] = useState(0);
   const [coins, setCoins] = useState(0);
@@ -1008,8 +1012,8 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
     birdX: 140,
     birdY: 235,
     birdVelocity: 0,
-    gravity: 0.36,
-    jumpStrength: -7.2,
+    gravity: 0.30,
+    jumpStrength: -6.4,
     birdRadius: 18,
     birdRotation: 0,
     invincibleFrames: 0,
@@ -1018,7 +1022,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
     pipesSinceQuiz: 0,
     nextPipeId: 1,
     items: [] as PickupItem[],
-    gateSpeed: 2.8,
+    gateSpeed: 2.1,
     spawnTimer: 0,
     scoreCount: 0,
     coinsCount: 0,
@@ -1147,8 +1151,8 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
       birdX: 140,
       birdY: 235,
       birdVelocity: 0,
-      gravity: 0.36,
-      jumpStrength: -7.2,
+      gravity: 0.30,
+      jumpStrength: -6.4,
       birdRadius: 18,
       birdRotation: 0,
       invincibleFrames: 0,
@@ -1157,7 +1161,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
       pipesSinceQuiz: 0,
       nextPipeId: 4,
       items: initialCoins,
-      gateSpeed: 2.8,
+      gateSpeed: 2.1,
       spawnTimer: 0,
       scoreCount: 0,
       coinsCount: 0,
@@ -1213,6 +1217,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
     setTimerSeconds(15);
     setActiveQuiz(null);
     setSelectedAnswerIdx(null);
+    setIsPaused(false);
     setGameState('playing');
   }, [selectedOp]);
 
@@ -1302,6 +1307,13 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       const key = e.key.toLowerCase();
+      if (e.key === 'Escape' || key === 'p') {
+        e.preventDefault();
+        if (gameState === 'playing' && !activeQuiz) {
+          setIsPaused(prev => !prev);
+        }
+        return;
+      }
       if (e.code === 'Space' || key === 'w') {
         e.preventDefault();
         if (gameState === 'idle') {
@@ -1341,8 +1353,19 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
     let lastFrameTime = performance.now();
 
     const render = (nowTime: number) => {
-      const deltaSec = Math.min(0.1, (nowTime - lastFrameTime) / 1000);
+      const rawDelta = (nowTime - lastFrameTime) / 1000;
       lastFrameTime = nowTime;
+
+      // Freeze all movement and timers when game is paused
+      if (isPausedRef.current) {
+        animId = requestAnimationFrame(render);
+        return;
+      }
+
+      // 60 FPS Baseline Normalization (prevents hyper speed on 120Hz/144Hz/240Hz monitors)
+      const deltaSec = Math.min(0.05, Math.max(0.001, rawDelta));
+      const targetDelta = 1 / 60;
+      const timeScale = Math.min(2.0, Math.max(0.3, deltaSec / targetDelta));
 
       const eng = engineRef.current;
       const width = canvas.width;
@@ -1555,8 +1578,8 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
             eng.invincibleFrames--;
           }
 
-          eng.birdVelocity += eng.gravity;
-          eng.birdY += eng.birdVelocity;
+          eng.birdVelocity += eng.gravity * timeScale;
+          eng.birdY += eng.birdVelocity * timeScale;
           eng.birdRotation = Math.min(Math.PI / 4, Math.max(-Math.PI / 4, (eng.birdVelocity * 3.5 * Math.PI) / 180));
 
           if (eng.birdY - eng.birdRadius <= 5) {
@@ -1567,7 +1590,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
           // Ground Collision
           if (eng.birdY + eng.birdRadius >= GROUND_Y) {
             eng.birdY = GROUND_Y - eng.birdRadius;
-            eng.birdVelocity = -6.5;
+            eng.birdVelocity = -5.8;
 
             for (let s = 0; s < 8; s++) {
               eng.particles.push({
@@ -1599,8 +1622,8 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
           // Items Update & Frequent Coin Spawning
           for (let i = eng.items.length - 1; i >= 0; i--) {
             const item = eng.items[i];
-            item.x -= eng.gateSpeed;
-            item.floatAngle += 0.08;
+            item.x -= eng.gateSpeed * timeScale;
+            item.floatAngle += 0.08 * timeScale;
             const bobY = item.y + Math.sin(item.floatAngle) * 6;
 
             const dx = eng.birdX - item.x;
@@ -1651,23 +1674,23 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
 
             // Scroll Flagpole and Castle into the scene
             if (mb.flagpoleX > 540) {
-              mb.flagpoleX -= eng.gateSpeed;
-              mb.castleX -= eng.gateSpeed;
-              mb.marioX -= eng.gateSpeed;
+              mb.flagpoleX -= eng.gateSpeed * timeScale;
+              mb.castleX -= eng.gateSpeed * timeScale;
+              mb.marioX -= eng.gateSpeed * timeScale;
             }
 
             // Phase 1: Mario Running towards the bird
             if (mb.state === 'run') {
-              mb.marioX += mb.marioVx;
+              mb.marioX += mb.marioVx * timeScale;
               if (mb.marioX <= eng.birdX + 150) {
                 mb.state = 'jump';
                 mb.marioVy = -8.5;
                 sounds.playFlap();
               }
             } else if (mb.state === 'jump') {
-              mb.marioX -= 2.2;
-              mb.marioVy += 0.36;
-              mb.marioY += mb.marioVy;
+              mb.marioX -= 2.2 * timeScale;
+              mb.marioVy += 0.36 * timeScale;
+              mb.marioY += mb.marioVy * timeScale;
 
               const dist = Math.hypot(mb.marioX - eng.birdX, mb.marioY - eng.birdY);
               if (dist < 46 || mb.marioY >= GROUND_Y - 48) {
@@ -1816,7 +1839,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
 
           for (let i = eng.pipes.length - 1; i >= 0; i--) {
             const p = eng.pipes[i];
-            p.x -= eng.gateSpeed;
+            p.x -= eng.gateSpeed * timeScale;
 
             const pipeLeft = p.x - 4;
             const pipeRight = p.x + p.width + 4;
@@ -1912,7 +1935,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
 
           // Pulihkan posisi X burung maju jika tidak sedang tertahan pipa
           if (!isBlockedByPipe && eng.birdX < 140) {
-            eng.birdX = Math.min(140, eng.birdX + 2.5);
+            eng.birdX = Math.min(140, eng.birdX + 2.5 * timeScale);
           }
         }
       }
@@ -2192,9 +2215,21 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
     <div className="flappy-game-container">
       {/* Top Navigation Bar */}
       <div className="flappy-nav">
-        <button className="flappy-btn-back" onClick={onBackToMenu}>
-          &larr; Back to Games Hub
-        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <button className="flappy-btn-back" onClick={onBackToMenu} title="Kembali ke Games Lobby">
+            🏠 Kembali ke Lobby Game
+          </button>
+          {gameState === 'playing' && (
+            <button
+              type="button"
+              className="flappy-btn-pause-nav"
+              onClick={() => setIsPaused(prev => !prev)}
+              title="Jeda Game (Esc / P)"
+            >
+              {isPaused ? '▶ Lanjut' : '⏸ Menu / Jeda'}
+            </button>
+          )}
+        </div>
 
         <div className="flappy-title-badge">
           FLAPPY MATH
@@ -2236,11 +2271,82 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
       </div>
 
       {/* GAME CANVAS ARENA */}
-      <div className="flappy-canvas-wrapper" onClick={gameState === 'playing' ? triggerJump : startGame}>
+      <div className="flappy-canvas-wrapper" onClick={gameState === 'playing' ? (isPaused ? undefined : triggerJump) : startGame}>
         <canvas ref={canvasRef} width={840} height={480} className="flappy-canvas" />
+
+        {/* In-Game Floating Pause Button on Canvas */}
+        {gameState === 'playing' && !activeQuiz && (
+          <button
+            type="button"
+            className="flappy-floating-pause"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsPaused(prev => !prev);
+            }}
+            title="Menu & Jeda Game [Esc]"
+          >
+            {isPaused ? '▶ Lanjut' : '⏸ Menu'}
+          </button>
+        )}
 
         {/* Floating Notification Popup */}
         {floatText && <div className="flappy-float-text">{floatText.text}</div>}
+
+        {/* OVERLAY: IN-GAME PAUSE / MENU MODAL */}
+        {isPaused && gameState === 'playing' && (
+          <div className="flappy-overlay pause-overlay">
+            <div className="flappy-start-card pause-card">
+              <h1 className="start-hero-title">⏸ GAME DIJEDA</h1>
+              <p className="start-hero-subtitle">
+                Day {day}/25 ({getTimeLabel(timeOfDay)}) • Skor: {score} • HP: {formatLivesText(lives)}/3
+              </p>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '100%', maxWidth: '320px', margin: '20px auto 0' }}>
+                <button
+                  type="button"
+                  className="btn-play-game"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsPaused(false);
+                  }}
+                  style={{ backgroundColor: '#22c55e', color: '#ffffff', border: '2.5px solid #000', boxShadow: '3px 3px 0 #000' }}
+                >
+                  ▶ Lanjutkan Main
+                </button>
+
+                <button
+                  type="button"
+                  className="btn-play-game"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsPaused(false);
+                    startGame();
+                  }}
+                  style={{ backgroundColor: '#38bdf8', color: '#000000', border: '2.5px solid #000', boxShadow: '3px 3px 0 #000' }}
+                >
+                  🔄 Ulangi Dari Day 1
+                </button>
+
+                <button
+                  type="button"
+                  className="btn-play-game"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsPaused(false);
+                    onBackToMenu();
+                  }}
+                  style={{ backgroundColor: '#f43f5e', color: '#ffffff', border: '2.5px solid #000', boxShadow: '3px 3px 0 #000' }}
+                >
+                  🏠 Kembali ke Lobby Game
+                </button>
+              </div>
+
+              <div className="start-click-hint" style={{ marginTop: '14px' }}>
+                Tekan <strong>[Esc]</strong> atau <strong>[P]</strong> untuk kembali main langsung
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* OVERLAY: MODAL SOAL (4 PILIHAN JAWABAN) */}
         {gameState === 'playing' && activeQuiz && (
@@ -2301,19 +2407,34 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
               <h1 className="start-hero-title">FLAPPY MATH ADVENTURE</h1>
               <p className="start-hero-subtitle">Jelajahi Day 1 - 25 (Pagi, Sore, Malam) Menuju Final Boss Mario!</p>
 
-              <button
-                type="button"
-                className="btn-play-game"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  startGame();
-                }}
-              >
-                <span className="play-icon">▶</span> START ADVENTURE
-              </button>
+              <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap', margin: '18px 0 12px 0' }}>
+                <button
+                  type="button"
+                  className="btn-play-game"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    startGame();
+                  }}
+                  style={{ minWidth: '180px' }}
+                >
+                  <span className="play-icon">▶</span> START ADVENTURE
+                </button>
+
+                <button
+                  type="button"
+                  className="btn-play-game"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onBackToMenu();
+                  }}
+                  style={{ minWidth: '180px', backgroundColor: '#f43f5e', color: '#fff', border: '2.5px solid #000' }}
+                >
+                  🏠 Kembali ke Lobby
+                </button>
+              </div>
 
               <div className="start-click-hint">
-                Tekan <strong>[Spasi]</strong> atau klik tombol di atas untuk mulai terbang!
+                Tekan <strong>[Spasi]</strong> untuk terbang • <strong>[Esc]</strong> untuk menu jeda
               </div>
             </div>
           </div>
@@ -2367,7 +2488,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
                     onBackToMenu();
                   }}
                 >
-                  Menu Game
+                  🏠 Kembali ke Lobby Game
                 </button>
               </div>
             </div>
@@ -2422,7 +2543,7 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
                     onBackToMenu();
                   }}
                 >
-                  Menu Game
+                  🏠 Kembali ke Lobby Game
                 </button>
               </div>
             </div>
@@ -2432,25 +2553,63 @@ export default function FlappyBirdGame({ onBackToMenu, onAddScore }: FlappyBirdG
 
       {/* Controls Hint footer */}
       <div className="flappy-hint-bar">
-        <strong>Tujuan Game:</strong> Bertahan dari <strong>Day 1 sampai Day 25 (Pagi, Sore, Malam)</strong>. Setiap jawaban benar & koin akan dijumlahkan menjadi total skor akhir di hadapan <strong>Super Mario</strong>!
+        <strong>Tujuan Game:</strong> Bertahan dari <strong>Day 1 sampai Day 25 (Pagi, Sore, Malam)</strong>. Gunakan <strong>[Esc]</strong> untuk jeda / kembali ke lobby kapan saja!
       </div>
 
       {/* Flappy Bird Styles */}
       <style jsx>{`
         .flappy-game-container {
-          height: calc(100vh - 80px);
-          max-height: calc(100vh - 80px);
+          min-height: calc(100vh - 80px);
+          height: auto;
           background: #0f172a;
           color: #fff;
-          padding: 0.8rem 1.5rem;
+          padding: 1rem 1.5rem 2.5rem 1.5rem;
           display: flex;
           flex-direction: column;
           align-items: center;
-          justify-content: center;
-          gap: 0.6rem;
+          justify-content: flex-start;
+          gap: 0.8rem;
           user-select: none;
-          overflow: hidden;
+          overflow-y: auto;
           box-sizing: border-box;
+        }
+
+        .flappy-floating-pause {
+          position: absolute;
+          top: 14px;
+          right: 14px;
+          z-index: 30;
+          background: #ffdc00;
+          color: #000;
+          border: 2.5px solid #000;
+          border-radius: 8px;
+          font-weight: 900;
+          font-size: 13px;
+          padding: 6px 14px;
+          cursor: pointer;
+          box-shadow: 3px 3px 0 #000;
+          transition: all 0.1s ease;
+        }
+        .flappy-floating-pause:hover {
+          transform: translate(-1px, -1px);
+          box-shadow: 4px 4px 0 #000;
+        }
+
+        .flappy-btn-pause-nav {
+          background: #38bdf8;
+          color: #000;
+          border: 2px solid #000;
+          border-radius: 8px;
+          font-weight: 900;
+          font-size: 0.85rem;
+          padding: 0.4rem 0.8rem;
+          cursor: pointer;
+          box-shadow: 2px 2px 0 #000;
+          transition: transform 0.1s;
+        }
+        .flappy-btn-pause-nav:hover {
+          transform: translate(-1.5px, -1.5px);
+          box-shadow: 3px 3px 0 #000;
         }
 
         .flappy-nav {

@@ -28,7 +28,7 @@ interface MateriSectionProps {
   initialTopicId?: string;
 }
 
-type TabType = 'all' | 'konsep' | 'rumus' | 'contoh' | 'video' | 'kuis';
+type TabType = 'all' | 'resource' | 'konsep' | 'rumus' | 'contoh' | 'video' | 'kuis';
 
 export default function MaterialSection({ onStartSoloWithTopic, initialTopicId }: MateriSectionProps) {
   const [activeModalTopic, setActiveModalTopic] = useState<MathTopic | null>(() => {
@@ -121,6 +121,7 @@ export default function MaterialSection({ onStartSoloWithTopic, initialTopicId }
     
     const tabs: { id: TabType; label: string; count?: number }[] = [
       { id: 'all', label: 'Semua Materi' },
+      { id: 'resource', label: '📁 System Resource & Modul', count: (TOPIC_PDF_MAP[activeModalTopic.id] ? 1 : 0) + 1 },
       { id: 'konsep', label: 'Teori & Konsep' },
       { id: 'rumus', label: 'Rumus Penting', count: activeModalTopic.keyFormulas.length },
       { id: 'contoh', label: 'Contoh Soal', count: activeModalTopic.examples.length },
@@ -313,6 +314,316 @@ export default function MaterialSection({ onStartSoloWithTopic, initialTopicId }
           </div>
 
           {/* =============================================================== */}
+          {/* SYSTEM RESOURCE HUB (MODUL PDF, VIDEO, FORMULA CHEAT SHEET, GAME) */}
+          {/* =============================================================== */}
+          {(activeTab === 'all' || activeTab === 'resource') && (
+            <div style={{
+              backgroundColor: '#ffffff',
+              borderRadius: '16px',
+              padding: '28px',
+              border: '2.5px solid #000',
+              marginBottom: '28px',
+              boxShadow: '5px 5px 0px #000'
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', borderBottom: '2.5px solid #000', paddingBottom: '14px', flexWrap: 'wrap', gap: '10px' }}>
+                <div>
+                  <h2 style={{ fontSize: '22px', fontWeight: 900, color: '#0f172a', margin: '0 0 4px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span>📁</span> Pusat System Resource & Media Pembelajaran
+                  </h2>
+                  <p style={{ fontSize: '13px', color: '#64748b', margin: 0, fontWeight: 600 }}>
+                    Koleksi lengkap dokumen kurikulum resmi, video materi HD, bank formula, dan simulasi arcade untuk <strong>{activeModalTopic.title}</strong>.
+                  </p>
+                </div>
+                <span style={{ fontSize: '12px', fontWeight: 800, padding: '4px 12px', borderRadius: '9999px', backgroundColor: '#e0e7ff', color: '#3730a3', border: '1.5px solid #000' }}>
+                  Resource Terverifikasi SMA
+                </span>
+              </div>
+
+              {/* 4 Interactive Resource Cards Grid */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '16px' }}>
+                {/* 1. PDF Module Resource */}
+                {TOPIC_PDF_MAP[activeModalTopic.id] ? (
+                  <div style={{
+                    backgroundColor: '#fff1f2',
+                    border: '2.5px solid #000',
+                    borderRadius: '12px',
+                    padding: '20px',
+                    boxShadow: '4px 4px 0px #000',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between'
+                  }}>
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                        <span style={{ backgroundColor: '#dc2626', color: '#fff', fontSize: '11px', fontWeight: 900, padding: '3px 8px', borderRadius: '6px', border: '1.5px solid #000' }}>
+                          DOKUMEN RESMI PDF
+                        </span>
+                        <span style={{ fontSize: '12px', fontWeight: 700, color: '#991b1b' }}>Kemendikbud RI</span>
+                      </div>
+                      <h3 style={{ fontSize: '16px', fontWeight: 800, color: '#0f172a', margin: '0 0 6px 0', lineHeight: 1.3 }}>
+                        {TOPIC_PDF_MAP[activeModalTopic.id]}
+                      </h3>
+                      <p style={{ fontSize: '12px', color: '#475569', lineHeight: 1.5, margin: '0 0 16px 0' }}>
+                        Modul pegangan siswa & guru berstandar Kurikulum Merdeka / K13 Revisi. Berisi materi runtut, bukti rumus, dan latihan soal.
+                      </p>
+                    </div>
+
+                    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                      <a
+                        href={`/assets/file%20materi/${encodeURIComponent(TOPIC_PDF_MAP[activeModalTopic.id])}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          flex: 1,
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '6px',
+                          backgroundColor: '#dc2626',
+                          color: '#ffffff',
+                          padding: '10px 14px',
+                          borderRadius: '8px',
+                          fontSize: '13px',
+                          fontWeight: 800,
+                          textDecoration: 'none',
+                          border: '2px solid #000',
+                          boxShadow: '2px 2px 0px #000'
+                        }}
+                      >
+                        <span>Buka PDF ↗</span>
+                      </a>
+                      <a
+                        href={`/assets/file%20materi/${encodeURIComponent(TOPIC_PDF_MAP[activeModalTopic.id])}`}
+                        download={TOPIC_PDF_MAP[activeModalTopic.id]}
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          padding: '10px 14px',
+                          backgroundColor: '#ffffff',
+                          color: '#0f172a',
+                          borderRadius: '8px',
+                          fontSize: '13px',
+                          fontWeight: 800,
+                          textDecoration: 'none',
+                          border: '2px solid #000',
+                          boxShadow: '2px 2px 0px #000'
+                        }}
+                        title="Unduh Dokumen PDF"
+                      >
+                        ⬇ Unduh
+                      </a>
+                    </div>
+                  </div>
+                ) : (
+                  <div style={{ backgroundColor: '#f8fafc', border: '2px dashed #cbd5e1', borderRadius: '12px', padding: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <span style={{ fontSize: '13px', color: '#64748b', fontWeight: 600 }}>Modul PDF sedang disiapkan</span>
+                  </div>
+                )}
+
+                {/* 2. YouTube Video Resource */}
+                <div style={{
+                  backgroundColor: '#eff6ff',
+                  border: '2.5px solid #000',
+                  borderRadius: '12px',
+                  padding: '20px',
+                  boxShadow: '4px 4px 0px #000',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between'
+                }}>
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                      <span style={{ backgroundColor: '#2563eb', color: '#fff', fontSize: '11px', fontWeight: 900, padding: '3px 8px', borderRadius: '6px', border: '1.5px solid #000' }}>
+                        VIDEO PEMBELAJARAN
+                      </span>
+                      <span style={{ fontSize: '12px', fontWeight: 700, color: '#1e40af' }}>{videoData.channel}</span>
+                    </div>
+                    <h3 style={{ fontSize: '16px', fontWeight: 800, color: '#0f172a', margin: '0 0 6px 0', lineHeight: 1.3 }}>
+                      {videoData.title}
+                    </h3>
+                    <p style={{ fontSize: '12px', color: '#475569', lineHeight: 1.5, margin: '0 0 16px 0' }}>
+                      Video interaktif step-by-step dengan visual animasi grafik dan tips mengerjakan soal ujian dengan cepat.
+                    </p>
+                  </div>
+
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <button
+                      onClick={() => {
+                        setActiveTab('video');
+                        setIsPlayingVideo(true);
+                      }}
+                      style={{
+                        flex: 1,
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '6px',
+                        backgroundColor: '#2563eb',
+                        color: '#ffffff',
+                        padding: '10px 14px',
+                        borderRadius: '8px',
+                        fontSize: '13px',
+                        fontWeight: 800,
+                        cursor: 'pointer',
+                        border: '2px solid #000',
+                        boxShadow: '2px 2px 0px #000'
+                      }}
+                    >
+                      <span>Putar Video ▶</span>
+                    </button>
+                    <a
+                      href={videoData.watchUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: '10px 14px',
+                        backgroundColor: '#ffffff',
+                        color: '#0f172a',
+                        borderRadius: '8px',
+                        fontSize: '13px',
+                        fontWeight: 800,
+                        textDecoration: 'none',
+                        border: '2px solid #000',
+                        boxShadow: '2px 2px 0px #000'
+                      }}
+                    >
+                      YouTube ↗
+                    </a>
+                  </div>
+                </div>
+
+                {/* 3. Formula Cheat Sheet Resource */}
+                <div style={{
+                  backgroundColor: '#fefce8',
+                  border: '2.5px solid #000',
+                  borderRadius: '12px',
+                  padding: '20px',
+                  boxShadow: '4px 4px 0px #000',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between'
+                }}>
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                      <span style={{ backgroundColor: '#eab308', color: '#000', fontSize: '11px', fontWeight: 900, padding: '3px 8px', borderRadius: '6px', border: '1.5px solid #000' }}>
+                        FORMULA CHEAT SHEET
+                      </span>
+                      <span style={{ fontSize: '12px', fontWeight: 800, color: '#854d0e' }}>
+                        {activeModalTopic.keyFormulas.length} Rumus Kunci
+                      </span>
+                    </div>
+                    <h3 style={{ fontSize: '16px', fontWeight: 800, color: '#0f172a', margin: '0 0 6px 0', lineHeight: 1.3 }}>
+                      Bank Rumus & Catatan Khusus
+                    </h3>
+                    <p style={{ fontSize: '12px', color: '#475569', lineHeight: 1.5, margin: '0 0 16px 0' }}>
+                      Daftar formula matematis esensial dengan fitur 1-klik salin rumus untuk memudahkan persiapan ujian harian & UTBK.
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={() => setActiveTab('rumus')}
+                    style={{
+                      width: '100%',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '6px',
+                      backgroundColor: '#eab308',
+                      color: '#000000',
+                      padding: '10px 14px',
+                      borderRadius: '8px',
+                      fontSize: '13px',
+                      fontWeight: 800,
+                      cursor: 'pointer',
+                      border: '2px solid #000',
+                      boxShadow: '2px 2px 0px #000'
+                    }}
+                  >
+                    <span>Buka Bank Rumus 📐</span>
+                  </button>
+                </div>
+
+                {/* 4. Gamified Time Attack Exercise */}
+                <div style={{
+                  backgroundColor: '#f0fdf4',
+                  border: '2.5px solid #000',
+                  borderRadius: '12px',
+                  padding: '20px',
+                  boxShadow: '4px 4px 0px #000',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between'
+                }}>
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                      <span style={{ backgroundColor: '#16a34a', color: '#fff', fontSize: '11px', fontWeight: 900, padding: '3px 8px', borderRadius: '6px', border: '1.5px solid #000' }}>
+                        SIMULASI INTERAKTIF
+                      </span>
+                      <span style={{ fontSize: '12px', fontWeight: 800, color: '#166534' }}>Arcade Solo</span>
+                    </div>
+                    <h3 style={{ fontSize: '16px', fontWeight: 800, color: '#0f172a', margin: '0 0 6px 0', lineHeight: 1.3 }}>
+                      Time Attack Solo Game
+                    </h3>
+                    <p style={{ fontSize: '12px', color: '#475569', lineHeight: 1.5, margin: '0 0 16px 0' }}>
+                      Uji kecepatan dan ketelitian Anda menjawab soal materi ini dalam permainan berwaktu seru dengan sistem kombo poin!
+                    </p>
+                  </div>
+
+                  {onStartSoloWithTopic ? (
+                    <button
+                      onClick={() => onStartSoloWithTopic(activeModalTopic.id)}
+                      style={{
+                        width: '100%',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '6px',
+                        backgroundColor: '#16a34a',
+                        color: '#ffffff',
+                        padding: '10px 14px',
+                        borderRadius: '8px',
+                        fontSize: '13px',
+                        fontWeight: 800,
+                        cursor: 'pointer',
+                        border: '2px solid #000',
+                        boxShadow: '2px 2px 0px #000'
+                      }}
+                    >
+                      <span>Mulai Simulasi ⚡</span>
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => setActiveTab('kuis')}
+                      style={{
+                        width: '100%',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '6px',
+                        backgroundColor: '#16a34a',
+                        color: '#ffffff',
+                        padding: '10px 14px',
+                        borderRadius: '8px',
+                        fontSize: '13px',
+                        fontWeight: 800,
+                        cursor: 'pointer',
+                        border: '2px solid #000',
+                        boxShadow: '2px 2px 0px #000'
+                      }}
+                    >
+                      <span>Kerjakan Kuis Cepat 🎯</span>
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* =============================================================== */}
           {/* SECTION 1: TEORI & KONSEP PEMBELAJARAN */}
           {/* =============================================================== */}
           {(activeTab === 'all' || activeTab === 'konsep') && (
@@ -320,84 +631,15 @@ export default function MaterialSection({ onStartSoloWithTopic, initialTopicId }
               backgroundColor: '#ffffff',
               borderRadius: '16px',
               padding: '28px',
-              border: '1.5px solid #e2e8f0',
+              border: '2.5px solid #000',
               marginBottom: '24px',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.03)'
+              boxShadow: '4px 4px 0px #000'
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px', borderBottom: '1px solid #f1f5f9', paddingBottom: '14px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px', borderBottom: '2px solid #000', paddingBottom: '14px' }}>
                 <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0f172a', margin: 0 }}>
                   Teori & Capaian Pembelajaran
                 </h2>
               </div>
-
-              {/* PDF Module Action Card */}
-              {TOPIC_PDF_MAP[activeModalTopic.id] && (
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  backgroundColor: '#ffffff',
-                  border: '1.5px solid #fecaca',
-                  borderRadius: '12px',
-                  padding: '16px 20px',
-                  marginBottom: '20px',
-                  flexWrap: 'wrap',
-                  gap: '14px',
-                  boxShadow: '0 2px 6px rgba(239, 68, 68, 0.06)'
-                }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                    <div style={{
-                      width: '42px',
-                      height: '42px',
-                      borderRadius: '8px',
-                      backgroundColor: '#fee2e2',
-                      color: '#dc2626',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontWeight: 900,
-                      fontSize: '14px'
-                    }}>
-                      PDF
-                    </div>
-                    <div>
-                      <h4 style={{ fontSize: '15px', fontWeight: 800, color: '#0f172a', margin: '0 0 3px 0' }}>
-                        Modul Kurikulum Resmi Kemendikbud
-                      </h4>
-                      <p style={{ fontSize: '12px', color: '#64748b', margin: 0 }}>
-                        {TOPIC_PDF_MAP[activeModalTopic.id]} • Buku Referensi Standar SMA
-                      </p>
-                    </div>
-                  </div>
-
-                  <a
-                    href={`/assets/file%20materi/${encodeURIComponent(TOPIC_PDF_MAP[activeModalTopic.id])}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '8px',
-                      backgroundColor: '#dc2626',
-                      color: '#ffffff',
-                      padding: '9px 18px',
-                      borderRadius: '8px',
-                      fontSize: '13px',
-                      fontWeight: 700,
-                      textDecoration: 'none',
-                      boxShadow: '0 2px 6px rgba(220, 38, 38, 0.25)',
-                      transition: 'all 0.15s ease'
-                    }}
-                  >
-                    <span>Buka Modul PDF</span>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                      <polyline points="15 3 21 3 21 9"></polyline>
-                      <line x1="10" y1="14" x2="21" y2="3"></line>
-                    </svg>
-                  </a>
-                </div>
-              )}
               
               {/* Detailed Overview Box */}
               <div style={{
